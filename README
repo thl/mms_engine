@@ -3,22 +3,27 @@ MmsEngine
 
 MMS engine provides a way to run the whole MMS application with several themes. Currently two themes are supported: thdl_integration engine (https://ndlb.svn.sourceforge.net/svnroot/ndlb/portal/ror/plugins/thdl_integration/trunk) and basic_engine (https://ndlb.svn.sourceforge.net/svnroot/ndlb/portal/ror/plugins/basic_engine/trunk).
 
+, topical_map_builder_integration, restful-authentication, upload_progress, thl_integration 
+
 Besides either of these two, the required plugins are:
-- acts_as_list:						http://dev.rubyonrails.org/svn/rails/plugins/acts_as_list
-- acts_as_tree:						http://dev.rubyonrails.org/svn/rails/plugins/acts_as_tree
+- acts_as_list:						git://github.com/rails/acts_as_list.git
+- acts_as_tree:						git://github.com/rails/acts_as_tree.git
+- annotate_models					git://github.com/ctran/annotate_models.git
 - attachment_fu:					git://github.com/technoweenie/attachment_fu.git
 - attachment_fu_patch: 				should take out!
-- authenticated_system:				https://ndlb.svn.sourceforge.net/svnroot/ndlb/portal/ror/plugins/authenticated_system/trunk
-- classic_pagination:
-- comatose: 						http://comatose-plugin.googlecode.com/svn/trunk/comatose
-- complex_scripts: 					http://ndlb.svn.sourceforge.net/svnroot/ndlb/portal/ror/plugins/complex_scripts/trunk
+- authenticated_system:				git://github.com/thl/authenticated_system.git
+- classic_pagination:				git://github.com/masterkain/classic_pagination.git
+- comatose: 						git://github.com/darthapo/comatose.git
+- complex_scripts: 					git://github.com/thl/complex_scripts.git
 - forked_notifier: 					should take out
 - globalize2: 						git://github.com/joshmh/globalize2.git
-- in_place_editing:					http://dev.rubyonrails.org/svn/rails/plugins/in_place_editing
-- jrails							http://ennerchi.googlecode.com/svn/trunk/plugins/jrails
+- in_place_editing:					git://github.com/rails/in_place_editing.git
+- jrails							git://github.com/aaronchi/jrails.git
+- mms_engine						git://github.com/thl/mms_engine.git
 - open_id_authentication: 			git://github.com/rails/open_id_authentication.git
 - permalink_fu: 					git://github.com/technoweenie/permalink_fu.git
-- topical_map_builder_integration:	https://ndlb.svn.sourceforge.net/svnroot/ndlb/portal/ror/plugins/topical_map_builder_integration/trunk
+- tiny_mce:							git://github.com/kete/tiny_mce.git
+- topical_map_builder_integration:	git://github.com/thl/kmaps_integration.git
 - restful-authentication: 			git://github.com/technoweenie/restful-authentication.git
 
 Also recommended but not required are:
