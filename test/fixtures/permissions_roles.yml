@@ -1,0 +1,17 @@
+# == Schema Information
+# Schema version: 20090626173648
+#
+# Table name: permissions_roles
+#
+#  permission_id :integer(4)      not null
+#  role_id       :integer(4)      not null
+#
+
+one:
+  id: 1
+  permission_id: 1
+  role_id: 1
+two:
+  id: 2
+  permission_id: 1
+  role_id: 1

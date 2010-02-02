@@ -1,0 +1,15 @@
+<p>
+  <b><%= ts :for, :what => MediaAdministrativeLocation.human_name(:count => :many).titleize, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></b>
+</p>
+<p>
+<%=  link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %>
+</p>
+<%= display_if_not_blank AdministrativeUnit.human_attribute_name('title').s, link_to(h(@element.full_lineage).s, associations_path(@element_name.to_sym => @element)) %>
+<%= display_if_not_blank MediaAdministrativeLocation.human_attribute_name('spot_feature').s, h(@association.spot_feature) %>
+<%= display_if_not_blank MediaAdministrativeLocation.human_attribute_name('notes').s, h(@association.notes) %>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_edit_media_administrative_location_path do %>
+<%=  link_to ts('edit.this'), edit_association_path(@association) %> |
+<% end %>
+<%= render :partial => 'main/hierarchy/mixed_associations/persistent_links' %>
+</p>

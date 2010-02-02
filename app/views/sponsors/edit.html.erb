@@ -1,0 +1,9 @@
+<h1><%= ts('edit.ing.record', :what => Sponsor.human_name.titleize) %></h1>
+<%= error_messages_for :sponsor %>
+<%  form_for(:sponsor, :url => sponsor_path(@sponsor), :html => { :method => :put }) do |f| %>
+<%=   render :partial => 'form', :locals => {:f => f} %>
+      <p><%= globalized_submit_tag 'update.this' %></p>
+<%  end %>
+<p>&nbsp;<br/>
+<%= render :partial => 'persistent_links' %>
+</p>

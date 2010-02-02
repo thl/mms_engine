@@ -1,0 +1,37 @@
+<h1><%= ts :for, :what => t('list.ing', :what => @medium.class.human_attribute_name('caption', :count => :many)), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<p>
+<%= link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %>
+</p>
+<table border="1" class="normal">
+  <tr>
+<%  caption_title = @medium.class.human_attribute_name('caption') %>
+    <th><%= caption_title.s %></th>
+    <th><%= DescriptionType.human_name(:what => caption_title.titleize).s %></th>
+    <th><%= Caption.human_attribute_name('creator').s %></th>
+    <th><%= ComplexScripts::Language.human_name.titleize.s %></th>
+    <th><%= ts :options %></th>
+  </tr>
+<% for caption in @captions %>
+  <tr>
+    <td><%= h(caption.title).s %></td>
+<%  if !caption.description_type.blank? %>
+      <td><%= h(caption.description_type.title).s %></td>
+<%  else %>
+      <td><%= ts :none %></td>
+<%  end 
+    if caption.creator.nil? %>
+    <td>&nbsp;</td>
+<%  else %>
+    <td><%=h caption.creator.fullname %></td>
+<%  end %>
+    <td><%=h caption.language.title %></td>
+    <td><%= link_to ts('manage.this'), medium_caption_path(@medium, caption) %></td>
+  </tr>
+<% end %>
+</table>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_new_medium_caption_path do %>
+<%=  link_to ts(:for, :what => t('new.record', :what => caption_title.downcase), :whom => @medium.class.human_name), new_medium_caption_path(@medium) %> |
+<% end %>
+<%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'captions'} %>
+</p>

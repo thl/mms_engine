@@ -1,0 +1,12 @@
+<p>
+  <b><%= ts :for, :what => Keyword.human_name.titleize, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></b>
+</p>
+<p>
+<%=  link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %>
+</p>
+<%= display_if_not_blank Keyword.human_name.titleize.s, link_to(h(@keyword.title).s, keyword_path(@keyword)) %>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_edit_media_keyword_association_path do %>
+<%= link_to 'Edit'.ts, edit_media_keyword_association_path(@media_keyword_association) %> |
+<%= render :partial => 'persistent_links' %>
+</p>

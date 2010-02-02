@@ -1,0 +1,18 @@
+<h1><%= ts 'list.ing.records', :what => Source.human_name(:count => :many).titleize %></h1>
+<table border="1" class="normal">
+  <tr>
+    <th><%= Source.human_name.titleize %></th>
+  </tr>
+<% can_edit = authorized? hash_for_edit_source_path
+   for source in @sources %>
+  <tr>
+    <td><%= can_edit ? link_to(h(source.title), edit_source_path(source)) : link_to(h(source.title), source_path(source)) %></td>
+  </tr>
+<% end %>
+</table>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_new_source_path do %>
+<%=  link_to ts('new.record', :what => Source.human_name), new_source_path %> |
+<% end %>
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

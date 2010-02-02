@@ -1,0 +1,29 @@
+<% movie = @medium.screen_size_movie
+   relative_url = ActionController::Base.relative_url_root 
+   image = @medium.screen_size_image
+   if movie.status==1
+	 transcript_path = @medium.transcript.nil? ? nil : @transcript_params.nil? ? subtitles_path(@medium) : subtitles_path(@medium, @transcript_params) %>
+     <p id="player1"><a href="http://www.macromedia.com/go/getflashplayer"><%= ts 'video.needs_flash' %></a></p>
+     <script type="text/javascript">
+	   var s1 = new SWFObject(<%= "\"#{relative_url}/flash/mediaplayer.swf\"" %>,"single","<%= movie.width %>","<%= movie.height + 20 %>","7");
+	   s1.addParam("allowscriptaccess", "always");
+	   s1.addParam("allowfullscreen", "true");
+	   s1.addVariable("file",<%= "\"#{relative_url}#{movie.public_filename}\"" %>);
+	   s1.addVariable("overstretch", "false");
+	   s1.addVariable("image",<%= "\"#{relative_url}#{image.public_filename}\"" %>);
+<%     if !transcript_path.nil? %>
+         s1.addVariable("captions", <%= "\"#{relative_url}#{transcript_path}\"" %>);
+<%     end %>
+	   s1.write("player1");
+     </script>
+<%   if !transcript_path.nil? %>
+	 <p>
+<%=    link_to_remote ts('tibetan.script'), :update => 'primary', :url => video_subtitles_path(@medium, :language => 'bo'), :method => :get %> |
+<%=    link_to_remote ts('tibetan.transliteration'), :update => 'primary', :url => video_subtitles_path(@medium, :language => 'bo', :form => 'transliteration'), :method => :get %> |
+<%=    link_to_remote ts(:english), :update => 'primary', :url => video_subtitles_path(@medium, :language => 'en'), :method => :get %>
+	 </p>
+<%   end
+   else %>
+<%=  image_tag(image.public_filename) %>
+     <p><%= ts 'video.not_ready' %></p>
+<% end %>

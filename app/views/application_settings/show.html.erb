@@ -1,0 +1,13 @@
+<%= display_if_not_blank ApplicationSetting.human_attribute_name('title').s, h(@application_setting.title) %>
+<%= display_if_not_blank ApplicationSetting.human_attribute_name('description').s, h(@application_setting.description) %>
+<%= display_if_not_blank ApplicationSetting.human_attribute_name('value').s, h(@application_setting.value) %>
+<%= display_if_not_blank ApplicationSetting.human_attribute_name('string_value').s, h(@application_setting.string_value) %>
+<% if !@application_setting.permission_id.nil? && !@application_setting.permission.nil? %>
+<%=  display_if_not_blank ts('admin.page'), link_to(h(@application_setting.permission.title), @application_setting.configuration_path) %>
+<% end %>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_application_setting_path do %>
+<%=  link_to ts('edit.this'), edit_application_setting_path(@application_setting) %> |
+<% end %>
+<%= render :partial => 'persistent_links' %>
+</p>

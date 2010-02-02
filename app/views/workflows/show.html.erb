@@ -1,0 +1,13 @@
+<%  @medium = @workflow.medium %>
+<h1><%= ts :for, :what => Workflow.human_name.titleize, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<p>
+    <b><%= Medium.human_name.titleize.s %></b><br />    
+<%= link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %></td>
+</p>
+<%= render :partial => 'show', :locals => {:workflow => @workflow} %>
+<p>
+<% authorized_only hash_for_edit_workflow_path do %>
+<%=  link_to ts('edit.this'), edit_workflow_path(@workflow) %> |
+<% end %>
+<%= render :partial => 'persistent_links' %>
+</p>

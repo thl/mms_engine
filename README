@@ -1,0 +1,34 @@
+MmsEngine
+=========
+
+MMS engine provides a way to run the whole MMS application with several themes. Currently two themes are supported: thdl_integration engine (https://ndlb.svn.sourceforge.net/svnroot/ndlb/portal/ror/plugins/thdl_integration/trunk) and basic_engine (https://ndlb.svn.sourceforge.net/svnroot/ndlb/portal/ror/plugins/basic_engine/trunk).
+
+Besides either of these two, the required plugins are:
+- acts_as_list:						http://dev.rubyonrails.org/svn/rails/plugins/acts_as_list
+- acts_as_tree:						http://dev.rubyonrails.org/svn/rails/plugins/acts_as_tree
+- attachment_fu:					git://github.com/technoweenie/attachment_fu.git
+- attachment_fu_patch: 				should take out!
+- authenticated_system:				https://ndlb.svn.sourceforge.net/svnroot/ndlb/portal/ror/plugins/authenticated_system/trunk
+- classic_pagination:
+- comatose: 						http://comatose-plugin.googlecode.com/svn/trunk/comatose
+- complex_scripts: 					http://ndlb.svn.sourceforge.net/svnroot/ndlb/portal/ror/plugins/complex_scripts/trunk
+- forked_notifier: 					should take out
+- globalize2: 						git://github.com/joshmh/globalize2.git
+- in_place_editing:					http://dev.rubyonrails.org/svn/rails/plugins/in_place_editing
+- jrails							http://ennerchi.googlecode.com/svn/trunk/plugins/jrails
+- open_id_authentication: 			git://github.com/rails/open_id_authentication.git
+- permalink_fu: 					git://github.com/technoweenie/permalink_fu.git
+- topical_map_builder_integration:	https://ndlb.svn.sourceforge.net/svnroot/ndlb/portal/ror/plugins/topical_map_builder_integration/trunk
+- restful-authentication: 			git://github.com/technoweenie/restful-authentication.git
+
+Also recommended but not required are:
+- annotate_models: http://repo.pragprog.com/svn/Public/plugins/annotate_models
+- newrelic_rpm: http://newrelic.rubyforge.org/svn/newrelic_rpm
+
+Example
+=======
+
+Example goes here.
+
+
+Copyright (c) 2009 Andres Montano, released under the MIT license

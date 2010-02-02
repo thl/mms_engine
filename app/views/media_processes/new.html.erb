@@ -1,0 +1,15 @@
+<h1>Execute New Process</h2>
+<% form_for :media_process, :url => media_processes_path do |f| %>
+<p><b>Process to execute</b><br/>
+<%= f.select(:process_type, @media_process_types.collect {|key, value| [ key, value ] }, { :include_blank => true }) %></p>
+<p><b>Apply to</b><br/>
+<%= f.select(:media_type, @media_types.collect {|key, value| [ key, key ] }, { :include_blank => false }) %></p>
+<p><b><%= 'From medium ID'.ts %></b><br />
+<%= f.text_field :id_start %></p>
+<p><b><%= 'To medium ID'.ts %></b><br />
+<%= f.text_field :id_end %></p>
+<p><%= globalized_submit_tag 'Execute' %></p>
+<% end %>
+<p>&nbsp;<br/>
+<%= link_to 'Status of last process', status_media_processes_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %></p>

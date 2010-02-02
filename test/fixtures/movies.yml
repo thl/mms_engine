@@ -1,0 +1,20 @@
+# == Schema Information
+# Schema version: 20090626173648
+#
+# Table name: movies
+#
+#  id           :integer(4)      not null, primary key
+#  content_type :string(255)
+#  filename     :string(255)
+#  size         :integer(4)
+#  parent_id    :integer(4)
+#  thumbnail    :string(10)
+#  width        :integer(4)
+#  height       :integer(4)
+#  status       :integer(4)      default(0)
+#
+
+first:
+  id: 1
+another:
+  id: 2

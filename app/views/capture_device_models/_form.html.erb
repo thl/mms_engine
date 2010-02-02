@@ -1,0 +1,12 @@
+<p>
+    <b><%= CaptureDeviceMaker.human_name.titleize %> Camera Manufacturer</b><br />
+<%= f.collection_select(:capture_device_maker_id, @capture_device_makers, :id, :title) %>
+</p>
+<p>
+    <b><%= CaptureDeviceModel.human_attribute_name('title').s %></b><br />
+<%= f.text_field :title %>
+</p>
+<p>
+    <b><%= CaptureDeviceModel.human_attribute_name('exif_tag').s %></b><br />
+<%= f.text_field :exif_tag %>
+</p>

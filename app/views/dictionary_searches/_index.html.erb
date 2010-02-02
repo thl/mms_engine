@@ -1,0 +1,60 @@
+<% if @words.empty? %>
+     <p><em><%= ts('results.none') %></em></p>
+<% else %>
+<table border="1" width="100%">
+<%   already_displayed_words = Array.new 
+     for word in @words
+       definitions = word.definitions
+       displayable_words = Array.new
+       if definitions.empty?
+         word.definienda.each do |w|
+           if !already_displayed_words.include? w.id
+             displayable_words << w
+             already_displayed_words << w.id
+           end 
+         end
+       else
+         if already_displayed_words.include? word.id
+           definitions = Array.new
+         else
+           displayable_words << word
+           already_displayed_words << word.id
+           already_displayed_words.concat definitions.collect{|d| d.definition_id}
+         end 
+       end
+       for definiendum in displayable_words 
+         lang = definiendum.language.code
+         if definitions.empty?
+           @definitions = definiendum.definitions
+         else
+           @definitions = definitions
+         end
+         @use_definiendum_instead = false %>
+     <tr>
+       <td align="left" valign="top"><p align="left"><b><%= definiendum.title.s %></b><br/>
+	     (<%= definiendum.language.title %>)</p></td>
+	   <td align="left" valign="top">
+<%=      render :partial => 'display_definitions' %>
+<%     end
+       if !definitions.empty?
+         @definitions = Array.new
+         word.definitions_of_definienda.each do |d|
+           word_id = d.definiendum_id
+           if !already_displayed_words.include? word_id
+             @definitions << d
+             already_displayed_words << word_id
+           end
+         end 
+         if !@definitions.empty?
+           @use_definiendum_instead = true %> 
+<%=        render :partial => 'display_definitions' %>
+<%       end
+       end %>
+    </td>
+  </tr>
+<%   end %>
+</table> 
+<% end %>
+<%= link_to_remote(ts('results.previous'), :update => 'results', :url => { :page => @word_pages.current.previous, :language_id => @language }, :method => :get, :loading => javascript_searching('results')) if @word_pages.current.previous %>
+<%= pagination_links_each(@word_pages, {}) { |n| link_to_remote(n.to_s, :url => {:page => n, :language_id => @language}, :method => :get, :update => 'results', :loading => javascript_searching('results')) } %>
+<%= link_to_remote(ts('results.next'), :update => 'results', :url => { :page => @word_pages.current.next, :language_id => @language }, :method => :get, :loading => javascript_searching('results')) if @word_pages.current.next %>

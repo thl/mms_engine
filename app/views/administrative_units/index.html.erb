@@ -1,0 +1,18 @@
+<div id="primary">
+  <p>
+    <b><%= ts :in, :what => h(@administrative_level.title.pluralize), :where => h(@country.title) %></b>
+<%  base_language_only do
+      authorized_only hash_for_new_element_path do %>
+        (<%= link_to_remote ts('new.record', :what => h(@administrative_level.title.downcase)), :url => new_element_path(:administrative_level_id => @administrative_level), :update => 'secondary', :method => 'get' %>)
+<%    end
+    end %>
+  </p>
+  <div id="navigation" class="normal">
+<%= render :partial => 'main/hierarchy/admin/index' %>
+  </div>
+  <p>&nbsp;<br/>
+<%= link_to ts('back.to', :what => h(@country.title)), country_path(@country) %>
+  </p>
+</div>
+<div id="secondary">
+</div>

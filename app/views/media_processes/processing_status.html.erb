@@ -1,0 +1,12 @@
+<h1>Processing by <%= @user.screen_name %></h1>
+<%= periodically_call_remote(:url => status_media_processes_path(:user_id => @user.id)) %>
+<div id="status" class="normal">
+<%= render :partial => 'status' %>
+</div>
+<p>&nbsp;<br/>
+<%= link_to 'Media Processes Home', media_processes_path %> |
+<%  authorized_only hash_for_media_process_path(:action => 'destroy') do %>
+<%=   link_to 'Delete log'.ts, media_process_path(@user), :confirm => 'Are you sure?'.te, :method => :delete %> |
+<%  end %>
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

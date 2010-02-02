@@ -1,0 +1,27 @@
+# == Schema Information
+# Schema version: 20090626173648
+#
+# Table name: administrative_units
+#
+#  id                      :integer(4)      not null, primary key
+#  title                   :string(100)     not null
+#  administrative_level_id :integer(4)      not null
+#  parent_id               :integer(4)
+#  title_dz                :string(100)
+#  description             :text
+#  creator_id              :integer(4)
+#  created_on              :datetime
+#  order                   :integer(4)
+#  is_problematic          :boolean(1)      not null
+#
+
+one:
+  id: 1
+  administrative_level_id: 1
+  parent_administrative_unit_id: 1
+  title: MyString
+two:
+  id: 2
+  administrative_level_id: 1
+  parent_administrative_unit_id: 1
+  title: MyString

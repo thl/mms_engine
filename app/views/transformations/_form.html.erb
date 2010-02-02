@@ -1,0 +1,12 @@
+<p>
+  <b><%= Renderer.human_name.titleize.s %></b><br />
+  <%= f.text_field :renderer_id %>
+</p>
+<p>
+  <b><%= Transformation.human_attribute_name('title').s %></b><br />
+  <%= f.text_field :title %>
+</p>
+<p>
+  <b><%= Transformation.human_attribute_name('path').s %></b><br />
+  <%= f.text_field :path %>
+</p>

@@ -1,0 +1,154 @@
+<p>
+<% chosen_caption = chosen_caption(@medium)
+   if !chosen_caption.nil? %>
+     <h2><%=  h(chosen_caption.title).s %></h2>
+<% end
+   if defined?(large) && large %>
+<%=  render :partial => 'pictures/large' %>
+<% else
+     large = false
+     if @medium.class == Picture %>
+<%=    render :partial => 'pictures/show' %>
+<%   elsif @medium.class == Video %>
+<%=    render :partial => 'videos/show' %>
+<%   elsif @medium.class == Document %>
+<%=    render :partial => 'documents/show' %>
+<%   end %>
+<%=  display_if_not_blank ts(:id, :what => Medium.human_name.titleize), "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})" %>
+<%   administrative_units = @medium.administrative_units 
+     if !administrative_units.empty? %>
+<%=    display_if_not_blank MediaAdministrativeLocation.human_name(:count => administrative_units.size).titleize.s, administrative_units.collect {|u| link_to h(u.title).s, media_administrative_locations_path(:administrative_unit_id => u)}.join(', ') %>
+<%   end
+   end %>  
+<% captions = @medium.captions
+   if !captions.empty? && captions.size>1 %>
+     <p>
+<%   for caption in captions
+       if caption != chosen_caption %>
+<%=      h(caption.title).s %><br/>
+<%     end
+     end %>
+     </p>  
+<% end
+   photographer = @medium.photographer
+   if !photographer.nil? %>
+<%=  display_if_not_blank @medium.class.human_attribute_name('photographer').s, link_to(h(photographer.fullname).s, person_path(photographer)) %>
+<% end
+   quality_type = @medium.quality_type 
+   if !quality_type.nil? %>
+<%=  display_if_not_blank QualityType.human_name.titleize.s, h(quality_type.title).s %>
+<% end 
+   orientation = @medium.recording_orientation
+   if !orientation.nil? %>
+<%=  display_if_not_blank RecordingOrientation.human_name.titleize.s, h(orientation.title).s %>
+<% end %>
+<%= display_if_not_blank Medium.human_attribute_name('recording_note').s, h(@medium.recording_note) %>
+<% authorized_only hash_for_edit_medium_path do %>
+<%=  display_if_not_blank Medium.human_attribute_name('private_note').s, h(@medium.private_note) %>
+<% end %>
+<% collections = @medium.collections
+   if !collections.empty? %>
+<%=  display_if_not_blank ts(:collection, :count => collections.size).titleize, collections.collect {|c| link_to h(c.title).s, collection_path(c)}.join(', ') %>
+<% end
+   ethnicities = @medium.ethnicities
+   if !ethnicities.empty? %>
+<%=  display_if_not_blank ts(:ethnicity, :count => ethnicities.size).titleize, ethnicities.collect {|e| link_to h(e.title).s, ethnicity_path(e)}.join(', ') %>
+<% end
+   descriptions = @medium.descriptions
+   if !descriptions.empty? %>
+     <p><b><%= Description.human_name(:count => descriptions.size).titleize.s %>:</b></p>
+<%   for description in descriptions %>
+       <p><%= h(description.title).s %></p>
+<%   end
+   end
+   keywords = @medium.keywords
+   if !keywords.empty? %>
+<%=  display_if_not_blank Keyword.human_name(:count => :many).titleize.s, keywords.collect{|k| link_to_remote h(k.title).s, :url => media_path(:keyword_id => k), :method => 'get'}.join(", ") %>
+<% end
+   subjects = @medium.subjects
+   if !subjects.empty? %>
+<%=  display_if_not_blank ts(:subject, :count => subjects.size).titleize, subjects.collect {|s| link_to h(s.title).s, subject_path(s)}.join(', ') %>
+<% end %>
+<% affiliations = @medium.affiliations
+   copyrights = @medium.copyrights
+   if !affiliations.empty? || !copyrights.empty? %>
+   <p>
+<%   if !affiliations.empty?
+	   affiliations_list = affiliations.collect do |c|
+         title = c.organization.website.blank? ? h(c.organization.title): link_to(h(c.organization.title), c.organization.website, :target => '_blank')
+         project = c.project
+         sponsor = c.sponsor
+		 if !project.nil? || !sponsor.nil?
+           parenthesis = ' ('
+           if !project.nil?
+             parenthesis << project.title
+             parenthesis << ' ' if !sponsor.nil?
+           end
+           parenthesis << t(:sponsored_by, :what => sponsor.title) if !sponsor.nil?
+           parenthesis << ')'
+         else
+           parenthesis = ''
+         end
+         "#{title}#{parenthesis}"
+	   end %>
+<%=    ts 'copyright.message.provider', :what => Medium.human_name, :whom => affiliations_list.join(', ') %>
+<%   end
+     if !copyrights.empty? %>
+<%=    ts 'copyright.message.holder', :count => copyrights.size, :whom => copyrights.collect{|c| "#{c.copyright_holder.website.blank? ? h(c.copyright_holder.title): link_to(h(c.copyright_holder.title), c.copyright_holder.website)} (#{c.reproduction_type.website.blank? ? h(c.reproduction_type.title).downcase : link_to(h(c.reproduction_type.title).downcase, c.reproduction_type.website)})"}.join(', ') %>
+<%   end %>
+   </p>
+<% end %>
+<p>
+<% if @medium.taken_on.nil? 
+	 if !@medium.partial_taken_on.nil? %>
+       <b><%= Medium.human_attribute_name('taken_on', :what => @medium.class.human_name.titleize).s %>:</b>
+<%=    h(@medium.partial_taken_on) %>
+<%   end
+   else %>
+     <b><%= Medium.human_attribute_name('taken_on', :what => @medium.class.human_name.titleize).s %>:</b>
+<%= h(@medium.taken_on.strftime('%d/%b/%Y')) %>
+<% end
+   if logged_in? %>
+     <br/><b><%= Medium.human_attribute_name('created_on').s %>:</b>
+<%=  h(@medium.created_on.strftime('%d/%b/%Y')) %><br/>
+     <b><%= Medium.human_attribute_name('updated_on').s %>:</b>
+<%=  h(@medium.updated_on.strftime('%d/%b/%Y')) %><br/>
+<% end %>
+</p>
+<% if logged_in? %>
+<%   capture_device_model = @medium.capture_device_model
+     if !capture_device_model.nil? %>
+<%=    display_if_not_blank CaptureDeviceModel.human_name.titleize.s, "#{h(capture_device_model.capture_device_maker.title)} - #{h(capture_device_model.title)}" %>
+<%   end
+     media_source_associations = @medium.media_source_associations
+     if !media_source_associations.empty? %>
+<%=    display_if_not_blank Source.human_name(:count => media_source_associations.size).titleize.s, media_source_associations.collect {|s| "#{s.source.title} #{"(#{s.shot_number})" if !s.shot_number.nil?}"}.join(', ') %>
+<%   end %>
+<% end
+   authorized_only hash_for_workflow_path do
+     workflow = @medium.workflow
+     if !workflow.nil? %>
+<%=    render :partial => 'workflows/show', :locals => {:workflow => workflow} %>
+<%   end
+   end %>
+<p>
+<% has_previous = false
+   authorized_only hash_for_edit_medium_path do %>
+<%=  link_to ts('edit.record', :what => t(:catalog_record)), edit_medium_path(@medium) %>
+<%   has_previous = true
+   end
+   authorized_only hash_for_medium_path(:action => 'destroy') do 
+	 if has_previous %>
+	   |
+<%   else
+       has_previous = true
+	 end %>
+<%=  link_to ts('delete.this'), medium_path(@medium), :confirm => te('delete.confirmation'), :method => :delete %>
+<% end 
+   if large
+	 if has_previous %>
+	   |
+<%   end %>
+<%=  link_to ts('back.to', :what => Medium.human_name), medium_path(@medium) %>
+<% end %>
+</p>

@@ -1,0 +1,7 @@
+<%= display_if_not_blank Sponsor.human_attribute_name('title').s, h(@sponsor.title).s %>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_edit_sponsor_path do %>
+<%=  link_to ts('edit.this'), edit_sponsor_path(@sponsor) %> |
+<% end %>
+<%= render :partial => 'persistent_links' %>
+</p>

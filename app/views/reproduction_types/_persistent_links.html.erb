@@ -1,0 +1,5 @@
+<%  authorized_only hash_for_reproduction_type_path(:action => 'destroy') do %>
+<%=   link_to ts('delete.this'), reproduction_type_path(@reproduction_type), :confirm => te('delete.confirmation'), :method => :delete %> |
+<%  end %>
+<%= link_to ts('back.to', :what => t(:all, :what => ReproductionType.human_name(:count => :many))), reproduction_types_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %>

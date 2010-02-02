@@ -1,0 +1,198 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+dz:
+    activerecord:
+        # Model names will be kept in lower case. Invoke .capitalize or .titleize if you need them in uppercase.
+        models:
+            administrative_level: 'བདག་སྐྱོང་གནས་རིམ།'
+            # one
+            # other
+            administrative_unit: 'བདག་སྐྱོང་ལས་ཚན།'
+            # one
+            # other
+            affiliation: 'འབྲེལ་གཏོགས།'
+            # one
+            # other
+            application_setting: 'application setting'
+            # one
+            # other
+            caption: 'འགོ་བརྗོད།'
+            capture_device_maker:
+                one: 'camera manufacturer'
+                other: 'camera manufacturers'
+            capture_device_model:
+                one: 'camera model'
+                other: 'camera models'
+            copyright: 'འདྲ་བཤུས་དབང་ཆ།'
+            # one
+            # other
+            copyright_holder: 'འདྲ་བཤུས་དབང་ཆ་འཆང་མི།'
+            # one
+            # other
+            country: 'རྒྱལ་ཁབ།'
+            # one
+            # other
+            description: 'འགྲེལ་བཤད།'
+            # one
+            # other
+            description_type: '{{what}} དབྱེ་བ།'
+            dialect: 'dialect'
+            document: 'ཡིག་ཆ།'
+            # one
+            # other
+            glossary: 'glossary'
+            # one
+            # other
+            keyword: 'གཙོ་ཚིག།'
+            # one
+            # other
+            loan_type: 'loan type'
+            media_administrative_location: 'གནས་ཁོངས།'
+            # one
+            # other
+            media_keyword_association:
+                one: 'media keyword association'
+                other: 'media keyword associations'
+            media_source_association:
+                one: 'media source association'
+                other: 'media source associations'
+            medium: 'བརྡ་སྟོན་ལམ།'
+            # one
+            # other
+            movie: 'གློག་བརྙན།'
+            organization: 'ཚོགས་སྡེ།'
+            # one
+            # other
+            picture: 'པར།'
+            project: 'ལས་འགུལ།'
+            # one
+            # other
+            quality_type: 'སྤུས་ཚད་ཀྱི་དབྱེ་བ།'
+            # one
+            # other
+            recording_orientation: 
+                one: 'recording orientation'
+                other: 'recording orientations'
+            renderer: 'ལྷག་སྟོན་པ།'
+            reproduction_type: 'ཆོག་ཐམ་གྱི་དབྱེ་བ།' #'སྐྱེ་འཕེལ་དབྱེ་བ།'
+            # one
+            # other
+            source:
+                one: 'source'
+                other: 'sources'
+            sponsor: 'ཟད་འགྲོ་གནང་མི།'
+            # one
+            # other
+            transformation: 'བསྒྱུར་བ།'
+            video: 'བརྙན་སྟོན།'
+            # one
+            # other
+            workflow: 'workflow'
+        # Attribute names will be titleized.
+        attributes:
+            administrative_level:
+                level: 'Level Number'
+                title: 'བདག་སྐྱོང་པའི་གནས་རིམ་མིང་།'
+            administrative_unit:
+                created_on: 'གསར་བསྐྲུན་འབད་བའི་དུས་ཚེས།'
+                creator: 'གསར་བསྐྲུན་པ།'
+                description: 'འགྲེལ་བཤད།'
+                is_problematic: 'Is Problematic?'
+                parent: 'Parent'
+                title: 'བདག་སྐྱོང་ལས་ཚན།'
+            application_setting:
+                description: 'འགྲེལ་བཤད།'
+                title: 'Application Setting Name'
+                value: 'Value (int)'
+                string_value: 'Value (str)'
+            caption:
+                creator: 'གསར་བསྐྲུན་པ།'                
+            capture_device_maker:
+                title: 'Name of Camera Manufacturer'
+                exif_tag: 'EXIF Tag for Manufacturer'
+            capture_device_model:
+                title: 'Name of Camera Model'
+                exif_tag: 'EXIF Tag for Model'                
+            copyright:
+                notes: 'Notes'
+            copyright_holder:
+                title: 'Name of Copyright Holder'
+                website: 'Website'
+            country:
+                title: 'Country Name'
+            description:
+                creator: 'གསར་བསྐྲུན་པ།'
+                title: 'འགྲེལ་བཤད།'
+            description_type:
+                title: 'Name of Description Type'
+            document:
+                caption: 'མགོ་མིང་།'
+                # one
+                # other
+                photographer: 'Author'
+            glossary:
+                abbreviation: 'Abbreviation'
+                description: 'འགྲེལ་བཤད།'
+                is_public: 'For Public Consumption?'
+                title: 'Glossary Name'
+            image:
+                uploaded_data: 'གཟུགས་བརྙན།'
+            keyword:
+                title: 'Keyword Name'
+            media_administrative_location:
+                notes: 'Notes'
+                spot_feature: 'Spot Feature'
+            media_source_association:
+                shot_number: 'Shot number'
+            medium:
+                caption: 'འགོ་བརྗོད།'
+                # one
+                # other
+                created_on: 'གསར་བསྐྲུན་འབད་བའི་དུས་ཚེས།'
+                photographer: 'Maker'
+                private_note: 'Private Note'
+                updated_on: 'Updated on'
+                recording_note: 'སྒྲ་པར་བཟུང་ནིའི་དྲན་འཛིན།'
+                taken_on: 'Time {{what}} Was Taken'
+            organization:
+                title: 'Organization Name'
+                website: 'Website'
+            picture:
+                caption: 'འགོ་བརྗོད།'
+                # one
+                # other
+                photographer: 'པར་བཏབ་མི།'
+            project:
+                title: 'Project Name'
+            quality_type:
+                title: 'Quality Type Name'
+            recording_orientation:
+                title: 'Recording Orientation Name'                
+            renderer:
+                title: 'Renderer Name'
+                path: 'Path'
+            reproduction_type:
+                order: 'Order'
+                title: 'License Type Name'
+                website: 'Website'
+            source:
+                title: 'Source Name'
+            sponsor:
+                title: 'Sponsor Name'
+            transformation:
+                path: 'Path'
+                title: 'Transformation Name'
+            typescript:
+                thumbnail: 'སྔོན་ལྟ།'
+                uploaded_data: 'ཡིག་ཆ།'
+            video:
+                caption: 'མགོ་མིང་།'
+                # one
+                # other
+                photographer: 'Videographer'
+            workflow:
+                notes: 'Notes'
+                other_id: 'Other ID'
+                original_filename: 'Original Filename'
+                original_medium_id: 'Original Medium ID'
+                sequence_order: 'Sequence order'

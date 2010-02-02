@@ -1,0 +1,9 @@
+<h1><%= ts 'new.record', :what => CaptureDeviceMaker.human_name.titleize %></h1>
+<%= error_messages_for :capture_device_maker %>
+<%  form_for(@capture_device_maker) do |f| %>
+<%=   render :partial => 'form', :locals => {:f => f} %>
+      <p><%= globalized_submit_tag 'create.this' %></p>
+<%  end %>
+<p>&nbsp;<br/>
+<%= link_to ts('cancel.record', :what => t('new.this')), capture_device_makers_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %></p>

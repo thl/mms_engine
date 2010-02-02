@@ -1,0 +1,19 @@
+<div class="header-links">
+  <table border="0" width="100%" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="2%">&nbsp;</td>
+      <td width="14%"><%= link_to ts('home.this'), root_path %></td>
+      <td width="14%"><%= link_to ts('dictionaries.tab'), new_dictionary_search_path %></td>
+      <td width="14%"><%= link_to Medium.human_name(:count => :many).titleize.s, media_path %></td>
+      <td width="14%"><div id="div_admin-links"><%= render :partial => 'main/admin_links' %></div></td>
+      <td width="14%" align="center">
+<%=     render :partial => 'main/language_options' %>       
+      </td>
+      <td width="28%">
+	   	 <small><div id="div_login">
+<%=        render :partial => 'sessions/show' %>
+         </div></small>
+      </td>
+    </tr>
+  </table>
+</div>

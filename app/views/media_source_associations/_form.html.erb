@@ -1,0 +1,13 @@
+<p>
+    <b><%= Medium.human_name.titleize.s %></b><br />    
+<%= f.hidden_field :medium_id %>
+<%= link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %></td>
+</p>
+<p>
+    <b><%= Source.human_name.titleize.s %></b><br />
+<%= f.collection_select(:source_id, @sources, :id, :title, { :include_blank => true }, language_options) %> (<%= link_to ts('new.record', :what => Source.human_name), new_source_path, { :target => '_blank' } %>)
+</p>
+<p>
+    <b><%= MediaSourceAssociation.human_attribute_name('shot_number').s %></b><br />
+<%= f.text_field :shot_number %>
+</p>

@@ -1,0 +1,32 @@
+<% for definition in @definitions
+     glossary = definition.glossary
+     next if !(glossary.is_public || logged_in?)
+     if @use_definiendum_instead
+       definition_itself = definition.definiendum
+     else
+       definition_itself = definition.definition
+     end
+     language = definition_itself.language
+     lang_code = language.code
+     dialect = definition.dialect
+     loan_type = definition.loan_type
+     grammatical_class = definition.grammatical_class %>
+   <p align="left">
+<%   if !dialect.nil? %>
+       <i><%= Dialect.human_name.titleize.s %></i>: <%=h dialect.title %>,
+<%   end
+     if !loan_type.nil? %>
+       <i><%= LoanType.human_name.titleize.s %></i>: <%=h loan_type.title %>,
+<%   end
+     if !grammatical_class.nil? %>
+<%=h   definition.grammatical_class.title.s %>,
+<%   end %>		 
+<%=  definition_itself.title.s %>
+<%	 keywords = definition.keywords
+	 if !keywords.empty? %>
+	   <br/>
+       <i><%= Keyword.human_name(:count => :many).titleize.s %></i>: <%= keywords.collect{|k| k.title}.join(', ') %>
+<%	 end %>
+<%=  "(#{language.title}, #{link_to glossary.abbreviation, glossary_path(glossary)})" %>
+     </p>
+<% end %>

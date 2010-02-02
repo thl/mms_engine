@@ -1,0 +1,8 @@
+<h1><%= ts :for, :what => Description.human_name.titleize, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<%= error_messages_for :description %>
+<%  form_for(:description, :url => medium_descriptions_path(@medium)) do |f| %>
+<%=   render :partial => 'form', :locals => {:f => f} %>
+      <p><%= globalized_submit_tag 'create.this' %></p>
+<%  end %>
+<p>&nbsp;<br/>
+<%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'descriptions'} %></p>

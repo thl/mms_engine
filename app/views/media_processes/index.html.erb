@@ -1,0 +1,22 @@
+<h1>Media Processes</h1>
+<% if !@active_users.empty? %>
+     <h2>Users Currently Processing</h2>
+     <ul class="normal">
+<%   for user in @active_users %>
+     <li><%= link_to user.screen_name, media_process_path(user) %></li>
+<%   end %>
+     </ul>
+<% end %>
+<% if !@users_with_processes.empty? %>
+     <h2>Users' Last Process</h2>
+     <ul class="normal">
+<%   for user in @users_with_processes %>
+     <li><%= link_to user.screen_name, media_process_path(user) %></li>
+<%   end %>
+     </ul>
+<% end %>
+<p>&nbsp;<br/>
+<%= link_to 'Status of last process', status_media_processes_path %> |
+<%= link_to 'Execute process', new_media_process_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

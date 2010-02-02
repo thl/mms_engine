@@ -1,0 +1,22 @@
+<h1><%= ts 'list.ing.records', :what => Project.human_name(:count => :many) %></h1>
+<table border="1" class="normal">
+  <tr>
+    <th><%= Project.human_name.titleize.s %></th>
+  </tr>
+<% can_edit = authorized? hash_for_edit_project_path
+   for project in @projects %>
+  <tr>
+    <td>
+<%  if can_edit %>
+<%=   link_to h(project.title).s, edit_project_path(project) %>
+<%  else %>
+<%=   link_to h(project.title).s, project_path(project) %>
+<%  end %>
+    </td>
+  </tr>
+<% end %>
+</table>
+<p>&nbsp;<br/>
+<%= link_to ts('new.record', :what => Project.human_name), new_project_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

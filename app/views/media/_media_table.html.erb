@@ -1,0 +1,19 @@
+<table border="0" cellpadding="0px" cellspacing="5px">
+   <tr align="center" valign="middle">
+<% i=0
+   for medium in media
+	 next if medium.nil? %>
+<%=  render :partial => 'media/thumb_column', :locals => {:medium => medium} %>	 
+<%   i+=1
+     if i==Medium::COLS %>
+       </tr><tr align="center" valign="middle">
+<%     i=0
+     end
+   end %>
+   </tr>
+<% if !more.nil? %>
+     <tr>
+   	   <td colspan="<%= Medium::COLS %>" align="right" class="media_keywords"><%= link_to_remote 'More', :url => media_path(more), :method => :get %></td>
+     </tr>
+<% end %>
+</table>

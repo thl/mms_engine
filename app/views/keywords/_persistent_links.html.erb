@@ -1,0 +1,5 @@
+<%  authorized_only hash_for_keyword_path(:action => 'destroy') do %>
+<%=   link_to ts('delete.this'), keyword_path(@keyword), :confirm => te('delete.confirmation'), :method => :delete %> |
+<%  end %>
+<%= link_to ts('back.to', :what => t(:all, :what => Keyword.human_name(:count => :many))), keywords_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %>

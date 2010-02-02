@@ -1,0 +1,27 @@
+<% if !@element.parent.nil? %>
+     <h1><%= ts 'new.under', :what => h(@parent.next_level_name), :where => h(@parent.title) %></h1>
+<% else %>
+    <h1><%= ts 'new.major', :what => AdministrativeUnit.human_name.titleize %></h1>
+<% end %>
+<%= error_messages_for :element %>
+<% remote_form_for(:element, :url => elements_path) do |f| %>
+  <p>
+    <b><%= ts 'name.for', :what => h(AdministrativeUnit.human_name.titleize) %></b><br />
+<%= f.text_field :title, language_options %>
+  </p>
+  <p>
+    <b><%= AdministrativeUnit.human_attribute_name('description').s %></b><br />
+    <%= f.text_area :description, :rows => 5 %>
+  </p>
+<%= f.hidden_field :parent_id %>
+<%= f.hidden_field :order %>
+<%= f.hidden_field :creator_id %>
+  <p><%= globalized_submit_tag 'create.this' %></p>
+<% end %>
+<p>&nbsp;<br/>
+<% if @element.parent.nil? %>
+<%=  link_to ts('cancel.record', :what => t('new.this')), '#', :onclick => "$(\'secondary\').innerHTML = \'\';" %>
+<% else %>
+<%=  link_to_remote ts('cancel.record', :what => t('new.this')), :url => element_path(@element.parent), :method => 'get' %>
+<% end %>
+</p>

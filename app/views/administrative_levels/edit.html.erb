@@ -1,0 +1,13 @@
+<h1><%= ts('edit.ing.record', :what => AdministrativeLevel.human_name.titleize) %></h1>
+<%= error_messages_for :administrative_level %>
+<%  form_for(:administrative_level, :url => country_administrative_level_path(@country, @administrative_level), :html => { :method => :put }) do |f| %>
+<%=   render :partial => 'form', :locals => {:f => f} %>
+      <p><%= globalized_submit_tag 'update.this' %></p>
+<% end %>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_country_administrative_level_path(:action => 'destroy') do %>
+<%= link_to ts('delete.this'), country_administrative_level_path(@country, @administrative_level), :confirm => te('delete.confirmation'), :method => :delete %> |
+<% end %>
+<%= link_to ts('cancel.record', :what => t('edit.ing.this')), country_administrative_levels_path(@country) %> |
+<%= link_to ts('back.to', :what => h(@country.title)), country_path(@country) %> |
+<%= render :partial => 'main/back_to_admin_or_media' %></p>

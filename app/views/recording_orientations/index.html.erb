@@ -1,0 +1,18 @@
+<h1><%= ts 'list.ing.records', :what => RecordingOrientation.human_name(:count => :many).titleize %></h1>
+<table border="1" class="normal">
+  <tr>
+    <th><%= RecordingOrientation.human_name.titleize %></th>
+  </tr>
+<% can_edit = authorized? hash_for_edit_recording_orientation_path
+   for recording_orientation in @recording_orientations %>
+  <tr>
+    <td><%= can_edit ? link_to(h(recording_orientation.title), edit_recording_orientation_path(recording_orientation)) : link_to(h(recording_orientation.title), recording_orientation_path(recording_orientation)) %></td>
+  </tr>
+<% end %>
+</table>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_new_recording_orientation_path do %>
+<%= link_to ts('new.record', :what => RecordingOrientation.human_name), new_recording_orientation_path %> |
+<% end %>
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

@@ -1,0 +1,26 @@
+<h1><%= ts 'list.ing.records', :what => Renderer.human_name(:count => :many).titleize %></h1>
+<table border="1" class="normal">
+  <tr>
+    <th><%= Renderer.human_name.titleize.s %></th>
+    <th><%= Renderer.human_attribute_name('path').s %></th>
+  </tr>
+<% can_edit = authorized? hash_for_edit_renderer_path
+   for renderer in @renderers %>
+  <tr>
+    <td>
+<%  if can_edit %>
+<%=   link_to h(renderer.title).s, edit_renderer_path(renderer) %>
+<%  else %>
+<%=   link_to h(renderer.title).s, renderer_path(renderer) %>
+<%  end %>
+	</td>
+    <td><%=h renderer.path %></td>
+  </tr>
+<% end %>
+</table>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_new_renderer_path do %>
+<%=  link_to ts('new.record', :what => Renderer.human_name), new_renderer_path %> |
+<% end %>
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

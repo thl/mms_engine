@@ -1,0 +1,2 @@
+module CaptureDeviceMakersHelper
+end

@@ -1,0 +1,16 @@
+<% typescript = @medium.typescript
+   transformation = typescript.transformation
+   if transformation.nil?
+     relative_url = ActionController::Base.relative_url_root
+     url = "#{relative_url}#{typescript.public_filename}"
+   else
+     url = transformation.full_path.sub(/:document/, typescript.public_filename)
+   end
+   image = @medium.screen_size_image
+   if !image.nil? %>
+<%=  link_to image_tag(image.public_filename), url %>
+<% end %>
+<br/>
+<p>
+<%= link_to ts :get, :what => Document.human_name, url %>
+</p>

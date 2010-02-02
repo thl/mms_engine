@@ -1,0 +1,39 @@
+/*
+   Main StyleSheet for the 'thdl' theme
+*/
+
+h4, h5, h6 {
+font-weight:normal;
+}
+
+.shell-1 ul
+{
+	list-style-type:disc;
+}
+
+#primary{
+	float: right;
+	width: 40%;
+}
+
+#secondary{
+	width: 60%;
+}
+
+#content-main{
+    width: 60%;
+    float: right;
+}
+
+.media_keywords {
+  font-size: 9px;
+  color :white;
+}
+
+.media_keywords a:hover { color: #C8BBBE; }
+
+.selected_branch {
+  background-color: #FFDDB5;
+}
+
+.clear{ clear:both }

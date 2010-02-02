@@ -1,0 +1,29 @@
+# == Schema Information
+# Schema version: 20081023204633
+#
+# Table name: media_ethnicity_associations
+#
+#  id           :integer(4)      not null, primary key
+#  medium_id    :integer(4)      not null
+#  ethnicity_id :integer(4)      not null
+#
+
+# == Schema Information
+# Schema version: 93
+#
+# Table name: media_ethnicity_associations
+#
+#  id           :integer(11)     not null, primary key
+#  medium_id    :integer(11)     not null
+#  ethnicity_id :integer(11)     not null
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  medium_id: 1
+  ethnicity_id: 1
+two:
+  id: 2
+  medium_id: 1
+  ethnicity_id: 1

@@ -1,0 +1,198 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+en:
+    activerecord:
+        # Model names will be kept in lower case. Invoke .capitalize or .titleize if you need them in uppercase.
+        models:
+            administrative_level:
+                one: 'administrative level'
+                other: 'administrative levels'
+            administrative_unit:
+                one: 'administrative unit'
+                other: 'administrative units'
+            affiliation:
+                one: 'affiliation'
+                other: 'affiliations'
+            application_setting:
+                one: 'application setting'
+                other: 'application settings'
+            caption: 'caption'
+            capture_device_maker:
+                one: 'camera manufacturer'
+                other: 'camera manufacturers'
+            capture_device_model:
+                one: 'camera model'
+                other: 'camera models'
+            copyright:
+                one: 'copyright'
+                other: 'copyrights'
+            copyright_holder:
+                one: 'copyright holder'
+                other: 'copyright holders'
+            country: 
+                one: 'country'
+                other: 'countries'
+            description:
+                one: 'description'
+                other: 'descriptions'
+            description_type: '{{what}} type'
+            dialect: 'dialect'
+            document: 
+                one: 'document'
+                other: 'documents'
+            glossary: 
+                one: 'glossary'
+                other: 'glossaries'
+            keyword:
+                one: 'keyword'
+                other: 'keywords'
+            loan_type: 'loan type'
+            media_administrative_location:
+                one: 'location'
+                other: 'locations'
+            media_keyword_association:
+                one: 'media keyword association'
+                other: 'media keyword associations'
+            media_source_association:
+                one: 'media source association'
+                other: 'media source associations'
+            medium:
+                one: 'media object'
+                other: 'media objects'
+            movie: 'movie'
+            organization:
+                one: 'organization'
+                other: 'organizations'
+            picture: 'photograph'
+            project:
+                one: 'project'
+                other: 'projects'
+            quality_type:
+                one: 'quality type'
+                other: 'quality types'
+            recording_orientation: 
+                one: 'recording orientation'
+                other: 'recording orientations'
+            renderer: 'renderer'
+            reproduction_type:
+                one: 'license type'
+                other: 'license types'
+            source: 
+                one: 'source'
+                other: 'sources'
+            sponsor:
+                one: 'sponsor'
+                other: 'sponsors'
+            transformation: 'transformation'
+            video: 
+                one: 'video'
+                other: 'videos'
+            workflow: 'workflow information'
+        # Attribute names will be titleized.
+        attributes:
+            administrative_level:
+                level: 'Level Number'
+                title: 'Administrative Level Name'
+            administrative_unit:
+                created_on: 'Created on'
+                creator: 'Creator'
+                description: 'Description'
+                is_problematic: 'Is Problematic?'
+                parent: 'Parent'
+                title: 'Administrative Unit Name'
+            application_setting:
+                description: 'Description'
+                title: 'Application Setting Name'
+                value: 'Value (int)'
+                string_value: 'Value (str)'
+            caption:
+                creator: 'Creator'
+            capture_device_maker:
+                title: 'Name of Camera Manufacturer'
+                exif_tag: 'EXIF Tag for Manufacturer'
+            capture_device_model:
+                title: 'Name of Camera Model'
+                exif_tag: 'EXIF Tag for Model'
+            copyright:
+                notes: 'Notes'
+            copyright_holder:
+                title: 'Name of Copyright Holder'
+                website: 'Website'
+            country:
+                title: 'Country Name'
+            description:
+                creator: 'Creator'
+                title: 'Description'
+            description_type:
+                title: 'Name of Description Type'
+            document:
+                caption:
+                    one: 'Title'
+                    other: 'Titles'
+                photographer: 'Author'
+            glossary:
+                abbreviation: 'Abbreviation'
+                description: 'Description'
+                is_public: 'For Public Consumption?'
+                title: 'Glossary Name'
+            image:
+                uploaded_data: 'Image'
+            keyword:
+                title: 'Keyword Name'
+            media_administrative_location:
+                notes: 'Notes'
+                spot_feature: 'Spot Feature'
+            media_source_association:
+                shot_number: 'Shot Number'
+            medium:
+                caption:
+                    one: 'Caption'
+                    other: 'Captions'
+                created_on: 'Created on'
+                photographer: 'Photographer'
+                private_note: 'Private Note'
+                updated_on: 'Updated on'
+                recording_note: 'Recording Note'
+                taken_on: '{{what}} Date'
+            organization:
+                title: 'Organization Name'
+                website: 'Website'
+            picture:
+                caption:
+                    one: 'Caption'
+                    other: 'Captions'
+                photographer: 'Photographer'
+            project:
+                title: 'Project Name'
+            quality_type:
+                title: 'Quality Type Name'
+            recording_orientation:
+                title: 'Recording Orientation Name'
+            renderer:
+                title: 'Renderer Name'
+                path: 'Path'
+            reproduction_type:
+                order: 'Order'
+                title: 'License Type Name'
+                website: 'Website'
+            source:
+                title: 'Source Name'
+            sponsor:
+                title: 'Sponsor Name'
+            transformation:
+                path: 'Path'
+                title: 'Transformation Name'
+            typescript:
+                thumbnail: 'Preview'
+                uploaded_data: 'Document'
+            video:
+                caption:
+                    one: 'Title'
+                    other: 'Titles'
+                photographer: 'Videographer'
+            workflow:
+                notes: 'Notes'
+                other_id: 'Other ID'
+                original_filename: 'Original Filename'
+                original_medium_id: 'Original Media Object ID'
+                sequence_order: 'Sequence order'

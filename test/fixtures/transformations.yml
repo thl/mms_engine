@@ -1,0 +1,21 @@
+# == Schema Information
+# Schema version: 20090626173648
+#
+# Table name: transformations
+#
+#  id          :integer(4)      not null, primary key
+#  renderer_id :integer(4)      not null
+#  title       :string(20)      not null
+#  path        :string(100)     not null
+#
+
+one:
+  id: 1
+  renderer_id: 1
+  title: MyString
+  path: MyString
+two:
+  id: 2
+  renderer_id: 1
+  title: MyString
+  path: MyString

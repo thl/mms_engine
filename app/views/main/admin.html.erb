@@ -1,0 +1,67 @@
+<h1><%= ts 'manage.ment', :what => t(:application) %></h1>
+<table width="85%">
+<tr>
+  <td colspan="4" valign="top">
+    <h2><%= ts 'admin.content' %></h2>
+  </td>
+</tr>
+<tr>
+  <td width="15%" valign="top">
+    <ul>
+      <li><h3><%= link_to Country.human_name(:count => :many).titleize.s, countries_path %></h3></li>  
+      <li><h3><%= link_to Keyword.human_name(:count => :many).titleize.s, keywords_path %></h3></li>
+	  <li><h3><%= link_to Glossary.human_name(:count => :many).titleize.s, glossaries_path %></h3></li>
+      <li><h3><%= link_to ComplexScripts::Language.human_name(:count => :many).titleize.s, languages_path %></h3></li>
+    </ul>
+  </td>
+  <td width="20%" valign="top">
+    <ul>  
+      <li><h3><%= link_to Organization.human_name(:count => :many).titleize.s, organizations_path %></h3></li>
+      <li><h3><%= link_to Project.human_name(:count => :many).titleize.s, projects_path %></h3></li>
+      <li><h3><%= link_to Sponsor.human_name(:count => :many).titleize.s, sponsors_path %></h3></li>
+    </ul>
+  </td>
+  <td width="30%" valign="top">
+    <ul>  
+      <li><h3><%= link_to CopyrightHolder.human_name(:count => :many).titleize.s, copyright_holders_path %></h3></li>      
+	  <li><h3><%= link_to ReproductionType.human_name(:count => :many).titleize.s, reproduction_types_path %></h3></li>
+	  <li><h3><%= link_to ts('admin.static_pages'), :controller => 'comatose_admin' %></h3></li>
+	  <li><h3><%= link_to Workflow.human_name.titleize.s, workflows_path %></h3></li>	
+    </ul>
+  </td>
+  <td width="35%" valign="top">
+    <ul>  
+	  <li><h3 align="left"><%= link_to CaptureDeviceMaker.human_name(:count => :many).titleize.s, capture_device_makers_path %></h3></li>
+	  <li><h3><%= link_to RecordingOrientation.human_name(:count => :many).titleize.s, recording_orientations_path %></h3></li>
+	  <li><h3><%= link_to Source.human_name(:count => :many).titleize.s, sources_path %></h3></li>
+    </ul>
+  </td>
+</tr>
+<tr>
+  <td valign="top">
+    <h2><%= ts 'admin.accounts' %></h2>
+    <ul>
+      <li><h3><%= link_to Person.human_name(:count => :many).titleize.s, people_path %></h3></li>
+      <li><h3><%= link_to Role.human_name(:count => :many).titleize.s, roles_path %></h3></li>
+    </ul>	
+  </td>
+  <td valign="top">
+	<h2><%= ts :application %></h2>
+	<ul>
+      <li><h3><%= link_to Renderer.human_name(:count => :many).titleize.s, renderers_path %></h3></li>
+      <li><h3><%= link_to Transformation.human_name(:count => :many).titleize.s, transformations_path %></h3></li>
+      <li><h3><%= link_to ts(:settings), application_settings_path %></h3></li>
+	</ul>
+  </td>
+  <td valign="top">
+    <h2><%= ts 'admin.files' %></h2>
+	<ul>
+	  <li><h3><%= link_to ts('admin.media_importation'), media_imports_path %></h3></li>
+	  <li><h3><%= link_to ts('admin.media_processes'), media_processes_path %></h3></li>
+    </ul>
+  </td>
+</tr>
+</table>
+<p>
+<%= link_to ts('back.this'), root_path %>
+</p>

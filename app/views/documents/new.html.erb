@@ -1,0 +1,20 @@
+<h1><%= ts('new.record', :what => Document.human_name.titleize) %></h1>
+<%= error_messages_for :document %>
+<% form_for(:medium, :url => documents_path, :html => {:multipart => true}) do |f| %>
+     <p>
+       <b><%= Typescript.human_attribute_name('uploaded_data').s %></b><br />
+<%=    file_field :typescript, :uploaded_data %>
+     </p>
+     <p>
+       <b><%= Typescript.human_attribute_name('thumbnail').s %></b><br />
+<%=    file_field :typescript, :thumbnail %>
+     </p>
+     <p>
+       <b><%= Renderer.human_name.titleize.s %></b><br />
+<%=    select(:typescript, :transformation_id, @transformations.collect {|t| [ "#{h(t.renderer.title)} > #{h(t.title)}", t.id ] }, { :include_blank => true }, language_options) %> (<%= link_to ts('new.record', :what => Renderer.human_name), new_renderer_path, { :target => '_blank' } %>)
+     </p>
+<%=  render :partial => 'media/form', :locals => {:f => f} %>
+     <p><%= globalized_submit_tag 'create.this' %></p>
+<% end %>
+<p>&nbsp;<br/>
+<%= link_to ts('back.this'), media_path %></p>

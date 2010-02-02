@@ -1,0 +1,23 @@
+<h1><%= ts('edit.ing.record', :what => Keyword.human_name.titleize) %></h1>
+<%= error_messages_for :keyword %>
+<% if base_language? %>
+<%   form_for(:keyword, :url => keyword_path(@keyword), :html => { :method => :put }) do |f| %>
+<%=    render :partial => 'form', :locals => {:f => f} %>
+       <p><%= globalized_submit_tag 'update.this' %></p>
+<%   end 
+   else %>
+    <h2><%= ts(LANGUAGES[I18n.default_locale][:title]) %></h2>
+<%   locale = I18n.locale
+	 I18n.locale = I18n.default_locale %>
+<%=  render :partial => 'show' %>
+<%   I18n.locale = locale
+     @keyword[:title] = @keyword.title %>
+     <h2><%= ts(LANGUAGES[I18n.locale][:title]) %></h2>
+<%   form_for(:keyword, :url => keyword_path(@keyword), :html => { :method => :put }) do |f| %>
+<%=    render :partial => 'form', locals => {:f => f} %>
+	   <p><%= submit_tag te(:save, :what => t('translat.ion')), language_options(:disabled_with => 'Posting...') %></p>
+<%   end %>
+<% end %>
+<p>&nbsp;<br/>
+<%= render :partial => 'persistent_links' %>
+</p>

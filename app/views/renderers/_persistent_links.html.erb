@@ -1,0 +1,5 @@
+<%  authorized_only hash_for_renderer_path(:action => 'destroy') do %>
+<%=   link_to ts('delete.this'), renderer_path(@renderer), :confirm => te('delete.confirmation'), :method => :delete %> |
+<%  end %>
+<%= link_to ts('back.to', :what => t(:all, :what => Renderer.human_name(:count => :many))), renderers_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %>

@@ -1,0 +1,36 @@
+<table border="0" cellpadding="0px" cellspacing="5px">
+   <tr align="center" valign="middle">
+<% administrative_units = nil
+   for medium in @media
+	 next if medium.nil?
+     thumbnail = medium.thumbnail_image
+     image = medium.large_image %>
+     <tr align="center" valign="middle">
+<%   if thumbnail.nil? %>
+       <td>&nbsp;</td>
+<%   else %>
+       <td width="<%= thumbnail.width %>" height="<%= thumbnail.height %>"><%= link_to image_tag(thumbnail.public_filename, :width => thumbnail.width, :height => thumbnail.height), image_path(image.public_filename), {:class => 'thickbox'} %></td>
+<%   end %>
+     <td>
+<%   administrative_locations = medium.media_administrative_locations
+     if !administrative_locations.nil? && !administrative_locations.empty?
+       administrative_locations.each do |location| %>
+<%       remote_form_for(:association, location, :url => media_administrative_location_path(location), :update => dom_id(location), :html => { :method => :put }) do |f|
+	       div_for(location) do 
+             unit = location.administrative_unit
+             administrative_units = unit.administrative_level.country.valid_administrative_units_with_ancestors if administrative_units.nil? %>
+             <p>
+<%=            unit.full_lineage %>.<br/> Change to
+<%=            f.select(:administrative_unit_id, administrative_units, :include_blank => true) %>
+<%=            globalized_submit_tag 'update.this' %>
+             </p>
+<%         end  
+         end %>
+<%     end
+     else %>
+       &nbsp;
+<%   end %>
+     </td>
+     </tr>
+<% end %>
+</table>

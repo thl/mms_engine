@@ -1,0 +1,23 @@
+<%= display_if_not_blank ts('name.for', :what => @element.level_name), h(@element.title).s %>
+<%= display_if_not_blank('ID', @element.id) %>
+<%= display_if_not_blank AdministrativeUnit.human_attribute_name('description').s, h(@element.description) %>
+<%  if !@element.creator.nil? %>
+<%=   display_if_not_blank AdministrativeUnit.human_attribute_name('creator').s, h(@element.creator.fullname) %>
+<%  end %>
+<%= display_if_not_blank AdministrativeUnit.human_attribute_name('created_on').s, h(@element.created_on) %>
+<%= render :partial => 'show' %>
+<% media = @element.media
+   no_media = media.empty?
+   if !no_media %>
+<%=  display_if_not_blank ts('associate.d', :what => Medium.human_name(:count => :many)), media.count %>
+<% end %>
+<p>&nbsp;<br/>
+<% previous = false
+   authorized_only hash_for_edit_element_path do %>
+<%=  link_to_remote ts('edit.this'), :url => edit_element_path(@element), :update => 'secondary', :method => 'get' %>
+<%   previous = true
+   end
+   if authorized?(hash_for_element_path(:action => 'destroy')) && @element.children.empty? %>
+<%=  '|' if previous %>
+<%=  link_to_remote ts('delete.this'), :url => element_path(@element), :confirm => te('delete.confirmation'), :method => :delete %>
+<% end %>

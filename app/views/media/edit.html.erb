@@ -1,0 +1,155 @@
+<h1><%= ts :for, :what => t('edit.ing.record', :what => t(:catalog_record)), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<%= error_messages_for :medium %>
+<% form_for(:medium, :url => medium_path(@medium), :html => { :method => :put }) do |f| %>
+<%= f.hidden_field :attachment_id %>
+  <p><b><%= Medium.human_name.titleize.s %></b><br />
+<%= link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %></p>
+<%= render :partial => 'form', :locals => {:f => f} %>
+<%= render(:partial => 'videos/form') if @medium.class == Video %>
+  <p><%= globalized_submit_tag 'update.this' %></p>
+<% end %>
+<hr/>
+<% captions = @medium.captions
+   if !captions.empty? %>
+     <p><%= bookmark 'captions' %>
+	 <b><%= @medium.class.human_attribute_name('caption', :count => captions.size).s %></b>
+     (<%= link_to ts('new.record', :what => Caption.human_name), new_medium_caption_path(@medium) %>)</p>
+<%=  captions.collect{|caption| "<p>#{caption.title.s} (#{link_to caption.description_type.nil? ? ts('edit.this') : caption.description_type.title, edit_medium_caption_path(@medium, caption)})</p>"}.join("\n") %>
+     <hr/>
+<% end
+   descriptions = @medium.descriptions
+   if !descriptions.empty? %>
+     <p><%= bookmark 'descriptions' %>
+	 <b><%= Description.human_name(:count => descriptions.size).titleize.s %></b>
+	 (<%=  link_to ts('new.record', :what => Description.human_name), new_medium_description_path(@medium) %>)</p>
+<%=  descriptions.collect{|description| "#{h(description.title).s}<p>#{link_to description.description_type.nil? ? ts('edit.this') : description.description_type.title, edit_medium_description_path(@medium, description)}</p><hr/>" }.join("\n") %>
+<% end %>
+<% media_administrative_locations = @medium.media_administrative_locations 
+   if !media_administrative_locations.empty? %>
+     <p><%= bookmark 'administrative_locations' %>
+	 <b><%= MediaAdministrativeLocation.human_name(:count => media_administrative_locations.size).titleize.s %></b>
+<%=  media_administrative_locations.collect {|l| link_to h(l.administrative_unit.title).s, edit_media_administrative_location_path(l)}.join(', ') %>
+(<%= link_to ts('add.record', :what => MediaAdministrativeLocation.human_name), new_media_administrative_location_path(:medium_id => @medium) %>)</p>
+<% end  
+   media_collection_associations = @medium.media_collection_associations
+   if !media_collection_associations.empty? %>
+     <p><%= bookmark Collection.anchor_name %>
+	 <b><%= ts(:collection, :count => media_collection_associations.size).titleize %>:</b>
+<%=  media_collection_associations.collect {|c| link_to h(c.category.title).s, edit_medium_collection_association_path(@medium, c)}.join(', ') %>
+(<%= link_to ts('add.record', :what => t(:collection)), new_medium_collection_association_path(@medium) %>)</p>
+<% end
+   media_subject_associations = @medium.media_subject_associations
+   if !media_subject_associations.empty? %>
+     <p><%= bookmark Subject.anchor_name %>
+	 <b><%= ts(:subject, :count => media_subject_associations.size).titleize %>:</b>
+<%=  media_subject_associations.collect {|s| link_to h(s.category.title).s, edit_medium_subject_association_path(@medium, s)}.join(', ') %>
+(<%= link_to ts('add.record', :what => t(:subject)), new_medium_subject_association_path(@medium) %>)</p>
+<% end
+   media_ethnicity_associations = @medium.media_ethnicity_associations
+   if !media_ethnicity_associations.empty? %>
+     <p><%= bookmark Ethnicity.anchor_name %>
+	 <b><%= ts(:ethnicity, :count => media_ethnicity_associations.size).titleize %>:</b>
+<%=  media_ethnicity_associations.collect {|e| link_to h(e.category.title).s, edit_medium_ethnicity_association_path(@medium, e)}.join(', ') %>
+(<%= link_to ts('add.record', :what => t(:ethnicity)), new_medium_ethnicity_association_path(@medium )%>)</p>
+<% end
+   media_keyword_associations = @medium.media_keyword_associations
+   if !media_keyword_associations.empty? %>
+     <p><%= bookmark 'keywords' %>
+	 <b><%= Keyword.human_name(:count => :many).titleize.s %>:</b>
+<%=  media_keyword_associations.collect {|k| link_to h(k.keyword.title).s, edit_media_keyword_association_path(k)}.join(', ') %>
+(<%= link_to ts('add.record', :what => Keyword.human_name), new_media_keyword_association_path(:medium_id => @medium) %>)</p>
+<% end
+   copyrights = @medium.copyrights
+   if !@medium.copyrights.empty? %>
+     <p><%= bookmark 'copyrights' %>
+	 <b><%= Copyright.human_name(:count => :many).titleize.s %>:</b>
+<%=    @medium.copyrights.collect {|c| "#{link_to h(c.copyright_holder.title).s, edit_copyright_path(c)} (#{h(c.reproduction_type.title).downcase})"}.join(', ') %>
+(<%=  link_to ts('add.record', :what => Copyright.human_name), new_copyright_path(:medium_id => @medium) %>)</p>
+<% end
+   affiliations = @medium.affiliations
+   if !affiliations.empty? 
+     affiliations_list = affiliations.collect do |c|
+       title = link_to h(c.organization.title).s, edit_medium_affiliation_path(@medium, c)
+       project = c.project
+       sponsor = c.sponsor
+	   if !project.nil? || !sponsor.nil?
+         parenthesis = ' ('
+         if !project.nil?
+           parenthesis << project.title
+           parenthesis << ' ' if !sponsor.nil?
+         end
+         parenthesis << ts(:sponsored_by, :what => sponsor.title) if !sponsor.nil?
+         parenthesis << ')'
+       else
+         parenthesis = ''
+       end
+       "#{title}#{parenthesis}"
+	 end %>
+     <p><%= bookmark 'affiliations' %>
+	 <b><%= Affiliation.human_name(:count => :many).s %>:</b>
+<%=  affiliations_list.join(', ') %>
+(<%= link_to ts('add.record', :what => Affiliation.human_name(:count => :many)), new_medium_affiliation_path(@medium) %>)</p>
+<% end
+   media_source_associations = @medium.media_source_associations
+   if !media_source_associations.empty? %>
+     <p><%= bookmark 'sources' %>
+	   <b><%= Source.human_name(:count => media_source_associations.size).titleize.s %>:</b>
+<%=    media_source_associations.collect {|s| "#{link_to h(s.source.title).s, edit_medium_source_association_path(@medium, s)} #{"(#{s.shot_number})" if !s.shot_number.nil?}"}.join(', ') %>
+     (<%= link_to ts('add.record', :what => Source.human_name), new_medium_source_association_path(@medium) %>)</p>
+<% end %>
+<hr/>
+<p>
+<% if captions.empty? %>
+<%=  bookmark 'captions' %>
+<%=  link_to ts('add.record', :what => Caption.human_name), new_medium_caption_path(@medium)%> |
+<% end
+   if descriptions.empty? %>
+<%=  bookmark 'descriptions' %>
+<%=  link_to ts('add.record', :what => Description.human_name), new_medium_description_path(@medium) %> |
+<% end
+   if media_keyword_associations.empty? %>
+<%=  bookmark 'keywords' %>
+<%=  link_to ts('associate.to', :what => Keyword.human_name), new_media_keyword_association_path(:medium_id => @medium) %> |
+<% end %>
+<br/>
+<% if media_administrative_locations.empty? %>
+<%=  bookmark 'administrative_locations' %>
+<%=  link_to ts('associate.to', :what => MediaAdministrativeLocation.human_name), new_media_administrative_location_path(:medium_id =>@medium) %> |
+<% end
+   if media_collection_associations.empty? %>
+<%=   bookmark Collection.anchor_name %>
+<%=   link_to ts('associate.to', :what => t(:collection)), new_medium_collection_association_path(@medium) %> |
+<% end
+   if media_subject_associations.empty? %>
+<%=   bookmark Subject.anchor_name %>
+<%=   link_to ts('associate.to', :what => t(:subject)), new_medium_subject_association_path(@medium) %> |
+<% end
+   if media_ethnicity_associations.empty? %>
+<%=   bookmark Ethnicity.anchor_name %>
+<%=   link_to ts('associate.to', :what => t(:ethnicity)), new_medium_ethnicity_association_path(@medium) %> |
+<% end
+   if media_source_associations.empty? %>
+<%=   bookmark 'sources' %>
+<%=   link_to ts('associate.to', :what => Source.human_name), new_medium_source_association_path(@medium) %> |
+<% end %>
+<br/>
+<% if copyrights.empty? %>
+<%=  bookmark 'copyrights' %>
+<%=  link_to ts('add.record', :what => Copyright.human_name), new_copyright_path(:medium_id => @medium)%> |
+<% end
+   if affiliations.empty? %>
+<%=  bookmark 'affiliations' %>
+<%=  link_to ts('add.record', :what => Affiliation.human_name), new_medium_affiliation_path(@medium)%> |
+<% end %></p>
+<% authorized_only hash_for_workflow_path do %>
+<%   workflow = @medium.workflow
+     if !workflow.nil? %>
+<%=    bookmark 'workflow' %>
+       <h3><%= Workflow.human_name.titleize.s %></h3>
+<%=    render :partial => 'workflows/show', :locals => {:workflow => workflow} %>
+       <p><%= link_to ts('edit.record', :what => Workflow.human_name), workflow_path(@medium.workflow) %></p>
+<%   end
+   end %>
+<hr/>
+<p>&nbsp;<br/>
+<%= link_to ts('back.to', :what => Medium.human_name), medium_path(@medium) %></p>

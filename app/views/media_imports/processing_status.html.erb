@@ -1,0 +1,10 @@
+<h1>Processing Importation by <%= @user.screen_name %></h1>
+<%= periodically_call_remote(:url => status_media_imports_path(:user_id => @user.id)) %>
+<div id="status" class="normal">
+<%= render :partial => 'status' %>
+</div>
+<p>&nbsp;<br/>
+<%= link_to 'New media importation', new_media_import_path %> |
+<%= link_to 'Media Importation Home', media_imports_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

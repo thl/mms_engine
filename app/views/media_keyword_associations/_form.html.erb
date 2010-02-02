@@ -1,0 +1,9 @@
+<p>
+    <b><%= Medium.human_name.titleize.s %></b><br />
+<%= link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %></td>
+<%= f.hidden_field :medium_id %>
+</p>
+<p>
+    <b><%= Keyword.human_name.titleize.s %></b><br />
+<%= f.collection_select(:keyword_id, @keywords, :id, :title) %> (<%= link_to ts('new.record', :what => Keyword.human_name), new_keyword_path, { :target => '_blank' } %>)
+</p>

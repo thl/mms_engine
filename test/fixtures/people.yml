@@ -1,0 +1,15 @@
+# == Schema Information
+# Schema version: 20090626173648
+#
+# Table name: people
+#
+#  id       :integer(4)      not null, primary key
+#  fullname :string(255)     not null
+#
+
+one:
+  id: 1
+  fullname: MyString
+two:
+  id: 2
+  fullname: MyString

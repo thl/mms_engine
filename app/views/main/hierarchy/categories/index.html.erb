@@ -1,0 +1,13 @@
+<div id="primary">
+<h2><%= ts 'browse.by', :what => Medium.human_name(:count => :many).titleize, :whom => t("by.#{@model.model_name.underscore}").titleize %></h2>
+  <div id="navigation" class="normal">
+<%= render :partial => 'main/hierarchy/categories/category_index', :locals => {:elements => @elements, :margin_depth => 0} %>
+  </div>
+  <p>&nbsp;<br/>
+<span id="unframe"><%= link_to ts('back.to', :what => t(:all, :what => Medium.human_name(:count => :name))), media_path %></span>
+  </p>
+</div>
+<div id="secondary">
+<%= render :partial => 'main/hierarchy/categories/media_index' %>
+</div>
+<div class="clear"></div>

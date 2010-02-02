@@ -1,0 +1,8 @@
+<% @media_search = MediaSearch.new({:title => '', :type => 'simple'}) if @media_search.nil?
+   form_for(:media_search, :url => media_searches_path, :html => {:style => 'margin-top: 0; margin-bottom: 0;'}) do |f| %>
+   <p>
+<%=  f.text_field :title, fixed_language_options(:size => 12) %>
+<%=  f.hidden_field :type %>
+<%=  globalized_submit_tag 'search.this' %>
+   </p>
+<% end %>

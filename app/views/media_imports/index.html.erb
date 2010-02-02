@@ -1,0 +1,22 @@
+<h1>Media Importations</h1>
+<% if !@active_users.empty? %>
+     <h2>Users Currently Importing</h2>
+     <ul class="normal">
+<%   for user in @active_users %>
+     <li><%= link_to user.screen_name, media_import_path(user) %></li>
+<%   end %>
+     </ul>
+<% end %>
+<% if !@users_with_imports.empty? %>
+     <h2>Users' Last Importation</h2>
+     <ul class="normal">
+<%   for user in @users_with_imports %>
+     <li><%= link_to user.screen_name, media_import_path(user) %></li>
+<%   end %>
+     </ul>
+<% end %>
+<p>&nbsp;<br/>
+<%= link_to 'Status of last importation', status_media_imports_path %> |
+<%= link_to 'New media importation', new_media_import_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

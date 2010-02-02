@@ -1,0 +1,7 @@
+<%= Util::MARGIN * @margin_depth %>
+<%  if @element.children.blank? %>
+      &#9674;
+<%  else %>
+<%=   link_to_remote '+', { :update => "#{@element.id}_div", :url => {:controller => @controller_name, :action => 'expand_unit', :id => @element.id, :margin_depth => @margin_depth} }, { :class => 'collapsable' } %>
+<%  end %>
+<%= "#{link_to_remote h(@element.title).s, :url => media_path(@element_name.to_sym => @element.id), :method => 'get'} (#{@element.count_inherited_media})" %><br/>

@@ -1,0 +1,15 @@
+<h1><%= ts 'list.ing.records', :what => QualityType.human_name(:count => :many).titleize %></h1>
+<table border="1" class="normal">
+  <tr>
+    <th><%= QualityType.human_name.titleize.s %></th>
+  </tr>  
+<% for quality_type in @quality_types %>
+  <tr>
+    <td><%=link_to h(quality_type.title), quality_type_path(quality_type) %></td>
+  </tr>
+<% end %>
+</table>
+<p>
+<%= link_to ts('new.record', :what => QualityType.human_name), new_quality_type_path %> |
+<%= link_to ts('back.this'), admin_path %>
+</p>

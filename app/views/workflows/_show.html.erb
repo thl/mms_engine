@@ -1,0 +1,5 @@
+<%= display_if_not_blank Workflow.human_attribute_name('original_filename').s, h(workflow.original_filename) %>
+<%= display_if_not_blank Workflow.human_attribute_name('original_medium_id').s, h(workflow.original_medium_id) %>
+<%= display_if_not_blank Workflow.human_attribute_name('other_id').s, h(workflow.other_id) %>
+<%= display_if_not_blank Workflow.human_attribute_name('notes').s, h(workflow.notes) %>
+<%= display_if_not_blank Workflow.human_attribute_name('sequence_order').s, h(workflow.sequence_order) %>

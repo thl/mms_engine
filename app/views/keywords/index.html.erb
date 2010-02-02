@@ -1,0 +1,27 @@
+<h1><%= ts 'list.ing.records', :what => Keyword.human_name(:count => :many).titleize %></h1>
+<table border="1" class="normal">
+  <tr>
+    <th><%= Keyword.human_name.titleize.s %></th>
+  </tr>
+<% can_edit = authorized? hash_for_edit_keyword_path
+   for keyword in @keywords %>
+  <tr>
+    <td>
+<%    if can_edit %>
+<%=     link_to h(keyword.title).s, edit_keyword_path(keyword) %>
+<%    else %>
+<%=     link_to h(keyword.title).s, keyword_path(keyword) %>
+<%    end %>
+	</td>
+  </tr>
+<% end %>
+</table>
+<p>&nbsp;<br/>
+<% base_language_only do 
+     authorized_only(hash_for_new_keyword_path) do %>
+<%=    link_to ts('new.record', :what => Keyword.human_name), new_keyword_path %> |
+<%   end
+   end %>
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>
+

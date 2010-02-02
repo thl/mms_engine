@@ -1,0 +1,68 @@
+/*--------
+ID Selectors   --primarily used for page layout
+----------*/
+
+/*placing the TOC*/
+#columnLeft {
+  position: absolute;
+  left:0px;/*TOC left*/
+  top:135px;/*table's top*/
+  width:200px;/*TOC width*/
+  padding:0px;
+}
+
+#main.contains-nav2 #columnLeft, 
+#main.contains-nav2 #columnRight 
+{
+  margin-top: 123px;
+}
+
+/*margin of content*/
+#columnMain {
+  margin-left: 220px;
+  margin-right: 10px;
+  margin-top:10px;
+  margin-bottom:10px;
+  padding:5px;
+}
+
+#main p.illustratedBlurb
+{
+  max-width: none!important;	  
+}
+
+#main ul, #main dl, #main ol
+{
+  max-width: 500px;/*alignin links*/
+  min-width: 15px;/*width of links in TOC*/
+}
+
+.highlightBox, .spotlightBox/*TOC box*/
+{
+  width: 100%;
+  margin: 10px ;
+  padding: 0px ;
+  background-color: #C47451;/*background-color of the whole TOC box*/
+  border: solid 1px black;/*border of TOC*/
+  text-align: left;
+}
+
+/*title of the TOC*/
+.highlightBox h2, .spotlightBox h2
+{
+  color:white;
+  margin:10px;
+  text-align :center;
+}
+
+h3.toc
+{
+  line-height: 130%;
+}
+
+/*aligning the ul styles in TOC*/
+.highlightBox ul 
+{
+  margin:2px;
+  padding-left: 15px;
+}

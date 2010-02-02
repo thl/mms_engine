@@ -1,0 +1,85 @@
+<p><br />The advanced full-text search capability supports the following operators:
+</p>
+  <ul type="disc">
+    <li><code class="literal">+</code>
+    <p>A leading plus sign indicates that this word <span class="bold">
+    <strong>must</strong></span> be present in each row that is returned.
+    </li>
+    <li><code class="literal">-</code>
+    <p>A leading minus sign indicates that this word must <span class="bold">
+    <strong>not</strong></span> be present in any of the rows that are 
+    returned. </li>
+    <li><code class="literal">(no operator)</code>
+    <p>By default (when neither <code class="literal">+</code> nor
+    <code class="literal">-</code> is specified) the word is optional, but 
+    the rows that contain it are rated higher. This mimics the behavior of
+    <code class="literal">MATCH() ... AGAINST()</code> without the
+    <code class="literal">IN BOOLEAN MODE</code> modifier. </li>
+    <li><code class="literal">&gt; &lt;</code>
+    <p>These two operators are used to change a word's contribution to the 
+    relevance value that is assigned to a row. The <code class="literal">&gt;</code> 
+    operator increases the contribution and the <code class="literal">&lt;</code> 
+    operator decreases it. See the example below. </li>
+    <li><code class="literal">( )</code>
+    <p>Parentheses are used to group words into subexpressions. 
+    Parenthesized groups can be nested. </li>
+    <li><code class="literal">~</code>
+    <p>A leading tilde acts as a negation operator, causing the word's 
+    contribution to the row's relevance to be negative. This is useful for 
+    marking &quot;<span class="quote">noise</span>&quot; words. A row containing such 
+    a word is rated lower than others, but is not excluded altogether, as it 
+    would be with the <code class="literal">-</code> operator. </li>
+    <li><code class="literal">*</code>
+    <p>The asterisk serves as the truncation operator. Unlike the other 
+    operators, it should be <span class="bold"><strong>appended</strong></span> 
+    to the word to be affected. </li>
+    <li><code class="literal">&quot;</code>
+    <p>A phrase that is enclosed within double quote ('<code class="literal">&quot;</code>') 
+    characters matches only rows that contain the phrase
+    <span class="emphasis"><em>literally, as it was typed</em></span>. The 
+    full-text engine splits the phrase into words, performs a search in the
+    <code class="literal">FULLTEXT</code> index for the words. Prior to 
+    MySQL 5.0.3, the engine then performed a substring search for the phrase 
+    in the records that were found, so the match must include non-word 
+    characters in the phrase. As of MySQL 5.0.3, non-word characters need 
+    not be matched exactly: Phrase searching requires only that matches 
+    contain exactly the same words as the phrase and in the same order. For 
+    example, <code class="literal">&quot;test phrase&quot;</code> matches
+    <code class="literal">&quot;test, phrase&quot;</code> in MySQL 5.0.3, but not 
+    before. </p>
+    <p>If the phrase contains no words that are in the index, the result is 
+    empty. For example, if all words are either stopwords or shorter than 
+    the minimum length of indexed words, the result is empty. </li>
+  </ul>
+<p>The following examples demonstrate some search strings that use boolean 
+full-text operators: </p>
+  <ul type="disc">
+    <li><code class="literal">'apple banana'</code>
+    <p>Find rows that contain at least one of the two words. </li>
+    <li><code class="literal">'+apple +juice'</code>
+    <p>Find rows that contain both words. </li>
+    <li><code class="literal">'+apple macintosh'</code>
+    <p>Find rows that contain the word &quot;<span class="quote">apple</span>&quot;, 
+    but rank rows higher if they also contain &quot;<span class="quote">macintosh</span>&quot;.
+    </li>
+    <li><code class="literal">'+apple -macintosh'</code>
+    <p>Find rows that contain the word &quot;<span class="quote">apple</span>&quot; 
+    but not &quot;<span class="quote">macintosh</span>&quot;. </li>
+    <li><code class="literal">'+apple +(&gt;turnover &lt;strudel)'</code>
+    <p>Find rows that contain the words &quot;<span class="quote">apple</span>&quot; 
+    and &quot;<span class="quote">turnover</span>&quot;, or &quot;<span class="quote">apple</span>&quot; 
+    and &quot;<span class="quote">strudel</span>&quot; (in any order), but rank &quot;<span class="quote">apple 
+    turnover</span>&quot; higher than &quot;<span class="quote">apple strudel</span>&quot;.
+    </li>
+    <li><code class="literal">'apple*'</code>
+    <p>Find rows that contain words such as &quot;<span class="quote">apple</span>&quot;, 
+    &quot;<span class="quote">apples</span>&quot;, &quot;<span class="quote">applesauce</span>&quot;, 
+    or &quot;<span class="quote">applet</span>&quot;. </li>
+    <li><code class="literal">'&quot;some words&quot;'</code>
+    <p>Find rows that contain the exact phrase &quot;<span class="quote">some 
+    words</span>&quot; (for example, rows that contain &quot;<span class="quote">some 
+    words of wisdom</span>&quot; but not &quot;<span class="quote">some noise words</span>&quot;). 
+    Note that the '<code class="literal">&quot;</code>' characters that surround 
+    the phrase are operator characters that delimit the phrase. They are not 
+    the quotes that surround the search string itself. </li>
+  </ul>

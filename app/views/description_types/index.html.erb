@@ -1,0 +1,14 @@
+<h1><%= ts 'list.ing.records', :what => DescriptionType.human_name(:what => "#{Caption.human_name.titleize}/#{Description.human_name.titleize}") %></h1>
+<table border="1" class="normal">
+  <tr>
+    <th><%= DescriptionType.human_name.titleize.s %></th>
+  </tr>
+<% for description_type in @description_types %>
+  <tr>
+    <td><%= link_to h(description_type.title), description_type_path(description_type) %></td>
+  </tr>
+<% end %>
+</table>
+<br />
+<%= link_to ts('new.record', :what => "#{Caption.human_name}/#{Description.human_name}"), new_description_type_path %> |
+<%= link_to ts('back.this'), media_path %>

@@ -1,0 +1,25 @@
+# == Schema Information
+# Schema version: 20090626173648
+#
+# Table name: application_settings
+#
+#  id            :integer(4)      not null, primary key
+#  title         :string(30)      not null
+#  description   :text
+#  value         :integer(4)
+#  permission_id :integer(4)
+#  string_value  :string(255)
+#
+
+one:
+  id: 1
+  title: MyString
+  description: MyText
+  value: 1
+  permission_id: 1
+two:
+  id: 2
+  title: MyString
+  description: MyText
+  value: 1
+  permission_id: 1

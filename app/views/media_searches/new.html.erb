@@ -1,0 +1,7 @@
+<h2><%= ts 'new.record', :what => t('search.record', :what => Medium.human_name(:count => :many).titleize) %></h2>
+<p>
+<%= render :partial => 'advanced' %>
+</p>
+<p>&nbsp;<br/>
+<%= link_to ts('back.to', :what => t(:all, :what => Medium.human_name(:count => :many).titleize)), media_path %>
+</p>

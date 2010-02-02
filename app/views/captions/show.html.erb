@@ -1,0 +1,19 @@
+<% caption_title = @medium.class.human_attribute_name('caption') %>
+<b><%= ts :for, :what => caption_title, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></b>
+<p>
+<%= link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %>
+</p>
+<%= display_if_not_blank caption_title.s, h(@caption.title).s %>
+<% if !@caption.description_type.nil? %>
+<%=  display_if_not_blank DescriptionType.column_name(:what => caption_title).titleize.s, h(@caption.description_type.title).s %>
+<% end 
+   if !@caption.creator.nil? %>
+<%= display_if_not_blank Caption.human_attribute_name('creator').s, h(@caption.creator.fullname).s %>
+<% end %>
+<%= display_if_not_blank ComplexScripts::Language.human_name.titleize.s, h(@caption.language.title).s %>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_edit_medium_caption_path do %>
+<%=  link_to ts('edit.this'), edit_medium_caption_path(@medium, @caption) %> |
+<% end %>
+<%= render :partial => 'persistent_links' %>
+</p>

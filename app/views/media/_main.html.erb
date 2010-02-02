@@ -1,0 +1,54 @@
+<%= render :partial => 'media_searches/advanced' %>
+<% remote_form_for :goto, :url => {:controller => 'media', :action => 'goto'}, :update => 'primary' do |f| %>
+   <p>
+     <label for="goto_media_id"><b><%= ts :id, :what => Medium.human_name.titleize %></b></label>
+<%=  f.text_field :media_id, :size => 10 %>
+<%=  globalized_submit_tag :go %>
+   </p>
+<% end %>
+<table border="0">
+  <tr valign="top" colspan="2">
+	<td><h3><%= ts 'browse.this' %></h3></td>
+  </tr>
+    <td>
+  <tr valign="top">
+    <td>
+      <ul>
+      	<li><h4><%= link_to ts('by.location'), media_administrative_locations_path %></h4></li>
+		<li><h4><%= link_to ts('by.collection'), collections_path %></h4></li>
+	  </ul>
+	</td>
+    <td>
+      <ul>
+      	<li><h4><%= link_to ts('by.subject'), subjects_path %></h4></li>
+		<li><h4><%= link_to ts('by.ethnicity'), ethnicities_path %></h4></li>
+      </ul>
+	</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="2">
+      <ul>
+      <li><h4><%= ts 'by.keyword' %></h4>
+      <p>
+<%      for keyword in @keywords %>
+<%        font_size = (@keyword_font_size[keyword.id]) %>
+          <FONT SIZE= "<%= font_size %>"><%= link_to_remote h(keyword.title).s, :url => media_path(:keyword_id => keyword), :method => 'get' %></FONT>
+<%      end %>
+      </p>
+      </li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p>
+<% authorized_only hash_for_new_picture_path do %>
+<%=  link_to ts('new.record', :what => Picture.human_name), new_picture_path %> |
+<% end
+   authorized_only hash_for_new_video_path do %>
+<%=  link_to ts('new.record', :what => Video.human_name), new_video_path %> |
+<% end
+   authorized_only hash_for_new_document_path do %>
+<%=  link_to ts('new.record', :what => Document.human_name), new_document_path %> |
+<% end %>
+<%= link_to ts('back.this'), root_path %>
+</p>

@@ -1,0 +1,45 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+# According to Rails 2.2, this should be at config/locales.
+# Left it at lib/locale following globalize2.
+# View messages are capitalized.
+dz:
+    admin: 
+        accounts: 'རྩིས་ཐོ།'
+        application_management: 'ལག་ལེན་འཛིན་སྐྱོང་།'
+        content: 'ནང་དོན།'
+        files: 'Files'
+        media_importation: 'Media Importation'
+        media_processes: 'Media Processes'
+        page: 'Admin Page'
+        static_pages: 'འགྱུར་མེད་ཤོག་ལེབ།'
+        tab: 'བདག་སྐྱོང་པ།'
+        web_interface: 'ཝེབ་ཀྱི་ངོས་འདྲ་བ།'
+    by:
+        collection: 'བསྡུ་གསོག་གི་ཐོག་ལས།'
+        ethnicity: 'མི་རིགས་ཀྱི་ཐོག་ལས།'
+        keyword: 'གཙོ་ཚིག་གི་ཐོག་ལས།'
+        location: 'གནས་ཁོངས་ཀྱི་ཐོག་ལས།'
+        subject: 'དོན་ཚན་གྱི་ཐོག་ལས།'
+    catalog_record: 'catalog record'
+    collection: 'བསྡུ་གསོག།'
+    # one
+    # other
+    daily: 'ད་རིས་ཀྱི་ {{what}}།'
+    dictionaries:
+        tab: 'ཚིག་མཛོད།'
+        title: 'Search Himalayan Languages Dictionaries'
+    ethnicity: 'མི་རིགས།'
+    # one
+    # other
+    import: 'Import'
+    keyword: 'གཙོ་ཚིག {{what}}།'
+    sponsored_by: 'sponsored by {{what}}'
+    subject: 'དོན་ཚན།'
+    # one
+    # other
+    transcript: 'Transcript'
+    unicode_range: 'Unicode Range'
+    video:
+        needs_flash: 'You need a Flash Player to see this movie.'
+        not_ready: 'Video is being converted into the appropriate formats. It will be available shortly.'

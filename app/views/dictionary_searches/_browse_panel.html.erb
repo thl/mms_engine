@@ -1,0 +1,6 @@
+<p>
+<% lang_code = @language.code
+   for letter in @letters %>
+<%=  link_to_remote letter.title.s, :update => 'results', :url => dictionary_search_path(:id => letter, :language_id => @language), :method => :get, :loading => javascript_searching('results') %>&nbsp;
+<% end %>
+</p>

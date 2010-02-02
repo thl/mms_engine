@@ -1,0 +1,8 @@
+<% for country in @countries %>
+     <h3><%=h(country.title).s %></h3>
+<%   first_level = country.administrative_levels.first
+     if !first_level.nil?
+       @elements = first_level.administrative_units %>
+<%=    render :partial => 'main/hierarchy/mixed_associations/general_index' %>
+<%   end %>
+<% end %>

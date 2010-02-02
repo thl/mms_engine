@@ -1,0 +1,4 @@
+<%  screen_size_image = @medium.screen_size_image
+    large_image = @medium.large_image 
+    image_tag = image_tag(screen_size_image.public_filename, :width => screen_size_image.width, :height => screen_size_image.height) %>
+<%= large_image.nil? ? image_tag : link_to_function(image_tag, "$(\"#TB_window\").remove(); $(\"body\").append(\"<div id='TB_window'></div>\");	tb_show(null, \"#{image_path(large_image.public_filename)}\", false);") %>

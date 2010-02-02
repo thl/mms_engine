@@ -1,0 +1,6 @@
+<%= display_if_not_blank Organization.human_attribute_name('title').s, h(@organization.title).s %>
+<%= display_if_not_blank Organization.human_attribute_name('website').s, h(@organization.website) %>
+<p>&nbsp;<br/>
+<%= link_to ts('edit.this'), edit_organization_path(@organization) %> |
+<%= render :partial => 'persistent_links' %>
+</p>

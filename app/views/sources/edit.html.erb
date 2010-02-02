@@ -1,0 +1,11 @@
+<h1><%= ts 'edit.ing.record', :what => Source.human_name.titleize %></h1>
+<%= error_messages_for :source %>
+<% form_for(@source) do |f| %>
+<%= render :partial => 'form', :locals => {:f => f} %>
+  <p>
+<%= globalized_submit_tag 'update.this' %>
+  </p>
+<% end %>
+<p>&nbsp;<br/>
+<%= render :partial => 'persistent_links' %>
+</p>

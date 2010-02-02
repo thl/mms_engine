@@ -1,0 +1,62 @@
+<% @onload = 'updateRadioButton(); updateClassification();' %>
+<script type="text/javascript">   
+	function updateRadioButton()
+	{
+		checked = 0;
+		if ($('media_import_has_images').checked) checked++;
+		if ($('media_import_has_movies').checked) checked++;
+		if ($('media_import_has_texts').checked) checked++;
+		radio_no = $('media_import_media_type_subfolder_no');
+		button = $('submit_button');
+		if (checked==0) button.disabled = true;
+		else if (checked==1)
+		{
+		  radio_no.disabled = false;
+		  radio_no.checked = true;
+		  button.disabled = false;
+		}
+		else
+		{
+		  $('media_import_media_type_subfolder_yes').checked = true;
+		  radio_no.disabled = true;
+		  button.disabled = false;
+		}
+	}
+	
+	function updateClassification()
+	{
+		value = ($('media_import_import_type_id').selectedIndex == 0);
+		$('media_import_media_classification_1').disabled = value;
+		$('media_import_media_classification_2').disabled = value;
+		$('media_import_media_classification_3').disabled = value;		
+	}
+</script>
+<h1>New media importation</h1>
+<% form_for(:media_import, :url => confirm_media_imports_path) do |f| %>
+<p><b>Media types</b>
+<%= f.check_box :has_images, :onclick => 'updateRadioButton();' %>Images
+<%= f.check_box :has_movies, :onclick => 'updateRadioButton();' %>Movies
+<%= f.check_box :has_texts, :onclick => 'updateRadioButton();' %>Typescripts
+</p>	
+<p><b>Select relative folder containing media to import</b>
+<%= "#{@folder}/" %><%= f.text_field :batch_processing_folder %>
+</p>
+<p><b>Media is under subfolder with the media type's name?</b>
+<%= radio_button :media_import, :media_type_subfolder, 'no' %>No
+<%= radio_button :media_import, :media_type_subfolder, 'yes' %>Yes
+</p>
+<p><b>Importation type</b>
+<%= f.select :import_type_id, @import_types, {}, {:onchange => 'updateClassification();'} %>
+</p>
+<p><b>Classification scheme</b>
+<%= f.select :media_classification_1, @media_classification, :include_blank => false %>
+<%= f.select :media_classification_2, @media_classification, :include_blank => true %>
+<%= f.select :media_classification_3, @media_classification, :include_blank => true %>
+</p>
+<p><%= globalized_submit_tag :import %></p>
+<% end %>
+<p>&nbsp;<br/>
+<%= link_to 'Status of last importation', status_media_imports_path %> |
+<%= link_to 'Media Importation Home', media_imports_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

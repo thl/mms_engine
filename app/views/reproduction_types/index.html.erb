@@ -1,0 +1,26 @@
+<h1><%= ts 'list.ing.records', :what => ReproductionType.human_name(:count => :many).titleize %></h1>
+<table border="1" class="normal">
+  <tr>
+  	<th><%= ReproductionType.human_attribute_name('order').s %></th>
+    <th><%= ReproductionType.human_name.titleize.s %></th>
+	<th><%= ReproductionType.human_attribute_name('website').s %></th>
+  </tr>
+<% can_edit = authorized? hash_for_edit_reproduction_type_path
+   for reproduction_type in @reproduction_types %>
+  <tr>
+  	<td><%= reproduction_type.order %></td>
+    <td>
+<%    if can_edit %>
+<%=     link_to h(reproduction_type.title), edit_reproduction_type_path(reproduction_type) %>
+<%    else %>
+<%=     link_to h(reproduction_type.title), reproduction_type_path(reproduction_type) %>
+<%    end %>
+	</td>
+	<td><%=h reproduction_type.website %></td>
+  </tr>
+<% end %>
+</table>
+<p>&nbsp;<br/>
+<%= link_to ts('new.record', :what => ReproductionType.human_name), new_reproduction_type_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

@@ -1,0 +1,2 @@
+<%  large_image = @medium.large_image %>
+<%= large_image.nil? ? image_tag(@medium.screen_size_image.public_filename) : image_tag(large_image.public_filename) %>

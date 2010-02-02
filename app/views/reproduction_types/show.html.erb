@@ -1,0 +1,9 @@
+<%= display_if_not_blank ReproductionType.human_attribute_name('title').s, h(@reproduction_type.title).s %>
+<%= display_if_not_blank ReproductionType.human_attribute_name('order').s, @reproduction_type.order %>
+<%= display_if_not_blank ReproductionType.human_attribute_name('website').s, h(@reproduction_type.website).s %>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_edit_reproduction_type_path do %>
+<%=  link_to ts('edit.this'), edit_reproduction_type_path(@reproduction_type) %> |
+<% end %>
+<%= render :partial => 'persistent_links' %>
+</p>

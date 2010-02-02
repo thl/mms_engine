@@ -1,0 +1,8 @@
+<h1><%= ts 'associate.record', :what => t(@model.model_name.underscore).titleize, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<%= error_messages_for :association %>
+<% form_for(:association, :url => associations_path) do |f| %>
+<%=  render :partial => 'main/hierarchy/associations/form', :locals => {:f => f} %>
+     <p><%= globalized_submit_tag 'create.this' %></p>
+<% end %>
+<p>&nbsp;<br/>
+<%= render :partial => 'media/back_to_edit', :locals => {:anchor => @model.anchor_name} %></p>

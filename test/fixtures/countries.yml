@@ -1,0 +1,16 @@
+# == Schema Information
+# Schema version: 20090626173648
+#
+# Table name: countries
+#
+#  id       :integer(4)      not null, primary key
+#  title    :string(100)     not null
+#  title_dz :string(100)
+#
+
+one:
+  id: 1
+  title: MyString
+two:
+  id: 2
+  title: MyString

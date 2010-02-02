@@ -1,0 +1,26 @@
+# == Schema Information
+# Schema version: 20090626173648
+#
+# Table name: words
+#
+#  id          :integer(4)      not null, primary key
+#  title       :text            not null
+#  language_id :integer(4)      not null
+#  order       :integer(4)
+#  letter_id   :integer(4)
+#
+
+one:
+  id: 1
+  title: MyString
+  grammatical_class_id: 1
+  language_id: 1
+  order: 1
+  letter_id: 1
+two:
+  id: 2
+  title: MyString
+  grammatical_class_id: 1
+  language_id: 1
+  order: 1
+  letter_id: 1

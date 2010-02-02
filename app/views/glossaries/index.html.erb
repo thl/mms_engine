@@ -1,0 +1,30 @@
+<h1><%= ts 'list.ing.records', :what => Glossary.human_name(:count => :many).titleize %></h1>
+<table border="1" class="normal">
+  <tr>
+    <th><%= Glossary.human_name.titleize.s %></th>
+	<th><%= Glossary.human_attribute_name('abbreviation').s %></th>
+    <th><%= Organization.human_name.titleize.s %></th>
+    <th><%= Glossary.human_attribute_name('is_public').s %></th>
+  </tr>
+<% can_edit = authorized? hash_for_edit_glossary_path
+   for glossary in @glossaries %>
+  <tr>
+    <td>
+<%  if can_edit %>
+<%=   link_to h(glossary.title), edit_glossary_path(glossary) %>
+<%  else %>
+<%=   link_to h(glossary.title), glossary_path(glossary) %>
+<%  end %>
+	</td>
+	<td><%=h glossary.abbreviation %></td>
+    <td><%=h(glossary.organization.title) if !glossary.organization.nil? %></td>
+	<td><%= glossary.is_public ? ts(:affirmation) : ts(:negation) %></td>
+  </tr>
+<% end %>
+</table>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_new_glossary_path do %>
+<%=  link_to ts('new.record', :what => Glossary.human_name), new_glossary_path %> |
+<% end %>
+<%= render :partial => 'main/back_to_admin_or_dicts' %>
+</p>

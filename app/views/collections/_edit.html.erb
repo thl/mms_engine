@@ -1,0 +1,5 @@
+<%= error_messages_for :association %>
+<% form_for(:association, :url => association_path(@association), :html => { :method => :put }) do |f| %>
+<%=  render :partial => 'form', :locals => {:f => f} %>
+     <p><%= globalized_submit_tag 'update.this' %></p>
+<% end %>

@@ -1,0 +1,5 @@
+<%  authorized_only hash_for_capture_device_maker_model_path(:action => 'destroy') do %>
+<%=   link_to ts('delete.this'), capture_device_maker_model_path(@capture_device_maker, @capture_device_model), :confirm => te('delete.confirmation'), :method => :delete %> |
+<%  end %>
+<%= link_to ts('back.to', :what => ts(:all, :what => CaptureDeviceMaker.human_name(:count => :many))), capture_device_makers_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %>

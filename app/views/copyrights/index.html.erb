@@ -1,0 +1,24 @@
+<h1><%= ts :for, :what => t('list.ing.records', :what => Copyright.human_name(:count => :many).titleize), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<p>
+<%= link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %>
+</p>
+<table border="1" class="normal">
+  <tr>
+    <th><%= CopyrightHolder.human_name.titleize.s %></th>
+    <th><%= ReproductionType.human_name.titleize.s %></th>
+    <th><%= ts(:options) %></th>
+  </tr>
+<% for copyright in @copyrights %>
+  <tr>
+    <td><%= link_to h(copyright.copyright_holder.title).s %></td>
+    <td><%=h copyright.reproduction_type.title %></td>
+    <td><%= link_to ts('manage.this'), copyright_path(copyright) %></td>
+  </tr>
+<% end %>
+</table>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_new_copyright_path do %>
+<%=  link_to ts('new.record', :what => Copyright.human_name), new_copyright_path(:medium_id => @medium) %> |
+<% end %>
+<%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'copyrights'} %>
+</p>

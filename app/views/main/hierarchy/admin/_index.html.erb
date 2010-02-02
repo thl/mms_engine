@@ -1,0 +1,17 @@
+<% for @child in @elements
+     @margin_depth = 0 %>
+     <div id="<%= "#{@child.id}_div" %>">
+<%   if @current.nil? || @current.empty? %>
+<%=    render :partial => 'main/hierarchy/admin/contracted' %>
+<%   else 
+       index = @current.index(@child.id)
+       if index.nil? %>
+<%=      render :partial => 'main/hierarchy/admin/contracted' %>
+<%     else
+         @current.delete_at(index) %>
+<%=      render :partial => 'main/hierarchy/admin/expanded' %>
+<%       @margin_depth = 0
+       end %>
+<%   end %>
+     </div>
+<% end %>

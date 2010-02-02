@@ -1,0 +1,9 @@
+<h1><%= ts :for, :what => t('edit.ing.record', :what => MediaAdministrativeLocation.human_name.titleize.s), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<%= error_messages_for :association %>
+<% form_for(:association, :url => association_path(@association), :html => { :method => :put }) do |f| %>
+<%=  render :partial => 'form', :locals => {:f => f} %>
+     <p><%= globalized_submit_tag 'update.this' %></p>
+<% end %>
+<p>&nbsp;<br/>
+<%= render :partial => 'main/hierarchy/mixed_associations/persistent_links' %>
+</p>

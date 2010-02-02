@@ -1,0 +1,9 @@
+<h1>Last Execution by <%= @user.screen_name %> Done</h1>
+<p>
+<%= render :partial => 'status' %>
+</p>
+<p>&nbsp;<br/>
+<%= link_to 'Media Processes Home', media_processes_path %> |
+<%= link_to 'Execute process', new_media_process_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

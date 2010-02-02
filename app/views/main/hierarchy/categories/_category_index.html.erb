@@ -1,0 +1,10 @@
+<% for element in elements %>
+   <div id="<%= "#{element.id}_div" %>">
+<%   if @current.nil? || @current.empty?  || (index = @current.index(element.id)).nil? %>
+<%=    render :partial => 'main/hierarchy/categories/contracted', :object => element, :locals => {:margin_depth => margin_depth} %>
+<%   else
+       @current.delete_at(index) %>
+<%=    render :partial => 'main/hierarchy/categories/expanded', :object => element, :locals => {:margin_depth => margin_depth} %>
+<%   end %>
+   </div>
+<% end %>

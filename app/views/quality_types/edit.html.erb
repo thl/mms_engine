@@ -1,0 +1,10 @@
+<h1><%= ts 'edit.ing.record', :what => QualityType.human_name.titleize %></h1>
+<%= error_messages_for :quality_type %>
+<%  form_for(:quality_type, :url => quality_type_path(@quality_type), :html => { :method => :put }) do |f| %>
+<%=   render :partial => 'form', :locals => {:f => f} %>
+      <p><%= globalized_submit_tag 'update.this' %></p>
+<%  end %>
+<p>&nbsp;<br/>
+<%= link_to ts(:show), quality_type_path(@quality_type) %> |
+<%= link_to ts('back.this'), quality_types_path %>
+</p>

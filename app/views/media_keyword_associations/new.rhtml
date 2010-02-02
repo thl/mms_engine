@@ -1,0 +1,8 @@
+<h1><%= ts 'associate.record', :what => Keyword.human_name.titleize, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<%= error_messages_for :media_keyword_association %>
+<%  form_for(:media_keyword_association, :url => media_keyword_associations_path) do |f| %>
+<%=   render :partial => 'form', :locals => {:f => f} %>
+      <p><%= globalized_submit_tag 'create.this' %></p>
+<%  end %>
+<p>&nbsp;<br/>
+<%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'keywords'} %></p>

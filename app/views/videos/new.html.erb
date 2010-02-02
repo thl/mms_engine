@@ -1,0 +1,13 @@
+<h1><%= ts 'new.record', :what => Video.human_name.titleize %></h1>
+<%= error_messages_for :video %>
+<% form_for(:video, :url => videos_path, :html => {:multipart => true}) do |f| %>
+  <p><b><%= Movie.human_name.titleize.s %></b><br />
+<%= file_field :movie, :uploaded_data %></p>
+  <p><b><%= ts(:transcript) %></b><br />
+<%= file_field :transcript, :uploaded_data %>
+  </p>
+<%= render :partial => 'media/form', :locals => {:f => f} %>
+  <p><%= globalized_submit_tag 'create.this' %></p>
+<% end %>
+<p>&nbsp;<br/>
+<%= link_to ts('back.this'), media_path %></br>

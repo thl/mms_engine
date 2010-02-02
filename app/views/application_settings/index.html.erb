@@ -1,0 +1,37 @@
+<h1><%= ts 'list.ing.records', :what => ApplicationSetting.human_name(:count => :many).titleize %></h1>
+
+<table border="1" class="normal">
+  <tr>
+    <th><%= ApplicationSetting.human_name.titleize.s %></th>
+    <th><%= ApplicationSetting.human_attribute_name('description').s %></th>
+    <th><%= ApplicationSetting.human_attribute_name('value').s %></th>
+    <th><%= ApplicationSetting.human_attribute_name('string_value').s %></th>
+  </tr>
+<% can_edit = authorized? hash_for_edit_application_setting_path
+   for application_setting in @application_settings %>
+  <tr>
+    <td>
+<%  if can_edit %>
+<%=   link_to h(application_setting.title), edit_application_setting_path(application_setting) %>
+<%  else %>
+<%=   link_to h(application_setting.title), application_setting_path(application_setting) %>
+<%  end %>
+	</td>
+    <td><%=h application_setting.description %></td>
+    <td><%=h application_setting.value %></td>
+    <td><%=h application_setting.string_value %></td>
+    <td>
+<%  path = application_setting.configuration_path
+    if !path.nil? %>
+<%=   link_to ts(:configure), path %>
+<%  end %>
+    </td>
+  </tr>
+<% end %>
+</table>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_new_application_setting_path do %>
+<%=  link_to ts('new.record', :what => ApplicationSetting.human_name), new_application_setting_path %> |
+<% end %>
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>
