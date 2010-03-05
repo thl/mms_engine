@@ -20,11 +20,11 @@ module MediaCollectionAssociationsHelper
   end
   
   def stylesheet_files
-    uses_thickbox? ? super + ['thickbox', 'category_selector'] : super
+    uses_thickbox? ? super + ['jquery.autocomplete', 'jquery.checktree'] : super
   end
   
   def javascript_files
-    uses_thickbox? ? super + ['thickbox-compressed', 'category_selector'] : super
+    uses_thickbox? ? super + ['jquery.autocomplete', 'jquery.checktree', 'model-searcher'] : super
   end
   
   private
