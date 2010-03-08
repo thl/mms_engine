@@ -4,6 +4,10 @@
 <%  form_for(:medium, :url => pictures_path, :html => {:multipart => true}) do |f| %>
       <p><b><%= Image.human_attribute_name('uploaded_data').s %></b><br />
 <%=   file_field :image, :uploaded_data %></p>
+      <p><b><%= RecordingOrientation.human_name.titleize.s %></b><br />
+<%=   f.collection_select(:recording_orientation_id, @recording_orientations, :id, :title, { :include_blank => true }, language_options) %> (<%= link_to ts('new.record', :what => RecordingOrientation.human_name), new_recording_orientation_path, { :target => '_blank' } %>)</p>
+      <p><b><%= Medium.human_attribute_name('recording_note').s %></b><br />
+<%=   f.text_area :recording_note, :rows => 5, :class => 'mceEditor' %></p>
 <%=   render :partial => 'media/form', :locals => {:f => f} %>
       <p><%= globalized_submit_tag 'create.this' %></p>
 <%  end %>

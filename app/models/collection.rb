@@ -1,4 +1,6 @@
 class Collection < Category
+  headers['Host'] = Category.headers['Host'] if !Category.headers['Host'].blank?
+  
   self.element_name = 'category'
   include Tree
   # self.extend Tree::ClassMethods

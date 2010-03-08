@@ -18,8 +18,8 @@ en:
                 other: 'application settings'
             caption: 'caption'
             capture_device_maker:
-                one: 'camera manufacturer'
-                other: 'camera manufacturers'
+                one: 'capture device manufacturer'
+                other: 'capture device manufacturers'
             capture_device_model:
                 one: 'camera model'
                 other: 'camera models'
@@ -38,8 +38,8 @@ en:
             description_type: '{{what}} type'
             dialect: 'dialect'
             document: 
-                one: 'document'
-                other: 'documents'
+                one: 'text'
+                other: 'texts'
             glossary: 
                 one: 'glossary'
                 other: 'glossaries'
@@ -126,6 +126,7 @@ en:
             description_type:
                 title: 'Name of Description Type'
             document:
+                capture_device_model: 'Scanner Model'                
                 caption:
                     one: 'Title'
                     other: 'Titles'
@@ -148,6 +149,7 @@ en:
                 caption:
                     one: 'Caption'
                     other: 'Captions'
+                capture_device_model: 'Camera Model'
                 created_on: 'Created on'
                 photographer: 'Photographer'
                 private_note: 'Private Note'
