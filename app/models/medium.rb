@@ -27,7 +27,7 @@ class Medium < ActiveRecord::Base
   PREVIEW_ROWS = 2
   COLS = 4
   
-  CROPPED_SIZES = {:compact => '70:95x95#', :thumb => '70:120x120#'}
+  COMMON_SIZES = {:compact => '70:95x95#', :thumb => '70:120x120#', :essay => '80:280x280>'}
   
   include Util, FileUtils, MediaProcessor::MediumExtension
   

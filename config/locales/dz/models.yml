@@ -18,8 +18,8 @@ dz:
             # other
             caption: 'འགོ་བརྗོད།'
             capture_device_maker:
-                one: 'camera manufacturer'
-                other: 'camera manufacturers'
+                one: 'capture device manufacturer'
+                other: 'capture device manufacturers'
             capture_device_model:
                 one: 'camera model'
                 other: 'camera models'
@@ -126,6 +126,7 @@ dz:
             description_type:
                 title: 'Name of Description Type'
             document:
+                capture_device_model: 'Scanner Model'
                 caption: 'མགོ་མིང་།'
                 # one
                 # other
@@ -148,6 +149,7 @@ dz:
                 caption: 'འགོ་བརྗོད།'
                 # one
                 # other
+                capture_device_model: 'Camera Model'
                 created_on: 'གསར་བསྐྲུན་འབད་བའི་དུས་ཚེས།'
                 photographer: 'Maker'
                 private_note: 'Private Note'
