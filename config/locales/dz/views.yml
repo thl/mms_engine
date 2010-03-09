@@ -29,6 +29,10 @@ dz:
     dictionaries:
         tab: 'ཚིག་མཛོད།'
         title: 'Search Himalayan Languages Dictionaries'
+    document:
+        description:
+            preview: 'if pdf is available, preview will be generated automatically; otherwise if preview is available, include it here'
+            typescript: 'if original pdf is available, include it here'
     ethnicity: 'མི་རིགས།'
     # one
     # other

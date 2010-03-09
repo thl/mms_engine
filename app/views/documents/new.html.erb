@@ -2,9 +2,9 @@
 <%= error_messages_for :medium %>
 <%= error_messages_for :document %>
 <%  form_for(:medium, :url => documents_path, :html => {:multipart => true}) do |f| %>
-      <p><b><%= Typescript.human_attribute_name('uploaded_data').s %></b><br />
+      <p><b><%= Typescript.human_attribute_name('uploaded_data').s %></b> (<%= ts 'document.description.typescript'.s %>)<br />
 <%=   file_field :typescript, :uploaded_data %></p>
-      <p><b><%= Typescript.human_attribute_name('thumbnail').s %></b><br />
+      <p><b><%= Typescript.human_attribute_name('thumbnail').s %></b> (<%= ts 'document.description.preview'.s %>)<br />
 <%=   file_field :thumbnail, :uploaded_data %></p>
 <%=   render :partial => 'media/form', :locals => {:f => f} %>
       <p><%= globalized_submit_tag 'create.this' %></p>

@@ -11,7 +11,7 @@
 #  recording_note           :text
 #  private_note             :text
 #  type                     :string(10)      not null
-#  attachment_id            :integer(4)      not null
+#  attachment_id            :integer(4)
 #  taken_on                 :datetime
 #  recording_orientation_id :integer(4)
 #  capture_device_model_id  :integer(4)
@@ -27,7 +27,7 @@ class Medium < ActiveRecord::Base
   PREVIEW_ROWS = 2
   COLS = 4
   
-  COMMON_SIZES = {:compact => '70:95x95#', :thumb => '70:120x120#', :essay => '80:280x280>'}
+  COMMON_SIZES = {:compact => '70:95x95#', :thumb => '70:120x120#', :essay => '80:280x280>', :huge => '90:2000x2000>'}
   
   include Util, FileUtils, MediaProcessor::MediumExtension
   

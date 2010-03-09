@@ -41,10 +41,14 @@
    orientation = @medium.recording_orientation
    if !orientation.nil? %>
 <%=  display_if_not_blank RecordingOrientation.human_name.titleize.s, h(orientation.title).s %>
-<% end %>
-<%= display_if_not_blank Medium.human_attribute_name('recording_note').s, h(@medium.recording_note) %>
-<% authorized_only hash_for_edit_medium_path do %>
-<%=  display_if_not_blank Medium.human_attribute_name('private_note').s, h(@medium.private_note) %>
+<% end 
+   if !@medium.recording_note.nil? %>
+     <p><b><%= Medium.human_attribute_name('recording_note').s %>:</b></p>
+<%=  @medium.recording_note %>
+<% end
+   if authorized?(hash_for_edit_medium_path) && !@medium.private_note.nil? %>
+     <p><b><%= Medium.human_attribute_name('private_note').s %>:</b></p>
+<%=  @medium.private_note %>
 <% end %>
 <% collections = @medium.collections
    if !collections.empty? %>

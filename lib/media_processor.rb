@@ -310,11 +310,12 @@ module MediaProcessor
   
   module MediumExtension
     def rename
+      actual_media = self.attachment_id
+      return if actual_media.nil?
       message = String.new
       save_to_cold_storage = true
       media_folder = self.class.public_folder
       save_to_cold_storage = false if self.class==Document
-      actual_media = attachment_id
       parent = attachment
       folder = File.expand_path(File.join(RAILS_ROOT, 'public', media_folder, *parent.partitioned_path))
       begin

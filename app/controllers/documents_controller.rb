@@ -48,57 +48,46 @@ class DocumentsController < AclController
   # POST /documents
   # POST /documents.xml
   def create
-    @typescript = Typescript.new(params[:typescript])
-    success = @typescript.save
+    typescript_params = params[:typescript]
+    @typescript = nil
+    if !typescript_params.nil? && !typescript_params[:uploaded_data].nil?
+      @typescript = Typescript.new(params[:typescript])
+      success = @typescript.save
+      has_typescript = true
+    else
+      has_typescript = false
+      success = true
+    end
+    has_preview = false
     if success
       thumbnail_params = params[:thumbnail]
-      thumbnail_params[:parent_id] = @typescript.id
-      thumbnail_params[:thumbnail] = 'preview'
-      thumbnail = Typescript.new(thumbnail_params)
-      success = thumbnail.save
+      if !thumbnail_params.nil? && !thumbnail_params[:uploaded_data].nil?
+        # If thumbnail preview was given, use that as the original preview.
+        if has_typescript
+          thumbnail_params[:parent_id] = @typescript.id
+          thumbnail_params[:thumbnail] = Document::PREVIEW_TYPE.to_s
+        end
+        thumbnail = Typescript.new(thumbnail_params)
+        success = thumbnail.save
+        if success
+          if has_typescript
+            has_preview = true
+          else            
+            @typescript = thumbnail
+            has_typescript = true
+          end
+        end
+      end
     end
     if success
       # creating medium before thumbnail to get id name.
       @medium = Document.new(params[:medium])
       @medium.typescript = @typescript
       success = @medium.save
-      if success
-        # first create essay image
-        thumbnail.reload
-        full_filename = @typescript.full_filename
-        pos = full_filename.rindex('.')
-        main_full_beginning = full_filename[0...pos]
-        filename = @typescript.filename
-        pos = filename.rindex('.')
-        main_beginning = filename[0...pos]
-        [:essay, :compact].each do |type|
-          # get image settings
-          image_settings = Medium::COMMON_SIZES[type]
-          pos = image_settings.index(':')
-          if !pos.nil?
-            quality = image_settings[0...pos].to_i
-            size = image_settings[pos+1...image_settings.size]
-          end
-          # fetching preview image
-          thumb_img = Magick::Image.read(thumbnail.full_filename).first
-          if size[size.size-1]==35 # numeral sign
-            size.downcase!
-            pos = size.index('x')
-            thumb_img.crop_resized!(size[0...pos].to_i, size[pos+1...size.size-1].to_i)
-          else            
-            thumb_img.change_geometry(size) { |cols, rows, image| image.resize!(cols<1 ? 1 : cols, rows<1 ? 1 : rows) }
-          end
-          # write file
-          filename_ending = "_#{type.to_s}.jpg"
-          full_path = main_full_beginning + filename_ending
-          thumb_img.write(full_path) do
-            self.quality = quality if !quality.nil?
-            self.format = 'JPG'
-          end
-          # create db record
-          typescript = Typescript.create :content_type => 'image/jpeg', :filename => main_beginning + filename_ending, :size => File.size(full_path), :parent_id => @typescript.id, :thumbnail => type.to_s, :width => thumb_img.columns, :height => thumb_img.rows    
-        end
-      end
+    end
+    if success
+      has_preview = @medium.create_preview if has_typescript && !has_preview
+      @medium.create_thumbnails if has_preview
     end
     respond_to do |format|
       if success

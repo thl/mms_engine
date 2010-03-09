@@ -19,6 +19,7 @@
 #
 
 class Picture < Medium
+  validates_presence_of :attachment_id
   include MediaProcessor::PictureExtension
   belongs_to :image, :foreign_key => 'attachment_id'
   

@@ -21,6 +21,8 @@
 require 'fileutils'
 
 class Video < Medium
+  validates_presence_of :attachment_id
+  
   include Util
   include ForkedNotifier
   

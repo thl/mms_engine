@@ -29,6 +29,10 @@ en:
     dictionaries: 
         tab: 'Dictionaries'
         title: 'Search Himalayan Languages Dictionaries'
+    document:
+        description:
+            preview: 'if pdf is available, preview will be generated automatically; otherwise if preview is available, include it here'
+            typescript: 'if original pdf is available, include it here'
     ethnicity:
         one: 'socio-cultural group'
         other: 'socio-cultural groups'
