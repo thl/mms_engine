@@ -1,4 +1,5 @@
 class CaptionsController < AclController
+  helper :media
   before_filter :find_medium
   
   # GET /media/1/captions
@@ -109,6 +110,7 @@ class CaptionsController < AclController
       end
     end
   end
+  
   
   private
   

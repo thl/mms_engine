@@ -1,10 +1,8 @@
-<h1><%= ts :for, :what => t('list.ing', :what => @medium.class.human_attribute_name('caption', :count => :many)), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
-<p>
-<%= thumbnail_image_link(@medium) %>
-</p>
+<h1><%= ts :for, :what => t('list.ing.records', :what => Caption.human_name(:count => :many).capitalize), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<p><%= thumbnail_image_link(@medium) %></p>
 <table border="1" class="normal">
   <tr>
-<%  caption_title = @medium.class.human_attribute_name('caption') %>
+<%  caption_title = Caption.human_name.capitalize.s %>
     <th><%= caption_title.s %></th>
     <th><%= DescriptionType.human_name(:what => caption_title.titleize).s %></th>
     <th><%= Caption.human_attribute_name('creator').s %></th>

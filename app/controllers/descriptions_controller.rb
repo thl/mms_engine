@@ -1,4 +1,5 @@
 class DescriptionsController < AclController
+  helper :media
   before_filter :find_medium
   
   # GET /media/1/descriptions

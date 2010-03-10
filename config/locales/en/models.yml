@@ -16,7 +16,9 @@ en:
             application_setting:
                 one: 'application setting'
                 other: 'application settings'
-            caption: 'caption'
+            caption: 
+                one: 'caption'
+                other: 'captions'
             capture_device_maker:
                 one: 'capture device manufacturer'
                 other: 'capture device manufacturers'
@@ -83,6 +85,9 @@ en:
             sponsor:
                 one: 'sponsor'
                 other: 'sponsors'
+            title:
+                one: 'title'
+                other: 'titles'
             transformation: 'transformation'
             video: 
                 one: 'video'

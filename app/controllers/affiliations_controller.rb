@@ -1,4 +1,5 @@
 class AffiliationsController < AclController
+  helper :media
   before_filter :find_medium
   
   # GET /affiliations

@@ -1,0 +1,13 @@
+<%= f.error_messages %>
+<p>
+<%=  thumbnail_image_link(@medium) %>
+</p>
+<p>
+  <%= title_name.s %><br />
+  <%= f.text_field :title, fixed_language_options %>
+</p>
+<p>
+  <%= ComplexScripts::Language.human_name.titleize.s %><br />
+<%=  f.collection_select(:language_id, @languages, :id, :title) %> (<%= link_to ts('new.record', :what => ComplexScripts::Language.human_name), new_language_path, { :target => '_blank' } %>)
+</p>
+<%= javascript_tag "$('title_title').focus()" %>

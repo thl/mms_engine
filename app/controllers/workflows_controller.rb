@@ -1,4 +1,6 @@
 class WorkflowsController < AclController
+  helper :media
+  
   def initialize
     super
     @guest_perms = []

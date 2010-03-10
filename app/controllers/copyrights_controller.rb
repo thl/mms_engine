@@ -1,4 +1,5 @@
 class CopyrightsController < AclController
+  helper :media
 
   # GET /copyrights
   # GET /copyrights.xml

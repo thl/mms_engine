@@ -1,4 +1,5 @@
 class MediaSourceAssociationsController < AclController
+  helper :media
   before_filter :find_medium
   
   # GET /media_source_associations

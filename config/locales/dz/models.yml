@@ -17,6 +17,8 @@ dz:
             # one
             # other
             caption: 'འགོ་བརྗོད།'
+            # one
+            # other
             capture_device_maker:
                 one: 'capture device manufacturer'
                 other: 'capture device manufacturers'
@@ -83,6 +85,9 @@ dz:
             sponsor: 'ཟད་འགྲོ་གནང་མི།'
             # one
             # other
+            title:
+                one: 'title'
+                other: 'titles'
             transformation: 'བསྒྱུར་བ།'
             video: 'བརྙན་སྟོན།'
             # one

@@ -9,10 +9,17 @@
   <p><%= globalized_submit_tag 'update.this' %></p>
 <% end %>
 <hr/>
-<% captions = @medium.captions
+<% titles = @medium.titles
+   if !titles.empty? %>
+     <p><%= bookmark 'titles' %>
+	 <b><%= Title.human_name(:count => titles.size).titleize.s %></b>
+     (<%= link_to ts('new.record', :what => Title.human_name), new_medium_title_path(@medium) %>)</p>
+<%=  titles.collect{|title| "<p>#{title.title.s} (#{link_to ts('edit.this'), edit_medium_title_path(@medium, title)})</p>"}.join("\n") %>
+<% end
+   captions = @medium.captions
    if !captions.empty? %>
      <p><%= bookmark 'captions' %>
-	 <b><%= @medium.class.human_attribute_name('caption', :count => captions.size).s %></b>
+	 <b><%= Caption.human_name(:count => captions.size).titleize.s %></b>
      (<%= link_to ts('new.record', :what => Caption.human_name), new_medium_caption_path(@medium) %>)</p>
 <%=  captions.collect{|caption| "<p>#{caption.title.s} (#{link_to caption.description_type.nil? ? ts('edit.this') : caption.description_type.title, edit_medium_caption_path(@medium, caption)})</p>"}.join("\n") %>
      <hr/>
