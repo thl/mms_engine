@@ -1,7 +1,7 @@
 <% caption_title = @medium.class.human_attribute_name('caption') %>
 <b><%= ts :for, :what => caption_title, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></b>
 <p>
-<%= link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %>
+<%= thumbnail_image_link(@medium) %>
 </p>
 <%= display_if_not_blank caption_title.s, h(@caption.title).s %>
 <% if !@caption.description_type.nil? %>

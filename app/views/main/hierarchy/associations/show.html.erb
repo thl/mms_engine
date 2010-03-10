@@ -2,7 +2,7 @@
   <b><%= ts :for, :what => t('associate.ion', :what => t(@model.model_name.underscore).titleize), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></b>
 </p>
 <p>
-<%=  link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %>
+<%=  thumbnail_image_link(@medium) %>
 </p>
 <%= display_if_not_blank(ts(:name, :what => t(@model.model_name.underscore).titleize), @element.ancestors.collect(&:title).reverse.join(' > ')) %>
 <p>&nbsp;<br/>

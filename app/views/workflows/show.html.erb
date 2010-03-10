@@ -2,7 +2,7 @@
 <h1><%= ts :for, :what => Workflow.human_name.titleize, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
 <p>
     <b><%= Medium.human_name.titleize.s %></b><br />    
-<%= link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %></td>
+<%= thumbnail_image_link(@medium) %></td>
 </p>
 <%= render :partial => 'show', :locals => {:workflow => @workflow} %>
 <p>

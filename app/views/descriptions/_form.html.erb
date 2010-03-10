@@ -2,7 +2,7 @@
 
 <p>
      <b><%= Medium.human_name.titleize.s %></b><br />
-<%=  link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %>
+<%=  thumbnail_image_link(@medium) %>
 </p>
 <p>
      <b><%= Description.human_attribute_name('title').s %></b><br />

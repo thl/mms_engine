@@ -1,6 +1,6 @@
 <b><%= ts :for, :what => Copyright.human_name.titleize, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></b>
 <p>
-<%= link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %>
+<%= thumbnail_image_link(@medium) %>
 </p>
 <%= display_if_not_blank CopyrightHolder.human_name.titleize.s, h(@copyright.copyright_holder.title).s %>
 <%= display_if_not_blank ReproductionType.human_name.titleize.s, h(@copyright.reproduction_type.title).s %>

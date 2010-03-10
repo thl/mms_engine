@@ -1,5 +1,5 @@
 <h1><%= ts :for, :what => t('list.ing.records', :what => Source.human_name(:count => :many).titleize), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
-<p><%= link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %></p>
+<p><%= thumbnail_image_link(@medium) %></p>
 <p>
 <table border="1" class="normal">
   <tr>

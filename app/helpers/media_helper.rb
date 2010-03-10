@@ -8,11 +8,16 @@ module MediaHelper
         return caption
       end
     end
-    return captions.first    
+    return captions.first
   end
   
   def bookmark(name)
     tag :a, :name => name
+  end
+  
+  def thumbnail_image_link(medium)
+    thumbnail_image = medium.thumbnail_image
+    thumbnail_image.nil? ? nil : link_to(image_tag(thumbnail_image.public_filename), medium_path(medium))
   end
   
   def javascript_files

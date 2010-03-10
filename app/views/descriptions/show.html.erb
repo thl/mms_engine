@@ -1,6 +1,6 @@
 <b><%= ts :for, :what => Description.human_name.titleize, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></b>
 <p>
-<%= link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %>
+<%= thumbnail_image_link(@medium) %>
 </p>
 <%= display_if_not_blank Description.human_attribute_name('title').s, h(@description.title).s %>
 <% description_type = @description.description_type

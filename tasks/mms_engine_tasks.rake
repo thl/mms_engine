@@ -3,7 +3,7 @@ namespace :mms do
   desc "Syncronize extra files for MMS"
   task :sync do
     system "rsync -ruv --exclude '.*' vendor/plugins/mms_engine/db/migrate db"
-    system "rsync -ruv --exclude '.*' vendor/plugins/mms_engine/public ."
+    system "rsync -ruvK --exclude '.*' vendor/plugins/mms_engine/public ."
   end
   
   desc "Deploys collections to knowledge maps (authenticating through TMB_USER arguments) making the appropriate replacements."

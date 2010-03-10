@@ -1,7 +1,7 @@
 <%= tagged_tinymce_script %>
 
 <p>
-<%= link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %>
+<%= thumbnail_image_link(@medium) %>
 </p>
 <%= f.hidden_field :medium_id %>
 <p>

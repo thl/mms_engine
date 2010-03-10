@@ -2,7 +2,7 @@
     <b><%= Medium.human_name.titleize.s %></b><br />
 <%= f.hidden_field :medium_id %>
 <%= f.hidden_field :root_id %>
-<%= link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %></td>
+<%= thumbnail_image_link(@medium) %></td>
 </p>
 <p>
 <%  root = @model.root %>

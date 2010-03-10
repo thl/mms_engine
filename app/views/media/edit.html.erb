@@ -3,7 +3,7 @@
 <% form_for(:medium, :url => medium_path(@medium), :html => { :method => :put }) do |f| %>
 <%= f.hidden_field :attachment_id %>
   <p><b><%= Medium.human_name.titleize.s %></b><br />
-<%= link_to image_tag(@medium.thumbnail_image.public_filename), medium_path(@medium) %></p>
+<%= thumbnail_image_link(@medium) %></p>
 <%= render :partial => 'form', :locals => {:f => f} %>
 <%= render(:partial => 'videos/form') if @medium.class == Video %>
   <p><%= globalized_submit_tag 'update.this' %></p>
