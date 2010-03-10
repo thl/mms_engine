@@ -106,7 +106,11 @@
 <% end %>
 <hr/>
 <p>
-<% if captions.empty? %>
+<% if titles.empty? %>
+<%=  bookmark 'titles' %>
+<%=  link_to ts('add.record', :what => Title.human_name), new_medium_title_path(@medium)%> |
+<% end
+   if captions.empty? %>
 <%=  bookmark 'captions' %>
 <%=  link_to ts('add.record', :what => Caption.human_name), new_medium_caption_path(@medium)%> |
 <% end

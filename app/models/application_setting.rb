@@ -1,15 +1,14 @@
-# == Schema Information
-# Schema version: 20090626173648
+# == Schema Info
+# Schema version: 20100310060934
 #
 # Table name: application_settings
 #
 #  id            :integer(4)      not null, primary key
-#  title         :string(30)      not null
-#  description   :text
-#  value         :integer(4)
 #  permission_id :integer(4)
+#  description   :text
 #  string_value  :string(255)
-#
+#  title         :string(30)      not null
+#  value         :integer(4)
 
 class ApplicationSetting < ActiveRecord::Base
   belongs_to :permission

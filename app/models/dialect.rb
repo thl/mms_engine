@@ -1,11 +1,10 @@
-# == Schema Information
-# Schema version: 20090626173648
+# == Schema Info
+# Schema version: 20100310060934
 #
 # Table name: dialects
 #
 #  id    :integer(4)      not null, primary key
 #  title :string(140)     not null
-#
 
 class Dialect < ActiveRecord::Base
   has_many :words

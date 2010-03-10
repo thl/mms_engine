@@ -1,13 +1,12 @@
-# == Schema Information
-# Schema version: 20090626173648
+# == Schema Info
+# Schema version: 20100310060934
 #
 # Table name: administrative_levels
 #
 #  id         :integer(4)      not null, primary key
-#  title      :string(100)     not null
 #  country_id :integer(4)      not null
 #  level      :integer(4)      not null
-#
+#  title      :string(100)     not null
 
 class AdministrativeLevel < ActiveRecord::Base
   validates_presence_of :country_id, :level, :title

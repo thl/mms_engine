@@ -1,15 +1,14 @@
-# == Schema Information
-# Schema version: 20090626173648
+# == Schema Info
+# Schema version: 20100310060934
 #
 # Table name: glossaries
 #
 #  id              :integer(4)      not null, primary key
-#  title           :string(255)     not null
-#  description     :text
-#  abbreviation    :string(20)
 #  organization_id :integer(4)
-#  is_public       :boolean(1)      default(TRUE), not null
-#
+#  abbreviation    :string(20)
+#  description     :text
+#  is_public       :boolean(1)      not null, default(TRUE)
+#  title           :string(255)     not null
 
 class Glossary < ActiveRecord::Base
   has_many :definitions

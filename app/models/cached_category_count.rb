@@ -1,16 +1,15 @@
-# == Schema Information
-# Schema version: 20090626173648
+# == Schema Info
+# Schema version: 20100310060934
 #
 # Table name: cached_category_counts
 #
 #  id               :integer(4)      not null, primary key
 #  category_id      :integer(4)      not null
-#  medium_type      :string(255)
 #  count            :integer(4)      not null
+#  medium_type      :string(255)
+#  cache_updated_at :datetime        not null
 #  created_at       :datetime
 #  updated_at       :datetime
-#  cache_updated_at :datetime        not null
-#
 
 class CachedCategoryCount < ActiveRecord::Base
   belongs_to :category

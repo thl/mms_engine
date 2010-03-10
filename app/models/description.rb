@@ -1,16 +1,15 @@
-# == Schema Information
-# Schema version: 20090626173648
+# == Schema Info
+# Schema version: 20100310060934
 #
 # Table name: descriptions
 #
 #  id                  :integer(4)      not null, primary key
-#  title               :text            not null
-#  description_type_id :integer(4)
 #  creator_id          :integer(4)
+#  description_type_id :integer(4)
 #  language_id         :integer(4)
+#  title               :text            not null, default("")
 #  created_on          :datetime
 #  updated_on          :datetime
-#
 
 class Description < ActiveRecord::Base
   validates_presence_of :title

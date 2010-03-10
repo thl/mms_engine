@@ -1,11 +1,10 @@
-# == Schema Information
-# Schema version: 20090626173648
+# == Schema Info
+# Schema version: 20100310060934
 #
 # Table name: sponsors
 #
 #  id    :integer(4)      not null, primary key
 #  title :string(250)     not null
-#
 
 class Sponsor < ActiveRecord::Base
  validates_presence_of :title

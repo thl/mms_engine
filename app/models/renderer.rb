@@ -1,12 +1,11 @@
-# == Schema Information
-# Schema version: 20090626173648
+# == Schema Info
+# Schema version: 20100310060934
 #
 # Table name: renderers
 #
 #  id    :integer(4)      not null, primary key
-#  title :string(50)      default(""), not null
 #  path  :string(200)     not null
-#
+#  title :string(50)      not null, default("")
 
 class Renderer < ActiveRecord::Base
   has_many :transformations

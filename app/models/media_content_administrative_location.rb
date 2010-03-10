@@ -1,15 +1,14 @@
-# == Schema Information
-# Schema version: 20090626173648
+# == Schema Info
+# Schema version: 20100310060934
 #
 # Table name: media_administrative_locations
 #
 #  id                     :integer(4)      not null, primary key
-#  medium_id              :integer(4)      not null
 #  administrative_unit_id :integer(4)      not null
-#  spot_feature           :text
+#  medium_id              :integer(4)      not null
 #  notes                  :text
+#  spot_feature           :text
 #  type                   :string(50)
-#
 
 class MediaContentAdministrativeLocation < MediaAdministrativeLocation
 end

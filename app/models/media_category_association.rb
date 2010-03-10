@@ -1,15 +1,14 @@
-# == Schema Information
-# Schema version: 20090626173648
+# == Schema Info
+# Schema version: 20100310060934
 #
 # Table name: media_category_associations
 #
 #  id          :integer(4)      not null, primary key
-#  medium_id   :integer(4)      not null
 #  category_id :integer(4)      not null
+#  medium_id   :integer(4)      not null
 #  root_id     :integer(4)      not null
 #  created_at  :datetime
 #  updated_at  :datetime
-#
 
 class MediaCategoryAssociation < ActiveRecord::Base
   validates_presence_of :category_id, :medium_id

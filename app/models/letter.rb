@@ -1,12 +1,11 @@
-# == Schema Information
-# Schema version: 20090626173648
+# == Schema Info
+# Schema version: 20100310060934
 #
 # Table name: letters
 #
 #  id    :integer(4)      not null, primary key
-#  title :string(10)      not null
 #  order :integer(4)
-#
+#  title :string(10)      not null
 
 class Letter < ActiveRecord::Base
   has_many :words, :dependent => :destroy, :order => '`order`'

@@ -34,7 +34,7 @@ class TitlesController < AclController
     if !@medium.nil?
       @languages = ComplexScripts::Language.find(:all, :order => 'title')
       language = ComplexScripts::Language.find_iso_code(I18n.locale)
-      @title = @medium.titles.new(:language => language)
+      @title = @medium.titles.new(:language => language, :creator => current_user.person)
       respond_to do |format|
         format.html # new.html.erb
         format.xml  { render :xml => @title }
@@ -55,10 +55,9 @@ class TitlesController < AclController
   def create
     if !@medium.nil?
       @title = @medium.titles.new(params[:title])
-
       respond_to do |format|
         if @title.save
-          flash[:notice] = 'Title was successfully created.'
+          flash[:notice] = ts('new.successful', :what => Title.human_name.capitalize)
           format.html { redirect_to medium_title_url(@medium, @title) }
           format.xml  { render :xml => @title, :status => :created, :location => @title }
         else
@@ -75,10 +74,9 @@ class TitlesController < AclController
   def update
     if !@medium.nil?
       @title = Title.find(params[:id])
-
       respond_to do |format|
         if @title.update_attributes(params[:title])
-          flash[:notice] = 'Title was successfully updated.'
+          flash[:notice] = ts('edit.successful', :what => Title.human_name.capitalize)
           format.html { redirect_to medium_title_url(@medium, @title) }
           format.xml  { head :ok }
         else

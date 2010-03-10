@@ -1,19 +1,17 @@
-# == Schema Information
-# Schema version: 20090626173648
+# == Schema Info
+# Schema version: 20100310060934
 #
 # Table name: administrative_units
 #
 #  id                      :integer(4)      not null, primary key
-#  title                   :string(100)     not null
 #  administrative_level_id :integer(4)      not null
-#  parent_id               :integer(4)
-#  title_dz                :string(100)
-#  description             :text
 #  creator_id              :integer(4)
-#  created_on              :datetime
-#  order                   :integer(4)
+#  parent_id               :integer(4)
+#  description             :text
 #  is_problematic          :boolean(1)      not null
-#
+#  order                   :integer(4)
+#  title                   :string(100)     not null
+#  created_on              :datetime
 
 class AdministrativeUnit < ActiveRecord::Base
   include Tree  

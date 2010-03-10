@@ -1,14 +1,13 @@
-# == Schema Information
-# Schema version: 20090626173648
+# == Schema Info
+# Schema version: 20100310060934
 #
 # Table name: words
 #
 #  id          :integer(4)      not null, primary key
-#  title       :text            not null
 #  language_id :integer(4)      not null
-#  order       :integer(4)
 #  letter_id   :integer(4)
-#
+#  order       :integer(4)
+#  title       :text            not null, default("")
 
 class Word < ActiveRecord::Base
   belongs_to :language, :class_name => 'ComplexScripts::Language'

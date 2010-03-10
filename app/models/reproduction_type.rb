@@ -1,13 +1,12 @@
-# == Schema Information
-# Schema version: 20090626173648
+# == Schema Info
+# Schema version: 20100310060934
 #
 # Table name: reproduction_types
 #
 #  id      :integer(4)      not null, primary key
+#  order   :integer(4)      not null, default(0)
 #  title   :string(255)     not null
 #  website :string(255)
-#  order   :integer(4)      default(0), not null
-#
 
 class ReproductionType < ActiveRecord::Base
   validates_presence_of :title
