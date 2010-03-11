@@ -1,7 +1,7 @@
-require 'xml/xslt'
-
 class SubtitlesController < AclController
   def index
+    require 'xml/xslt'
+    
     video_id = params[:video_id]
     video = video_id.blank? ? nil : Video.find(video_id)
     transcript = video.transcript
