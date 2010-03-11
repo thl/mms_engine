@@ -27,7 +27,12 @@ ActionController::Routing::Routes.draw do |map|
     media.resources :collection_associations, :controller => 'media_collection_associations'
     media.resources :subject_associations, :controller => 'media_subject_associations'
     media.resources :ethnicity_associations, :controller => 'media_ethnicity_associations'
-    media.resources :affiliations, :captions, :collections, :descriptions, :ethnicities, :subjects, :titles
+    media.resources :affiliations, :captions, :collections, :descriptions, :ethnicities, :subjects
+    media.resources :titles, :as => 'titles'  do |title| 
+      title.resources :translated_titles, :controller => 'translated_titles'
+    end
+      
+      
   end
   
   map.resources :media_imports, :collection => { :confirm => :post, :status => :get }
