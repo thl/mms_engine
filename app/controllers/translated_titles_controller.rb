@@ -5,7 +5,7 @@ class TranslatedTitlesController < AclController
   # GET /translated_titles
   # GET /translated_titles.xml
   def index
-    if !@medium.nil? || !@title.nil?
+    if !@medium.nil? && !@title.nil?
       @translated_titles = @title.translated_titles.all
 
       respond_to do |format|
@@ -18,7 +18,7 @@ class TranslatedTitlesController < AclController
   # GET /translated_titles/1
   # GET /translated_titles/1.xml
   def show
-    if !@medium.nil? || !@title.nil?
+    if !@medium.nil? && !@title.nil?
       @translated_title = TranslatedTitle.find(params[:id])
 
     respond_to do |format|
@@ -31,7 +31,7 @@ class TranslatedTitlesController < AclController
   # GET /translated_titles/new
   # GET /translated_titles/new.xml
   def new
-    if !@medium.nil? || !@title.nil?
+    if !@medium.nil? && !@title.nil?
       @languages = ComplexScripts::Language.find(:all, :order => 'tranlated_title')
       language = ComplexScripts::Language.find_iso_code(I18n.locale)
       @translated_title = @title.translated_titles.new(:language => language, :creator => current_user.person)
@@ -45,7 +45,7 @@ class TranslatedTitlesController < AclController
 
   # GET /translated_titles/1/edit
   def edit
-    if !@medium.nil? || !@title.nil?
+    if !@medium.nil? && !@title.nil?
       @languages = ComplexScripts::Language.find(:all, :order => 'translated_title')
       @translated_title = TranslatedTitle.find(params[:id])
 	 end  
@@ -54,7 +54,7 @@ class TranslatedTitlesController < AclController
   # POST /translated_titles
   # POST /translated_titles.xml
   def create
-    if !@medium.nil? || !@title.nil?
+    if !@medium.nil? && !@title.nil?
       @translated_title = @title.translated_titles.new(params[:translated_title])
 
       respond_to do |format|
@@ -74,7 +74,7 @@ class TranslatedTitlesController < AclController
   # PUT /translated_titles/1
   # PUT /translated_titles/1.xml
   def update
-    if !@medium.nil? || !@title.nil?
+    if !@medium.nil? && !@title.nil?
       @translated_title = TranslatedTitle.find(params[:id])
 
       respond_to do |format|
@@ -94,7 +94,7 @@ class TranslatedTitlesController < AclController
   # DELETE /translated_titles/1
   # DELETE /translated_titles/1.xml
   def destroy
-    if !@medium.nil? || !@title.nil?
+    if !@medium.nil? && !@title.nil?
       @translated_title = TranslatedTitle.find(params[:id])
       @translated_title.destroy
 
@@ -108,7 +108,7 @@ class TranslatedTitlesController < AclController
   private
   
   def find_medium_and_title
-    @medium, @title = nil    
+    @medium, @title = nil
     begin
       medium_id = params[:medium_id]
       @medium = Medium.find(medium_id) if !medium_id.blank?
