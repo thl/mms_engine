@@ -1,0 +1,4 @@
+<% authorized_only hash_for_medium_title_translated_title_path(:action => 'destroy') do %>
+<%= link_to 'Destroy', medium_title_translated_title_path(@medium, @title, @translated_title), :confirm => 'Are you sure?', :method => :delete %> |
+<% end %>
+<%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'titles'} %>
