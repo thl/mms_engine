@@ -1,0 +1,25 @@
+<%= f.error_messages %>
+
+  <p>
+    <%= Citation.human_attribute_name('medium_id').s %><br />
+    <%= f.text_field :medium_id %>
+  </p>
+  <p>
+    <%= Citation.human_attribute_name('page_number').s %><br />
+    <%= f.text_field :page_number %>
+  </p>
+  <p>
+    <%= Citation.human_attribute_name('page_side').s %><br />
+    <%= f.text_field :page_side %>
+  </p>
+  <p>
+    <%= Citation.human_attribute_name('line_number').s %><br />
+    <%= f.text_field :line_number %>
+  </p>
+  <p>
+    <%= Citation.human_attribute_name('note').s %><br />
+    <%= f.text_area :note, :rows => 5 %>
+  </p>
+<%= f.hidden_field :creator_id %>
+<%= display_if_not_blank Caption.human_attribute_name('creator').s, h(@reference.creator.fullname).s %>
+<%= javascript_tag "$('citation_medium_id').focus()" %>

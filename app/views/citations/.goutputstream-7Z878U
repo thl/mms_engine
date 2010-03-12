@@ -1,0 +1,25 @@
+<h1><%= ts(:for, :what => t('list.ing.records', :what => Citation.human_name(:count => :many).capitalize), :whom => @reference.human_name.titleize %></h1>
+<table>
+ <tr>
+    <th><%= Citation.human_name.capitalize.s %></th>
+    <th><%= ComplexScripts::Language.human_name.capitalize.s %></th>
+    <th><%= ts :options %></th>
+  </tr>
+
+<% @citations.each do |citation| %>
+  <tr>
+    <td><%=h citation.reference_id %></td>
+    <td><%=h citation.reference_type %></td>
+    <td><%=h citation.medium_id %></td>
+    <td><%=h citation.page_number %></td>
+    <td><%=h citation.page_side %></td>
+    <td><%=h citation.line_number %></td>
+    <td><%=h citation.note %></td>
+    <td><%= link_to ts('manage.this'), medium_title_citation_path(@medium, reference) %></td>    
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New citation',new_medium_title_citation_path(@medium, @reference)%>

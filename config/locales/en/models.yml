@@ -25,6 +25,9 @@ en:
             capture_device_model:
                 one: 'camera model'
                 other: 'camera models'
+            citation:
+                one: 'citation'
+                other: 'citations'
             copyright:
                 one: 'copyright'
                 other: 'copyrights'
@@ -118,6 +121,12 @@ en:
             capture_device_model:
                 title: 'Name of Camera Model'
                 exif_tag: 'EXIF Tag for Model'
+            citation:
+                line_number: 'Line Number'
+                medium_id: 'Medium ID for Cited Resource'
+                note: 'Note'
+                page_number: 'Page Number'
+                page_side: 'Page Side'
             copyright:
                 notes: 'Notes'
             copyright_holder:

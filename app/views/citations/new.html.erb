@@ -1,0 +1,8 @@
+<h1><%= ts(:for, :what => t('new.record', :what => Citation.human_name.capitalize), :whom => @reference.title) %></h1>
+
+<% form_for(:citation, :url => @reference.class == Title ? medium_title_citations_path(@medium, @reference) : medium_title_translated_title_citations(@medium, @title, @reference)) do |f| %>
+<%=  render :partial => 'form', :locals => {:f => f } %>
+     <p><%= globalized_submit_tag 'create.this' %></p>
+<% end %>
+<p>&nbsp;<br/>
+<%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'captions'} %></p>
