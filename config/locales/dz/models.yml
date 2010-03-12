@@ -89,6 +89,9 @@ dz:
                 one: 'title'
                 other: 'titles'
             transformation: 'བསྒྱུར་བ།'
+            translated_title:
+                one: 'translated title'
+                other: 'translated titles'
             video: 'བརྙན་སྟོན།'
             # one
             # other

@@ -1,0 +1,10 @@
+<% title =  TranslatedTitle.human_name.titleize %>
+<b><%= ts :for, :what => title, :whom => @title.title.titleize %></b>
+<%= display_if_not_blank title.s, h(@translated_title.title).s %>
+<%= display_if_not_blank ComplexScripts::Language.human_name.titleize.s, h(@translated_title.language.title).s %>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_edit_medium_title_translated_title_path do %>
+<%= link_to ts('edit.this'), edit_medium_title_translated_title_path(@medium, @title, @translated_title) %> |
+<% end %>
+<%= render :partial => 'persistent_links' %>
+</p>

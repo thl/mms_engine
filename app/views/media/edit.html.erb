@@ -14,7 +14,14 @@
      <p><%= bookmark 'titles' %>
 	 <b><%= Title.human_name(:count => titles.size).titleize.s %></b>
      (<%= link_to ts('new.record', :what => Title.human_name), new_medium_title_path(@medium) %>)</p>
-<%=  titles.collect{|title| "<p>#{title.title.s} (#{link_to ts('edit.this'), edit_medium_title_path(@medium, title)})</p>"}.join("\n") %>
+<%   for title in titles 
+       translated_titles = title.translated_titles %>
+       <p><%= title.title.s %> (<%= link_to ts('edit.this'), edit_medium_title_path(@medium, title)%>; <%= link_to ts('new.record', :what => TranslatedTitle.human_name), new_medium_title_translated_title_path(@medium, title) %>)
+<%       if !translated_titles.empty? %>
+          <ul><%= translated_titles.collect{ |translated_title| "<li>#{h(translated_title.title).s} (#{h(translated_title.language.title)}; #{link_to ts('edit.this'), edit_medium_title_translated_title_path(@medium, title, translated_title)})</li>" }.join("\n") %></ul>
+<%       end %>
+       </p>
+<%   end %>
 <% end
    captions = @medium.captions
    if !captions.empty? %>

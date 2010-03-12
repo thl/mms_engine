@@ -32,7 +32,7 @@ class TranslatedTitlesController < AclController
   # GET /translated_titles/new.xml
   def new
     if !@medium.nil? && !@title.nil?
-      @languages = ComplexScripts::Language.find(:all, :order => 'tranlated_title')
+      @languages = ComplexScripts::Language.find(:all, :order => 'title')
       language = ComplexScripts::Language.find_iso_code(I18n.locale)
       @translated_title = @title.translated_titles.new(:language => language, :creator => current_user.person)
 
@@ -46,7 +46,7 @@ class TranslatedTitlesController < AclController
   # GET /translated_titles/1/edit
   def edit
     if !@medium.nil? && !@title.nil?
-      @languages = ComplexScripts::Language.find(:all, :order => 'translated_title')
+      @languages = ComplexScripts::Language.find(:all, :order => 'title')
       @translated_title = TranslatedTitle.find(params[:id])
 	 end  
   end
@@ -60,10 +60,10 @@ class TranslatedTitlesController < AclController
       respond_to do |format|
         if @translated_title.save
           flash[:notice] = ts('new.successful', :what => TranslatedTitle.human_name.capitalize)
-          format.html { redirect_to medium_title_translated_title_url(@medium, @title, @translated_title) }
+          format.html { redirect_to edit_medium_url(@medium) }
           format.xml  { render :xml => @translated_title, :status => :created, :location => @translated_title }
         else
-          @languages = ComplexScripts::Language.find(:all, :order => 'translated_title')
+          @languages = ComplexScripts::Language.find(:all, :order => 'title')
           format.html { render :action => "new" }
           format.xml  { render :xml => @translated_title.errors, :status => :unprocessable_entity }
         end
@@ -80,10 +80,10 @@ class TranslatedTitlesController < AclController
       respond_to do |format|
         if @translated_title.update_attributes(params[:translated_title])
           flash[:notice] = ts('edit.successful', :what => TranslatedTitle.human_name.capitalize)
-          format.html { redirect_to medium_title_translated_title_url(@medium, @title, @translated_title) }
+          format.html { redirect_to edit_medium_url(@medium) }
           format.xml  { head :ok }
         else
-          @languages = ComplexScripts::Language.find(:all, :order => 'translated_title')          
+          @languages = ComplexScripts::Language.find(:all, :order => 'title')          
           format.html { render :action => "edit" }
           format.xml  { render :xml => @translated_title.errors, :status => :unprocessable_entity }
         end
@@ -99,7 +99,7 @@ class TranslatedTitlesController < AclController
       @translated_title.destroy
 
       respond_to do |format|
-        format.html { redirect_to medium_title_translated_titles_url(@medium, @titles) }
+        format.html { redirect_to medium_title_translated_titles_url(@medium, @title) }
         format.xml  { head :ok }
       end
     end

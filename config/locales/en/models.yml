@@ -89,6 +89,9 @@ en:
                 one: 'title'
                 other: 'titles'
             transformation: 'transformation'
+            translated_title:
+                one: 'translated title'
+                other: 'translated titles'
             video: 
                 one: 'video'
                 other: 'videos'
