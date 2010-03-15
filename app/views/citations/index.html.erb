@@ -1,11 +1,14 @@
 <h1><%= ts(:for, :what => t('list.ing.records', :what => Citation.human_name.capitalize), :whom => @reference.title) %></h1>
 <p><%= thumbnail_image_link(@medium) %></p>
-<table>
+<table border="1">
   <tr>
-    <th><%= Citation.human_name.capitalize.s %></th>
-    <th><%= ComplexScripts::Language.human_name.capitalize.s %></th>
-    <th><%= ts :options %></th>
-  </tr>
+    <th><%= Citation.human_attribute_name('medium_id').s %></th>
+    <th><%= Citation.human_attribute_name('Page_Number').s %></th>
+    <th><%= Citation.human_attribute_name('Page_Size').s %></th>
+    <th><%= Citation.human_attribute_name('Line_Number').s %></th>
+    <th><%= Citation.human_attribute_name('Note').s %></th>
+        <th><%= ts :options %></th>
+ </tr>
 
 <% @citations.each do |citation| %>
   <tr>
@@ -14,8 +17,7 @@
     <td><%=h citation.page_side %></td>
     <td><%=h citation.line_number %></td>
     <td><%=h citation.note %></td>
-    <td><%= link_to 'Show', @reference.class == Title ? medium_title_citation_path(@medium, @reference, citation) : medium_title_translated_title_citation(@medium, @title, @reference, @citation) %></td>
-    <td><%= link_to 'Destroy', @reference.class == Title ? medium_title_citations_path(@medium, @reference) : medium_title_translated_tile_citations_path(@medium, @title, @reference), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to ts('manage.this'), @reference.class == Title ? medium_title_citation_path(@medium, @reference, citation) : medium_title_translated_title_citation_path(@medium, @title, @reference, citation) %></td>
   </tr>
 <% end %>
 </table>

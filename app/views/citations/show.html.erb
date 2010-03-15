@@ -8,17 +8,17 @@
    <%= thumbnail_image_link(@medium) %>
 </p>
 <p>
-  <b>Page number:</b>
+  <b>Page number:</b><br />
   <%=h @citation.page_number %>
 </p>
 
 <p>
-  <b>Page side:</b>
+  <b>Page side:</b><br />
   <%=h @citation.page_side %>
 </p>
 
 <p>
-  <b>Line number:</b>
+  <b>Line number:</b><br />
   <%=h @citation.line_number %>
 </p>
 
@@ -26,7 +26,9 @@
   <b>Note:</b><br />
   <%=h @citation.note %>
 </p>
-
-
-<%= link_to 'Edit', @reference.class == Title ? edit_medium_title_citation_path(@medium, @reference, @citation) : edit_medium_title_translated_title_citation_path(@medium, @reference, @citation) %> |
-<%= link_to 'Back', @reference.class == Title ? new_medium_title_citation_path(@medium, @reference, @citation) : new_medium_title_translated_title_citation_path(@medium, @reference, @citation) %>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_edit_medium_title_citation_path do %>
+<%= link_to 'Edit', @reference.class == Title ? edit_medium_title_citation_path(@medium, @reference, @citation) : edit_medium_title_translated_title_citation_path(@medium, @title, @reference, @citation) %> |
+<% end %>
+<%= render :partial => 'persistent_links' %>
+</p>

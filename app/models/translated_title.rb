@@ -3,6 +3,7 @@ class TranslatedTitle < ActiveRecord::Base
   belongs_to :parent_title, :class_name => 'Title', :foreign_key => 'title_id'
   belongs_to :language, :class_name => 'ComplexScripts::Language'
   belongs_to :creator, :class_name => 'Person', :foreign_key => 'creator_id'
+  has_many   :citations, :as => :reference
 end
 
 # == Schema Information
