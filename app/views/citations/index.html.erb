@@ -1,4 +1,4 @@
-<h1><%= ts(:for, :what => t('list.ing.records', :what => Citation.human_name.capitalize), :whom => @reference.title) %></h1>
+<h1><%= ts :in, :what => t(:for, :what => t('list.ing.records', :what => Citation.human_name.capitalize), :whom => @reference.title), :where => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
 <p><%= thumbnail_image_link(@medium) %></p>
 <table border="1">
   <tr>
@@ -12,10 +12,21 @@
 
 <% @citations.each do |citation| %>
   <tr>
-    <td><%=h citation.medium_id %></td>
-    <td><%=h citation.page_number %></td>
+    <td>
+<%    medium = citation.medium 
+      if !medium.nil? %>
+<%=     medium.id %>
+<%      titles = medium.titles
+        if !titles.empty? %>
+          : <%=h(titles.first.title).s %> ...
+<%	    end
+      else %>
+        &nbsp;
+<%    end %>
+    </td>
+    <td><%= citation.page_number %></td>
     <td><%=h citation.page_side %></td>
-    <td><%=h citation.line_number %></td>
+    <td><%= citation.line_number %></td>
     <td><%=h citation.note %></td>
     <td><%= link_to ts('manage.this'), @reference.class == Title ? medium_title_citation_path(@medium, @reference, citation) : medium_title_translated_title_citation_path(@medium, @title, @reference, citation) %></td>
   </tr>

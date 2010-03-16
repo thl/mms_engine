@@ -1,0 +1,31 @@
+<ul>
+<% for title in titles 
+     translated_titles = title.translated_titles %>
+     <li><p><%= title.title.s %> (<%=h title.language.title %>)
+<%     if !translated_titles.empty? %>
+         <ul><% for translated_title in translated_titles %>
+	       <li><%= h(translated_title.title).s %> (<%= h(translated_title.language.title) %>
+<%         authorized_only hash_for_edit_medium_title_translated_title_path do %>
+	      ; <%= link_to ts('edit.this'), edit_medium_title_translated_title_path(@medium, title, translated_title) %>
+<%         end %>)</li>
+<% 	     end %></ul>
+<%     end %>
+       &nbsp;<br/>
+<%     citations = title.citations
+       citations_size = citations.size
+       if citations_size==0 && authorized?(hash_for_new_medium_title_citation_path) %>
+<%=      link_to ts('add.record', :what => Citation.human_name), new_medium_title_citation_path(@medium, title) %>
+<%     elsif citations_size==1 %>
+<%=      link_to ts('see.record', :what => Citation.human_name), medium_title_citation_path(@medium, title, citations.first) %>
+<%     else %>
+<%=      link_to ts('see.record', :what => "#{Citation.human_name(:count => :many)} (#{citations_size})"), medium_title_citations_path(@medium, title) %>
+<%     end
+       authorized_only hash_for_edit_medium_title_path do %>
+         | <%= link_to ts('edit.this'), edit_medium_title_path(@medium, title) %>
+<%     end 
+       authorized_only hash_for_new_medium_title_translated_title_path do %>
+         | <%= link_to ts('new.record', :what => TranslatedTitle.human_name), new_medium_title_translated_title_path(@medium, title) %>
+<%     end %>
+    </p></li>
+<% end %>
+</ul>

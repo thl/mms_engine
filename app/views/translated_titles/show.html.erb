@@ -1,5 +1,6 @@
 <% title =  TranslatedTitle.human_name.titleize %>
-<b><%= ts :for, :what => title, :whom => @title.title.titleize %></b>
+<b><%= ts :in, :what => t(:for, :what => title, :whom => @title.title.titleize), :where => "#{Medium.human_name.titleize} #{@medium.id}" %></b>
+<p><%= thumbnail_image_link(@medium) %></p>
 <%= display_if_not_blank title.s, h(@translated_title.title).s %>
 <%= display_if_not_blank ComplexScripts::Language.human_name.titleize.s, h(@translated_title.language.title).s %>
 <p>&nbsp;<br/>

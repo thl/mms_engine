@@ -58,7 +58,7 @@ class TitlesController < AclController
       respond_to do |format|
         if @title.save
           flash[:notice] = ts('new.successful', :what => Title.human_name.capitalize)
-          format.html { redirect_to medium_title_url(@medium, @title) }
+          format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
           format.xml  { render :xml => @title, :status => :created, :location => @title }
         else
           @languages = ComplexScripts::Language.find(:all, :order => 'title')
@@ -77,7 +77,7 @@ class TitlesController < AclController
       respond_to do |format|
         if @title.update_attributes(params[:title])
           flash[:notice] = ts('edit.successful', :what => Title.human_name.capitalize)
-          format.html { redirect_to medium_title_url(@medium, @title) }
+          format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
           format.xml  { head :ok }
         else
           @languages = ComplexScripts::Language.find(:all, :order => 'title')
