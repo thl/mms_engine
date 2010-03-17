@@ -1,5 +1,5 @@
 <h1><%= ts :in, :what => ts(:for, :what => t('edit.ing.record', :what => Citation.human_name.titleize), :whom => @reference.title), :where => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
-<% form_for(:citation, :url => @reference.class == Title ? medium_title_citations_path(@medium, @reference, @citation) : medium_title_translated_title_citation_path(@medium, @title, @reference, @citation)) do |f| %>
+<% form_for(:citation, :url => polymorphic_path(@reference_stack + [@citation]), :html => {:method => :put}) do |f| %>
 <%=  render :partial => 'form', :locals => {:f => f } %>
      <p><%= globalized_submit_tag 'update.this' %></p>
 <% end %>
