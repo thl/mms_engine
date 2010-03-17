@@ -8,7 +8,7 @@ dz:
         accounts: 'རྩིས་ཐོ།'
         application_management: 'ལག་ལེན་འཛིན་སྐྱོང་།'
         content: 'ནང་དོན།'
-        files: 'Files'
+        files: 'ཡིག་སྣོད།'
         media_importation: 'Media Importation'
         media_processes: 'Media Processes'
         page: 'Admin Page'
@@ -28,7 +28,7 @@ dz:
     daily: 'ད་རིས་ཀྱི་ {{what}}།'
     dictionaries:
         tab: 'ཚིག་མཛོད།'
-        title: 'Search Himalayan Languages Dictionaries'
+        title: 'ཧི་མ་ལ་ཡཱན་སྐད་ཡིག་ཚུ་གི་ཚིག་མཛོད་ཚུ་འཚོལ་ཞིབ་འབད།'
     document:
         description:
             preview: 'if pdf is available, preview will be generated automatically; otherwise if preview is available, include it here'
@@ -36,14 +36,14 @@ dz:
     ethnicity: 'མི་རིགས།'
     # one
     # other
-    import: 'Import'
+    import: 'ནང་འདྲེན'
     keyword: 'གཙོ་ཚིག {{what}}།'
-    sponsored_by: 'sponsored by {{what}}'
+    sponsored_by: '{{what}} གི་རྒྱབ་སྐྱོར་ཐོག་ལས།'
     subject: 'དོན་ཚན།'
     # one
     # other
-    transcript: 'Transcript'
-    unicode_range: 'Unicode Range'
+    transcript: 'ཡིག་ཕབ།'
+    unicode_range: 'ཡུ་ནི་ཀོཌི་ཁྱབ་ཚད།'
     video:
-        needs_flash: 'You need a Flash Player to see this movie.'
-        not_ready: 'Video is being converted into the appropriate formats. It will be available shortly.'
+        needs_flash: 'བརྙན་སྟོན་འདི་བལྟ་ནིའི་དོན་ལུ་ཕེལེཤ་གཏང་འཕྲུལ་དགོ་པས།'
+        not_ready: 'བརྙན་སྟོན་འདི་འོས་འབབ་ཅན་གི་སྒྲིག་བཀོད་ཚུ་ལུ་གཞི་བསྒྱུར་འབད་དོ། དུས་ཡུན་དུམ་གྲ་ཅིག་ལས་འཐོབ་ཚུགས།'

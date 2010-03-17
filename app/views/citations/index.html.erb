@@ -1,6 +1,6 @@
 <h1><%= ts :in, :what => t(:for, :what => t('list.ing.records', :what => Citation.human_name.capitalize), :whom => @reference.title), :where => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
 <p><%= thumbnail_image_link(@medium) %></p>
-<table border="1">
+<table border="1" class="normal">
   <tr>
     <th><%= Citation.human_attribute_name('medium_id').s %></th>
     <th><%= Citation.human_attribute_name('Page_Number').s %></th>
