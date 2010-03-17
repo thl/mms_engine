@@ -1,4 +1,4 @@
 <% authorized_only hash_for_medium_title_citation_path(:action => 'destroy') do %>
-<%= link_to 'Delete', @reference.class == Title ? medium_title_citation_path(@medium, @reference, @citation) : medium_title_translated_title_citation_path(@medium, @title, @reference, @citation), :confirm => 'Are you sure?', :method => :delete %> |
+<%= link_to ts('delete.this'), @reference.class == Title ? medium_title_citation_path(@medium, @reference, @citation) : medium_title_translated_title_citation_path(@medium, @title, @reference, @citation), :confirm => te('delete.confirmation'), :method => :delete %> |
 <% end %>
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'titles'} %>

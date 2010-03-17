@@ -1,5 +1,7 @@
 <%= f.error_messages %>
-
+<p>
+<%=  thumbnail_image_link(@medium) %>
+</p>
   <p>
     <%= Citation.human_attribute_name('medium_id').s %><br />
     <%= f.text_field :medium_id %>
