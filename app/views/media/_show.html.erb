@@ -133,7 +133,7 @@
 <%=    display_if_not_blank Source.human_name(:count => media_source_associations.size).titleize.s, media_source_associations.collect {|s| "#{s.source.title} #{"(#{s.shot_number})" if !s.shot_number.nil?}"}.join(', ') %>
 <%   end %>
 <% end
-   authorized_only hash_for_workflow_path do
+   authorized_only hash_for_medium_workflow_path do
      workflow = @medium.workflow
      if !workflow.nil? %>
 <%=    render :partial => 'workflows/show', :locals => {:workflow => workflow} %>

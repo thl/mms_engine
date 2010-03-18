@@ -59,7 +59,7 @@ class CitationsController < AclController
       respond_to do |format|
         if @citation.save
           flash[:notice] = 'Citation was successfully created.'
-          format.html { redirect_to edit_medium_url(@medium) }
+          format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
           format.xml  { render :xml => @citation, :status => :created, :location => @citation }
         else
           @languages = ComplexScripts::Language.find(:all, :order => 'title')
@@ -78,7 +78,7 @@ class CitationsController < AclController
       respond_to do |format|
         if @citation.update_attributes(params[:citation])
           flash[:notice] = 'Citation was successfully updated.'
-          format.html { redirect_to edit_medium_url(@medium) }
+          format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
           format.xml  { head :ok }
         else
           @languages = ComplexScripts::Language.find(:all, :order => 'title')
@@ -96,7 +96,7 @@ class CitationsController < AclController
       @citation = Citation.find(params[:id])
       @citation.destroy
       respond_to do |format|
-        format.html { redirect_to edit_medium_url(@medium) }
+        format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
         format.xml  { head :ok }
       end
     end
