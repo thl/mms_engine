@@ -1,0 +1,24 @@
+<h1><%= ts 'list.ing.records', :what => Status.human_name(:count => :many).titleize %></h1>
+
+<table border="1" class="normal">
+  <tr>
+    <th><%= Status.human_name.titleize.s %></th>
+    <th><%= Status.human_attribute_name('description').s %></th>
+    <th><%= Status.human_attribute_name('position').s %></th>
+  </tr>
+
+<% @statuses.each do |status| %>
+  <tr>
+    <td><%=h status.title %></td>
+    <td><%=h status.description %></td>
+    <td><%=h status.position %></td>
+    <td><%= link_to 'Show', status %></td>
+    <td><%= link_to 'Edit', edit_status_path(status) %></td>
+    <td><%= link_to 'Destroy', status, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New status', new_status_path %>

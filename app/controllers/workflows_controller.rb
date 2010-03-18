@@ -5,18 +5,6 @@ class WorkflowsController < AclController
     super
     @guest_perms = []
   end
-  
-  # GET /workflows
-  # GET /workflows.xml
-  def index
-    redirect_to media_url
-#    @workflows = Workflow.find(:all)
-#
-#    respond_to do |format|
-#      format.html # index.html.erb
-#      format.xml  { render :xml => @workflows }
-#    end
-  end
 
   # GET /workflows/1
   # GET /workflows/1.xml

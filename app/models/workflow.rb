@@ -15,4 +15,5 @@
 
 class Workflow < ActiveRecord::Base
   belongs_to :medium
+  belongs_to :status
 end
