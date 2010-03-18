@@ -13,10 +13,11 @@
        if citations_size==0 && authorized?(hash_for_new_medium_title_translated_title_citation_path) %>
 <%=      link_to ts('add.record', :what => Citation.human_name), new_medium_title_translated_title_citation_path(@medium, translated_title) %>
 <%     elsif citations_size==1 %>
-<%=      link_to ts('see.record', :what => Citation.human_name), medium_title_translated_titles_path(@medium, @title, citations.first) %>
+<%=      link_to ts('see.record', :what => Citation.human_name), medium_title_translated_title_citation_path(@medium, title, translated_title, citations.first) %>
 <%     else %>
-<%=      link_to ts('see.record', :what => "#{Citation.human_name(:count => :many)} (#{citations_size})"), medium_title_translated_titles_path(@medium, @title) %>
-<%     end %>)</li>
+<%=      link_to ts('see.record', :what => "#{Citation.human_name(:count => :many)} (#{citations_size})"), medium_title_translated_title_citations_path(@medium, title, translated_title) %>
+<%     end %>
+         )</li>
 <% 	     end %></ul>
 <%     end %>
        <p>
