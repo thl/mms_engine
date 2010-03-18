@@ -1,4 +1,4 @@
-<%  authorized_only hash_for_workflow_path(:action => 'destroy') do %>
-<%=   link_to ts('delete.this'), workflow_path(@workflow), :confirm => te('delete.confirmation'), :method => :delete %> |
+<%  authorized_only hash_for_medium_workflow_path(:action => 'destroy') do %>
+<%=   link_to ts('delete.this'), medium_workflow_path(@medium, @workflow), :confirm => te('delete.confirmation'), :method => :delete %> |
 <%  end %>
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'workflow'} %>

@@ -1,13 +1,18 @@
+<<<<<<< HEAD
 <% title =  Citation.human_name.titleize %>
 <h1><%= ts :in, :what => t(:for, :what => title, :what => Citation.human_name.capitalize, :whom => @reference.title), :where => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+=======
+<% reference_title = @reference.title.s %>
+<h1><%= ts :in, :what => t(:for, :what => t('list.ing.records', :what => Citation.human_name.capitalize), :whom => reference_title), :where => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+>>>>>>> ee4ddd62ca315acf1e7a3cd7662459744752f02b
 <p><%= thumbnail_image_link(@medium) %></p>
 <%  medium = @citation.medium
     if !medium.nil? %>
       <p><b><%= Citation.human_attribute_name('medium_id').s %>:</b> <%= medium.id %>
 <%=   thumbnail_image_link(medium) %></p>
-<%    titles = medium.titles 
+<%    titles = medium.titles
       if !titles.empty? %>
-<%=     render :partial => 'titles/index', :locals => {:titles => titles} %>
+<%=     render :partial => 'titles/index_display_only', :locals => {:titles => titles} %>
 <%    end 
     end %>
 <%= display_if_not_blank Citation.human_attribute_name('page_number'), @citation.page_number %>
@@ -16,8 +21,11 @@
 <p><b>Note:</b></p>
 <%=h @citation.note %>
 <p>&nbsp;<br/>
-<%  authorized_only @reference.class==Title ? hash_for_edit_medium_title_citation_path : hash_for_edit_medium_title_translated_title_citation_path do %>
-<%= link_to 'Edit', @reference.class==Title ? edit_medium_title_citation_path(@medium, @reference, @citation) : edit_medium_title_translated_title_citation_path(@medium, @title, @reference, @citation) %> |
+<% authorized_only hash_for_new_medium_title_citation_path do %>
+<%=  link_to ts(:for, :what => t('new.record', :what => Citation.human_name), :whom => reference_title), new_polymorphic_path(@reference_stack + [Citation]) %> |
+<% end %>
+<%  authorized_only hash_for_edit_medium_title_citation_path do %>
+<%=   link_to 'Edit', edit_polymorphic_path(@reference_stack + [@citation]) %> |
 <% end %>
 <%= render :partial => 'persistent_links' %>
 </p>

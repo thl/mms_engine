@@ -32,8 +32,10 @@ ActionController::Routing::Routes.draw do |map|
       title.resources :citations
       title.resources :translated_titles, :as => 'translations' do |translated_title|
         translated_title.resources :citations
- 		   end
+ 		  end
     end
+    media.resource :workflow
+
   end
   map.resources :media_imports, :collection => { :confirm => :post, :status => :get }
   map.resources :media_processes, :collection => { :status => :get }
@@ -43,7 +45,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :application_settings, :copyrights, :copyright_holders, :description_types, :dictionary_searches,
   :documents, :glossaries, :keywords, :media_administrative_locations, :media_keyword_associations, :media_searches,
   :organizations, :pictures, :projects, :quality_types, :recording_orientations, :renderers, :reproduction_types,
-  :sources, :sponsors, :transformations, :videos, :workflows
+  :sources, :sponsors, :transformations, :videos, :statuses
     
   map.comatose_admin
   map.comatose_root 'ndlb/pages'  

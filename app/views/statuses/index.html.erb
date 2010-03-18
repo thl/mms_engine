@@ -1,0 +1,19 @@
+<h1><%= ts 'list.ing.records', :what => Status.human_name(:count => :many).titleize %></h1>
+
+<table border="1" class="normal">
+  <tr>
+    <th><%= Status.human_name.titleize.s %></th>
+    </tr>
+<% can_edit = authorized? hash_for_edit_status_path
+   for status in @statuses %>
+  <tr>
+    <td><%= link_to(h(status.title), can_edit ? edit_status_path(status) : statuses_path) %></td>
+  </tr>
+<% end %>
+</table>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_new_status_path do %>
+<%=  link_to ts('new.record', :what => Status.human_name), new_status_path %> |
+<% end %>
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

@@ -15,6 +15,10 @@
 <%=    render :partial => 'documents/show' %>
 <%   end %>
 <%=  display_if_not_blank ts(:id, :what => Medium.human_name.titleize), "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})" %>
+<%   titles = @medium.titles
+     if !titles.empty? %>
+<%=    render :partial => 'titles/index_display_only', :locals => {:titles => titles} %>
+<%   end %>
 <%   administrative_units = @medium.administrative_units 
      if !administrative_units.empty? %>
 <%=    display_if_not_blank MediaAdministrativeLocation.human_name(:count => administrative_units.size).titleize.s, administrative_units.collect {|u| link_to h(u.title).s, media_administrative_locations_path(:administrative_unit_id => u)}.join(', ') %>

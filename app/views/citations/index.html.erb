@@ -28,13 +28,13 @@
     <td><%=h citation.page_side %></td>
     <td><%= citation.line_number %></td>
     <td><%=h citation.note %></td>
-    <td><%= link_to ts('manage.this'), @reference.class == Title ? medium_title_citation_path(@medium, @reference, citation) : medium_title_translated_title_citation_path(@medium, @title, @reference, citation) %></td>
+    <td><%= link_to ts('manage.this'), polymorphic_path(@reference_stack + [citation]) %></td>
   </tr>
 <% end %>
 </table>
 <p>&nbsp;<br/>
 <% authorized_only hash_for_new_medium_title_citation_path do %>
-<%=  link_to ts(:for, :what => t('new.record', :what => Citation.human_name), :whom => @reference.class.human_name), new_medium_title_citation_path(@medium) %> |
+<%=  link_to ts(:for, :what => t('new.record', :what => Citation.human_name), :whom => @reference.class.human_name), new_polymorphic_path(@reference_stack + [Citation]) %> |
 <% end %>
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'titles'} %>
 </p>

@@ -1,0 +1,8 @@
+<% reference = polymorphic_stack.last
+   citations = reference.citations
+   citations_size = citations.size
+   if citations_size==1 %>
+     ; <%= link_to ts('see.record', :what => Citation.human_name), polymorphic_path(polymorphic_stack + [citations.first]) %>
+<% elsif citations_size>1 %>
+     ; <%= link_to ts('see.record', :what => "#{Citation.human_name(:count => :many)} (#{citations_size})"), polymorphic_path(polymorphic_stack + [Citation.new]) %>
+<% end %>
