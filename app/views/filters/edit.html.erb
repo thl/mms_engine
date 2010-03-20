@@ -1,0 +1,16 @@
+<h1>Editing filter</h1>
+
+<% form_for(@filter) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @filter %> |
+<%= link_to 'Back', filters_path %>
