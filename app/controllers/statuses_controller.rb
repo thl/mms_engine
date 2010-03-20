@@ -3,7 +3,7 @@ class StatusesController < AclController
   # GET /statuses
   # GET /statuses.xml
   def index
-    @statuses = Status.all
+    @statuses = Status.all(:order => :position)
 
       respond_to do |format|
         format.html # index.html.erb

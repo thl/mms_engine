@@ -51,7 +51,7 @@ class Medium < ActiveRecord::Base
   has_many :keywords, :through => :media_keyword_associations, :order => 'title'
   has_many :cumulative_media_category_associations, :dependent => :destroy
   has_many :titles, :dependent => :destroy
-
+  
   def media_collection_associations
     self.media_category_associations.find(:all, :conditions => {:root_id => Collection.root_id})
   end

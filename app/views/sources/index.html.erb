@@ -6,7 +6,7 @@
 <% can_edit = authorized? hash_for_edit_source_path
    for source in @sources %>
   <tr>
-    <td><%= can_edit ? link_to(h(source.title), edit_source_path(source)) : link_to(h(source.title), source_path(source)) %></td>
+    <td><%= link_to(h(source.title), can_edit ? edit_source_path(source) : source_path(source)) %></td>
   </tr>
 <% end %>
 </table>

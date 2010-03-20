@@ -3,22 +3,17 @@
 <table border="1" class="normal">
   <tr>
     <th><%= Status.human_name.titleize.s %></th>
-    <th><%= Status.human_attribute_name('description').s %></th>
-    <th><%= Status.human_attribute_name('position').s %></th>
-  </tr>
-
-<% @statuses.each do |status| %>
+    </tr>
+<% can_edit = authorized? hash_for_edit_status_path
+   for status in @statuses %>
   <tr>
-    <td><%=h status.title %></td>
-    <td><%=h status.description %></td>
-    <td><%=h status.position %></td>
-    <td><%= link_to 'Show', status %></td>
-    <td><%= link_to 'Edit', edit_status_path(status) %></td>
-    <td><%= link_to 'Destroy', status, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to(h(status.title), can_edit ? edit_status_path(status) : statuses_path) %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New status', new_status_path %>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_new_status_path do %>
+<%=  link_to ts('new.record', :what => Status.human_name), new_status_path %> |
+<% end %>
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

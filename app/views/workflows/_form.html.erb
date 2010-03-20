@@ -1,0 +1,5 @@
+<%= f.error_messages %>
+<p>
+	<%= f.label :status %><br />
+	<%= f.select :status_id, @statuses.collect{|d| [d.title, d.id]}, { :include_blank => false } %>
+</p>
