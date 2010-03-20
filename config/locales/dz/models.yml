@@ -16,6 +16,9 @@ dz:
             application_setting: 'application setting'
             # one
             # other
+            application_filter:
+                one: 'Application Filter'
+                other: 'Application Filters'
             caption: 'འགོ་བརྗོད།'
             # one
             # other
@@ -82,6 +85,9 @@ dz:
             reproduction_type: 'ཆོག་ཐམ་གྱི་དབྱེ་བ།' #'སྐྱེ་འཕེལ་དབྱེ་བ།'
             # one
             # other
+            setting:
+              one: 'Setting'
+              other: 'Settings'
             source:
                 one: 'source'
                 other: 'sources'
@@ -111,6 +117,8 @@ dz:
                 is_problematic: 'Is Problematic?'
                 parent: 'Parent'
                 title: 'བདག་སྐྱོང་ལས་ཚན།'
+            application_filter:
+                title: 'Title'
             application_setting:
                 description: 'འགྲེལ་བཤད།'
                 title: 'Application Setting Name'
@@ -198,6 +206,10 @@ dz:
                 title: 'Source Name'
             sponsor:
                 title: 'Sponsor Name'
+            status:
+                title: 'title'
+                description: 'description'
+                position: 'position'
             transformation:
                 path: 'Path'
                 title: 'Transformation Name'

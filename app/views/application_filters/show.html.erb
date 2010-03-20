@@ -1,0 +1,8 @@
+<p>
+  <b><%= ApplicationFilter.human_name.titleize.s %>:</b>
+  <%=h @filter.title %>
+</p>
+
+
+<%= link_to 'Edit', edit_application_filter_path(@filter) %> |
+<%= link_to 'Back to application_filter', application_filters_path %>

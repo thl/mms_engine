@@ -3,22 +3,23 @@
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :title %><br />
+    <%= Status.human_attribute_name('title').s %><br />
     <%= f.text_field :title %>
   </p>
   <p>
-    <%= f.label :description %><br />
+    <%= Status.human_attribute_name('description').s %><br />
     <%= f.text_area :description, :rows => 5 %>
   </p>
   <p>
-    <%= f.label :position %><br />
+    <%= Status.human_attribute_name('position').s %><br />
     <%= f.text_field :position %>
   </p>
   <p>
     <%= globalized_submit_tag 'update.this' %>
   </p>
 <% end %>
-
+<%  authorized_only hash_for_statuses_path(:action => 'destroy') do %>
 <td><%= link_to 'Delete', @status, :confirm => 'Are you sure?', :method => :delete %></td> |
+<%  end %>
 <%= link_to ts('back.to', :what => t(:all, :what => Status.human_name(:count => :many))), statuses_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>

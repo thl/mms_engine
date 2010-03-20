@@ -1,0 +1,17 @@
+<h1><%= ts('edit.ing.record', :what => ApplicationFilter.human_name.titleize) %></h1>
+<% form_for(@filter) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= ApplicationFilter.human_attribute_name('title').s%><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+      <%= globalized_submit_tag 'update.this' %>
+  </p>
+<% end %>
+<%  authorized_only hash_for_application_filters_path(:action => 'destroy') do %>
+<%=   link_to ts('delete.this'), application_filters_path(@filters), :confirm => te('delete.confirmation'), :method => :delete %> |
+<%  end %>
+<%= link_to ts('back.to', :what => t(:all, :what => ApplicationFilter.human_name(:count => :many))), application_filters_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %>

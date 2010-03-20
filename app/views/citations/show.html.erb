@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 <% title =  Citation.human_name.titleize %>
 <h1><%= ts :in, :what => t(:for, :what => title, :what => Citation.human_name.capitalize, :whom => @reference.title), :where => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
-=======
 <% reference_title = @reference.title.s %>
-<h1><%= ts :in, :what => t(:for, :what => t('list.ing.records', :what => Citation.human_name.capitalize), :whom => reference_title), :where => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
->>>>>>> ee4ddd62ca315acf1e7a3cd7662459744752f02b
 <p><%= thumbnail_image_link(@medium) %></p>
 <%  medium = @citation.medium
     if !medium.nil? %>

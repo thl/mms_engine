@@ -1,0 +1,15 @@
+<h1><%= ts 'new.record', :what => ApplicationFilter.human_name.titleize %></h1>
+<% form_for(:filter, :url => application_filters_path) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= ApplicationFilter.human_name.titleize.s %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+   <%= globalized_submit_tag 'create.this' %>
+  </p>
+<% end %>
+<p>&nbsp;<br/>
+<%= link_to ts('cancel.record', :what => t('new.this')), application_filters_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %></p>

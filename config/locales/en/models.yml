@@ -16,6 +16,9 @@ en:
             application_setting:
                 one: 'application setting'
                 other: 'application settings'
+            application_filter:
+                one: 'Application Filter'
+                other: 'Application Filters'
             caption: 
                 one: 'caption'
                 other: 'captions'
@@ -82,6 +85,9 @@ en:
             reproduction_type:
                 one: 'license type'
                 other: 'license types'
+            setting:
+                one: 'Setting'
+                other: 'Settings'
             source: 
                 one: 'source'
                 other: 'sources'
@@ -111,6 +117,8 @@ en:
                 is_problematic: 'Is Problematic?'
                 parent: 'Parent'
                 title: 'Administrative Unit Name'
+            application_filter:
+                title: 'Title'
             application_setting:
                 description: 'Description'
                 title: 'Application Setting Name'
@@ -193,11 +201,15 @@ en:
             reproduction_type:
                 order: 'Order'
                 title: 'License Type Name'
-                website: 'Website'
+                website: 'Website' 
             source:
                 title: 'Source Name'
             sponsor:
                 title: 'Sponsor Name'
+            status:
+                title: 'title'
+                description: 'description'
+                position: 'position'
             transformation:
                 path: 'Path'
                 title: 'Transformation Name'
