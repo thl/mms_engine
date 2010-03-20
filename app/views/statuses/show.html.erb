@@ -1,18 +1,18 @@
 <p>
-  <b>Title:</b>
+  <b>Status.human_attribute_name('title').s:</b>
   <%=h @status.title %>
 </p>
 
 <p>
-  <b>Description:</b>
+  <b>Status.human_attribute_name('description').s:</b>
   <%=h @status.description %>
 </p>
 
 <p>
-  <b>Position:</b>
+  <b>Status.human_attribute_name('position').s:</b>
   <%=h @status.position %>
 </p>
 
 
 <%= link_to 'Edit', edit_status_path(@status) %> |
-<%= link_to 'Back to Statuses', statuses_path %>
+<%= link_to ts('back.to', :what => t(:all, :what => Status.human_name(:count => :many))), statuses_path %>
