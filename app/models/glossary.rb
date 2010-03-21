@@ -1,5 +1,10 @@
+class Glossary < ActiveRecord::Base
+  has_many :definitions
+  belongs_to :organization
+end
+
 # == Schema Info
-# Schema version: 20100310060934
+# Schema version: 20100320035754
 #
 # Table name: glossaries
 #
@@ -9,8 +14,3 @@
 #  description     :text
 #  is_public       :boolean(1)      not null, default(TRUE)
 #  title           :string(255)     not null
-
-class Glossary < ActiveRecord::Base
-  has_many :definitions
-  belongs_to :organization
-end

@@ -1,5 +1,11 @@
+class Copyright < ActiveRecord::Base
+  belongs_to :medium
+  belongs_to :copyright_holder
+  belongs_to :reproduction_type
+end
+
 # == Schema Info
-# Schema version: 20100310060934
+# Schema version: 20100320035754
 #
 # Table name: copyrights
 #
@@ -8,9 +14,3 @@
 #  medium_id            :integer(4)      not null
 #  reproduction_type_id :integer(4)      not null
 #  notes                :text
-
-class Copyright < ActiveRecord::Base
-  belongs_to :medium
-  belongs_to :copyright_holder
-  belongs_to :reproduction_type
-end

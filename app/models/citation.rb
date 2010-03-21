@@ -6,19 +6,19 @@ class Citation < ActiveRecord::Base
   belongs_to :creator, :class_name => 'Person', :foreign_key => 'creator_id'
 end
 
-# == Schema Information
+# == Schema Info
+# Schema version: 20100320035754
 #
 # Table name: citations
 #
 #  id             :integer(4)      not null, primary key
-#  reference_id   :integer(4)      not null
-#  reference_type :string(255)     not null
+#  creator_id     :integer(4)
 #  medium_id      :integer(4)
-#  page_number    :integer(4)
-#  page_side      :string(5)
+#  reference_id   :integer(4)      not null
 #  line_number    :integer(4)
 #  note           :text
+#  page_number    :integer(4)
+#  page_side      :string(5)
+#  reference_type :string(255)     not null
 #  created_at     :datetime
 #  updated_at     :datetime
-#
-

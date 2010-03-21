@@ -1,5 +1,10 @@
+class CumulativeMediaCategoryAssociation < ActiveRecord::Base
+  belongs_to :medium
+  belongs_to :category
+end
+
 # == Schema Info
-# Schema version: 20100310060934
+# Schema version: 20100320035754
 #
 # Table name: cumulative_media_category_associations
 #
@@ -8,8 +13,3 @@
 #  medium_id   :integer(4)      not null
 #  created_at  :datetime
 #  updated_at  :datetime
-
-class CumulativeMediaCategoryAssociation < ActiveRecord::Base
-  belongs_to :medium
-  belongs_to :category
-end

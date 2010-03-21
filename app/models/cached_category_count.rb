@@ -1,16 +1,3 @@
-# == Schema Info
-# Schema version: 20100310060934
-#
-# Table name: cached_category_counts
-#
-#  id               :integer(4)      not null, primary key
-#  category_id      :integer(4)      not null
-#  count            :integer(4)      not null
-#  medium_type      :string(255)
-#  cache_updated_at :datetime        not null
-#  created_at       :datetime
-#  updated_at       :datetime
-
 class CachedCategoryCount < ActiveRecord::Base
   belongs_to :category
   
@@ -43,3 +30,16 @@ class CachedCategoryCount < ActiveRecord::Base
     return cached_count
   end
 end
+
+# == Schema Info
+# Schema version: 20100320035754
+#
+# Table name: cached_category_counts
+#
+#  id               :integer(4)      not null, primary key
+#  category_id      :integer(4)      not null
+#  count            :integer(4)      not null
+#  medium_type      :string(255)
+#  cache_updated_at :datetime        not null
+#  created_at       :datetime
+#  updated_at       :datetime

@@ -1,5 +1,10 @@
+class CaptureDeviceModel < ActiveRecord::Base
+  belongs_to :capture_device_maker
+  has_many :media
+end
+
 # == Schema Info
-# Schema version: 20100310060934
+# Schema version: 20100320035754
 #
 # Table name: capture_device_models
 #
@@ -9,8 +14,3 @@
 #  title                   :string(255)
 #  created_at              :datetime
 #  updated_at              :datetime
-
-class CaptureDeviceModel < ActiveRecord::Base
-  belongs_to :capture_device_maker
-  has_many :media
-end

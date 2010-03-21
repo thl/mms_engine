@@ -6,14 +6,15 @@ class TranslatedTitle < ActiveRecord::Base
   has_many   :citations, :as => :reference
 end
 
-# == Schema Information
+# == Schema Info
+# Schema version: 20100320035754
 #
 # Table name: translated_titles
 #
 #  id          :integer(4)      not null, primary key
-#  title       :string(255)     not null
-#  title_id    :integer(4)      not null
+#  creator_id  :integer(4)
 #  language_id :integer(4)      not null
+#  title_id    :integer(4)      not null
+#  title       :string(255)     not null
 #  created_at  :datetime
 #  updated_at  :datetime
-#

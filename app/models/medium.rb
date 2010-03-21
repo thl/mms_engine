@@ -1,44 +1,27 @@
-# == Schema Info
-# Schema version: 20100310060934
-#
-# Table name: media
-#
-#  id                       :integer(4)      not null, primary key
-#  attachment_id            :integer(4)
-#  capture_device_model_id  :integer(4)
-#  photographer_id          :integer(4)
-#  quality_type_id          :integer(4)
-#  recording_orientation_id :integer(4)
-#  private_note             :text
-#  recording_note           :text
-#  type                     :string(10)      not null
-#  created_on               :datetime
-#  partial_taken_on         :string(255)
-#  taken_on                 :datetime
-#  updated_on               :datetime
-
 require 'fileutils'
 
 class Medium < ActiveRecord::Base
-  include FilenameUtils
-  
   ROWS = 5
   PREVIEW_ROWS = 2
-  COLS = 4
-  
+  COLS = 4  
   COMMON_SIZES = {:compact => '70:95x95#', :thumb => '70:120x120#', :essay => '80:280x280>', :huge => '90:2000x2000>'}
   
-  include Util, FileUtils, MediaProcessor::MediumExtension
+  default_scope :conditions => {:application_filter_id => ApplicationFilter.application_filter.id} if !ApplicationFilter.application_filter.nil?
   
+  include Util, FileUtils, MediaProcessor::MediumExtension, FilenameUtils
+  belongs_to :capture_device_model  
+  belongs_to :application_filter
   belongs_to :photographer, :class_name => 'Person', :foreign_key => 'photographer_id'
   belongs_to :quality_type
   belongs_to :recording_orientation
-  belongs_to :capture_device_model
+  
   has_and_belongs_to_many :captions
   has_and_belongs_to_many :descriptions
   has_and_belongs_to_many :sources
+  
   has_one :workflow, :dependent => :destroy
   has_one  :media_recording_administrative_location, :dependent => :destroy
+  
   has_many :media_source_associations, :dependent => :destroy
   has_many :sources, :through => :media_source_associations
   has_many :media_content_administrative_locations, :order => 'DESC type', :dependent => :destroy
@@ -146,6 +129,10 @@ class Medium < ActiveRecord::Base
     end   
   end
   
+  def before_create
+    self.application_filter = ApplicationFilter.default_filter
+  end
+  
   def after_create
     # TODO: handle if it couldn't be saved
     rename
@@ -234,3 +221,23 @@ class Medium < ActiveRecord::Base
     end
   end
 end
+
+# == Schema Info
+# Schema version: 20100320035754
+#
+# Table name: media
+#
+#  id                       :integer(4)      not null, primary key
+#  application_filter_id    :integer(4)      not null
+#  attachment_id            :integer(4)
+#  capture_device_model_id  :integer(4)
+#  photographer_id          :integer(4)
+#  quality_type_id          :integer(4)
+#  recording_orientation_id :integer(4)
+#  private_note             :text
+#  recording_note           :text
+#  type                     :string(10)      not null
+#  created_on               :datetime
+#  partial_taken_on         :string(255)
+#  taken_on                 :datetime
+#  updated_on               :datetime

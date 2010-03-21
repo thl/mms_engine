@@ -1,5 +1,8 @@
+class MediaRecordingAdministrativeLocation < MediaAdministrativeLocation
+end
+
 # == Schema Info
-# Schema version: 20100310060934
+# Schema version: 20100320035754
 #
 # Table name: media_administrative_locations
 #
@@ -9,6 +12,3 @@
 #  notes                  :text
 #  spot_feature           :text
 #  type                   :string(50)
-
-class MediaRecordingAdministrativeLocation < MediaAdministrativeLocation
-end

@@ -1,15 +1,3 @@
-# == Schema Info
-# Schema version: 20100310060934
-#
-# Table name: media_administrative_locations
-#
-#  id                     :integer(4)      not null, primary key
-#  administrative_unit_id :integer(4)      not null
-#  medium_id              :integer(4)      not null
-#  notes                  :text
-#  spot_feature           :text
-#  type                   :string(50)
-
 class MediaAdministrativeLocation < ActiveRecord::Base
   validates_presence_of :medium_id, :administrative_unit_id
   belongs_to :medium
@@ -23,3 +11,15 @@ class MediaAdministrativeLocation < ActiveRecord::Base
     medium.media_administrative_locations
   end  
 end
+
+# == Schema Info
+# Schema version: 20100320035754
+#
+# Table name: media_administrative_locations
+#
+#  id                     :integer(4)      not null, primary key
+#  administrative_unit_id :integer(4)      not null
+#  medium_id              :integer(4)      not null
+#  notes                  :text
+#  spot_feature           :text
+#  type                   :string(50)

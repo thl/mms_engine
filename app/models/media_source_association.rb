@@ -1,5 +1,10 @@
+class MediaSourceAssociation < ActiveRecord::Base
+  belongs_to :medium
+  belongs_to :source
+end
+
 # == Schema Info
-# Schema version: 20100310060934
+# Schema version: 20100320035754
 #
 # Table name: media_source_associations
 #
@@ -9,8 +14,3 @@
 #  shot_number :integer(4)
 #  created_at  :datetime
 #  updated_at  :datetime
-
-class MediaSourceAssociation < ActiveRecord::Base
-  belongs_to :medium
-  belongs_to :source
-end

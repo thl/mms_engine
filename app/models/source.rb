@@ -1,5 +1,10 @@
+class Source < ActiveRecord::Base
+  has_many :media_source_associations
+  has_many :media, :through => :media_source_associations
+end
+
 # == Schema Info
-# Schema version: 20100310060934
+# Schema version: 20100320035754
 #
 # Table name: sources
 #
@@ -7,8 +12,3 @@
 #  title      :string(255)
 #  created_at :datetime
 #  updated_at :datetime
-
-class Source < ActiveRecord::Base
-  has_many :media_source_associations
-  has_many :media, :through => :media_source_associations
-end

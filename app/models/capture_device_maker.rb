@@ -1,5 +1,9 @@
+class CaptureDeviceMaker < ActiveRecord::Base
+  has_many :capture_device_models, :dependent => :destroy, :order => 'title'
+end
+
 # == Schema Info
-# Schema version: 20100310060934
+# Schema version: 20100320035754
 #
 # Table name: capture_device_makers
 #
@@ -8,7 +12,3 @@
 #  title      :string(255)
 #  created_at :datetime
 #  updated_at :datetime
-
-class CaptureDeviceMaker < ActiveRecord::Base
-  has_many :capture_device_models, :dependent => :destroy, :order => 'title'
-end

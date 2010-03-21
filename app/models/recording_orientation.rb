@@ -1,5 +1,9 @@
+class RecordingOrientation < ActiveRecord::Base
+  has_many :media, :dependent => :nullify
+end
+
 # == Schema Info
-# Schema version: 20100310060934
+# Schema version: 20100320035754
 #
 # Table name: recording_orientations
 #
@@ -7,7 +11,3 @@
 #  title      :string(255)
 #  created_at :datetime
 #  updated_at :datetime
-
-class RecordingOrientation < ActiveRecord::Base
-  has_many :media, :dependent => :nullify
-end

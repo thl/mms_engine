@@ -1,16 +1,3 @@
-# == Schema Info
-# Schema version: 20100310060934
-#
-# Table name: descriptions
-#
-#  id                  :integer(4)      not null, primary key
-#  creator_id          :integer(4)
-#  description_type_id :integer(4)
-#  language_id         :integer(4)
-#  title               :text            not null, default("")
-#  created_on          :datetime
-#  updated_on          :datetime
-
 class Description < ActiveRecord::Base
   validates_presence_of :title
   belongs_to :description_type
@@ -22,3 +9,16 @@ class Description < ActiveRecord::Base
     media.clear
   end
 end
+
+# == Schema Info
+# Schema version: 20100320035754
+#
+# Table name: descriptions
+#
+#  id                  :integer(4)      not null, primary key
+#  creator_id          :integer(4)
+#  description_type_id :integer(4)
+#  language_id         :integer(4)
+#  title               :text            not null, default("")
+#  created_on          :datetime
+#  updated_on          :datetime

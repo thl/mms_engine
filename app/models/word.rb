@@ -1,14 +1,3 @@
-# == Schema Info
-# Schema version: 20100310060934
-#
-# Table name: words
-#
-#  id          :integer(4)      not null, primary key
-#  language_id :integer(4)      not null
-#  letter_id   :integer(4)
-#  order       :integer(4)
-#  title       :text            not null, default("")
-
 class Word < ActiveRecord::Base
   belongs_to :language, :class_name => 'ComplexScripts::Language'
   belongs_to :letter
@@ -30,3 +19,14 @@ class Word < ActiveRecord::Base
     Word.find_by_sql("SELECT DISTINCT language_id FROM words WHERE id IN (SELECT DISTINCT definiendum_id FROM definitions)").collect { |word| word.language }
   end
 end
+
+# == Schema Info
+# Schema version: 20100320035754
+#
+# Table name: words
+#
+#  id          :integer(4)      not null, primary key
+#  language_id :integer(4)      not null
+#  letter_id   :integer(4)
+#  order       :integer(4)
+#  title       :text            not null, default("")

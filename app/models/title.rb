@@ -1,5 +1,14 @@
+class Title < ActiveRecord::Base
+  validates_presence_of :title, :medium_id, :language_id
+  belongs_to :medium
+  belongs_to :language, :class_name => 'ComplexScripts::Language'
+  belongs_to :creator, :class_name => 'Person', :foreign_key => 'creator_id'
+  has_many   :translated_titles
+  has_many   :citations, :as => :reference
+end
+
 # == Schema Info
-# Schema version: 20100310060934
+# Schema version: 20100320035754
 #
 # Table name: titles
 #
@@ -10,12 +19,3 @@
 #  title       :string(255)     not null
 #  created_at  :datetime
 #  updated_at  :datetime
-
-class Title < ActiveRecord::Base
-  validates_presence_of :title, :medium_id, :language_id
-  belongs_to :medium
-  belongs_to :language, :class_name => 'ComplexScripts::Language'
-  belongs_to :creator, :class_name => 'Person', :foreign_key => 'creator_id'
-  has_many   :translated_titles
-  has_many   :citations, :as => :reference
-end

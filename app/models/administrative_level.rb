@@ -1,13 +1,3 @@
-# == Schema Info
-# Schema version: 20100310060934
-#
-# Table name: administrative_levels
-#
-#  id         :integer(4)      not null, primary key
-#  country_id :integer(4)      not null
-#  level      :integer(4)      not null
-#  title      :string(100)     not null
-
 class AdministrativeLevel < ActiveRecord::Base
   validates_presence_of :country_id, :level, :title
   validates_numericality_of :level, :only_integer => true
@@ -22,3 +12,13 @@ class AdministrativeLevel < ActiveRecord::Base
     self.administrative_units.find(:all, :order => 'parent_id, title').collect{|unit| [unit.full_lineage(20), unit.id]}
   end
 end
+
+# == Schema Info
+# Schema version: 20100320035754
+#
+# Table name: administrative_levels
+#
+#  id         :integer(4)      not null, primary key
+#  country_id :integer(4)      not null
+#  level      :integer(4)      not null
+#  title      :string(100)     not null
