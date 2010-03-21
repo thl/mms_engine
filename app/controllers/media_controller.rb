@@ -39,7 +39,7 @@ class MediaController < AclController
         if type.blank?
           @pictures = @element.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Picture')
           @videos = @element.paged_media(Medium::COLS, nil, 'Video')
-          #@documents = @element.paged_media(Medium::COLS, nil, 'Document')
+          @documents = @element.paged_media(Medium::COLS, nil, 'Document')
           title = @element.title
           @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
           @more = { element_name => element_id, :type => '' }
@@ -78,7 +78,7 @@ class MediaController < AclController
         else
           @pictures = Picture.find(:all, :order => 'RAND()', :limit => Medium::COLS * Medium::PREVIEW_ROWS)
           @videos = Video.find(:all, :order => 'RAND()', :limit => 1)
-          #@documents = Document.find(:all, :order => 'RAND()', :limit => 1)
+          @documents = Document.find(:all, :order => 'RAND()', :limit => 1)
           @titles = { :picture => ts(:daily, :what => Picture.human_name(:count => :many).titleize), :video => ts(:daily, :what => Video.human_name(:count => :many).titleize), :document => ts(:daily, :what => Document.human_name(:count => :many).titleize) }
           @more = { :type => '' }
         end
@@ -143,7 +143,7 @@ class MediaController < AclController
     else      
       @pictures = Picture.find(:all, :order => 'RAND()', :limit => Medium::COLS * Medium::PREVIEW_ROWS)
       @videos = Video.find(:all, :order => 'RAND()', :limit => 1)
-      #@documents = Document.find(:all, :order => 'RAND()', :limit => 1)
+      @documents = Document.find(:all, :order => 'RAND()', :limit => 1)
       @titles = { :picture => ts(:daily, :what => Picture.human_name(:count => :many).titleize), :video => ts(:daily, :what => Video.human_name(:count => :many).titleize), :document => ts(:daily, :what => Document.human_name(:count => :many).titleize) }
       @more = { :type => '' }
       respond_to do |format|

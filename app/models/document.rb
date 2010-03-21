@@ -11,6 +11,19 @@ class Document < Medium
     super
     typescript.destroy
   end
+  
+  def thumbnail_image
+    att = attachment
+    return nil if att.nil?
+    att.children.find(:first, :conditions => {:thumbnail => 'thumb'} )
+  end
+  
+  def screen_size_image
+    att = attachment
+    return nil if att.nil?
+    att.children.find(:first, :conditions => {:thumbnail => 'normal'} )
+  end  
+  
     
   def self.public_folder
     'typescripts'
