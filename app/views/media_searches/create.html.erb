@@ -8,27 +8,6 @@
 <%=  @administrative_units.collect{|u| link_to h(u.title).s, media_administrative_locations_path(:administrative_unit_id => u)}.join(", ") %>
 <% end %>
 </p>
-<p><b><%= ts :found, :what => t(:collection, :count => :many).titleize %>:</b>
-<% if @collections.empty? %>
-      <i><%= ts(:none) %></i>
-<% else %>
-<%= @collections.collect{|c| link_to h(c.title).s, collection_path(c)}.join(", ") %>
-<% end %>
-</p>
-<p><b><%= ts :found, :what => t(:ethnicity, :count => :many).titleize %>:</b>
-<% if @ethnicities.empty? %>
-      <i><%= ts :none %></i>
-<% else %>
-<%= @ethnicities.collect{|e| link_to h(e.title).s, ethnicity_path(e)}.join(", ") %>
-<% end %>
-</p>
-<p><b><%= ts :found, :what => t(:subject, :count => :many).titleize %>:</b>
-<% if @subjects.empty? %>
-      <i><%= ts :none %></i>
-<% else %>
-<%= @subjects.collect{|s| link_to h(s.title).s, subject_path(s)}.join(", ") %>
-<% end %>
-</p>
 <p><b><%= ts :found, :what => Keyword.human_name(:count => :many).titleize %>:</b>
 <% if @keywords.empty? %>
       <i><%= ts :none %></i>

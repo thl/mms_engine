@@ -35,9 +35,6 @@ class MediaSearchesController < AclController
     @medium_pages = Paginator.new self, Medium.count_media_search(@media_search), 9, params[:page]
     @media = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset)
     @administrative_units = AdministrativeUnit.find(:all, :conditions => [Util.search_condition_string(@media_search.type, 'title', true), @media_search.title])
-    @collections = Collection.find(:all, :conditions => [Util.search_condition_string(@media_search.type, 'title',true), @media_search.title])
-    @ethnicities = Ethnicity.find(:all, :conditions => [Util.search_condition_string(@media_search.type, 'title', true), @media_search.title])
-    @subjects = Subject.find(:all, :conditions => [Util.search_condition_string(@media_search.type, 'title', true), @media_search.title])
     @keywords = Keyword.find(:all, :conditions => [Util.search_condition_string(@media_search.type, 'title', true), @media_search.title])
     @pagination_prev_url = { :page => @medium_pages.current.previous }
     @pagination_next_url = { :page => @medium_pages.current.next }
