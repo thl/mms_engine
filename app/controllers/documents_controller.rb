@@ -21,7 +21,7 @@ class DocumentsController < AclController
     else
       respond_to do |format|
         format.html # show.rhtml
-        format.xml  { render :xml => @medium.to_xml }
+        format.xml  { render :template => 'media/show' }
       end
     end
   end

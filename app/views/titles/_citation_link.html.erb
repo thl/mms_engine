@@ -1,8 +1,8 @@
 <% reference = polymorphic_stack.last
    citations = reference.citations
    citations_size = citations.size
-   if citations_size==0 && authorized?(hash_for_new_medium_title_citation_path) %>
-<%=  link_to ts('add.record', :what => Citation.human_name), new_polymorphic_path(polymorphic_stack + [Citation]) %>
+   if citations_size==0 %>
+<%=  link_to ts('add.record', :what => Citation.human_name), new_polymorphic_path(polymorphic_stack + [Citation]) if authorized?(hash_for_new_medium_title_citation_path) %>
 <% elsif citations_size==1 %>
 <%=  link_to ts('see.record', :what => Citation.human_name), polymorphic_path(polymorphic_stack + [citations.first]) %>
 <% else %>
