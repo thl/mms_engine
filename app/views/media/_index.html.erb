@@ -16,7 +16,7 @@
      <h3 align="center"><%= @titles[:document] %></h3>
 <%   no_media = false
      @more[:type] = 'Document' if !@more.nil? %>
-<%=  render :partial => 'media/media_table', :locals => {:media => @documents, :more => @more} %>
+<%=  render :partial => 'documents/media_table', :locals => {:media => @documents, :more => @more} %>
 <% end
    if no_media %>
      <h3 align="right"><%= ts 'media.none' %></h3>

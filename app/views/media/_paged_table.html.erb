@@ -1,0 +1,19 @@
+<% if media.empty? %>
+     <h3 align="right"><%= ts 'media.none' %></h3>
+<% else %>
+     <h3><%= title %></h3>
+     <table border="0" cellpadding="0px" cellspacing="5px" id="picframe">
+       <tr align="center" valign="middle">
+<%     i=0
+       for medium in media
+         next if medium.nil? %>
+<%=      render :partial => 'media/thumb_column', :locals => {:medium => medium} %>	 
+<%       i+=1
+         if i==Medium::COLS %>
+           </tr><tr align="center" valign="middle">
+<%         i=0
+         end
+       end %>
+       </tr>
+     </table>
+<% end %>

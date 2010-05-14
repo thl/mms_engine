@@ -22,11 +22,15 @@ class Document < Medium
     att = attachment
     return nil if att.nil?
     att.children.find(:first, :conditions => {:thumbnail => 'normal'} )
-  end  
-  
+  end
     
   def self.public_folder
     'typescripts'
+  end
+  
+  def prioritized_title
+    titles = self.titles.find(:all, :order => :id)
+    return titles.empty? ? self.id.to_s : titles.first.title
   end
   
   # Used to generate a preview of the document. For now, it only works with PDFs.

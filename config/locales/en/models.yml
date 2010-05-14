@@ -71,7 +71,9 @@ en:
             organization:
                 one: 'organization'
                 other: 'organizations'
-            picture: 'photograph'
+            picture: 
+                one: 'photograph'
+                other: 'photographs'
             project:
                 one: 'project'
                 other: 'projects'

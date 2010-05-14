@@ -6,11 +6,8 @@
     if !medium.nil? %>
       <p><b><%= Citation.human_attribute_name('medium_id').s %>:</b> <%= medium.id %>
 <%=   thumbnail_image_link(medium) %></p>
-<%    titles = medium.titles
-      if !titles.empty? %>
-<%=     render :partial => 'titles/index_display_only', :locals => {:titles => titles} %>
-<%    end 
-    end %>
+<%=   render :partial => 'titles/index_display_only', :locals => {:medium => medium} %>
+<%  end %>
 <%= display_if_not_blank Citation.human_attribute_name('page_number'), @citation.page_number %>
 <%= display_if_not_blank Citation.human_attribute_name('page_side'), h(@citation.page_side) %>
 <%= display_if_not_blank Citation.human_attribute_name('line_number'), @citation.line_number %>

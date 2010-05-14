@@ -1,27 +1,4 @@
-<% if @media.empty? %>
-     <h3 align="right"><%= ts 'media.none' %></h3>
-<% else %>
-     <h3><%= @title %></h3>
-     <table border="0" cellpadding="0px" cellspacing="5px" id="picframe">
-       <tr align="center" valign="middle">
-<%     i=0
-       for medium in @media
-         next if medium.nil? %>
-<%=      render :partial => 'media/thumb_column', :locals => {:medium => medium} %>	 
-<%       i+=1
-         if i==Medium::COLS %>
-           </tr><tr align="center" valign="middle">
-<%         i=0
-         end
-       end %>
-       </tr>
-     </table>
-     <p>
-<%=    link_to_remote(ts('results.previous'), :url => media_path(@pagination_prev_url), :method => :get) if @medium_pages.current.previous %>
-<%=    pagination_links_each(@medium_pages, {}) do |n|
-         @pagination_params[:page] = n
-         link_to_remote(n.to_s, :url => media_path(@pagination_params), :method => :get)
-       end %>
-<%=    link_to_remote(ts('results.next'), :url => media_path(@pagination_next_url), :method => :get) if @medium_pages.current.next %>
-     </p>
-<% end %>
+<%= render :partial => 'media/paged_table', :locals => { :media => @media, :title => @title } %>
+<%  if !@media.empty? %>
+<%=   render :partial => 'media/paged_links', :locals => { :medium_pages => @medium_pages, :pagination_params => @pagination_params } %>
+<%  end %>

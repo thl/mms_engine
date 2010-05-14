@@ -1,4 +1,4 @@
-<% form_for(:media_search, :url => media_searches_path) do |f| %>
+<% remote_form_for(:media_search, :url => media_searches_path) do |f| %>
    <p>
 <%=  f.text_field :title, fixed_language_options(:size => 12) %>
 <%=  submit_tag te('search.this'), language_options %><br/>

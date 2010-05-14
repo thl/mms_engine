@@ -1,16 +1,19 @@
-<ul>
-<% medium = Medium.new
-   medium.id = @medium.id	
-   for title in titles %>
-     <li><p><%= title.title.s %> (<%=h title.language.title %>
-<%=    render :partial => 'titles/citation_link_display_only', :locals => {:polymorphic_stack => [medium, title]} %>)</p>
-<%     translated_titles = title.translated_titles
-       if !translated_titles.empty? %>
-         <ul class="normal"><% for translated_title in translated_titles %>
-	       <li><%= h(translated_title.title).s %> (<%= h(translated_title.language.title) %>
-<%=        render :partial => 'titles/citation_link_display_only', :locals => {:polymorphic_stack => [medium, title, translated_title]} %>)</li>
-<% 	     end %></ul>
-<%     end %>
-     </li>
+<% titles = medium.titles 
+   if !titles.empty? %>
+   <ul>
+<%   wrapper_medium = Medium.new
+     wrapper_medium.id = medium.id	
+     for title in titles %>
+       <li><p><%= title.title.s %> (<%=h title.language.title %>
+<%=      render :partial => 'titles/citation_link_display_only', :locals => {:polymorphic_stack => [wrapper_medium, title]} %>)</p>
+<%       translated_titles = title.translated_titles
+         if !translated_titles.empty? %>
+           <ul class="normal"><% for translated_title in translated_titles %>
+	         <li><%= h(translated_title.title).s %> (<%= h(translated_title.language.title) %>
+<%=          render :partial => 'titles/citation_link_display_only', :locals => {:polymorphic_stack => [wrapper_medium, title, translated_title]} %>)</li>
+<% 	       end %></ul>
+<%       end %>
+       </li>
+<%   end %>
+   </ul>
 <% end %>
-</ul>

@@ -1,0 +1,11 @@
+<% if media.empty? %>
+     <h3 align="right"><%= ts 'media.none' %></h3>
+<% else %>
+     <h3><%= title %></h3>
+     <table border="1" cellpadding="0px" cellspacing="0px" id="picframe">
+<%     for medium in media
+         next if medium.nil? %>
+         <tr align="center" valign="middle"><td align="left" class="normal"><%= link_to medium.prioritized_title.s, medium_path(medium), {:class => 'thickbox'} %></td></tr>
+<%     end %>
+     </table>
+<% end %>

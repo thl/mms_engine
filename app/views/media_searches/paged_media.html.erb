@@ -2,6 +2,7 @@
 <%= render :partial => 'media_searches/tabulated_search_results' %>
 </div>
 <div id="secondary">
+<%= render :partial => 'media_searches/paged_media' %>
 </div>
 <p>&nbsp;<br/>
 <%= link_to ts('back.to', :what => t(:all, :what => Medium.human_name(:count => :many))), media_path %>

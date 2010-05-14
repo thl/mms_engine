@@ -1,0 +1,4 @@
+<%= render :partial => 'documents/paged_table', :locals => { :media => @media, :title => @title } %>
+<%  if !@media.empty? %>
+<%=   render :partial => 'media/paged_links', :locals => { :medium_pages => @medium_pages, :pagination_params => @pagination_params } %>
+<%  end %>

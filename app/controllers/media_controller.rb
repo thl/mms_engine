@@ -21,8 +21,6 @@ class MediaController < AclController
       keyword_id = params[:keyword_id]
       type = params[:type]
       @pagination_params = Hash.new
-      @pagination_prev_url = Hash.new
-      @pagination_next_url = Hash.new
       element_id = nil
       element_name = nil
       @@element_candidates.each_key do |element_name|
@@ -53,8 +51,6 @@ class MediaController < AclController
           @medium_pages = Paginator.new self, @element.count_inherited_media(type), Medium::COLS * Medium::ROWS, params[:page]
           @media = @element.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset, type)
           @pagination_params[element_name] = element_id
-          @pagination_prev_url[element_name] = element_id
-          @pagination_next_url[element_name] = element_id
           @title = ts(:in, :what => type.pluralize, :where => @element.title)
         end
         @current = @element.ancestors.collect{|c| c.id.to_i}
@@ -65,16 +61,12 @@ class MediaController < AclController
         @medium_pages = Paginator.new self, @keyword.media.size, Medium::COLS * Medium::ROWS, params[:page]
         @media = @keyword.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset)
         @pagination_params[:keyword_id] = @keyword.id
-        @pagination_prev_url[:keyword_id] = @keyword.id
-        @pagination_next_url[:keyword_id] = @keyword.id
         @title = ts(:in, :what => Medium.human_name(:count => :many).titleize, :where => ts(:keyword, :what => @keyword.title))
       else
-        if request.xhr?
-          if !type.blank?
-            @medium_pages = Paginator.new self, Medium.count(:conditions => { :type => type }), Medium::COLS * Medium::ROWS, params[:page]
-            @media = Medium.find(:all, :conditions => {:type => type}, :limit => @medium_pages.items_per_page, :offset => @medium_pages.current.offset)
-            @title = ts(:all, :what => type.pluralize)
-          end
+        if !type.blank?
+          @medium_pages = Paginator.new self, Medium.count(:conditions => { :type => type }), Medium::COLS * Medium::ROWS, params[:page]
+          @media = Medium.find(:all, :conditions => {:type => type}, :limit => @medium_pages.items_per_page, :offset => @medium_pages.current.offset)
+          @title = ts(:all, :what => type.pluralize)
         else
           @pictures = Picture.find(:all, :order => 'RAND()', :limit => Medium::COLS * Medium::PREVIEW_ROWS)
           @videos = Video.find(:all, :order => 'RAND()', :limit => 1)
@@ -83,19 +75,11 @@ class MediaController < AclController
           @more = { :type => '' }
         end
       end
-      if !@medium_pages.nil?
-        @pagination_prev_url[:page] = @medium_pages.current.previous
-        @pagination_next_url[:page] = @medium_pages.current.next
-        if !type.blank?
-          @pagination_params[:type] = type
-          @pagination_prev_url[:type] = type
-          @pagination_next_url[:type] = type
-        end
-      end
+      @pagination_params[:type] = type if !@medium_pages.nil? && !type.blank?
     rescue ActiveRecord::RecordNotFound
       redirect_to media_path
     else
-      rendering_main = !request.xhr? || (@media.nil? && @pictures.nil? && @videos.nil?) # && @documents.nil?
+      rendering_main = !request.xhr? || (@media.nil? && @pictures.nil? && @videos.nil? && @documents.nil?)
       if rendering_main
         @keywords = Keyword.all_tabulated_by_media
         count = @keywords.collect{ |k| k.counted_media.to_i}
@@ -119,7 +103,7 @@ class MediaController < AclController
               page.replace_html 'secondary', :partial => 'media/index'
               page.replace_html('navigation', :partial => partial) if !element_id.blank?
             else
-              page.replace_html 'secondary', :partial => 'media/paged_index'
+              page.replace_html 'secondary', :partial => type == 'Document' ? 'documents/paged_index' : 'media/paged_index'
             end
             page.call 'tb_remove'
             page.call 'tb_init', 'a.thickbox, area.thickbox, input.thickbox'
@@ -127,7 +111,15 @@ class MediaController < AclController
         end
       else
         respond_to do |format|
-          format.html # index.rhtml
+          format.html do
+            if !@medium_pages.nil?
+              if type == 'Document'
+                render :template => 'documents/paged_index'
+              else
+                render :action => 'paged_index'
+              end
+            end # else render index.rhtml
+          end
           format.xml  { render :xml => @media.to_xml }
         end
       end
