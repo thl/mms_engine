@@ -24,7 +24,7 @@ class Medium < ActiveRecord::Base
   
   has_many :media_source_associations, :dependent => :destroy
   has_many :sources, :through => :media_source_associations
-  has_many :media_content_administrative_locations, :order => 'DESC type', :dependent => :destroy
+  has_many :media_content_administrative_locations, :order => 'type DESC', :dependent => :destroy
   has_many :media_administrative_locations, :dependent => :destroy
   has_many :media_category_associations, :dependent => :destroy
   has_many :media_keyword_associations, :dependent => :destroy
@@ -103,7 +103,6 @@ class Medium < ActiveRecord::Base
       
   def self.paged_media_search(media_search, limit, offset, type)
     # for now asumming that its English; change later TODO
-    # TODO: Meterle type a las conditiones!!!!
     conditions_string = "(SELECT DISTINCT media.* FROM media, captions, captions_media WHERE captions_media.medium_id = media.id AND captions_media.caption_id = captions.id AND " + Util.search_condition_string(media_search.type, 'captions.title', true)
     conditions_array = [media_search.title]
     if !type.nil?
@@ -116,14 +115,14 @@ class Medium < ActiveRecord::Base
       conditions_string << ' AND media.type = ?'
       conditions_array << type
     end
-    conditions_string << ") UNION (SELECT media.* FROM media, titles WHERE titles.medium_id = media.id AND " + Util.search_condition_string(media_search.type, 'title', false)
-    conditions_array << "%#{media_search.title}%"
+    conditions_string << ") UNION (SELECT media.* FROM media, titles WHERE titles.medium_id = media.id AND " + Util.search_condition_string(media_search.type, 'title', true)
+    conditions_array << media_search.title
     if !type.nil?
       conditions_string << ' AND media.type = ?'
       conditions_array << type
     end
-    conditions_string << ") UNION (SELECT media.* FROM media, titles, translated_titles WHERE titles.medium_id = media.id AND translated_titles.title_id = titles.id AND " + Util.search_condition_string(media_search.type, 'translated_titles.title', false)
-    conditions_array << "%#{media_search.title}%"
+    conditions_string << ") UNION (SELECT media.* FROM media, titles, translated_titles WHERE titles.medium_id = media.id AND translated_titles.title_id = titles.id AND " + Util.search_condition_string(media_search.type, 'translated_titles.title', true)
+    conditions_array << media_search.title
     if !type.nil?
       conditions_string << ' AND media.type = ?'
       conditions_array << type
@@ -144,15 +143,11 @@ class Medium < ActiveRecord::Base
     conditions_string = "SELECT COUNT(media.id) FROM media, descriptions, descriptions_media WHERE descriptions_media.medium_id = media.id AND descriptions_media.description_id = descriptions.id AND " + Util.search_condition_string(media_search.type, 'title', true)
     conditions_string << ' AND media.type = ?' if !type.nil?
     descriptions = Medium.count_by_sql([conditions_string] + conditions_array) 
-    conditions_array = ["%#{media_search.title}%"]
-    if !type.nil?
-      conditions_string << ' AND media.type = ?'
-      conditions_array << type
-    end    
-    conditions_string = "SELECT COUNT(media.id) FROM media, titles WHERE titles.medium_id = media.id AND " + Util.search_condition_string(media_search.type, 'title', false)
+    conditions_string << ' AND media.type = ?' if !type.nil?
+    conditions_string = "SELECT COUNT(media.id) FROM media, titles WHERE titles.medium_id = media.id AND " + Util.search_condition_string(media_search.type, 'title', true)
     conditions_string << ' AND media.type = ?' if !type.nil?
     titles = Medium.count_by_sql([conditions_string] + conditions_array) 
-    conditions_string = "SELECT COUNT(media.id) FROM media, titles, translated_titles WHERE titles.medium_id = media.id AND translated_titles.title_id = titles.id AND " + Util.search_condition_string(media_search.type, 'translated_titles.title', false)
+    conditions_string = "SELECT COUNT(media.id) FROM media, titles, translated_titles WHERE titles.medium_id = media.id AND translated_titles.title_id = titles.id AND " + Util.search_condition_string(media_search.type, 'translated_titles.title', true)
     conditions_string << ' AND media.type = ?' if !type.nil?
     translated_titles = Medium.count_by_sql([conditions_string] + conditions_array) 
     captions + descriptions + titles + translated_titles

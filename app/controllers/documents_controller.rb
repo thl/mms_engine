@@ -1,14 +1,19 @@
 class DocumentsController < AclController
   helper :media
 
+  def initialize
+    super
+    @guest_perms += ['documents/by_title']
+  end
+
   # GET /documents
   # GET /documents.xml
   def index
-    @documents = Document.find(:all)
-
+    title = params[:title]
+    @documents = title.blank? ? Document.find(:all) : Document.find(:all, :joins => :titles, :conditions => {'titles.title' => title}) + Document.find(:all, :joins => {:titles => :translated_titles}, :conditions => {'translated_titles.title' => title})
     respond_to do |format|
       format.html # index.rhtml
-      format.xml  { render :xml => @documents.to_xml }
+      format.xml  # { render :xml => @documents.to_xml }
     end
   end
 
@@ -81,7 +86,9 @@ class DocumentsController < AclController
     end
     if success
       # creating medium before thumbnail to get id name.
-      @medium = Document.new(params[:medium])
+      params_medium = params[:medium]
+      params_medium = params[:document] if params_medium.nil?
+      @medium = Document.new(params_medium)
       @medium.typescript = @typescript
       success = @medium.save
     end
@@ -142,5 +149,5 @@ class DocumentsController < AclController
       format.html { redirect_to documents_url }
       format.xml  { head :ok }
     end
-  end
+  end  
 end

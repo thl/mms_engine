@@ -46,7 +46,11 @@ ActionController::Routing::Routes.draw do |map|
   :documents, :application_filters, :glossaries, :keywords, :media_administrative_locations, :media_keyword_associations, :media_searches,
   :organizations, :pictures, :projects, :quality_types, :recording_orientations, :renderers, :reproduction_types,
   :sources, :sponsors, :transformations, :videos, :statuses
-    
+  
+  map.with_options :path_prefix => 'documents', :controller => 'documents' do |documents|
+    documents.by_title 'by_title/:title.:format', :action => 'by_title'
+  end
+  
   map.comatose_admin
   map.comatose_root 'ndlb/pages'  
 end

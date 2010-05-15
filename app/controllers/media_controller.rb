@@ -65,7 +65,7 @@ class MediaController < AclController
       else
         if !type.blank?
           @medium_pages = Paginator.new self, Medium.count(:conditions => { :type => type }), Medium::COLS * Medium::ROWS, params[:page]
-          @media = Medium.find(:all, :conditions => {:type => type}, :limit => @medium_pages.items_per_page, :offset => @medium_pages.current.offset)
+          @media = Medium.find(:all, :conditions => {:type => type}, :limit => @medium_pages.items_per_page, :offset => @medium_pages.current.offset, :order => 'created_on DESC')
           @title = ts(:all, :what => type.pluralize)
         else
           @pictures = Picture.find(:all, :order => 'RAND()', :limit => Medium::COLS * Medium::PREVIEW_ROWS)

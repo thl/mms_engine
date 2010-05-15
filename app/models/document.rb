@@ -9,7 +9,7 @@ class Document < Medium
   
   def before_destroy
     super
-    typescript.destroy
+    typescript.destroy if !typescript.nil?
   end
   
   def thumbnail_image
@@ -78,6 +78,10 @@ class Document < Medium
       # create db record
       Typescript.create :content_type => 'image/jpeg', :filename => main_beginning + filename_ending, :size => File.size(full_path), :parent_id => typescript.id, :thumbnail => type, :width => thumbnail.columns, :height => thumbnail.rows    
     end
+  end
+  
+  def self.paged_media_search(media_search, limit = 10, offset = 0)
+    super(media_search, limit, offset, 'Document')
   end
 end
 

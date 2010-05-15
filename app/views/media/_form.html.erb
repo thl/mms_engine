@@ -18,6 +18,10 @@
 <%= f.collection_select(:quality_type_id, @quality_types, :id, :title, { :include_blank => true }, language_options) %> (<%= link_to ts('new.record', :what => QualityType.human_name), new_quality_type_path, { :target => '_blank' } %>)
 </p>
 <p>
+  <b><%= Medium.human_attribute_name('recording_note').s %></b><br />
+<%= f.text_area :recording_note, :rows => 5, :class => 'mceEditor' %>
+</p>
+<p>
   <b><%= Medium.human_attribute_name('private_note').s %></b><br />
 <%= f.text_area :private_note, :rows => 5, :class => 'mceEditor' %>
 </p>

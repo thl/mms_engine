@@ -1,6 +1,6 @@
 class WorkflowsController < AclController
   helper :media
-   before_filter :find_medium
+  before_filter :find_medium
   
   def initialize
     super
@@ -31,8 +31,7 @@ class WorkflowsController < AclController
   def edit
     if !@medium.nil?
       @workflow = @medium.workflow
-      @workflow = @medium.create if @workflow.nil?
-      end
+      @workflow = @medium.workflow.create if @workflow.nil?
     end  
   end
 
@@ -40,7 +39,14 @@ class WorkflowsController < AclController
   # POST /workflows.xml
   def create
     if !@medium.nil?
-     redirect_to media_url
+      @workflow = @medium.build_workflow(params[:workflow])
+      respond_to do |format|
+        if @workflow.save
+          format.xml  { render :xml => @workflow, :status => :created, :location => medium_workflow_url(@medium) }
+        else
+          format.xml  { render :xml => @workflow.errors, :status => :unprocessable_entity }
+        end
+      end
     end
   end
 
@@ -67,13 +73,13 @@ class WorkflowsController < AclController
   # DELETE /workflows/1.xml
   def destroy
     if !@medium.nil?
-     @workflow = @medium.workflow
-     @workflow.destroy
+      @workflow = @medium.workflow
+      @workflow.destroy
 
-     respond_to do |format|
-       format.html { redirect_to media_url }
-       format.xml  { head :ok }
-     end
+      respond_to do |format|
+        format.html { redirect_to media_url }
+        format.xml  { head :ok }
+      end
     end
   end
 
@@ -91,3 +97,4 @@ private
       redirect_to media_path
     end
   end
+end
