@@ -4,7 +4,7 @@
 </p>
 <p>
      <b><%= caption_title.s %></b><br />
-<%=  f.text_field :title, fixed_language_options %>
+<%=  f.text_area :title, fixed_language_options.merge({:rows => 3}) %>
 </p>
 <p>  
 <%   description_type_title = DescriptionType.human_name(:what => caption_title) %>
@@ -12,7 +12,8 @@
 <%=  f.collection_select(:description_type_id, @description_types, :id, :title, :include_blank => true) %> (<%= link_to ts('new.record', :what => description_type_title), new_description_type_path, { :target => '_blank' } %>)
 </p>
 <%=  f.hidden_field :creator_id %>
-<%=  display_if_not_blank Caption.human_attribute_name('creator').s, h(@caption.creator.fullname).s %>
+<%   creator = @caption.creator %>
+<%=  display_if_not_blank(Caption.human_attribute_name('creator').s, h(creator.fullname).s) if !creator.nil? %>
 <p>
      <b><%= ComplexScripts::Language.human_name.titleize.s %></b><br />
 <%=  f.collection_select(:language_id, @languages, :id, :title) %> (<%= link_to ts('new.record', :what => ComplexScripts::Language.human_name), new_language_path, { :target => '_blank' } %>)
