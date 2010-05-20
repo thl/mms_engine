@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100309074720) do
+ActiveRecord::Schema.define(:version => 20100515065558) do
 
   create_table "administrative_levels", :force => true do |t|
     t.string  "title",      :limit => 100, :null => false
@@ -49,6 +49,12 @@ ActiveRecord::Schema.define(:version => 20100309074720) do
   end
 
   add_index "affiliations", ["medium_id", "sponsor_id", "organization_id", "project_id"], :name => "by_medium_sponsor_organization_project", :unique => true
+
+  create_table "application_filters", :force => true do |t|
+    t.string   "title",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "application_settings", :force => true do |t|
     t.string  "title",         :limit => 30, :null => false
@@ -119,6 +125,19 @@ ActiveRecord::Schema.define(:version => 20100309074720) do
   add_index "category_registered_theme_associations", ["category_id", "registered_theme_id"], :name => "by_category_registered_theme", :unique => true
   add_index "category_registered_theme_associations", ["permalink"], :name => "index_category_registered_theme_associations_on_permalink", :unique => true
 
+  create_table "citations", :force => true do |t|
+    t.integer  "reference_id",                :null => false
+    t.string   "reference_type",              :null => false
+    t.integer  "creator_id"
+    t.integer  "medium_id"
+    t.integer  "page_number"
+    t.string   "page_side",      :limit => 5
+    t.integer  "line_number"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "comatose_pages", :force => true do |t|
     t.integer  "parent_id"
     t.text     "full_path"
@@ -151,7 +170,8 @@ ActiveRecord::Schema.define(:version => 20100309074720) do
   add_index "copyrights", ["medium_id"], :name => "index_copyrights_on_medium_id", :unique => true
 
   create_table "countries", :force => true do |t|
-    t.string "title", :limit => 100, :null => false
+    t.string  "title",                 :limit => 100, :null => false
+    t.integer "application_filter_id",                :null => false
   end
 
   add_index "countries", ["title"], :name => "index_countries_on_title", :unique => true
@@ -352,6 +372,7 @@ ActiveRecord::Schema.define(:version => 20100309074720) do
     t.integer  "recording_orientation_id"
     t.integer  "capture_device_model_id"
     t.string   "partial_taken_on"
+    t.integer  "application_filter_id",                  :null => false
   end
 
   add_index "media", ["type", "attachment_id"], :name => "index_media_on_type_and_attachment_id"
@@ -536,12 +557,24 @@ ActiveRecord::Schema.define(:version => 20100309074720) do
 
   add_index "sponsors", ["title"], :name => "index_sponsors_on_title", :unique => true
 
-  create_table "students", :force => true do |t|
-    t.string   "name"
-    t.integer  "age"
+  create_table "statuses", :force => true do |t|
+    t.string   "title",       :null => false
+    t.text     "description"
+    t.integer  "position",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "titles", :force => true do |t|
+    t.text     "title",       :null => false
+    t.integer  "creator_id"
+    t.integer  "medium_id",   :null => false
+    t.integer  "language_id", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "titles", ["title"], :name => "title"
 
   create_table "transformations", :force => true do |t|
     t.integer "renderer_id",                :null => false
@@ -551,6 +584,17 @@ ActiveRecord::Schema.define(:version => 20100309074720) do
 
   add_index "transformations", ["path"], :name => "index_transformations_on_path", :unique => true
   add_index "transformations", ["renderer_id", "title"], :name => "index_transformations_on_renderer_id_and_title", :unique => true
+
+  create_table "translated_titles", :force => true do |t|
+    t.text     "title",       :null => false
+    t.integer  "creator_id"
+    t.integer  "title_id",    :null => false
+    t.integer  "language_id", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "translated_titles", ["title"], :name => "title"
 
   create_table "typescripts", :force => true do |t|
     t.string  "content_type"
@@ -589,13 +633,14 @@ ActiveRecord::Schema.define(:version => 20100309074720) do
 
   create_table "workflows", :force => true do |t|
     t.integer  "medium_id",          :null => false
-    t.string   "original_filename",  :null => false
+    t.string   "original_filename"
     t.string   "original_medium_id"
     t.string   "other_id"
     t.string   "notes"
     t.integer  "sequence_order"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status_id"
   end
 
   add_index "workflows", ["medium_id"], :name => "index_workflows_on_medium_id", :unique => true

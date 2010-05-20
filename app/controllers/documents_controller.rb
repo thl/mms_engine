@@ -10,7 +10,12 @@ class DocumentsController < AclController
   # GET /documents.xml
   def index
     title = params[:title]
-    @documents = title.blank? ? Document.find(:all) : Document.find(:all, :joins => :titles, :conditions => {'titles.title' => title}) + Document.find(:all, :joins => {:titles => :translated_titles}, :conditions => {'translated_titles.title' => title})
+    if title.blank?
+      original_medium_id = params[:original_medium_id]
+      @documents = original_medium_id.blank? ? Document.find(:all) : Document.find(:all, :joins => :workflow, :conditions => {'workflows.original_medium_id' => original_medium_id})
+    else
+      @documents = Document.find(:all, :joins => :titles, :conditions => {'titles.title' => title}) + Document.find(:all, :joins => {:titles => :translated_titles}, :conditions => {'translated_titles.title' => title})
+    end
     respond_to do |format|
       format.html # index.rhtml
       format.xml  # { render :xml => @documents.to_xml }
