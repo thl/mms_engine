@@ -31,7 +31,7 @@ class WorkflowsController < AclController
   def edit
     if !@medium.nil?
       @workflow = @medium.workflow
-      @workflow = @medium.workflow.create if @workflow.nil?
+      @workflow = @medium.create_workflow if @workflow.nil?
     end  
   end
 
@@ -55,11 +55,10 @@ class WorkflowsController < AclController
   def update
     if !@medium.nil?
       @workflow = @medium.workflow
-    
       respond_to do |format|
         if @workflow.update_attributes(params[:workflow])
           flash[:notice] = ts('edit.successful', :what => Workflow.human_name.capitalize)
-          format.html { redirect_to medium_workflow_url(@medium) }
+          format.html { redirect_to edit_medium_path(@medium, :anchor => 'workflow') }
           format.xml  { head :ok }
         else
           format.html { render :action => "edit" }

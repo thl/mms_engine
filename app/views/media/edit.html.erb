@@ -154,15 +154,15 @@
 <%=  bookmark 'affiliations' %>
 <%=  link_to ts('add.record', :what => Affiliation.human_name), new_medium_affiliation_path(@medium)%> |
 <% end %></p>
-<% authorized_only hash_for_medium_workflow_path do %>
-<%   workflow = @medium.workflow
-     if !workflow.nil? %>
-<%=    bookmark 'workflow' %>
-       <h3><%= Workflow.human_name.titleize.s %></h3>
-<%=    render :partial => 'workflows/show', :locals => {:workflow => workflow} %>
-       <p><%= link_to ts('edit.record', :what => Workflow.human_name), medium_workflow_path(@medium, @workflow) %></p>
-<%   end
-   end %>
+<% workflow = @medium.workflow
+   if !workflow.nil? %>
+<%=  bookmark 'workflow' %>
+     <h3><%= Workflow.human_name.titleize.s %></h3>
+<%=  render :partial => 'workflows/show', :locals => {:workflow => workflow} %>
+     <p><%= link_to ts('edit.record', :what => Workflow.human_name), medium_workflow_path(@medium, @workflow) %></p>
+<% else %>
+     <p><%= link_to ts('edit.record', :what => Workflow.human_name), edit_medium_workflow_path(@medium) %></p>
+<% end %>
 <hr/>
 <p>&nbsp;<br/>
 <%= link_to ts('back.to', :what => Medium.human_name), medium_path(@medium) %></p>
