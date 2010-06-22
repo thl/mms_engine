@@ -17,18 +17,19 @@ module MediaSubjectAssociationsHelper
   
   def element_path(element)
     medium_subject_path(@medium, element)
-  end  
+  end
+  
   def stylesheet_files
-    uses_thickbox? ? super + ['thickbox', 'category_selector'] : super
+    uses_kmaps_integration? ? super + ['jquery.autocomplete', 'jquery.checktree', 'jquery.draggable.popup'] : super
   end
   
   def javascript_files
-    uses_thickbox? ? super + ['thickbox-compressed', 'category_selector'] : super
+    uses_kmaps_integration? ? super + ['jquery.autocomplete', 'jquery.checktree', 'model-searcher', 'jquery.draggable.popup'] : super
   end
   
   private
   
-  def uses_thickbox?
+  def uses_kmaps_integration?
     ['new', 'edit'].include? params[:action]
   end
 end

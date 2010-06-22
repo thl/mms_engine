@@ -1,5 +1,6 @@
 class DocumentsController < AclController
   helper :media
+  caches_page :index, :show, :if => :api_response?.to_proc
 
   def initialize
     super
@@ -154,5 +155,11 @@ class DocumentsController < AclController
       format.html { redirect_to documents_url }
       format.xml  { head :ok }
     end
-  end  
+  end
+  
+  private
+  
+  def api_response?
+    request.format.xml?
+  end
 end

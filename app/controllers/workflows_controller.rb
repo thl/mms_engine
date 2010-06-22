@@ -1,6 +1,8 @@
 class WorkflowsController < AclController
   helper :media
   before_filter :find_medium
+  caches_page :show, :if => :api_response?.to_proc
+  cache_sweeper :workflow_sweeper, :only => [:create, :update, :destroy]
   
   def initialize
     super
@@ -82,7 +84,7 @@ class WorkflowsController < AclController
     end
   end
 
-private
+  private
   
   def find_medium
     begin
@@ -95,5 +97,9 @@ private
       flash[:notice] = 'Attempt to access invalid medium.'
       redirect_to media_path
     end
+  end
+  
+  def api_response?
+    request.format.xml?
   end
 end

@@ -1,6 +1,8 @@
 class TitlesController < AclController
   helper :media
   before_filter :find_medium
+  caches_page :index, :show, :if => :api_response?.to_proc
+  cache_sweeper :title_sweeper
   
   # GET /titles
   # GET /titles.xml
@@ -115,5 +117,9 @@ class TitlesController < AclController
       flash[:notice] = 'Attempt to access invalid medium.'
       redirect_to media_path
     end
+  end
+  
+  def api_response?
+    request.format.xml?
   end
 end
