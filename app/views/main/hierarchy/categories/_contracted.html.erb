@@ -6,4 +6,4 @@
 <%  else %>
 <%=   link_to_remote '+', { :update => contracted_div, :url => self.send("expand_#{element_path}", contracted, :margin_depth => margin_depth), :method => 'get' }, { :class => 'collapsable' } %>
 <%  end %>
-<%= "#{link_to_remote h(contracted.title).s, :url => self.send(element_path, contracted, :margin_depth => margin_depth), :method => 'get', :loading => loading_animation_script(contracted_div), :loaded => reset_animation_script(contracted_div) } (#{contracted.count_inherited_media})" %><br/>
+<%= "#{link_to h(contracted.title).s, contracted } (#{contracted.count_inherited_media})" %><br/>
