@@ -34,7 +34,7 @@
       <p>
 <%      for keyword in @keywords %>
 <%        font_size = (@keyword_font_size[keyword.id]) %>
-          <FONT SIZE= "<%= font_size %>"><%= link_to_remote h(keyword.title).s, :url => media_path(:keyword_id => keyword), :method => 'get' %></FONT>
+          <FONT SIZE= "<%= font_size %>"><%= link_to h(keyword.title).s, media_path(:keyword_id => keyword) %></FONT>
 <%      end %>
       </p>
       </li>
