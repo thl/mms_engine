@@ -77,13 +77,14 @@ class AdministrativeUnit < ActiveRecord::Base
 end
 
 # == Schema Info
-# Schema version: 20100320035754
+# Schema version: 20100707151911
 #
 # Table name: administrative_units
 #
 #  id                      :integer(4)      not null, primary key
 #  administrative_level_id :integer(4)      not null
 #  creator_id              :integer(4)
+#  feature_id              :integer(4)
 #  parent_id               :integer(4)
 #  description             :text
 #  is_problematic          :boolean(1)      not null

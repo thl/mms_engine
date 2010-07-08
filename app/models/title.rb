@@ -8,7 +8,7 @@ class Title < ActiveRecord::Base
 end
 
 # == Schema Info
-# Schema version: 20100320035754
+# Schema version: 20100707151911
 #
 # Table name: titles
 #
@@ -16,6 +16,6 @@ end
 #  creator_id  :integer(4)
 #  language_id :integer(4)      not null
 #  medium_id   :integer(4)      not null
-#  title       :string(255)     not null
+#  title       :text            not null, default("")
 #  created_at  :datetime
 #  updated_at  :datetime

@@ -9,6 +9,10 @@
 <%=    f.text_field :title %>
      </p>
      <p>
+       <b>FID</b><br />
+<%=    f.text_field :feature_id %>
+     </p>
+     <p>
        <b><%= AdministrativeUnit.human_attribute_name('description').s %></b><br />
 <%=    f.text_area :description, :rows => 5, :class => 'mceEditor' %>
      </p>

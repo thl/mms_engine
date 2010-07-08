@@ -22,7 +22,7 @@ class ApplicationFilter < ActiveRecord::Base
 end
 
 # == Schema Info
-# Schema version: 20100320035754
+# Schema version: 20100707151911
 #
 # Table name: application_filters
 #
