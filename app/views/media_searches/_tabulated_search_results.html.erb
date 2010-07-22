@@ -21,8 +21,8 @@
 <% end 
    if !@administrative_units.empty? 
 	 some_found = true %>
-     <p><b><%= ts :found, :what => MediaAdministrativeLocation.human_name(:count => :many).titleize %>:</b>
-<%=  @administrative_units.collect{|u| link_to h(u.title).s, media_administrative_locations_path(:administrative_unit_id => u)}.join(", ") %>
+     <p><b><%= ts :found, :what => Location.human_name(:count => :many).titleize %>:</b>
+<%=  @administrative_units.collect{|u| link_to h(u.title).s, places_path(:administrative_unit_id => u)}.join(", ") %>
      </p>
 <% end 
    if !@keywords.empty?

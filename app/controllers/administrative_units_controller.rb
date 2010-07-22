@@ -176,7 +176,6 @@ class AdministrativeUnitsController < AclController
     title = @element.title
     @child = @element.parent
     @country = @element.administrative_level.country if @country.nil?    
-    MediaAdministrativeLocation.update_all("administrative_unit_id = #{@child.id}", {:administrative_unit_id => @element.id}) if !@child.nil?
     @element.destroy
     administrative_level = @country.administrative_levels.first
     @elements = administrative_level.administrative_units.find(:all, :order => 'title')

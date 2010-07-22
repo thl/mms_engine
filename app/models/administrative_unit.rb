@@ -9,8 +9,8 @@ class AdministrativeUnit < ActiveRecord::Base
   belongs_to :creator, :class_name => 'Person', :foreign_key => 'creator_id'
   has_one :media_recording_administrative_location, :dependent => :destroy
   has_many :media_content_administrative_locations, :dependent => :destroy
-  has_many :media_administrative_locations, :dependent => :destroy
-  has_many :media, :through => :media_administrative_locations
+  has_many :locations, :dependent => :destroy
+  has_many :media, :through => :locations
 
   def self.titles_with_ancestors
     stack = AdministrativeUnit.find(:all, :include => {:administrative_level => :country}, :conditions => {:parent_id => nil}, :order => 'countries.title DESC, administrative_units.title DESC' )
@@ -65,13 +65,13 @@ class AdministrativeUnit < ActiveRecord::Base
   def paged_media(limit, offset = nil, type = nil)
     descendant_ids = self.descendants
     sql_statement = Medium.paged_media(descendant_ids, limit, offset, type)
-    sql_statement[0] = "SELECT media.* FROM media, media_administrative_locations WHERE media.id = media_administrative_locations.medium_id AND media_administrative_locations.administrative_unit_id IN #{Util::interrogation_set descendant_ids.size} #{sql_statement[0]}"
+    sql_statement[0] = "SELECT media.* FROM media, locations WHERE media.id = locations.medium_id AND locations.administrative_unit_id IN #{Util::interrogation_set descendant_ids.size} #{sql_statement[0]}"
     Medium.find_by_sql sql_statement
   end
   
   def self.count_media(descendant_ids, type = nil)
     sql_statement = Medium.count_media(descendant_ids, type)
-    sql_statement[0] = "SELECT COUNT(*) FROM media, media_administrative_locations WHERE media.id = media_administrative_locations.medium_id AND media_administrative_locations.administrative_unit_id IN #{Util::interrogation_set descendant_ids.size} #{sql_statement[0]}"
+    sql_statement[0] = "SELECT COUNT(*) FROM media, locations WHERE media.id = locations.medium_id AND locations.administrative_unit_id IN #{Util::interrogation_set descendant_ids.size} #{sql_statement[0]}"
     Medium.count_by_sql sql_statement
   end  
 end

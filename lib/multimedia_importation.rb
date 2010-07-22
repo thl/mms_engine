@@ -86,8 +86,8 @@ module MultimediaImportation
       if c_class != String
         class_name = c_class.name
         if class_name == 'AdministrativeUnit'
-          joins_array << :media_administrative_locations
-          conditions_string << ' AND media_administrative_locations.administrative_unit_id = ?'
+          joins_array << :locations
+          conditions_string << ' AND locations.feature_id = ?'
           conditions_array << c.id
         elsif ['Collection', 'Subject', 'Ethnicity'].include? class_name
           joins_array << :media_category_associations
@@ -246,7 +246,7 @@ module MultimediaImportation
         objects.each do |model_name, object|
           next if object.nil?
           if model_name=='administrative_unit'
-            MediaAdministrativeLocation.create :medium => medium, :administrative_unit_id => object
+            Location.create :medium => medium, :administrative_unit_id => object
           elsif model_name != 'recording_note'
             MediaCategoryAssociation.create :medium => medium, :category_id => object, :root_id => models[model_name].root_id
           end

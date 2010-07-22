@@ -33,12 +33,12 @@
 	 (<%=  link_to ts('new.record', :what => Description.human_name), new_medium_description_path(@medium) %>)</p>
 <%=  descriptions.collect{|description| "#{h(description.title).s}<p>#{link_to description.description_type.nil? ? ts('edit.this') : description.description_type.title, edit_medium_description_path(@medium, description)}</p><hr/>" }.join("\n") %>
 <% end %>
-<% media_administrative_locations = @medium.media_administrative_locations 
-   if !media_administrative_locations.empty? %>
-     <p><%= bookmark 'administrative_locations' %>
-	 <b><%= MediaAdministrativeLocation.human_name(:count => media_administrative_locations.size).titleize.s %></b>
-<%=  media_administrative_locations.collect {|l| link_to h(l.administrative_unit.title).s, edit_media_administrative_location_path(l)}.join(', ') %>
-(<%= link_to ts('add.record', :what => MediaAdministrativeLocation.human_name), new_media_administrative_location_path(:medium_id => @medium) %>)</p>
+<% locations = @medium.locations 
+   if !locations.empty? %>
+     <p><%= bookmark 'locations' %>
+	 <b><%= Location.human_name(:count => locations.size).titleize.s %></b>
+<%=  locations.collect {|l| link_to l.feature.header, edit_medium_location_path(@medium, l)}.join(', ') %>
+(<%= link_to ts('add.record', :what => Location.human_name), new_medium_location_path(@medium) %>)</p>
 <% end  
    media_collection_associations = @medium.media_collection_associations
    if !media_collection_associations.empty? %>
@@ -125,9 +125,9 @@
 <%=  link_to ts('associate.to', :what => Keyword.human_name), new_media_keyword_association_path(:medium_id => @medium) %> |
 <% end %>
 <br/>
-<% if media_administrative_locations.empty? %>
-<%=  bookmark 'administrative_locations' %>
-<%=  link_to ts('associate.to', :what => MediaAdministrativeLocation.human_name), new_media_administrative_location_path(:medium_id =>@medium) %> |
+<% if locations.empty? %>
+<%=  bookmark 'locations' %>
+<%=  link_to ts('associate.to', :what => Location.human_name), new_medium_location_path(@medium) %> |
 <% end
    if media_collection_associations.empty? %>
 <%=   bookmark Collection.anchor_name %>

@@ -19,21 +19,7 @@ class CollectionsController < AclController
   def show
     super
   end
-  
-  # GET /collections/1/list
-  # GET /collections/1/list.xml
-  def list_by_location
-    @collection = Collection.find(params[:id])
-    @media = Medium.find(:all, :conditions => {'cumulative_media_category_associations.category_id' => @collection.id, 'media.type' => 'Picture'}, :joins => :cumulative_media_category_associations, :include => :administrative_units, :order => 'media.created_on').select do |m| 
-      administrative_units = m.administrative_units
-      administrative_units.size>0 && administrative_units.any? { |u| u.is_problematic? }
-    end
     
-    respond_to do |format|
-      format.html # list.html.erb
-    end
-  end
-  
   def expand
     super
   end

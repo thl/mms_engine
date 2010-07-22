@@ -1,0 +1,18 @@
+<%= tagged_tinymce_script %>
+<p>
+    <b><%= Medium.human_name.titleize.s %></b><br />    
+<%= f.hidden_field :medium_id %>
+<%= thumbnail_image_link(@medium) %></td>
+</p>
+<p>
+    <b><%= Location.human_attribute_name('feature_id').s %></b><br />
+<%= f.text_field :feature_id %>
+</p>
+<p>
+    <b><%= Location.human_attribute_name('spot_feature').s %></b><br />
+    <%= f.text_area :spot_feature, :rows => 5, :class => 'mceEditor' %>
+</p>
+<p>
+    <b><%= Location.human_attribute_name('notes').s %></b><br />
+    <%= f.text_area :notes, :rows => 5, :class => 'mceEditor' %>
+</p>

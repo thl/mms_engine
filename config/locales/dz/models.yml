@@ -55,7 +55,7 @@ dz:
             # one
             # other
             loan_type: 'loan type'
-            media_administrative_location: 'གནས་ཁོངས།'
+            location: 'གནས་ཁོངས།'
             # one
             # other
             media_keyword_association:
@@ -167,7 +167,8 @@ dz:
                 uploaded_data: 'གཟུགས་བརྙན།'
             keyword:
                 title: 'Keyword Name'
-            media_administrative_location:
+            location:
+                feature_id: 'Feature ID'
                 notes: 'Notes'
                 spot_feature: 'Spot Feature'
             media_source_association:

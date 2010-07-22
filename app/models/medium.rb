@@ -25,12 +25,11 @@ class Medium < ActiveRecord::Base
   has_many :media_source_associations, :dependent => :destroy
   has_many :sources, :through => :media_source_associations
   has_many :media_content_administrative_locations, :order => 'type DESC', :dependent => :destroy
-  has_many :media_administrative_locations, :dependent => :destroy
+  has_many :locations, :dependent => :destroy
   has_many :media_category_associations, :dependent => :destroy
   has_many :media_keyword_associations, :dependent => :destroy
   has_many :copyrights, :dependent => :destroy
   has_many :affiliations, :dependent => :destroy
-  has_many :administrative_units, :through => :media_administrative_locations
   has_many :keywords, :through => :media_keyword_associations, :order => 'title'
   has_many :cumulative_media_category_associations, :dependent => :destroy
   has_many :titles, :dependent => :destroy

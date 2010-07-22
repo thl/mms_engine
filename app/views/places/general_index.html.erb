@@ -1,0 +1,14 @@
+<div id="primary">
+<h2><%= ts 'browse.by', :what => Medium.human_name(:count => :many).titleize.s, :whom => t('by.location') %></h2>
+  <div id="navigation" class="normal">
+<%= render :partial => 'general_index' %>
+  </div>
+  <p>&nbsp;<br/>
+<span id="unframe"><%= link_to ts('back.to', :what => t(:all, :what => Medium.human_name(:count => :many).titleize)), media_path %></span>
+  </p>
+</div>
+<div id="secondary">
+<%= render :partial => 'main/hierarchy/mixed_associations/index' %>
+</div>
+<div class="clear">
+</div>

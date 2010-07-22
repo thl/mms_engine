@@ -22,12 +22,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :ethnicities, :member => {:expand => :get, :contract => :get}
   map.resources :subjects, :member => {:expand => :get, :contract => :get}
   
-  map.resources :media, :as => 'media_objects', :member => { :large => :get, :rename => :get }, :collection => { :rename_all => :get } do |media|
+  map.resources :media, :as => 'media_objects', :member => { :large => :get, :rename => :get }, :collection => { :rename_all => :get }, :has_many => [:affiliations, :captions, :collections, :descriptions, :ethnicities, :locations, :places, :subjects] do |media|
     media.resources :source_associations, :controller => 'media_source_associations'
     media.resources :collection_associations, :controller => 'media_collection_associations'
     media.resources :subject_associations, :controller => 'media_subject_associations'
     media.resources :ethnicity_associations, :controller => 'media_ethnicity_associations'
-    media.resources :affiliations, :captions, :collections, :descriptions, :ethnicities, :subjects
     media.resources :titles do |title| 
       title.resources :citations
       title.resources :translated_titles, :as => 'translations' do |translated_title|
@@ -43,9 +42,9 @@ ActionController::Routing::Routes.draw do |map|
   # map.resources :tasks, :collection => {:create_file => :post}, :new => {:file => :get}
   
   map.resources :application_settings, :copyrights, :copyright_holders, :description_types, :dictionary_searches,
-  :documents, :application_filters, :glossaries, :keywords, :media_administrative_locations, :media_keyword_associations, :media_searches,
-  :organizations, :pictures, :projects, :quality_types, :recording_orientations, :renderers, :reproduction_types,
-  :sources, :sponsors, :transformations, :videos, :statuses
+  :documents, :application_filters, :glossaries, :keywords, :media_keyword_associations, :media_searches,
+  :organizations, :pictures, :places, :projects, :quality_types, :recording_orientations, :renderers,
+  :reproduction_types, :sources, :sponsors, :transformations, :videos, :statuses
   
   map.with_options :path_prefix => 'documents', :controller => 'documents' do |documents|
     documents.by_title 'by_title/:title.:format', :action => 'by_title'

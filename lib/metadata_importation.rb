@@ -165,8 +165,8 @@ module MetadataImportation
           if unit.nil?
             puts "Administrative unit #{unit_str} not found!"
           else
-            location_note = fields['media_administrative_locations.notes']
-            spot = fields['media_administrative_locations.spot_feature']
+            location_note = fields['locations.notes']
+            spot = fields['locations.spot_feature']
             if !location_note.nil?
               location_note.strip!
               location_note = nil if location_note.empty?
@@ -175,9 +175,9 @@ module MetadataImportation
               spot.strip!
               spot = nil if spot.empty?
             end
-            location = MediaAdministrativeLocation.find(:first, :conditions => {:medium_id => medium.id, :administrative_unit_id => unit.id})
+            location = Location.find(:first, :conditions => {:medium_id => medium.id, :administrative_unit_id => unit.id})
             if location.nil?
-              location = MediaAdministrativeLocation.create(:medium => medium, :administrative_unit => unit, :spot_feature => spot, :notes => location_note)
+              location = Location.create(:medium => medium, :administrative_unit => unit, :spot_feature => spot, :notes => location_note)
             else
               location.spot_feature = spot if !spot.nil? && location.spot_feature.blank?
               location.notes = location_note if !location_note.nil? && location.notes.blank?

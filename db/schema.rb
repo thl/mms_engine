@@ -377,7 +377,7 @@ ActiveRecord::Schema.define(:version => 20100515065558) do
 
   add_index "media", ["type", "attachment_id"], :name => "index_media_on_type_and_attachment_id"
 
-  create_table "media_administrative_locations", :force => true do |t|
+  create_table "locations", :force => true do |t|
     t.integer "medium_id",                            :null => false
     t.integer "administrative_unit_id",               :null => false
     t.text    "spot_feature"
@@ -385,7 +385,7 @@ ActiveRecord::Schema.define(:version => 20100515065558) do
     t.string  "type",                   :limit => 50
   end
 
-  add_index "media_administrative_locations", ["medium_id", "administrative_unit_id"], :name => "index_locations_on_medium_and_unit", :unique => true
+  add_index "locations", ["medium_id", "administrative_unit_id"], :name => "index_locations_on_medium_and_unit", :unique => true
 
   create_table "media_category_associations", :force => true do |t|
     t.integer  "medium_id",   :null => false

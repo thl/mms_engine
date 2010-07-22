@@ -55,7 +55,7 @@ en:
                 one: 'keyword'
                 other: 'keywords'
             loan_type: 'loan type'
-            media_administrative_location:
+            location:
                 one: 'location'
                 other: 'locations'
             media_keyword_association:
@@ -167,7 +167,8 @@ en:
                 uploaded_data: 'Image'
             keyword:
                 title: 'Keyword Name'
-            media_administrative_location:
+            location:
+                feature_id: 'Feature ID'
                 notes: 'Notes'
                 spot_feature: 'Spot Feature'
             media_source_association:

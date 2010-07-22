@@ -1,5 +1,5 @@
 class MediaController < AclController
-  @@element_candidates = {:administrative_unit_id => {:class => AdministrativeUnit, :association => 'media_administrative_locations', :name => 'administrative location'}, :collection_id => {:class => Collection, :association => 'media_collection_associations', :name => 'collection'}, :ethnicity_id => {:class => Ethnicity, :association => 'media_ethnicity_associations', :name => 'socio-cultural group'}, :subject_id => {:class => Subject, :association => 'media_subject_associations', :name => 'subject'}}
+  @@element_candidates = {:administrative_unit_id => {:class => AdministrativeUnit, :association => 'locations', :name => 'administrative location'}, :collection_id => {:class => Collection, :association => 'media_collection_associations', :name => 'collection'}, :ethnicity_id => {:class => Ethnicity, :association => 'media_ethnicity_associations', :name => 'socio-cultural group'}, :subject_id => {:class => Subject, :association => 'media_subject_associations', :name => 'subject'}}
 
   def initialize
     super
@@ -41,9 +41,9 @@ class MediaController < AclController
           title = @element.title
           @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
           @more = { element_name => element_id, :type => '' }
-          if @controller_name == 'media_administrative_locations'
+          if @controller_name == 'locations'
             @countries = Country.find(:all, :order => '`title`')
-            partial = 'media_administrative_locations/general_index'
+            partial = 'locations/general_index'
           else
             partial = 'main/hierarchy/associations/general_index'
           end            

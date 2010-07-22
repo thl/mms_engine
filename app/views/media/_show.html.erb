@@ -16,11 +16,9 @@
 <%   end %>
 <%=  display_if_not_blank ts(:id, :what => Medium.human_name.titleize), "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})" %>
 <%=  render :partial => 'titles/index_display_only', :locals => {:medium => @medium} %>
-<%   administrative_units = @medium.administrative_units 
-     if !administrative_units.empty? %>
-<%=    display_if_not_blank MediaAdministrativeLocation.human_name(:count => administrative_units.size).titleize.s, administrative_units.collect {|u| link_to h(u.title).s, media_administrative_locations_path(:administrative_unit_id => u)}.join(', ') %>
-<%   end
-   end %>  
+<%   locations = @medium.locations %>
+<%=  display_if_not_blank(Location.human_name(:count => locations.size).titleize.s, locations.collect{|l| l.feature.header}.join(', ')) if !locations.empty? %>
+<% end %>  
 <% captions = @medium.captions
    if !captions.empty? && captions.size>1 %>
      <p>

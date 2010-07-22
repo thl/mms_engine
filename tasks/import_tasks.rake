@@ -22,7 +22,7 @@ namespace :mms do
     "workflows.original_filename, workflows.original_medium_id, workflows.other_id, workflows.sequence_order,\n" +
     "workflows.notes, media.recording_note, media.private_note, media.taken_on, media.photographer,\n" +
     "recording_orientations.title, captions.title, collections.title, administrative_units.title,\n" +
-    "media_administrative_locations.notes, media_administrative_locations.spot_feature, descriptions.title,\n" +
+    "locations.notes, locations.spot_feature, descriptions.title,\n" +
     "descriptions.creator, keywords.title, sources.title, and media_source_associations.shot_number."
 
     desc media_import_description

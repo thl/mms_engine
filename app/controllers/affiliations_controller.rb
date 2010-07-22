@@ -78,7 +78,7 @@ class AffiliationsController < AclController
     respond_to do |format|
       if @affiliation.update_attributes(params[:affiliation])
         flash[:notice] = ts('edit.successful', :what => Affiliation.human_name.capitalize)
-        format.html { redirect_to edit_medium_url(@medium) }
+        format.html { redirect_to edit_medium_url(@medium, :anchor => 'affiliations') }
         format.xml  { head :ok }
       else
         @sponsors = Sponsor.find(:all)

@@ -97,7 +97,6 @@ class AdministrativeLevelsController < AclController
         child.parent = parent_unit
         child.save
       end      
-      MediaAdministrativeLocation.update_all("administrative_unit_id = #{parent_unit.id}", {:administrative_unit_id => unit.id})
     end
     @administrative_level.destroy
     AdministrativeLevel.update_all('level = level - 1', ['country_id = ? AND level > ?', @country, level])

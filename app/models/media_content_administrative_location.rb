@@ -1,10 +1,10 @@
-class MediaContentAdministrativeLocation < MediaAdministrativeLocation
+class MediaContentAdministrativeLocation < Location
 end
 
 # == Schema Info
 # Schema version: 20100707151911
 #
-# Table name: media_administrative_locations
+# Table name: locations
 #
 #  id                     :integer(4)      not null, primary key
 #  administrative_unit_id :integer(4)      not null

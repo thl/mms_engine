@@ -6,7 +6,7 @@ module ApplicationHelper
           "<li>#{link_to 'Advanced Search', new_media_search_path, {:hreflang => 'Search images, videos, and texts.'}}</li>\n" +
           "<li>#{link_to "Collections <em class=\"browse\">Browse</em>", collections_path, {:hreflang => 'Browse images, videos, and texts by collection.'}}</li>\n" +
           "<li>#{link_to "Cultures <em class=\"browse\">Browse</em>", ethnicities_path, {:hreflang => 'Browse images, videos, and texts by socio-cultural group.'}}</li>\n" +
-          "<li>#{link_to "Locations <em class=\"browse\">Browse</em>", media_administrative_locations_path, {:hreflang => 'Browse images, videos, and texts by administrative unit.'}}</li>\n" +
+          "<li>#{link_to "Locations <em class=\"browse\">Browse</em>", places_path, {:hreflang => 'Browse images, videos, and texts by administrative unit.'}}</li>\n" +
           "<li>#{link_to "Subjects <em class=\"browse\">Browse</em>", subjects_path, {:hreflang => 'Browse images, videos, and texts by subject.'}}</li>\n"
     authorized_only(hash_for_admin_path) { str += "<li>#{link_to 'Administration', admin_path, {:hreflang => 'Manage countries, keywords, glossaries, static pages, copyright holders, organizations, projects, sponsors, translations, people, users, roles, themes, languages, settings and media importation.'}}</li>\n" }
     str += "</ul>"

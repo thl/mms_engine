@@ -1,4 +1,11 @@
-class MediaRecordingAdministrativeLocation < Location
+class Location < ActiveRecord::Base
+  validates_presence_of :medium_id, :feature_id
+  belongs_to :medium
+  belongs_to :feature
+    
+  def self.find_all_by_medium(medium)
+    medium.locations
+  end  
 end
 
 # == Schema Info
