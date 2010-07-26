@@ -75,25 +75,5 @@ class ProjectsController < AclController
       format.html { redirect_to projects_url }
       format.xml  { head :ok }
     end
-  end
-  
-  def expand_unit
-    @element = @model.find(params[:id])
-    @margin_depth = params[:margin_depth].to_i
-    if block_given?
-      yield
-    else
-      render :partial => 'main/hierarchy/mixed_associations/expanded'
-    end
-  end
-
-  def contract_unit
-    @element = @model.find(params[:id])
-    @margin_depth = params[:margin_depth].to_i
-    if block_given?
-      yield
-    else
-      render :partial => 'main/hierarchy/mixed_associations/contracted'
-    end
-  end
+  end  
 end

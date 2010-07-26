@@ -1,4 +1,6 @@
 class PlacesController < ApplicationController
+  helper :media
+  
   # To show browsing panel for admin units:
   # GET /locations
   # GET /locations.xml
@@ -88,72 +90,31 @@ class PlacesController < ApplicationController
   # GET /places/1.xml
   def show
     @place = Place.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @place }
-    end
-  end
-
-  # GET /places/new
-  # GET /places/new.xml
-  def new
-    @place = Place.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @place }
-    end
-  end
-
-  # GET /places/1/edit
-  def edit
-    @place = Place.find(params[:id])
-  end
-
-  # POST /places
-  # POST /places.xml
-  def create
-    @place = Place.new(params[:place])
-
-    respond_to do |format|
-      if @place.save
-        flash[:notice] = 'Place was successfully created.'
-        format.html { redirect_to(@place) }
-        format.xml  { render :xml => @place, :status => :created, :location => @place }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @place.errors, :status => :unprocessable_entity }
+    medium_id = params[:medium_id]
+    @medium = nil
+    if !medium_id.blank?
+      begin
+        @medium = Medium.find(medium_id)
+      rescue ActiveRecord::RecordNotFound
+        @medium = nil
       end
     end
-  end
-
-  # PUT /places/1
-  # PUT /places/1.xml
-  def update
-    @place = Place.find(params[:id])
-
-    respond_to do |format|
-      if @place.update_attributes(params[:place])
-        flash[:notice] = 'Place was successfully updated.'
-        format.html { redirect_to(@place) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @place.errors, :status => :unprocessable_entity }
+    @pictures = @place.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Picture')
+    @videos = @place.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Video')
+    @documents = @place.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Document')
+    title = @place.header
+    @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
+    @more = { :feature_id => @place.id, :type => '' }    
+    if request.xhr?
+      render :update do |page|
+        if !@medium.nil?
+          page.replace_html 'primary', :partial => 'media/show'
+        end
+        page.replace_html 'secondary', :partial => 'media_index'
+        page.call 'tb_init', 'a.thickbox, area.thickbox, input.thickbox'
       end
-    end
-  end
-
-  # DELETE /places/1
-  # DELETE /places/1.xml
-  def destroy
-    @place = Place.find(params[:id])
-    @place.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(places_url) }
-      format.xml  { head :ok }
+    else
+      respond_to { |format| format.html { render(:action => 'show_for_medium') if !@medium.nil? } }
     end
   end
 end

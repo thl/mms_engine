@@ -17,7 +17,7 @@
 <%=  display_if_not_blank ts(:id, :what => Medium.human_name.titleize), "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})" %>
 <%=  render :partial => 'titles/index_display_only', :locals => {:medium => @medium} %>
 <%   locations = @medium.locations %>
-<%=  display_if_not_blank(Location.human_name(:count => locations.size).titleize.s, locations.collect{|l| l.feature.header}.join(', ')) if !locations.empty? %>
+<%=  display_if_not_blank(Location.human_name(:count => locations.size).titleize.s, locations.collect(&:feature).collect{|f| link_to_remote f.header, :url => place_path(f.fid), :method => 'get'}.join(', ')) if !locations.empty? %>
 <% end %>  
 <% captions = @medium.captions
    if !captions.empty? && captions.size>1 %>

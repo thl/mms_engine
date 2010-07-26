@@ -3,7 +3,7 @@ class GrammaticalClass < ActiveRecord::Base
 end
 
 # == Schema Info
-# Schema version: 20100707151911
+# Schema version: 20100714204209
 #
 # Table name: grammatical_classes
 #

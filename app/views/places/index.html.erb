@@ -5,11 +5,6 @@
   </tr>
 
 <% @places.each do |place| %>
-  <tr>
-    <td><%= link_to 'Show', place %></td>
-    <td><%= link_to 'Edit', edit_place_path(place) %></td>
-    <td><%= link_to 'Destroy', place, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
 <% end %>
 </table>
 
