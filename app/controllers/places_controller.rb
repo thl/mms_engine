@@ -104,7 +104,7 @@ class PlacesController < ApplicationController
     @documents = @place.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Document')
     title = @place.header
     @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
-    @more = { :feature_id => @place.id, :type => '' }    
+    @more = { :feature_id => @place.fid, :type => '' }    
     if request.xhr?
       render :update do |page|
         if !@medium.nil?

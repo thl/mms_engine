@@ -1,5 +1,5 @@
 class MediaController < AclController
-  @@element_candidates = {:administrative_unit_id => {:class => AdministrativeUnit, :association => 'locations', :name => 'administrative location'}, :collection_id => {:class => Collection, :association => 'media_collection_associations', :name => 'collection'}, :ethnicity_id => {:class => Ethnicity, :association => 'media_ethnicity_associations', :name => 'socio-cultural group'}, :subject_id => {:class => Subject, :association => 'media_subject_associations', :name => 'subject'}}
+  @@element_candidates = {:feature_id => {:class => Place, :association => 'locations', :name => 'location'}, :collection_id => {:class => Collection, :association => 'media_collection_associations', :name => 'collection'}, :ethnicity_id => {:class => Ethnicity, :association => 'media_ethnicity_associations', :name => 'socio-cultural group'}, :subject_id => {:class => Subject, :association => 'media_subject_associations', :name => 'subject'}}
 
   def initialize
     super
@@ -42,8 +42,8 @@ class MediaController < AclController
           @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
           @more = { element_name => element_id, :type => '' }
           if @controller_name == 'locations'
-            @countries = Country.find(:all, :order => '`title`')
-            partial = 'locations/general_index'
+            @place = @element
+            partial = 'places/show'
           else
             partial = 'main/hierarchy/associations/general_index'
           end            
@@ -53,9 +53,11 @@ class MediaController < AclController
           @pagination_params[element_name] = element_id
           @title = ts(:in, :what => type.pluralize, :where => @element.title)
         end
-        @current = @element.ancestors.collect{|c| c.id.to_i}
-        @current << @element.id.to_i
-        @elements = element_class.root.children
+        if @controller_name != 'locations'
+          @current = @element.ancestors.collect{|c| c.id.to_i}
+          @current << @element.id.to_i
+          @elements = element_class.root.children
+        end
       elsif !keyword_id.blank?
         @keyword = Keyword.find(keyword_id)
         @medium_pages = Paginator.new self, @keyword.media.size, Medium::COLS * Medium::ROWS, params[:page]

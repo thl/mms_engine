@@ -7,10 +7,6 @@ class AdministrativeUnit < ActiveRecord::Base
   #has_many :childrenUnits, :class_name => 'AdministrativeUnit', :foreign_key => 'parent_administrative_unit_id'
   acts_as_tree :order => '`order`, title'
   belongs_to :creator, :class_name => 'Person', :foreign_key => 'creator_id'
-  has_one :media_recording_administrative_location, :dependent => :destroy
-  has_many :media_content_administrative_locations, :dependent => :destroy
-  has_many :locations, :dependent => :destroy
-  has_many :media, :through => :locations
 
   def self.titles_with_ancestors
     stack = AdministrativeUnit.find(:all, :include => {:administrative_level => :country}, :conditions => {:parent_id => nil}, :order => 'countries.title DESC, administrative_units.title DESC' )

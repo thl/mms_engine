@@ -11,4 +11,17 @@ class Place < Feature
     end
     media
   end
+  
+  def count_inherited_media(type = nil)
+    if type.nil?
+      media_count = Medium.count('media.id', :distinct => true, :conditions => {'locations.feature_id' => self.fid}, :joins => :locations)
+    else
+      media_count = Medium.count('media.id', :distinct => true, :conditions => {'locations.feature_id' => self.fid, 'media.type' => type}, :joins => :locations)
+    end
+    media_count
+  end
+  
+  def title
+    self.header
+  end
 end
