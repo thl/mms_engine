@@ -1,5 +1,5 @@
 class Place < Feature
-  headers['Host'] = Category.headers['Host'] if !Category.headers['Host'].blank?
+  headers['Host'] = PlacesResource.headers['Host'] if !PlacesResource.headers['Host'].blank?
   
   self.element_name = 'feature'
   
