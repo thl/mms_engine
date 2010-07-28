@@ -4,3 +4,5 @@
 <% elsif !@media.nil? %>
 <%=  render :partial => 'media/paged_index' %>
 <% end %>
+<h3><%= ts :in, :what => @place.header, :where => 'Places Dictionary' %></h3>
+<p><%= link_to ts('see.record', :what => 'entry'), Feature.element_url(@place.fid, :format => 'html') %></p>

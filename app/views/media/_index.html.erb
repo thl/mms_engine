@@ -1,23 +1,22 @@
-<h2>Media Collections</h2>
 <% no_media = true
    if !@pictures.empty? %>
-     <h3 align="center"><%= @titles[:picture] %></h3>
+     <h3><%= @titles[:picture] %></h3>
 <%   no_media = false
      @more[:type] = 'Picture' if !@more.nil? %>
 <%=  render :partial => 'media/media_table', :locals => {:media => @pictures, :more => @more} %>
 <% end
    if !@videos.empty? %>
-     <h3 align="center"><%= @titles[:video] %></h3>
+     <h3><%= @titles[:video] %></h3>
 <%   no_media = false
      @more[:type] = 'Video' if !@more.nil? %>
 <%=  render :partial => 'media/media_table', :locals => {:media => @videos, :more => @more} %>
 <% end
    if !@documents.empty? %>
-     <h3 align="center"><%= @titles[:document] %></h3>
+     <h3><%= @titles[:document] %></h3>
 <%   no_media = false
      @more[:type] = 'Document' if !@more.nil? %>
 <%=  render :partial => 'documents/media_table', :locals => {:media => @documents, :more => @more} %>
 <% end
    if no_media %>
-     <h3 align="right"><%= ts 'media.none' %></h3>
+     <h3><%= ts 'media.none' %></h3>
 <% end %>

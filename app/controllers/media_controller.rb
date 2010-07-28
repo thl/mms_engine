@@ -1,5 +1,6 @@
 class MediaController < AclController
   @@element_candidates = {:feature_id => {:class => Place, :association => 'locations', :name => 'location'}, :collection_id => {:class => Collection, :association => 'media_collection_associations', :name => 'collection'}, :ethnicity_id => {:class => Ethnicity, :association => 'media_ethnicity_associations', :name => 'socio-cultural group'}, :subject_id => {:class => Subject, :association => 'media_subject_associations', :name => 'subject'}}
+  @@media_types = {:picture => Picture, :video => Video, :document => Document}
 
   def initialize
     super
@@ -39,7 +40,8 @@ class MediaController < AclController
           @videos = @element.paged_media(Medium::COLS, nil, 'Video')
           @documents = @element.paged_media(Medium::COLS, nil, 'Document')
           title = @element.title
-          @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
+          @titles = Hash.new
+          @@media_types.each{ |key, value| @titles[key] = ts(:in, :what => value.human_name(:count => :many).titleize, :where => title) }
           @more = { element_name => element_id, :type => '' }
           if @controller_name == 'locations'
             @place = @element
@@ -51,7 +53,7 @@ class MediaController < AclController
           @medium_pages = Paginator.new self, @element.count_inherited_media(type), Medium::COLS * Medium::ROWS, params[:page]
           @media = @element.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset, type)
           @pagination_params[element_name] = element_id
-          @title = ts(:in, :what => type.pluralize, :where => @element.title)
+          @title = ts(:in, :what => @@media_types[type.downcase.to_sym].human_name(:count => :many).titleize, :where => @element.title)
         end
         if @controller_name != 'locations'
           @current = @element.ancestors.collect{|c| c.id.to_i}
