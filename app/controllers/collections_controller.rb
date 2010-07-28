@@ -6,6 +6,7 @@ class CollectionsController < AclController
     super
     @guest_perms += ['collections/expand', 'collections/contract']
     @model = Collection
+    @current_tab_id = :collections
   end
   
   # GET /collections

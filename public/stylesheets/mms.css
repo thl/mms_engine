@@ -47,3 +47,13 @@ font-weight:normal;
   -moz-box-shadow: 0 0 10px #ccc; 
   box-shadow:0 0 10px #ccc; 
 }
+
+/* THL-specific */
+
+/* Hide the THL sidebar menu immediately, without waiting from $(document).ready to be triggered */
+#fxSideMenu {
+	display:none;
+}
+#sideMenuLink {
+	background-position:0 0;
+}

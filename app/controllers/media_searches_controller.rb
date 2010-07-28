@@ -4,6 +4,7 @@ class MediaSearchesController < AclController
   def initialize
     super
     @guest_perms += ['media_searches/new', 'media_searches/create']
+    @current_tab_id = :search
   end
   
   # GET /media_searches

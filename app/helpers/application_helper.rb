@@ -13,11 +13,41 @@ module ApplicationHelper
   end
   
   def stylesheet_files
-    super + ['mms']
-  end  
+    super + ['mms', 'jquery-ui-tabs']
+  end
+  
+  def javascript_files
+    super + ['jquery-ui-tabs']
+  end
   
   def javascripts
     [super, include_tiny_mce_if_needed].join("\n")
+  end
+  
+  def secondary_tabs(current_tab_id=:media)
+    tabs = [
+        [:home, "Home", ActionController::Base.relative_url_root],
+        [:search, "Search", new_media_search_url],
+        [:collections, "Collections Browse", collections_url],
+        [:cultures, "Cultures Browse", ethnicities_url],
+        [:subjects, "Subjects Browse", subjects_url]
+      ]
+    if !session[:current_medium].blank? || current_tab_id == :media
+      media_path = session[:current_medium].blank? ? ActionController::Base.relative_url_root : medium_path(session[:current_medium])
+      tabs << [:media, "Media", media_path]
+      current_tab_index = tabs.length - 1
+    end
+    index = 0
+    current_tab_index = 0 if current_tab_index.blank?
+    # Is there a more Ruby-ish way to do this?
+    tabs.each do |tab|
+      current_tab_index = index if tab[0] == current_tab_id
+      index += 1
+    end
+    tabs[current_tab_index][2] = "#media_main"
+    tabs.collect!{|tab| tab[1..2]}
+    current_tab_index = 1 if current_tab_index == 0
+    un_secondary_tabs tabs, current_tab_index-1
   end
   
 end
