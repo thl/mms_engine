@@ -25,6 +25,9 @@ module HierarchicalMediaBrowse
     @pictures = @element.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Picture')
     @videos = @element.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Video')
     @documents = @element.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Document')
+    @tab_options ||= {}
+    @tab_options[:counts] = tab_counts_for_element(@element)
+    @tab_options[:urls] = tab_urls_for_element(@element)
     title = @element.title
     @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
     @more = { "#{@model.name.underscore}_id".to_sym => @element.id, :type => '' }    

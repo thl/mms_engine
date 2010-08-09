@@ -24,32 +24,82 @@ module ApplicationHelper
     [super, include_tiny_mce_if_needed].join("\n")
   end
   
-  def secondary_tabs(current_tab_id=:media)
-    tabs = [
-        [:home, "Home", ActionController::Base.relative_url_root],
-        [:search, "Search", new_media_search_url],
-        [:collections, "Collections Browse", collections_url],
-        [:cultures, "Cultures Browse", ethnicities_url],
-        [:subjects, "Subjects Browse", subjects_url]
-      ]
-    if !session[:current_medium].blank? || current_tab_id == :media
-      media_path = session[:current_medium].blank? ? ActionController::Base.relative_url_root : medium_path(session[:current_medium])
-      tabs << [:media, "Media", media_path]
-      current_tab_index = tabs.length - 1
-    end
-    index = 0
-    current_tab_index = 0 if current_tab_index.blank?
-    # Is there a more Ruby-ish way to do this?
-    tabs.each do |tab|
-      current_tab_index = index if tab[0] == current_tab_id
-      index += 1
-    end
-    tabs[current_tab_index][2] = "#media_main"
-    tabs.collect!{|tab| tab[1..2]}
-    current_tab_index = 1 if current_tab_index == 0
-    un_secondary_tabs tabs, current_tab_index-1
+  def secondary_tabs_config
+    {
+      :home => {:index => 1, :title => "Home", :url => "#{ActionController::Base.relative_url_root.to_s}/"},
+      :search => {:index => 2, :title => "Search", :url => new_media_search_url},
+      :browse => {:index => 3, :title => "Browse", :url => collections_url},
+      :picture => {:index => 4, :title => "Images", :url => media_path(:type => 'Picture')},
+      #:audio => {:index => 5, :title => "Audio", :url => new_media_search_url},
+      :video => {:index => 5, :title => "Video", :url => media_path(:type => 'Video')},
+      #:immersive => {:index => 7, :title => "Immersive", :url => new_media_search_url},
+      :document => {:index => 6, :title => "Texts", :url => media_path(:type => 'Document')}
+      #:biblio => {:index => 9, :title => "Biblio", :url => sources_url},
+    }
   end
   
+  def secondary_tabs(current_tab_id=:home)
+
+    @tab_options ||= {}
+    @tab_options[:urls] ||= {}
+    @tab_options[:counts] ||= {}
+    
+    # The :index values are necessary for this hash's elements to be sorted properly
+    tabs = secondary_tabs_config
+    
+    current_tab_id = :home unless tabs.has_key? current_tab_id
+    
+    @tab_options[:urls].each do |tab_id, url|
+      tabs[tab_id][:url] = url unless tabs[tab_id].nil? || url.nil?
+    end
+    
+    @tab_options[:counts].each do |tab_id, count|
+      tabs[tab_id][:title] += " (#{count})" unless tabs[tab_id].nil? || count.nil?
+    end
+    
+    tabs[current_tab_id][:url] = "#media_main"
+    current_tab_index = 1
+    tabs = tabs.sort{|a,b| a[1][:index] <=> b[1][:index]}.collect{|tab_id, tab| 
+      current_tab_index = tab[:index] - 1 if tab_id == current_tab_id
+      [tab[:title], tab[:url]]
+    }
+    
+    un_secondary_tabs tabs, current_tab_index
+  end
+  
+  def tab_counts_for_element(element)
+    counts = {}
+    Medium::TYPES.each do |type, display_names|
+      counts[type] = element.count_media(type.to_s.classify)
+    end
+    counts
+  end
+  
+  def tab_urls_for_element(element)
+    urls = {}
+    element_id = element.id
+    element_name = (element.class.name.underscore+"_id").to_sym
+    Medium::TYPES.each do |type, display_names|
+      urls[type] = media_path(element_name => element_id, :type => type.to_s.classify)
+    end
+    urls
+  end
+  
+  def tab_counts_for_search(search)
+    counts = {}
+    Medium::TYPES.each do |type, display_names|
+      counts[type] = Medium.count_media_search(search, type.to_s.classify)
+    end
+    counts
+  end
+  
+  def tab_urls_for_search(search)
+    urls = {}
+    Medium::TYPES.each do |type, display_names|
+      urls[type] = media_searches_path(search.merge({:media_type => type.to_s.classify}))
+    end
+    urls
+  end
 end
 
 module ActionView

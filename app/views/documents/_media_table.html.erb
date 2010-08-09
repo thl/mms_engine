@@ -8,7 +8,7 @@
    </tr>
 <% if !more.nil? %>
      <tr>
-   	   <td colspan="<%= Medium::COLS %>" align="right" class="media_keywords"><%= link_to_remote 'More', :url => media_path(more), :method => :get %></td>
+   	   <td colspan="<%= Medium::COLS %>" align="right" class="media_keywords"><%= link_to 'More', media_path(more) %></td>
      </tr>
 <% end %>
 </table>

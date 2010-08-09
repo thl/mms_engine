@@ -50,7 +50,12 @@ class MediaController < AclController
             partial = 'main/hierarchy/associations/general_index'
           end            
         else
-          @medium_pages = Paginator.new self, @element.count_inherited_media(type), Medium::COLS * Medium::ROWS, params[:page]
+          @tab_options ||= {}
+          @tab_options[:counts] = tab_counts_for_element(@element)
+          @tab_options[:urls] = tab_urls_for_element(@element)
+          @tab_options[:urls][:browse] = polymorphic_url(@element)
+          # FIX: This seems to make pages for all media instead of only pages for the specified media type
+          @medium_pages = Paginator.new self, @element.count_inherited_media(type), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
           @media = @element.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset, type)
           @pagination_params[element_name] = element_id
           @title = ts(:in, :what => @@media_types[type.downcase.to_sym].human_name(:count => :many).titleize, :where => @element.title)
@@ -68,7 +73,7 @@ class MediaController < AclController
         @title = ts(:in, :what => Medium.human_name(:count => :many).titleize, :where => ts(:keyword, :what => @keyword.title))
       else
         if !type.blank?
-          @medium_pages = Paginator.new self, Medium.count(:conditions => { :type => type }), Medium::COLS * Medium::ROWS, params[:page]
+          @medium_pages = Paginator.new self, Medium.count(:conditions => { :type => type }), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
           @media = Medium.find(:all, :conditions => {:type => type}, :limit => @medium_pages.items_per_page, :offset => @medium_pages.current.offset, :order => 'created_on DESC')
           @title = ts(:all, :what => type.pluralize)
         else
@@ -98,6 +103,7 @@ class MediaController < AclController
         @keywords.each { |k| @keyword_font_size[k.id] = (k.counted_media.to_i - min)*font_diff/count_diff + Util::MIN_FONT_SIZE }
         @media_search = MediaSearch.new({:title => '', :type => 'simple'})
       end
+      @current_tab_id = type.underscore.to_sym unless type.blank?
       if request.xhr?
         render :update do |page|
           if rendering_main
@@ -118,9 +124,17 @@ class MediaController < AclController
           format.html do
             if !@medium_pages.nil?
               if type == 'Document'
-                render :template => 'documents/paged_index'
+                if type.blank?
+                  render :template => 'documents/paged_index'
+                else
+                  render :template => 'documents/paged_index_full'
+                end
               else
-                render :action => 'paged_index'
+                if type.blank?
+                  render :action => 'paged_index'
+                else
+                  render :action => 'paged_index_full'
+                end
               end
             end # else render index.rhtml
           end

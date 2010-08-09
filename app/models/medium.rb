@@ -2,9 +2,20 @@ require 'fileutils'
 
 class Medium < ActiveRecord::Base
   ROWS = 5
+  COLS = 4
   PREVIEW_ROWS = 2
-  COLS = 4  
+  FULL_ROWS = 4
+  FULL_COLS = 8
   COMMON_SIZES = {:compact => '70:95x95#', :thumb => '70:120x120#', :essay => '80:280x280>', :huge => '90:2000x2000>'}
+  # The keys of TYPES should correspond to class names
+  TYPES = {
+    :picture => {:singular => 'Picture', :plural => 'Pictures'},
+    #:audio => {:singular => 'Audio', :plural => 'Audio'},
+    :video => {:singular => 'Video', :plural => 'Videos'},
+    #:immersive => {:singular => 'Immersive', :plural => 'Immersive'},
+    :document => {:singular => 'Document', :plural => 'Documents'}
+    #:biblio => {:singular => 'Biblio', :plural => 'Biblio'}
+  }
   
   default_scope :conditions => {:application_filter_id => ApplicationFilter.application_filter.id} if !ApplicationFilter.application_filter.nil?
   
