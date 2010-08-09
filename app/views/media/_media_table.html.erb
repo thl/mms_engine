@@ -13,7 +13,7 @@
    </tr>
 <% if !more.nil? %>
      <tr>
-   	   <td colspan="<%= Medium::COLS %>" align="right" class="media_keywords"><%= link_to 'More', media_path(more) %></td>
+   	   <td colspan="<%= Medium::COLS %>" align="right" class="media_keywords"><%= link_to 'More', more.is_a?(String) ? more : media_path(more) %></td>
      </tr>
 <% end %>
 </table>

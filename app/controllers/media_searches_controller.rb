@@ -56,8 +56,14 @@ class MediaSearchesController < AclController
     per_page = @media_type.blank? ? 20 : Medium::FULL_COLS * Medium::FULL_ROWS
     @medium_pages = Paginator.new self, Medium.count_media_search(@media_search, @media_type), per_page, params[:page]
     @media = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, @media_type)
-    media_type_display_sym = @media_type.underscore.to_sym unless @media_type.blank?
-    media_type_display = @media_type.blank? ? 'Media' : @@media_types[media_type_display_sym].human_name(:count => :many).titleize
+    @pictures = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, 'Picture')
+    @videos = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, 'Video')
+    @documents = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, 'Document')
+    
+    @titles = Hash.new
+    @@media_types.each{ |key, value| @titles[key] = "#{value.human_name(:count => :many).titleize} about \"#{@media_search.title}\"" }
+    
+    media_type_display = @media_type.blank? ? 'Media' : @@media_types[@media_type.underscore.to_sym].human_name(:count => :many).titleize
     @title = "#{media_type_display} about \"#{@media_search.title}\""
     @tab_options ||= {}
     @tab_options[:counts] = tab_counts_for_search(@media_search)
