@@ -21,6 +21,7 @@ class Medium < ActiveRecord::Base
   
   has_one :workflow, :dependent => :destroy
   has_one  :media_recording_administrative_location, :dependent => :destroy
+  has_one :media_publisher, :dependent => :destroy
   
   has_many :media_source_associations, :dependent => :destroy
   has_many :sources, :through => :media_source_associations
