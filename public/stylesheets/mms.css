@@ -51,6 +51,11 @@ font-weight:normal;
   box-shadow:0 0 10px #ccc; 
 }
 
+.media-thumb img {
+	border: 1px solid #CCCCCC;
+	padding: 3px;
+}
+
 /* THL-specific */
 
 /* Hide the THL sidebar menu immediately, without waiting from $(document).ready to be triggered */
