@@ -1,0 +1,24 @@
+<h1>Listing media_publishers</h1>
+
+<table>
+  <tr>
+    <th>Publisher</th>
+    <th>Medium</th>
+    <th>Date</th>
+  </tr>
+
+<% @media_publishers.each do |media_publisher| %>
+  <tr>
+    <td><%=h media_publisher.publisher_id %></td>
+    <td><%=h media_publisher.medium_id %></td>
+    <td><%=h media_publisher.date %></td>
+    <td><%= link_to 'Show', media_publisher %></td>
+    <td><%= link_to 'Edit', edit_media_publisher_path(media_publisher) %></td>
+    <td><%= link_to 'Destroy', media_publisher, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New media_publisher', new_media_publisher_path %>

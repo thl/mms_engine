@@ -1,0 +1,18 @@
+<p>
+  <b>Publisher:</b>
+  <%=h @media_publisher.publisher_id %>
+</p>
+
+<p>
+  <b>Medium:</b>
+  <%=h @media_publisher.medium_id %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%=h @media_publisher.date %>
+</p>
+
+
+<%= link_to 'Edit', edit_media_publisher_path(@media_publisher) %> |
+<%= link_to 'Back', media_publishers_path %>
