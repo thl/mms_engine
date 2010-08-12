@@ -1,4 +1,8 @@
 <%  screen_size_image = @medium.screen_size_image
     large_image = @medium.large_image 
-    image_tag = image_tag(screen_size_image.public_filename, :width => screen_size_image.width, :height => screen_size_image.height) %>
-<%= large_image.nil? ? image_tag : link_to_function(image_tag, "$(\"#TB_window\").remove(); $(\"body\").append(\"<div id='TB_window'></div>\");	tb_show(null, \"#{image_path(large_image.public_filename)}\", false);") %>
+    image_tag = image_tag(screen_size_image.public_filename, :width => screen_size_image.width, :height => screen_size_image.height)
+	  div_id = "media_large_#{@medium.id}"
+ %>
+<div id="<%= div_id %>">
+<%= large_image.nil? ? image_tag : link_to(image_tag, image_path(large_image.public_filename), {:class => 'media-thumb iframe overflow-x-auto thl-pop no-view-alone padding-10'}) %>
+<%= javascript_tag "ActivateThlPopups('##{div_id}')" %>
