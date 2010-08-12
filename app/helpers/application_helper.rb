@@ -54,7 +54,13 @@ module ApplicationHelper
     end
     
     @tab_options[:counts].each do |tab_id, count|
-      tabs[tab_id][:title] += " (#{count})" unless tabs[tab_id].nil? || count.nil?
+      unless tabs[tab_id].nil? || count.nil?
+        if count == 0
+          tabs.delete(tab_id)
+        else
+          tabs[tab_id][:title] += " (#{count})"
+        end
+      end
     end
     
     tabs[current_tab_id][:url] = "#media_main"
