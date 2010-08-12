@@ -1,12 +1,12 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   def side_column_links
-    str = "<h3 class=\"head\">#{link_to 'All Multimedia', '#nogo', {:hreflang => 'The media management system stores, organize and display images, videos and texts.'}}</h3>\n<ul>\n" +
-          "<li>#{link_to 'Home', media_path, {:hreflang => 'Browse images, videos, and texts.'}}</li>\n" +
-          "<li>#{link_to 'Advanced Search', new_media_search_path, {:hreflang => 'Search images, videos, and texts.'}}</li>\n" +
-          "<li>#{link_to "Collections <em class=\"browse\">Browse</em>", collections_path, {:hreflang => 'Browse images, videos, and texts by collection.'}}</li>\n" +
-          "<li>#{link_to "Cultures <em class=\"browse\">Browse</em>", ethnicities_path, {:hreflang => 'Browse images, videos, and texts by socio-cultural group.'}}</li>\n" +
-          "<li>#{link_to "Subjects <em class=\"browse\">Browse</em>", subjects_path, {:hreflang => 'Browse images, videos, and texts by subject.'}}</li>\n"
+    str = "<h3 class=\"head\">#{link_to 'All Multimedia', '#nogo', {:hreflang => 'The media management system stores, organize and display pictures, videos and texts.'}}</h3>\n<ul>\n" +
+          "<li>#{link_to 'Home', media_path, {:hreflang => 'Browse pictures, videos, and texts.'}}</li>\n" +
+          "<li>#{link_to 'Advanced Search', new_media_search_path, {:hreflang => 'Search pictures, videos, and texts.'}}</li>\n" +
+          "<li>#{link_to "Collections <em class=\"browse\">Browse</em>", collections_path, {:hreflang => 'Browse pictures, videos, and texts by collection.'}}</li>\n" +
+          "<li>#{link_to "Cultures <em class=\"browse\">Browse</em>", ethnicities_path, {:hreflang => 'Browse pictures, videos, and texts by socio-cultural group.'}}</li>\n" +
+          "<li>#{link_to "Subjects <em class=\"browse\">Browse</em>", subjects_path, {:hreflang => 'Browse pictures, videos, and texts by subject.'}}</li>\n"
     authorized_only(hash_for_admin_path) { str += "<li>#{link_to 'Administration', admin_path, {:hreflang => 'Manage countries, keywords, glossaries, static pages, copyright holders, organizations, projects, sponsors, translations, people, users, roles, themes, languages, settings and media importation.'}}</li>\n" }
     str += "</ul>"
     return str
@@ -25,15 +25,16 @@ module ApplicationHelper
   end
   
   def secondary_tabs_config
+    # The :index values are necessary for this hash's elements to be sorted properly
     {
       :home => {:index => 1, :title => "Home", :url => "#{ActionController::Base.relative_url_root.to_s}/"},
       :search => {:index => 2, :title => "Search", :url => new_media_search_url},
       :browse => {:index => 3, :title => "Browse", :url => collections_url},
-      :picture => {:index => 4, :title => "Images", :url => media_path(:type => 'Picture')},
+      :picture => {:index => 4, :title => "Pictures", :url => media_path(:type => 'Picture')},
       #:audio => {:index => 5, :title => "Audio", :url => new_media_search_url},
       :video => {:index => 5, :title => "Video", :url => media_path(:type => 'Video')},
       #:immersive => {:index => 7, :title => "Immersive", :url => new_media_search_url},
-      :document => {:index => 6, :title => "Texts", :url => media_path(:type => 'Document')}
+      :document => {:index => 6, :title => "Documents", :url => media_path(:type => 'Document')}
       #:biblio => {:index => 9, :title => "Biblio", :url => sources_url},
     }
   end
@@ -43,8 +44,8 @@ module ApplicationHelper
     @tab_options ||= {}
     @tab_options[:urls] ||= {}
     @tab_options[:counts] ||= {}
+    @tab_options[:counts] = tab_counts_for_all_media if @tab_options[:counts].blank?
     
-    # The :index values are necessary for this hash's elements to be sorted properly
     tabs = secondary_tabs_config
     
     current_tab_id = :home unless tabs.has_key? current_tab_id
@@ -105,6 +106,14 @@ module ApplicationHelper
       urls[type] = media_searches_path(search.merge({:media_type => type.to_s.classify}))
     end
     urls
+  end
+  
+  def tab_counts_for_all_media
+    counts = {}
+    Medium::TYPES.each do |type, display_names|
+      counts[type] = Medium.count_media_for_type(type.to_s.classify)
+    end
+    counts
   end
 end
 

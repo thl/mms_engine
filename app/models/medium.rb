@@ -158,6 +158,10 @@ class Medium < ActiveRecord::Base
     Medium.find_by_sql([conditions_string] + conditions_array + [offset, limit])
   end
   
+  def self.count_media_for_type(type)
+    Medium.count(:conditions => { :type => type })
+  end
+  
   def self.count_media_search(media_search, type = nil)
     if type.nil?
       ids = Medium.find(:first, :conditions => {:id => media_search.title}).nil? ? 0 : 1

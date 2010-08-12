@@ -5,7 +5,7 @@
      <table border="1" cellpadding="0px" cellspacing="0px" id="picframe">
 <%     for medium in media
          next if medium.nil? %>
-         <tr align="center" valign="middle"><td align="left" class="normal"><%= link_to medium.prioritized_title.s, medium_path(medium), {:class => 'media-thumb thl-pop no-view-alone padding-10'} %></td></tr>
+         <tr align="center" valign="middle"><td align="left" class="normal"><%= link_to medium.prioritized_title.s, medium_path(medium), {:class => 'media-thumb thl-pop no-view-alone padding-10', :onclick => "universal_navigation.loadTabsFor(#{medium.id})"} %></td></tr>
 <%     end %>
      </table>
 <% end %>

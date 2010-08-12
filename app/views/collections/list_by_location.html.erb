@@ -9,7 +9,7 @@
 <%   if thumbnail.nil? %>
        <td>&nbsp;</td>
 <%   else %>
-       <td width="<%= thumbnail.width %>" height="<%= thumbnail.height %>"><%= link_to image_tag(thumbnail.public_filename, :width => thumbnail.width, :height => thumbnail.height), image_path(image.public_filename), {:class => 'media-thumb thl-pop no-view-alone padding-10'} %></td>
+       <td width="<%= thumbnail.width %>" height="<%= thumbnail.height %>"><%= link_to image_tag(thumbnail.public_filename, :width => thumbnail.width, :height => thumbnail.height), image_path(image.public_filename), {:class => 'media-thumb thl-pop no-view-alone padding-10', :onclick => "universal_navigation.loadTabsFor(#{medium.id})"} %></td>
 <%   end %>
      <td>
 <%   administrative_locations = medium.locations
