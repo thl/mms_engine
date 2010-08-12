@@ -27,6 +27,7 @@
       <li><h3><%= link_to CopyrightHolder.human_name(:count => :many).titleize.s, copyright_holders_path %></h3></li>      
 	    <li><h3><%= link_to ReproductionType.human_name(:count => :many).titleize.s, reproduction_types_path %></h3></li>
 	    <li><h3><%= link_to ts('admin.static_pages'), :controller => 'comatose_admin' %></h3></li>
+	<li><h3><%= link_to Publisher.human_name(:count => :many).titleize.s, publishers_path %></h3></li>
 	  </ul>
   </td>
   <td width="35%" valign="top">

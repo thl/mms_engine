@@ -34,6 +34,7 @@ ActionController::Routing::Routes.draw do |map|
  		  end
     end
     media.resource :workflow
+    media.resource :media_publisher
 
   end
   map.resources :media_imports, :collection => { :confirm => :post, :status => :get }
@@ -44,7 +45,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :application_settings, :copyrights, :copyright_holders, :description_types, :dictionary_searches,
   :documents, :application_filters, :glossaries, :keywords, :media_keyword_associations, :media_searches,
   :organizations, :pictures, :places, :projects, :quality_types, :recording_orientations, :renderers,
-  :reproduction_types, :sources, :sponsors, :transformations, :videos, :statuses
+  :reproduction_types, :sources, :sponsors, :transformations, :videos, :statuses, :publishers
   
   map.with_options :path_prefix => 'documents', :controller => 'documents' do |documents|
     documents.by_title 'by_title/:title.:format', :action => 'by_title'

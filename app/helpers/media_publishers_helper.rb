@@ -1,0 +1,2 @@
+module MediaPublishersHelper
+end
