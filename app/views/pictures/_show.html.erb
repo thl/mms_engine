@@ -4,5 +4,5 @@
 	  div_id = "media_large_#{@medium.id}"
  %>
 <div id="<%= div_id %>">
-<%= large_image.nil? ? image_tag : link_to(image_tag, image_path(large_image.public_filename), {:class => 'media-thumb iframe overflow-x-auto thl-pop no-view-alone padding-10'}) %>
+<%= large_image.nil? ? image_tag : link_to(image_tag, image_path(large_image.public_filename), {:class => 'media-thumb iframe overflow-x-auto thl-pop no-view-alone no-main-site-ajax padding-10'}) %>
 <%= javascript_tag "ActivateThlPopups('##{div_id}')" %>
