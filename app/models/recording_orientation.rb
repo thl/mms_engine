@@ -3,7 +3,7 @@ class RecordingOrientation < ActiveRecord::Base
 end
 
 # == Schema Info
-# Schema version: 20100714204209
+# Schema version: 20100811203819
 #
 # Table name: recording_orientations
 #

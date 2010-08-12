@@ -4,7 +4,7 @@ class Project < ActiveRecord::Base
 end
 
 # == Schema Info
-# Schema version: 20100714204209
+# Schema version: 20100811203819
 #
 # Table name: projects
 #

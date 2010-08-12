@@ -56,15 +56,7 @@ class MetadataImportation
     
   def process_media_core_fields
     recording_note = self.fields.delete('media.recording_note')
-    if !recording_note.nil?
-      recording_note.strip!
-      self.medium.recording_note = recording_note if !recording_note.empty? && self.medium.recording_note.blank?
-    end
     private_note = self.fields.delete('media.private_note')
-    if !private_note.nil?
-      private_note.strip!
-      self.medium.private_note = private_note if !private_note.empty? && self.medium.private_note.blank?
-    end
     taken_on_str = self.fields.delete('media.taken_on')
     if !taken_on_str.blank?
       taken_on_str.strip!
@@ -90,14 +82,11 @@ class MetadataImportation
     end
     photographer_str = self.fields.delete('media.photographer')
     if !photographer_str.blank? && self.medium.photographer.nil?
-      photographer_str.strip!
-      if !photographer_str.empty?
-        photographer = Person.find_by_fullname(photographer_str)
-        if photographer.nil?
-          puts "Photographer named #{photographer_str} not found!"
-        else
-          self.medium.photographer = photographer
-        end
+      photographer = Person.find_by_fullname(photographer_str)
+      if photographer.nil?
+        puts "Photographer named #{photographer_str} not found!"
+      else
+        self.medium.photographer = photographer
       end
     end
     orientation_str = self.fields.delete('recording_orientations.title')
@@ -122,15 +111,12 @@ class MetadataImportation
   def process_caption
     caption_str = self.fields.delete('captions.title')
     if !caption_str.nil?
-      caption_str.strip!
-      if !caption_str.empty?
-        caption = MetadataImportation.truncated_find(Caption, caption_str)
-        captions = self.medium.captions
-        if caption.nil?
-          captions.create(:title => caption_str, :language => self.english)
-        else
-          captions << caption if !captions.collect{ |c| c.id }.include?(caption.id)
-        end
+      caption = MetadataImportation.truncated_find(Caption, caption_str)
+      captions = self.medium.captions
+      if caption.nil?
+        captions.create(:title => caption_str, :language => self.english)
+      else
+        captions << caption if !captions.collect{ |c| c.id }.include?(caption.id)
       end
     end
   end
@@ -138,19 +124,16 @@ class MetadataImportation
   def process_collection
     collection_str = self.fields.delete('collections.title')
     if !collection_str.nil?
-      collection_str.strip!
-      if !collection_str.empty?
-        begin
-          collection = Collection.find_by_title(collection_str)
-        rescue
-          collection = nil
-        end
-        if collection.nil?
-          puts "Collection #{collection_str} not found!"
-        else
-          associations = self.medium.media_category_associations
-          associations.create(:category_id => collection.id, :root_id => Collection.root_id) if !associations.collect{|a| a.category_id}.include?(collection.id)
-        end
+      begin
+        collection = Collection.find_by_title(collection_str)
+      rescue
+        collection = nil
+      end
+      if collection.nil?
+        puts "Collection #{collection_str} not found!"
+      else
+        associations = self.medium.media_category_associations
+        associations.create(:category_id => collection.id, :root_id => Collection.root_id) if !associations.collect{|a| a.category_id}.include?(collection.id)
       end
     end
   end
@@ -171,20 +154,16 @@ class MetadataImportation
     if !feature.nil?
       location_note = self.fields.delete('locations.notes')
       spot = self.fields.delete('locations.spot_feature')
-      if !location_note.nil?
-        location_note.strip!
-        location_note = nil if location_note.empty?
-      end
-      if !spot.nil?
-        spot.strip!
-        spot = nil if spot.empty?
-      end
+      lat = self.fields.delete('locations.lat')
+      lng = self.fields.delete('locations.lng')
       location = Location.find(:first, :conditions => {:medium_id => medium.id, :feature_id => feature.fid})
       if location.nil?
-        location = Location.create(:medium => medium, :feature_id => feature.fid, :spot_feature => spot, :notes => location_note)
+        location = Location.create(:medium => medium, :feature_id => feature.fid, :spot_feature => spot, :notes => location_note, :lat => lat, :lng => lng)
       else
         location.spot_feature = spot if !spot.nil? && location.spot_feature.blank?
         location.notes = location_note if !location_note.nil? && location.notes.blank?
+        location.lat = lat if !lat.nil? && location.lat.nil?
+        location.lng = lng if !lng.nil? && location.lng.nil?
         location.save
       end      
     end
@@ -193,30 +172,24 @@ class MetadataImportation
   def process_description
     description_str = self.fields.delete('descriptions.title')
     if !description_str.nil?
-      description_str.strip!
-      if !description_str.empty?
-        description_creator_str = self.fields.delete('descriptions.creator')
-        description_creator = nil
-        if !description_creator_str.nil?
-          description_creator_str.strip!
-          if !description_creator_str.empty?
-            description_creator = Person.find_by_fullname(description_creator_str)
-            if description_creator.nil?
-              puts "Description creator named #{description_creator_str} not found!"
-            end
-          end
+      description_creator_str = self.fields.delete('descriptions.creator')
+      description_creator = nil
+      if !description_creator_str.nil?
+        description_creator = Person.find_by_fullname(description_creator_str)
+        if description_creator.nil?
+          puts "Description creator named #{description_creator_str} not found!"
         end
-        description = MetadataImportation.truncated_find(Description, description_str)
-        descriptions = self.medium.descriptions
-        if description.nil?
-          descriptions.create(:title => description_str, :language => english, :creator => description_creator)
-        else
-          if !description_creator.nil? && description.creator.nil?
-            description.creator = description_creator
-            description.save
-          end
-          descriptions << description if !descriptions.collect{ |d| d.id }.include?(description.id)
+      end
+      description = MetadataImportation.truncated_find(Description, description_str)
+      descriptions = self.medium.descriptions
+      if description.nil?
+        descriptions.create(:title => description_str, :language => english, :creator => description_creator)
+      else
+        if !description_creator.nil? && description.creator.nil?
+          description.creator = description_creator
+          description.save
         end
+        descriptions << description if !descriptions.collect{ |d| d.id }.include?(description.id)
       end
     end
   end
@@ -251,10 +224,6 @@ class MetadataImportation
           puts "Source #{source_str} not found!"
         else
           shot = self.fields.delete('media_source_associations.shot_number')
-          if !shot.nil?
-            shot.strip!
-            shot = nil if shot.empty?
-          end
           source_association = MediaSourceAssociation.find(:first, :conditions => {:medium_id => self.medium.id, :source_id => source.id})
           if source_association.nil?
             source_association = MediaSourceAssociation.create(:medium => self.medium, :source => source, :shot_number => shot)
@@ -296,6 +265,12 @@ class MetadataImportation
       import.process_description
       import.process_keywords
       import.process_source
+      if import.fields.empty?
+        puts "#{import.medium.id} processed."
+      else
+        puts "#{import.medium.id}: the following fields have been ignored: #{import.fields.keys.join(', ')}"
+      end
+      
     end
   end
   
