@@ -1,3 +1,4 @@
+<br />
 <%= render :partial => 'media_searches/advanced' %>
 <% remote_form_for :goto, :url => {:controller => 'media', :action => 'goto'}, :update => 'primary' do |f| %>
    <p>
@@ -10,7 +11,7 @@
 <div class="line"></div>
 
 <table border="0">
-  <tr valign="top" colspan="2">
+  <tr valign="top">
 	<td><h3><%= ts 'browse.this' %></h3></td>
   </tr>
   <tr valign="top">
@@ -20,14 +21,9 @@
       	<li><h4><%= link_to ts('by.subject'), subjects_path %></h4></li>
 	  </ul>
 	</td>
-    <td>
-      <ul>
-		<li><h4><%= link_to ts('by.ethnicity'), ethnicities_path %></h4></li>
-      </ul>
-	</td>
   </tr>
   <tr>
-    <td valign="top" colspan="2">
+    <td valign="top">
       <ul>
       <li><h4><%= ts 'by.keyword' %></h4>
       <p>

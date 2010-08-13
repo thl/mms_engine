@@ -59,7 +59,7 @@ module ApplicationHelper
         if count == 0
           tabs.delete(tab_id)
         else
-          tabs[tab_id][:title] += " (#{count})"
+          tabs[tab_id][:title] += " (#{number_with_delimiter(count.to_i, :delimiter => ',')})"
         end
       end
     end

@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.admin 'admin', :controller => 'main', :action => 'admin'
-  map.root :controller => 'main', :action => 'index'
+  map.root :controller => 'media', :action => 'index'
     
   map.subtitles 'subtitles/:video_id/:language/:form', :defaults => {:language => 'bo', :form => 'script'}, :controller => 'subtitles', :action => 'index'
   map.video_subtitles 'videos/:id/subtitles/:language/:form', :defaults => {:language => 'bo', :form => 'script'}, :controller => 'videos', :action => 'show'
@@ -22,7 +22,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :ethnicities, :member => {:expand => :get, :contract => :get}
   map.resources :subjects, :member => {:expand => :get, :contract => :get}
   
-  map.resources :media, :as => 'media_objects', :member => { :large => :get, :rename => :get }, :collection => { :rename_all => :get }, :has_many => [:affiliations, :captions, :collections, :descriptions, :ethnicities, :locations, :places, :subjects] do |media|
+  map.resources :media, :as => 'media_objects', :member => { :full_size => :get, :large => :get, :rename => :get }, :collection => { :rename_all => :get }, :has_many => [:affiliations, :captions, :collections, :descriptions, :ethnicities, :locations, :places, :subjects] do |media|
     media.resources :source_associations, :controller => 'media_source_associations'
     media.resources :collection_associations, :controller => 'media_collection_associations'
     media.resources :subject_associations, :controller => 'media_subject_associations'

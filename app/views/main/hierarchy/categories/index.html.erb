@@ -1,17 +1,15 @@
 <% @current_tab_id = :browse %>
 <div id="primary">
-<h4>
+  <h4>
 	Browse <%= Medium.human_name(:count => :many).titleize %> By
 	<%
 	resources = {
     'Collections'=>collections_path,
-    'Cultures'=>ethnicities_path,
     'Subjects'=>subjects_path
   }.sort	
 	%>
 	<%= select_tag :resources, options_for_select(resources,  "/#{params[:controller]}"), :onchange => "window.location = $(this).val()" %>
-</h4>
-<!--<h4><%= ts 'browse.by', :what => Medium.human_name(:count => :many).titleize, :whom => t("by.#{@model.model_name.underscore}").titleize %></h4>-->
+  </h4>
   <div id="navigation" class="normal">
 <%= render :partial => 'main/hierarchy/categories/category_index', :locals => {:elements => @elements, :margin_depth => 0} %>
   </div>

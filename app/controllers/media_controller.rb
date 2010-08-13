@@ -4,7 +4,7 @@ class MediaController < AclController
 
   def initialize
     super
-    @guest_perms += ['media/goto', 'media/large']
+    @guest_perms += ['media/goto', 'media/large', 'media/full_size']
   end
   
   # GET /media[?administrative_unit_id=1][&type=Type]
@@ -78,8 +78,8 @@ class MediaController < AclController
           @title = type.pluralize
         else
           @pictures = Picture.find(:all, :order => 'RAND()', :limit => Medium::COLS * Medium::PREVIEW_ROWS)
-          @videos = Video.find(:all, :order => 'RAND()', :limit => 1)
-          @documents = Document.find(:all, :order => 'RAND()', :limit => 1)
+          @videos = Video.find(:all, :order => 'RAND()', :limit => Medium::COLS)
+          @documents = Document.find(:all, :order => 'RAND()', :limit => Medium::COLS)
           @titles = { :picture => ts(:daily, :what => Picture.human_name(:count => :many).titleize), :video => ts(:daily, :what => Video.human_name(:count => :many).titleize), :document => ts(:daily, :what => Document.human_name(:count => :many).titleize) }
           @more = { :type => '' }
         end
@@ -147,7 +147,9 @@ class MediaController < AclController
   # GET /media/1
   # GET /media/1.xml
   def show
-    @medium = Medium.find(params[:id])    
+    @medium = Medium.find(params[:id]) 
+    @un_options ||= {}
+    @un_options[:entity] = @medium   
     if request.xhr?
       render :partial => 'show'
     else      
@@ -169,6 +171,15 @@ class MediaController < AclController
     @medium = Medium.find(params[:id])    
     respond_to do |format|
       format.html { render :template => 'pictures/large' }# large.rhtml
+    end
+  end
+
+  # GET /media/1/full_size
+  # GET /media/1/full_size.xml
+  def full_size
+    @medium = Medium.find(params[:id])    
+    respond_to do |format|
+      format.html { render :partial => 'pictures/full_size' }# large.rhtml
     end
   end
   
