@@ -39,7 +39,7 @@ module ApplicationHelper
     }
   end
   
-  def secondary_tabs(current_tab_id=:home)
+  def secondary_tabs(current_tab_id=:browse)
 
     @tab_options ||= {}
     @tab_options[:urls] ||= {}
@@ -48,7 +48,7 @@ module ApplicationHelper
     
     tabs = secondary_tabs_config
     
-    current_tab_id = :home unless tabs.has_key? current_tab_id
+    current_tab_id = :browse unless tabs.has_key? current_tab_id
     
     @tab_options[:urls].each do |tab_id, url|
       tabs[tab_id][:url] = url unless tabs[tab_id].nil? || url.nil?
@@ -66,8 +66,10 @@ module ApplicationHelper
     
     tabs[current_tab_id][:url] = "#media_main"
     current_tab_index = 1
+    tab_index = 0
     tabs = tabs.sort{|a,b| a[1][:index] <=> b[1][:index]}.collect{|tab_id, tab| 
-      current_tab_index = tab[:index] - 1 if tab_id == current_tab_id
+      current_tab_index = tab_index if tab_id == current_tab_id
+      tab_index += 1
       [tab[:title], tab[:url]]
     }
     
