@@ -75,7 +75,7 @@ class MediaController < AclController
         if !type.blank?
           @medium_pages = Paginator.new self, Medium.count(:conditions => { :type => type }), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
           @media = Medium.find(:all, :conditions => {:type => type}, :limit => @medium_pages.items_per_page, :offset => @medium_pages.current.offset, :order => 'created_on DESC')
-          @title = type.pluralize
+          @title = type.constantize.human_name.titleize.pluralize
         else
           @pictures = Picture.find(:all, :order => 'RAND()', :limit => Medium::COLS * Medium::PREVIEW_ROWS)
           @videos = Video.find(:all, :order => 'RAND()', :limit => Medium::COLS)
@@ -113,7 +113,7 @@ class MediaController < AclController
               page.replace_html 'secondary', :partial => 'media/index'
               page.replace_html('navigation', :partial => partial) if !element_id.blank?
             else
-              page.replace_html 'secondary', :partial => type == 'Document' ? 'documents/paged_index' : 'media/paged_index'
+              page.replace_html 'secondary', :partial => type == 'Document' ? 'documents/paged_index' : 'media/paged_index_full'
             end
             page.call 'tb_remove'
             page.call 'tb_init', 'a.thickbox, area.thickbox, input.thickbox'

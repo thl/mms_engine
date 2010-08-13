@@ -14,7 +14,7 @@
    if selected %>
      <span class="selected_branch">
 <% end %>
-<%= "#{link_to h(expanded.title).s, expanded} (#{expanded.count_inherited_media})" %>
+<%= "#{link_to h(expanded.title).s, expanded} (#{number_with_delimiter(expanded.count_inherited_media, :delimiter => ',')})" %>
 <% if selected %>
      </span>
 <% end %>

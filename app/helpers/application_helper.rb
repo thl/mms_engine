@@ -30,11 +30,11 @@ module ApplicationHelper
       :home => {:index => 1, :title => "Home", :url => "#{ActionController::Base.relative_url_root.to_s}/"},
       :search => {:index => 2, :title => "Search", :url => new_media_search_url},
       :browse => {:index => 3, :title => "Browse", :url => collections_url},
-      :picture => {:index => 4, :title => "Pictures", :url => media_path(:type => 'Picture')},
+      :picture => {:index => 4, :title => Picture.human_name.titleize.pluralize, :url => media_path(:type => 'Picture')},
       #:audio => {:index => 5, :title => "Audio", :url => new_media_search_url},
-      :video => {:index => 5, :title => "Video", :url => media_path(:type => 'Video')},
+      :video => {:index => 5, :title => Video.human_name.titleize.pluralize, :url => media_path(:type => 'Video')},
       #:immersive => {:index => 7, :title => "Immersive", :url => new_media_search_url},
-      :document => {:index => 6, :title => "Documents", :url => media_path(:type => 'Document')}
+      :document => {:index => 6, :title => Document.human_name.titleize.pluralize, :url => media_path(:type => 'Document')}
       #:biblio => {:index => 9, :title => "Biblio", :url => sources_url},
     }
   end

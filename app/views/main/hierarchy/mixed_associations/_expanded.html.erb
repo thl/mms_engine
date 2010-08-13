@@ -7,7 +7,7 @@
 <% if !children.empty? %>
 <%=  link_to_remote '-', { :update => "#{@element.id}_div", :url => {:controller => @controller_name, :action => 'contract_unit', :id => @element.id, :margin_depth => @margin_depth} }, { :class => 'collapsable' } %>
 <% end %>
-<%= "#{link_to_remote h(@element.title).s, :url => media_path(@element_name.to_sym => @element), :method => 'get'} (#{@element.count_inherited_media})" %>
+<%= "#{link_to_remote h(@element.title).s, :url => media_path(@element_name.to_sym => @element), :method => 'get'} (#{number_with_delimiter(@element.count_inherited_media, :delimiter => ',')})" %>
 </span>
 <% @margin_depth += 1 
    for @element in children %>
