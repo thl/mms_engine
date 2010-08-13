@@ -18,12 +18,17 @@ namespace :mms do
     "\nExpected column names: word, definition, grammatical_class, letter, loan_type, dialect and keywords (notice the plural)."
 
     metadata_description = "Task used to import metadata for THL images.\n" +
+    "Syntax: rake mms:import:metadata FILENAME=filename\n" +
     "Takes a CSV where first row are the column names. The following column names are accepted and interpreted:\n" +
-    "workflows.original_filename, workflows.original_medium_id, workflows.other_id, workflows.sequence_order,\n" +
-    "workflows.notes, media.recording_note, media.private_note, media.taken_on, media.photographer,\n" +
-    "recording_orientations.title, captions.title, collections.title, administrative_units.title,\n" +
-    "locations.notes, locations.spot_feature, descriptions.title,\n" +
-    "descriptions.creator, keywords.title, sources.title, and media_source_associations.shot_number."
+    "media.id, workflows.original_filename,\n" +
+    "workflows.original_medium_id, workflows.other_id, workflows.sequence_order, workflows.notes,\n" +
+    "media.recording_note, media.private_note, media.taken_on, media.photographer, recording_orientations.title,\n" +
+    "locations.feature_id, geo_code_types.code, features.geo_code, locations.notes, locations.spot_feature,\n" +
+    "captions.title,\n" +
+    "collections.title,\n" +
+    "descriptions.title, descriptions.creator,\n" +
+    "keywords.title,\n" +
+    "sources.title, media_source_associations.shot_number"
 
     desc media_import_description
     task :images do |t|
@@ -123,7 +128,7 @@ namespace :mms do
 
     desc metadata_description
     task :metadata do |t|
-      require File.join(File.dirname(__FILE__), "../lib/media_extractor.rb")
+      require File.join(File.dirname(__FILE__), "../lib/metadata_importation.rb")
       filename = ENV['FILENAME']
       if filename.blank?
         puts metadata_description

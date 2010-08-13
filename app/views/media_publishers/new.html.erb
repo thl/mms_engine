@@ -1,0 +1,23 @@
+<h1>New media_publisher</h1>
+
+<% form_for(@media_publisher) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :publisher_id %><br />
+    <%= f.text_field :publisher_id %>
+  </p>
+  <p>
+    <%= f.label :medium_id %><br />
+    <%= f.text_field :medium_id %>
+  </p>
+  <p>
+    <%= f.label :date %><br />
+    <%= f.date_select :date %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', media_publishers_path %>

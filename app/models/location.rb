@@ -9,13 +9,15 @@ class Location < ActiveRecord::Base
 end
 
 # == Schema Info
-# Schema version: 20100714204209
+# Schema version: 20100811203819
 #
 # Table name: locations
 #
 #  id           :integer(4)      not null, primary key
 #  feature_id   :integer(4)      not null
 #  medium_id    :integer(4)      not null
+#  lat          :decimal(9, 6)
+#  lng          :decimal(9, 6)
 #  notes        :text
 #  spot_feature :text
 #  type         :string(50)
