@@ -1,5 +1,6 @@
 class PlacesController < ApplicationController
   helper :media
+  include ApplicationHelper
   
   # To show browsing panel for admin units:
   # GET /locations
@@ -104,7 +105,11 @@ class PlacesController < ApplicationController
     @documents = @place.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Document')
     title = @place.header
     @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
-    @more = { :feature_id => @place.fid, :type => '' }    
+    @more = { :feature_id => @place.fid, :type => '' }
+    @tab_options ||= {}
+    @tab_options[:counts] = tab_counts_for_element(@place)
+    # Not sure what these URLs should be yet
+    #@tab_options[:urls] = tab_urls_for_element(@place)  
     if request.xhr?
       render :update do |page|
         if !@medium.nil?
