@@ -9,5 +9,7 @@ xml.__send__(medium.class.name.underscore.dasherize) do
   case medium.class
   when Picture
     xml << render(:partial => 'pictures/show', :locals => {:picture => medium})
-  end  
+  end
+  medium.categories.each { |category| xml.associated_category(:title => category.title, :id => category.id) }
+  medium.features.each { |feature| xml.associated_feature(:title => feature.header, :fid => feature.fid) }
 end

@@ -59,15 +59,23 @@ class Medium < ActiveRecord::Base
   end
   
   def collections
-    self.media_collection_associations.collect(&:category)
+    self.media_collection_associations.collect(&:category).select{|c| c}
   end
 
   def subjects
-    self.media_subject_associations.collect(&:category)
+    self.media_subject_associations.collect(&:category).select{|c| c}
   end
 
   def ethnicities
-    self.media_ethnicity_associations.collect(&:category)
+    self.media_ethnicity_associations.collect(&:category).select{|c| c}
+  end
+  
+  def categories
+    self.media_category_associations.collect(&:category).select{|c| c}
+  end
+  
+  def features
+    self.locations.collect(&:feature).select{|f| f}
   end
   
   def thumbnail_image

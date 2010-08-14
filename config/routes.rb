@@ -47,6 +47,8 @@ ActionController::Routing::Routes.draw do |map|
   :organizations, :pictures, :places, :projects, :quality_types, :recording_orientations, :renderers,
   :reproduction_types, :sources, :sponsors, :transformations, :videos, :statuses, :publishers
   
+  map.resources :topics
+  
   map.with_options :path_prefix => 'documents', :controller => 'documents' do |documents|
     documents.by_title 'by_title/:title.:format', :action => 'by_title'
   end
