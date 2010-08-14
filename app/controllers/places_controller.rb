@@ -116,6 +116,7 @@ class PlacesController < ApplicationController
         end
         page.replace_html 'secondary', :partial => 'media_index'
         page.call 'ActivateThlPopups', '#secondary'
+        page.call 'tb_init', 'a.thickbox, area.thickbox, input.thickbox'
       end
     else
       respond_to { |format| format.html { render(:action => 'show_for_medium') if !@medium.nil? } }

@@ -121,6 +121,7 @@ class MediaController < AclController
               page.replace_html 'secondary', :partial => type == 'Document' ? 'documents/paged_index' : 'media/paged_index_full'
             end
             page.call 'ActivateThlPopups', '#secondary'
+            page.call 'tb_init', 'a.thickbox, area.thickbox, input.thickbox'
           end
         end
       else

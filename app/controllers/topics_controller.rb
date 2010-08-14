@@ -30,6 +30,7 @@ class TopicsController < ApplicationController
           page.replace_html 'primary', :partial => 'media/show'
         end
         page.replace_html 'secondary', :partial => 'media_index'
+        page.call 'ActivateThlPopups', '#secondary'
         page.call 'tb_init', 'a.thickbox, area.thickbox, input.thickbox'
       end
     else

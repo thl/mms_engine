@@ -7,6 +7,7 @@
 	  div_id = "media_large_#{@medium.id}"
  %>
 <div id="<%= div_id %>">
-<%= large_image.nil? ? image_tag : link_to(image_tag, full_size_medium_path(@medium), {:class => 'media-thumb overflow-x-auto thl-pop no-view-alone no-main-site-ajax padding-10 width-1000'}) %>
+<% #large_image.nil? ? image_tag : link_to(image_tag, full_size_medium_path(@medium), {:class => 'media-thumb overflow-x-auto thl-pop no-view-alone no-main-site-ajax padding-10 width-1000'}) %>
+<%= large_image.nil? ? image_tag : link_to_function(image_tag, "$(\"#TB_window\").remove(); $(\".thl-popup\").remove(); $(\"body\").append(\"<div id='TB_window'></div>\");	tb_show(null, \"#{image_path(large_image.public_filename)}\", false);") %>
 </div>
-<%= javascript_tag "ActivateThlPopups('##{div_id}')" %>
+<% #javascript_tag "ActivateThlPopups('##{div_id}')" %>
