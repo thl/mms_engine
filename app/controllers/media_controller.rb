@@ -1,5 +1,5 @@
 class MediaController < AclController
-  @@element_candidates = {:feature_id => {:class => Place, :association => 'locations', :name => 'location'}, :collection_id => {:class => Collection, :association => 'media_collection_associations', :name => 'collection'}, :ethnicity_id => {:class => Ethnicity, :association => 'media_ethnicity_associations', :name => 'socio-cultural group'}, :subject_id => {:class => Subject, :association => 'media_subject_associations', :name => 'subject'}}
+  @@element_candidates = {:category_id => {:class => Topic, :association => 'topics', :name => 'topic'}, :feature_id => {:class => Place, :association => 'locations', :name => 'location'}, :collection_id => {:class => Collection, :association => 'media_collection_associations', :name => 'collection'}, :ethnicity_id => {:class => Ethnicity, :association => 'media_ethnicity_associations', :name => 'socio-cultural group'}, :subject_id => {:class => Subject, :association => 'media_subject_associations', :name => 'subject'}}
   @@media_types = {:picture => Picture, :video => Video, :document => Document}
 
   def initialize
@@ -46,6 +46,8 @@ class MediaController < AclController
           if @controller_name == 'locations'
             @place = @element
             partial = 'places/show'
+          elsif @controller_name == 'topics'
+            partial = 'topics/show'
           else
             partial = 'main/hierarchy/associations/general_index'
           end            
@@ -55,7 +57,7 @@ class MediaController < AclController
           @pagination_params[element_name] = element_id
           @title = ts(:in, :what => @@media_types[type.downcase.to_sym].human_name(:count => :many).titleize, :where => @element.title)
         end
-        if @controller_name != 'locations'
+        if !['locations', 'topics'].include? @controller_name
           @current = @element.ancestors.collect{|c| c.id.to_i}
           @current << @element.id.to_i
           @elements = element_class.root.children

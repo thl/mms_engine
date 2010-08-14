@@ -21,6 +21,7 @@ dz:
         keyword: 'གཙོ་ཚིག་གི་ཐོག་ལས།'
         location: 'གནས་ཁོངས་ཀྱི་ཐོག་ལས།'
         subject: 'དོན་ཚན་གྱི་ཐོག་ལས།'
+        topic: 'By topic'      
     catalog_record: 'catalog record'
     collection: 'བསྡུ་གསོག།'
     # one

@@ -1,0 +1,8 @@
+<% if !@pictures.nil? || !@videos.nil? || !@documents.nil? %>
+<%=  render :partial => 'media/index' %>
+<p><%= link_to ts(:url_for_reference), topic_path(@topic.id) %></p>
+<% elsif !@media.nil? %>
+<%=  render :partial => 'media/paged_index' %>
+<% end %>
+<h3><%= ts :in, :what => @topic.title, :where => 'Kmaps' %></h3>
+<p><%= link_to ts('see.record', :what => 'entry'), Category.element_url(@topic.id, :format => 'html') %></p>
