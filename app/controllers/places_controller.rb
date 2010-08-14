@@ -109,7 +109,7 @@ class PlacesController < ApplicationController
     @tab_options ||= {}
     @tab_options[:counts] = tab_counts_for_element(@place)
     # Not sure what these URLs should be yet
-    #@tab_options[:urls] = tab_urls_for_element(@place)  
+    #@tab_options[:urls] = tab_urls_for_element(@place)
     if request.xhr?
       render :update do |page|
         if !@medium.nil?

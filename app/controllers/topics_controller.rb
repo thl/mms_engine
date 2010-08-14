@@ -1,5 +1,6 @@
 class TopicsController < ApplicationController
   helper :media
+  include ApplicationHelper
   
   # GET /places/1
   # GET /places/1.xml
@@ -19,7 +20,11 @@ class TopicsController < ApplicationController
     @documents = @topic.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Document')
     title = @topic.title
     @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
-    @more = { :category_id => @topic.id, :type => '' }    
+    @more = { :category_id => @topic.id, :type => '' }
+    @tab_options ||= {}
+    @tab_options[:counts] = tab_counts_for_element(@topic)
+    # Not sure what these URLs should be yet
+    #@tab_options[:urls] = tab_urls_for_element(@topic) 
     if request.xhr?
       render :update do |page|
         if !@medium.nil?

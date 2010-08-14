@@ -65,3 +65,7 @@ font-weight:normal;
 #sideMenuLink {
 	background-position:0 0;
 }
+
+#media_main h1, #media_main h2, #media_main h3 {
+	padding-left:0;
+}
