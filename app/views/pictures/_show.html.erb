@@ -1,6 +1,9 @@
-<%  screen_size_image = @medium.screen_size_image
-    large_image = @medium.large_image 
-    image_tag = image_tag(screen_size_image.public_filename, :width => screen_size_image.width, :height => screen_size_image.height)
+<%  #screen_size_image = @medium.screen_size_image
+    #image_tag = image_tag(screen_size_image.public_filename, :width => screen_size_image.width, :height => screen_size_image.height)
+    large_image = @medium.large_image
+ 		huge_image = @medium.huge_image
+    # Temporarily using the huge image and scaling it down with CSS to avoid regenerating all of the screen_size images
+    image_tag = image_tag(huge_image.public_filename, :style => "max-width: 550px; max-height: 350px;")
 	  div_id = "media_large_#{@medium.id}"
  %>
 <div id="<%= div_id %>">
