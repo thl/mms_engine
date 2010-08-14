@@ -63,6 +63,10 @@ class Medium < ActiveRecord::Base
     self.media_category_associations.collect(&:category).select{|c| c}
   end
   
+  def features
+    self.locations.collect(&:feature).select{|f| f}
+  end
+  
   def thumbnail_image
     att = attachment
     return nil if att.nil?
