@@ -4,4 +4,4 @@
 <% elsif !@media.nil? %>
 <%=  render :partial => 'media/paged_index' %>
 <% end %>
-<p><%= link_to ts(:in, :what => @place.header, :where => 'Places'), Feature.element_url(@place.fid) %></p>
+<p><%= link_to ts(:in, :what => @place.header, :where => 'Places'), Feature.element_url(@place.fid, :format => 'html') %></p>
