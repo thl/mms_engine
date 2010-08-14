@@ -84,10 +84,11 @@ module ApplicationHelper
     counts
   end
   
-  def tab_urls_for_element(element)
+  def tab_urls_for_element(element, element_model_name=nil)
     urls = {}
     element_id = element.id
-    element_name = (element.class.name.underscore+"_id").to_sym
+    element_model_name = element.class.name if element_model_name.blank?
+    element_name = (element_model_name.underscore+"_id").to_sym
     Medium::TYPES.each do |type, display_names|
       urls[type] = media_path(element_name => element_id, :type => type.to_s.classify)
     end

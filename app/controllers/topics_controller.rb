@@ -23,8 +23,7 @@ class TopicsController < ApplicationController
     @more = { :category_id => @topic.id, :type => '' }
     @tab_options ||= {}
     @tab_options[:counts] = tab_counts_for_element(@topic)
-    # Not sure what these URLs should be yet
-    #@tab_options[:urls] = tab_urls_for_element(@topic) 
+    @tab_options[:urls] = tab_urls_for_element(@topic) 
     if request.xhr?
       render :update do |page|
         if !@medium.nil?
