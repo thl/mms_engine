@@ -5,23 +5,34 @@ class Place < Feature
   
   def paged_media(limit, offset = nil, type = nil)
     if type.nil?
-      media = Medium.find(:all, :conditions => {'locations.feature_id' => self.fid}, :joins => :locations, :limit => limit, :offset => offset, :order => 'created_on DESC')
+      media = Medium.find(:all, :conditions => {'locations.feature_id' => self.fid}, :joins => :locations, :limit => limit, :offset => offset, :order => 'media.created_on DESC')
     else
-      media = Medium.find(:all, :conditions => {'locations.feature_id' => self.fid, 'media.type' => type}, :joins => :locations, :limit => limit, :offset => offset, :order => 'created_on DESC')
+      media = Medium.find(:all, :conditions => {'locations.feature_id' => self.fid, 'media.type' => type}, :joins => :locations, :limit => limit, :offset => offset, :order => 'media.created_on DESC')
     end
     media
   end
-  
-  def count_inherited_media(type = nil)
-    if type.nil?
-      media_count = Medium.count('media.id', :distinct => true, :conditions => {'locations.feature_id' => self.fid}, :joins => :locations)
-    else
-      media_count = Medium.count('media.id', :distinct => true, :conditions => {'locations.feature_id' => self.fid, 'media.type' => type}, :joins => :locations)
-    end
-    media_count
-  end
-  
+    
   def title
     self.header
   end
+  
+  def media(type = nil)
+    if type.nil?
+      media = Medium.find(:all, :conditions => {'locations.feature_id' => self.fid}, :joins => :locations, :order => 'media.created_on DESC')
+    else
+      media = Medium.find(:all, :conditions => {'locations.feature_id' => self.fid, 'media.type' => type}, :joins => :locations, :order => 'media.created_on DESC')
+    end
+    media
+  end
+    
+  def media_count(type = nil)
+    if type.nil?
+      count = Location.count(:conditions => {'locations.feature_id' => self.fid})
+    else
+      count = Location.count(:conditions => {'locations.feature_id' => self.fid, 'media.type' => type}, :joins => :medium)
+    end
+    count
+  end
+  
+  alias count_inherited_media media_count
 end

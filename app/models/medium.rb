@@ -63,8 +63,16 @@ class Medium < ActiveRecord::Base
     self.media_category_associations.collect(&:category).select{|c| c}
   end
   
+  def category_count
+    MediaCategoryAssociation.count(:conditions => {:medium_id => self.id})
+  end
+  
   def features
     self.locations.collect(&:feature).select{|f| f}
+  end
+  
+  def feature_count
+    Location.count(:conditions => {:medium_id => self.id})
   end
   
   def thumbnail_image
