@@ -12,20 +12,21 @@ class Topic < Category
     media
   end
   
-  def media(type = nil)
-    if type.nil?
-      media = Medium.find(:all, :conditions => {'media_category_associations.category_id' => self.id}, :joins => :media_category_associations, :order => 'media.created_on DESC')
-    else
-      media = Medium.find(:all, :conditions => {'media_category_associations.category_id' => self.id, 'media.type' => type}, :joins => :media_category_associations, :order => 'media.created_on DESC')
-    end
-    media
+  def media(options = {})
+    type = options[:type]
+    conditions = {'media_category_associations.category_id' => self.id}
+    conditions['media.type'] = type if !type.nil?
+    joins = options[:cumulative] ? :cumulative_media_category_associations : :media_category_associations
+    Medium.find(:all, :conditions => conditions, :joins => joins, :order => 'media.created_on DESC')
   end
     
-  def media_count(type = nil)
+  def media_count(options = {})
+    type = options[:type]
+    association = options[:cumulative] || false ? CumulativeMediaCategoryAssociation : MediaCategoryAssociation
     if type.nil?
-      count = MediaCategoryAssociation.count(:conditions => {:category_id => self.id})
+      count = association.count(:conditions => {:category_id => self.id})
     else
-      count = MediaCategoryAssociation.count(:conditions => {:category_id => self.id, 'media.type' => type}, :joins => :medium)
+      count = association.count(:conditions => {:category_id => self.id, 'media.type' => type}, :joins => :medium)
     end
   end
 

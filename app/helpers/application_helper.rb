@@ -79,7 +79,7 @@ module ApplicationHelper
   def tab_counts_for_element(element)
     counts = {}
     Medium::TYPES.each do |type, display_names|
-      counts[type] = element.count_media(type.to_s.classify)
+      counts[type] = element.media_count(:type => type.to_s.classify)
     end
     counts
   end

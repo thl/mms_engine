@@ -16,17 +16,15 @@ class Place < Feature
     self.header
   end
   
-  def media(type = nil)
-    if type.nil?
-      media = Medium.find(:all, :conditions => {'locations.feature_id' => self.fid}, :joins => :locations, :order => 'media.created_on DESC')
-    else
-      media = Medium.find(:all, :conditions => {'locations.feature_id' => self.fid, 'media.type' => type}, :joins => :locations, :order => 'media.created_on DESC')
-    end
-    media
+  def media(options = {})
+    type = options[:type]
+    conditions = {'locations.feature_id' => self.fid}
+    conditions['media.type'] = type if !type.nil?
+    Medium.find(:all, :conditions => conditions, :joins => :locations, :order => 'media.created_on DESC')
   end
-<<<<<<< HEAD
     
-  def media_count(type = nil)
+  def media_count(options = {})
+    type = options[:type]
     if type.nil?
       count = Location.count(:conditions => {'locations.feature_id' => self.fid})
     else

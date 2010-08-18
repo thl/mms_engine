@@ -70,12 +70,18 @@ class Medium < ActiveRecord::Base
     self.media_ethnicity_associations.collect(&:category).select{|c| c}
   end
   
-  def categories
-    self.media_category_associations.collect(&:category).select{|c| c}
+  def categories(options = {})
+    cumulative = options[:cumulative] || false
+    if cumulative
+      return self.cumulative_media_category_associations.collect(&:category).select{|c| c}
+    else
+      return self.media_category_associations.collect(&:category).select{|c| c}
+    end
   end
   
-  def category_count
-    MediaCategoryAssociation.count(:conditions => {:medium_id => self.id})
+  def category_count(options = {})
+    association = options[:cumulative] || false ? CumulativeMediaCategoryAssociation : MediaCategoryAssociation
+    association.count(:conditions => {:medium_id => self.id})
   end
   
   def features
