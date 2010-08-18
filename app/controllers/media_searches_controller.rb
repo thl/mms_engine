@@ -1,9 +1,11 @@
 class MediaSearchesController < AclController
+  @@media_types = {:picture => Picture, :video => Video, :document => Document}
   helper :media
   
   def initialize
     super
     @guest_perms += ['media_searches/new', 'media_searches/create']
+    @current_tab_id = :search
   end
   
   # GET /media_searches
@@ -33,6 +35,9 @@ class MediaSearchesController < AclController
   def create # actually creates the new search query and displays results
     calculate_media_search
     calculate_sorrounding_search
+    @tab_options ||= {}
+    @tab_options[:counts] = tab_counts_for_search(@media_search)
+    @tab_options[:urls] = tab_urls_for_search(@pagination_params)
     if request.xhr?
       render :update do |page|
         page.replace_html 'primary', :partial => 'media_searches/tabulated_search_results'
@@ -48,18 +53,38 @@ class MediaSearchesController < AclController
   def index
     calculate_media_search
     @media_type = params[:media_type]
-    @medium_pages = Paginator.new self, Medium.count_media_search(@media_search, @media_type), 20, params[:page]
+    per_page = @media_type.blank? ? 20 : Medium::FULL_COLS * Medium::FULL_ROWS
+    @medium_pages = Paginator.new self, Medium.count_media_search(@media_search, @media_type), per_page, params[:page]
     @media = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, @media_type)
-    @title = "Media about \"#{@media_search.title}\""
+    @pictures = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, 'Picture')
+    @videos = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, 'Video')
+    @documents = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, 'Document')
+    
+    @titles = Hash.new
+    @@media_types.each{ |key, value| @titles[key] = "#{value.human_name(:count => :many).titleize} about \"#{@media_search.title}\"" }
+    
+    media_type_display = @media_type.blank? ? 'Media' : @@media_types[@media_type.underscore.to_sym].human_name(:count => :many).titleize
+    @title = "#{media_type_display} about \"#{@media_search.title}\""
+    @tab_options ||= {}
+    @tab_options[:counts] = tab_counts_for_search(@media_search)
+    @tab_options[:urls] = tab_urls_for_search(@pagination_params)
+    @tab_options[:urls][:search] = media_searches_path(@pagination_params.reject{|param,value| param == :media_type})
+    @current_tab_id = @media_type.underscore.to_sym unless @media_type.blank?
     if request.xhr?
       respond_to do |format|
-        format.html { render :partial => @media_type=='Document' ? 'media_searches/paged_documents' : 'media_searches/paged_media' }
+        format.html { render :partial => @media_type=='Document' ? 'media_searches/paged_documents' : 'media_searches/paged_media_full' }
         #format.xml  { render :xml => TODO }
       end
     else
       calculate_sorrounding_search
       respond_to do |format|
-        format.html { render :action => @media_type=='Document' ? 'paged_documents' : 'paged_media' }
+        format.html do
+          if @media_type.blank?
+            render :action => @media_type=='Document' ? 'paged_documents' : 'paged_media'
+          else
+            render :action => @media_type=='Document' ? 'paged_documents_full' : 'paged_media_full'
+          end
+        end
         #format.xml  { render :xml => TODO }
       end
     end

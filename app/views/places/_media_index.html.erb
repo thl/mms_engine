@@ -1,8 +1,7 @@
+<h2>Media Associated with <%= @place.header %></h2>
 <% if !@pictures.nil? || !@videos.nil? || !@documents.nil? %>
 <%=  render :partial => 'media/index' %>
-<p><%= link_to ts(:url_for_reference), place_path(@place.fid) %></p>
 <% elsif !@media.nil? %>
 <%=  render :partial => 'media/paged_index' %>
 <% end %>
-<h3><%= ts :in, :what => @place.header, :where => 'Places Dictionary' %></h3>
-<p><%= link_to ts('see.record', :what => 'entry'), Feature.element_url(@place.fid, :format => 'html') %></p>
+<p><%= link_to ts(:in, :what => @place.header, :where => 'Places'), Feature.element_url(@place.fid, :format => 'html') %></p>

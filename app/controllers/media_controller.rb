@@ -1,10 +1,11 @@
 class MediaController < AclController
-  @@element_candidates = {:category_id => {:class => Topic, :association => 'topics', :name => 'topic'}, :feature_id => {:class => Place, :association => 'locations', :name => 'location'}, :collection_id => {:class => Collection, :association => 'media_collection_associations', :name => 'collection'}, :ethnicity_id => {:class => Ethnicity, :association => 'media_ethnicity_associations', :name => 'socio-cultural group'}, :subject_id => {:class => Subject, :association => 'media_subject_associations', :name => 'subject'}}
+  # Adding redundant candidates (e.g. category_id and :topic_id) for now to prevent errors, but these should be consolidated
+  @@element_candidates = {:category_id => {:class => Topic, :association => 'topics', :name => 'topic'}, :topic_id => {:class => Topic, :association => 'topics', :name => 'topic'}, :feature_id => {:class => Place, :association => 'locations', :name => 'location'}, :place_id => {:class => Place, :association => 'locations', :name => 'location'}, :collection_id => {:class => Collection, :association => 'media_collection_associations', :name => 'collection'}, :ethnicity_id => {:class => Ethnicity, :association => 'media_ethnicity_associations', :name => 'socio-cultural group'}, :subject_id => {:class => Subject, :association => 'media_subject_associations', :name => 'subject'}}
   @@media_types = {:picture => Picture, :video => Video, :document => Document}
 
   def initialize
     super
-    @guest_perms += ['media/goto', 'media/large']
+    @guest_perms += ['media/goto', 'media/large', 'media/full_size']
   end
   
   # GET /media[?administrative_unit_id=1][&type=Type]
@@ -52,7 +53,13 @@ class MediaController < AclController
             partial = 'main/hierarchy/associations/general_index'
           end            
         else
-          @medium_pages = Paginator.new self, @element.count_inherited_media(type), Medium::COLS * Medium::ROWS, params[:page]
+          @tab_options ||= {}
+          @tab_options[:counts] = tab_counts_for_element(@element)
+          @tab_options[:urls] = tab_urls_for_element(@element)
+          @tab_options[:urls][:browse] = polymorphic_url(@element)
+          # Need to use .fid if the element is a Place
+          @tab_options[:urls][:browse] = place_url(@element.fid) if @element.class.name == 'Place'
+          @medium_pages = Paginator.new self, @element.count_media(type), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
           @media = @element.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset, type)
           @pagination_params[element_name] = element_id
           @title = ts(:in, :what => @@media_types[type.downcase.to_sym].human_name(:count => :many).titleize, :where => @element.title)
@@ -70,13 +77,13 @@ class MediaController < AclController
         @title = ts(:in, :what => Medium.human_name(:count => :many).titleize, :where => ts(:keyword, :what => @keyword.title))
       else
         if !type.blank?
-          @medium_pages = Paginator.new self, Medium.count(:conditions => { :type => type }), Medium::COLS * Medium::ROWS, params[:page]
+          @medium_pages = Paginator.new self, Medium.count(:conditions => { :type => type }), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
           @media = Medium.find(:all, :conditions => {:type => type}, :limit => @medium_pages.items_per_page, :offset => @medium_pages.current.offset, :order => 'created_on DESC')
-          @title = ts(:all, :what => type.pluralize)
+          @title = type.constantize.human_name.titleize.pluralize
         else
           @pictures = Picture.find(:all, :order => 'RAND()', :limit => Medium::COLS * Medium::PREVIEW_ROWS)
-          @videos = Video.find(:all, :order => 'RAND()', :limit => 1)
-          @documents = Document.find(:all, :order => 'RAND()', :limit => 1)
+          @videos = Video.find(:all, :order => 'RAND()', :limit => Medium::COLS)
+          @documents = Document.find(:all, :order => 'RAND()', :limit => Medium::COLS)
           @titles = { :picture => ts(:daily, :what => Picture.human_name(:count => :many).titleize), :video => ts(:daily, :what => Video.human_name(:count => :many).titleize), :document => ts(:daily, :what => Document.human_name(:count => :many).titleize) }
           @more = { :type => '' }
         end
@@ -99,7 +106,9 @@ class MediaController < AclController
         count_diff = font_diff if count_diff == 0
         @keywords.each { |k| @keyword_font_size[k.id] = (k.counted_media.to_i - min)*font_diff/count_diff + Util::MIN_FONT_SIZE }
         @media_search = MediaSearch.new({:title => '', :type => 'simple'})
+        @current_tab_id = :home
       end
+      @current_tab_id = type.underscore.to_sym unless type.blank?
       if request.xhr?
         render :update do |page|
           if rendering_main
@@ -109,9 +118,9 @@ class MediaController < AclController
               page.replace_html 'secondary', :partial => 'media/index'
               page.replace_html('navigation', :partial => partial) if !element_id.blank?
             else
-              page.replace_html 'secondary', :partial => type == 'Document' ? 'documents/paged_index' : 'media/paged_index'
+              page.replace_html 'secondary', :partial => type == 'Document' ? 'documents/paged_index' : 'media/paged_index_full'
             end
-            page.call 'tb_remove'
+            page.call 'ActivateThlPopups', '#secondary'
             page.call 'tb_init', 'a.thickbox, area.thickbox, input.thickbox'
           end
         end
@@ -120,9 +129,17 @@ class MediaController < AclController
           format.html do
             if !@medium_pages.nil?
               if type == 'Document'
-                render :template => 'documents/paged_index'
+                if type.blank?
+                  render :template => 'documents/paged_index'
+                else
+                  render :template => 'documents/paged_index_full'
+                end
               else
-                render :action => 'paged_index'
+                if type.blank?
+                  render :action => 'paged_index'
+                else
+                  render :action => 'paged_index_full'
+                end
               end
             end # else render index.rhtml
           end
@@ -135,7 +152,9 @@ class MediaController < AclController
   # GET /media/1
   # GET /media/1.xml
   def show
-    @medium = Medium.find(params[:id])    
+    @medium = Medium.find(params[:id]) 
+    @un_options ||= {}
+    @un_options[:entity] = @medium   
     if request.xhr?
       render :partial => 'show'
     else      
@@ -157,6 +176,15 @@ class MediaController < AclController
     @medium = Medium.find(params[:id])    
     respond_to do |format|
       format.html { render :template => 'pictures/large' }# large.rhtml
+    end
+  end
+
+  # GET /media/1/full_size
+  # GET /media/1/full_size.xml
+  def full_size
+    @medium = Medium.find(params[:id])    
+    respond_to do |format|
+      format.html { render :partial => 'pictures/full_size' }# large.rhtml
     end
   end
   

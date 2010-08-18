@@ -24,6 +24,7 @@ class Place < Feature
     end
     media
   end
+<<<<<<< HEAD
     
   def media_count(type = nil)
     if type.nil?
@@ -32,6 +33,13 @@ class Place < Feature
       count = Location.count(:conditions => {'locations.feature_id' => self.fid, 'media.type' => type}, :joins => :medium)
     end
     count
+  end
+  
+  # This helps with calls to count media for generalized elements
+  # alias :count_media :count_inherited_media
+  
+  def title
+    self.header
   end
   
   alias count_inherited_media media_count

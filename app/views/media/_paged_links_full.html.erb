@@ -1,0 +1,5 @@
+<p>
+<%= link_to_remote(ts('results.previous'), :url => media_path(pagination_params.merge({ :page => medium_pages.current.previous })), :method => :get) if medium_pages.current.previous %>
+<%=  pagination_links_each(medium_pages, {}) { |n| link_to_remote(n.to_s, :url => media_path(pagination_params.merge({ :page => n })), :method => :get) } %>
+<%=  link_to_remote(ts('results.next'), :url => media_path(pagination_params.merge({ :page => medium_pages.current.next })), :method => :get) if medium_pages.current.next %>
+</p>

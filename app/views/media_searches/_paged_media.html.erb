@@ -1,5 +1,19 @@
-<%= javascript_include_tag 'thickbox-compressed' %>
-<%= render :partial => 'media/paged_table', :locals => { :media => @media, :title => @title } %>
-<% if !@media.empty? %>
-<%=   render :partial => 'media_searches/paged_links', :locals => { :medium_pages => @medium_pages, :pagination_params => @pagination_params } %>
+<% no_media = true
+   if !@pictures.empty? %>
+     <h3><%= @titles[:picture] %></h3>
+<%   no_media = false %>
+<%=  render :partial => 'media/media_table', :locals => {:media => @pictures, :more => media_searches_path(@pagination_params.merge({:media_type => 'Picture'}))} %>
+<% end
+   if !@videos.empty? %>
+     <h3><%= @titles[:video] %></h3>
+<%   no_media = false %>
+<%=  render :partial => 'media/media_table', :locals => {:media => @videos, :more => media_searches_path(@pagination_params.merge({:media_type => 'Video'}))} %>
+<% end
+   if !@documents.empty? %>
+     <h3><%= @titles[:document] %></h3>
+<%   no_media = false %>
+<%=  render :partial => 'documents/media_table', :locals => {:media => @documents, :more => media_searches_path(@pagination_params.merge({:media_type => 'Document'}))} %>
+<% end
+   if no_media %>
+     <h3><%= ts 'media.none' %></h3>
 <% end %>

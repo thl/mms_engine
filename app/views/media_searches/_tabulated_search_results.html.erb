@@ -1,22 +1,22 @@
-<h3><%= ts('search.results') %></h3>
+<h4><%= ts('search.results') %></h4>
 <p><%= render :partial => 'advanced' %></p>
 <% some_found = false
    if @picture_count>0 
 	 some_found = true %>
      <p><b><%= ts :found, :what => Picture.human_name(:count => :many).titleize %>:</b>
-<%=    link_to_remote @picture_count, :url => media_searches_path(@pagination_params.merge({:media_type => 'Picture'})), :method => :get, :update => 'secondary' %>
+<%=    link_to @picture_count, media_searches_path(@pagination_params.merge({:media_type => 'Picture'})) %>
 	 </p>
 <% end 
    if @video_count>0
 	 some_found = true %>
      <p><b><%= ts :found, :what => Video.human_name(:count => :many).titleize %>:</b>
-<%=    link_to_remote @video_count, :url => media_searches_path(@pagination_params.merge({:media_type => 'Video'})), :method => :get, :update => 'secondary' %>
+<%=    link_to @video_count, media_searches_path(@pagination_params.merge({:media_type => 'Video'})) %>
 	 </p>
 <% end 
    if @document_count>0 
 	 some_found = true %>
      <p><b><%= ts :found, :what => Document.human_name(:count => :many).titleize %>:</b>
-<%=    link_to_remote @document_count, :url => media_searches_path(@pagination_params.merge({:media_type => 'Document'})), :method => :get, :update => 'secondary' %>
+<%=    link_to @document_count, media_searches_path(@pagination_params.merge({:media_type => 'Document'})) %>
 	 </p>
 <% end 
    if !@administrative_units.empty? 
@@ -28,7 +28,7 @@
    if !@keywords.empty?
 	 some_found = true %>
      <p><b><%= ts :found, :what => Keyword.human_name(:count => :many).titleize %>:</b>
-<%=  @keywords.collect{|k| link_to_remote h(k.title).s, :url => media_path(:keyword_id => k), :method => 'get'}.join(", ") %>
+<%=  @keywords.collect{|k| link_to h(k.title).s, media_path(:keyword_id => k)}.join(", ") %>
      </p>
 <% end 
    if !some_found %>

@@ -6,4 +6,4 @@
 <%  else %>
 <%=   link_to_remote '+', { :update => contracted_div, :url => self.send("expand_#{element_path}", contracted, :margin_depth => margin_depth), :method => 'get' }, { :class => 'collapsable' } %>
 <%  end %>
-<%= "#{link_to h(contracted.title).s, contracted } (#{contracted.count_inherited_media})" %><br/>
+<%= "#{link_to h(contracted.title).s, contracted } (#{number_with_delimiter(contracted.count_inherited_media, :delimiter => ',')})" %><br/>
