@@ -14,9 +14,9 @@ class Topic < Category
   
   def media(options = {})
     type = options[:type]
-    conditions = {'media_category_associations.category_id' => self.id}
-    conditions['media.type'] = type if !type.nil?
     joins = options[:cumulative] ? :cumulative_media_category_associations : :media_category_associations
+    conditions = {"#{joins.to_s}.category_id" => self.id}
+    conditions['media.type'] = type if !type.nil?
     Medium.find(:all, :conditions => conditions, :joins => joins, :order => 'media.created_on DESC')
   end
     
