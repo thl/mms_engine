@@ -10,7 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   end    
   map.resources(:categories, :member => {:expand => :get, :contract => :get}) do |category|
     category.resources(:children, :controller => 'categories', :member => {:expand => :get, :contract => :get})
-    category.resources(:counts, :controller => 'cached_category_counts')
+    category.resources(:counts, :controller => 'cached_category_counts', :only => 'index')
   end
   map.resources :collections, :member => {:expand => :get, :contract => :get, :list_by_location => :get}
   map.permalink 'collection/:permalink', :controller => 'collections', :action => 'permalink'
@@ -39,12 +39,16 @@ ActionController::Routing::Routes.draw do |map|
   end
   map.resources :media_imports, :collection => { :confirm => :post, :status => :get }
   map.resources :media_processes, :collection => { :status => :get }
+
+  map.resources :places do |place|
+    place.resources(:counts, :controller => 'place_counts', :only => 'index')
+  end
     
   # map.resources :tasks, :collection => {:create_file => :post}, :new => {:file => :get}
   
   map.resources :application_settings, :copyrights, :copyright_holders, :description_types, :dictionary_searches,
   :documents, :application_filters, :glossaries, :keywords, :media_keyword_associations, :media_searches,
-  :organizations, :pictures, :places, :projects, :quality_types, :recording_orientations, :renderers,
+  :organizations, :pictures, :projects, :quality_types, :recording_orientations, :renderers,
   :reproduction_types, :sources, :sponsors, :transformations, :videos, :statuses, :publishers
   
   map.resources :topics
