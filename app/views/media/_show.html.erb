@@ -17,7 +17,7 @@
 <%=  display_if_not_blank ts(:id, :what => Medium.human_name.titleize), "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})" %>
 <%=  render :partial => 'titles/index_display_only', :locals => {:medium => @medium} %>
 <%   features = @medium.features %>
-<%=  display_if_not_blank(Location.human_name(:count => features.size).titleize.s, features.collect{|f| link_to_remote f.header, :url => place_path(f.fid), :method => 'get'}.join(', ')) if !features.empty? %>
+<%=  display_if_not_blank(Location.human_name(:count => features.size).titleize.s, features.collect{|f| link_to f.header, Feature.element_url(f.fid, :format => 'html')}.join(', ')) if !features.empty? %>
 <% end %>  
 <% captions = @medium.captions
    if !captions.empty? && captions.size>1 %>
@@ -66,7 +66,7 @@
    end
    keywords = @medium.keywords
    if !keywords.empty? %>
-<%=  display_if_not_blank Keyword.human_name(:count => :many).titleize.s, keywords.collect{|k| link_to_remote h(k.title).s, :url => media_path(:keyword_id => k), :method => 'get'}.join(", ") %>
+<%=  display_if_not_blank Keyword.human_name(:count => :many).titleize.s, keywords.collect {|k| link_to h(k.title).s, media_path(:keyword_id => k)}.join(", ") %>
 <% end
    subjects = @medium.subjects
    if !subjects.empty? %>
