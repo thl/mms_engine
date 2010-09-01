@@ -92,6 +92,14 @@ class Medium < ActiveRecord::Base
     Location.count(:conditions => {:medium_id => self.id})
   end
   
+  def kmaps_url
+    TopicalMapResource.get_url + medium_path
+  end
+  
+  def places_url
+    PlacesResource.get_url + medium_path
+  end
+  
   def thumbnail_image
     att = attachment
     return nil if att.nil?
@@ -327,6 +335,12 @@ class Medium < ActiveRecord::Base
     rescue Exception => exc
       message << "#{exc.to_s}<br/>"
     end
+  end
+  
+  private
+  
+  def medium_path
+    ['media', self.id].join('/')
   end
 end
 
