@@ -47,7 +47,8 @@ module Tree
     media
   end
   
-  def count_media(type = nil)
+  def media_count(options = {})
+    type = options[:type]
     if type.nil?
       count = Medium.count(:all, :conditions => {'cumulative_media_category_associations.category_id' => self.id}, :joins => :cumulative_media_category_associations, :select => 'media.id')
     else

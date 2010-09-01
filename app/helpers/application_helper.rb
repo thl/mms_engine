@@ -99,7 +99,7 @@ module ApplicationHelper
   def tab_counts_for_search(search)
     counts = {}
     Medium::TYPES.each do |type, display_names|
-      counts[type] = Medium.count_media_search(search, type.to_s.classify)
+      counts[type] = Medium.media_count_search(search, type.to_s.classify)
     end
     counts
   end
@@ -115,7 +115,7 @@ module ApplicationHelper
   def tab_counts_for_all_media
     counts = {}
     Medium::TYPES.each do |type, display_names|
-      counts[type] = Medium.count_media_for_type(type.to_s.classify)
+      counts[type] = Medium.media_count_for_type(type.to_s.classify)
     end
     counts
   end

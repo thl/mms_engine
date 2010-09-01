@@ -52,7 +52,7 @@ class PlacesController < ApplicationController
           @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
           @more = { @element_name.to_sym => element_id, :type => '' }  
         else
-         @medium_pages = Paginator.new self, @model.count_media(descendant_ids), Medium::ROWS * Medium::COLS, params[:page]
+         @medium_pages = Paginator.new self, @model.media_count(descendant_ids), Medium::ROWS * Medium::COLS, params[:page]
          @media = @element.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset)
          @pagination_params = { @element_name.to_sym => @element.id }
          @pagination_prev_url = { @element_name.to_sym => @element.id, :page => @medium_pages.current.previous }

@@ -32,5 +32,5 @@ class Topic < Category
 
   alias count_inherited_media media_count
   # This helps with calls to count media for generalized elements
-  # alias :count_media :count_inherited_media
+  # alias :media_count :count_inherited_media
 end

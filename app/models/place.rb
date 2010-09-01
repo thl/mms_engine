@@ -34,7 +34,7 @@ class Place < Feature
   end
   
   # This helps with calls to count media for generalized elements
-  # alias :count_media :count_inherited_media
+  # alias :media_count :count_inherited_media
   
   def title
     self.header

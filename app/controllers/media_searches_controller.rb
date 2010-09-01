@@ -54,7 +54,7 @@ class MediaSearchesController < AclController
     calculate_media_search
     @media_type = params[:media_type]
     per_page = @media_type.blank? ? 20 : Medium::FULL_COLS * Medium::FULL_ROWS
-    @medium_pages = Paginator.new self, Medium.count_media_search(@media_search, @media_type), per_page, params[:page]
+    @medium_pages = Paginator.new self, Medium.media_count_search(@media_search, @media_type), per_page, params[:page]
     @media = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, @media_type)
     @pictures = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, 'Picture')
     @videos = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, 'Video')
@@ -111,9 +111,9 @@ class MediaSearchesController < AclController
   end
   
   def calculate_sorrounding_search
-    @picture_count = Medium.count_media_search(@media_search, 'Picture')
-    @video_count = Medium.count_media_search(@media_search, 'Video')
-    @document_count = Medium.count_media_search(@media_search, 'Document')
+    @picture_count = Medium.media_count_search(@media_search, 'Picture')
+    @video_count = Medium.media_count_search(@media_search, 'Video')
+    @document_count = Medium.media_count_search(@media_search, 'Document')
     @administrative_units = AdministrativeUnit.find(:all, :conditions => [Util.search_condition_string(@media_search.type, 'title', true), @media_search.title])
     @keywords = Keyword.find(:all, :conditions => [Util.search_condition_string(@media_search.type, 'title', true), @media_search.title])
   end

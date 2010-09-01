@@ -38,7 +38,7 @@ class AdministrativeUnit < ActiveRecord::Base
   end
   
   def count_inherited_media(type = nil)
-    AdministrativeUnit.count_media(descendants, type)
+    AdministrativeUnit.media_count(descendants, type)
   end
   
   def level_name
@@ -65,8 +65,8 @@ class AdministrativeUnit < ActiveRecord::Base
     Medium.find_by_sql sql_statement
   end
   
-  def self.count_media(descendant_ids, type = nil)
-    sql_statement = Medium.count_media(descendant_ids, type)
+  def self.media_count(descendant_ids, type = nil)
+    sql_statement = Medium.media_count(descendant_ids, type)
     sql_statement[0] = "SELECT COUNT(*) FROM media, locations WHERE media.id = locations.medium_id AND locations.administrative_unit_id IN #{Util::interrogation_set descendant_ids.size} #{sql_statement[0]}"
     Medium.count_by_sql sql_statement
   end  
