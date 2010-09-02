@@ -1,24 +1,26 @@
-<h1>Listing publishers</h1>
-
-<table>
+<h1><%= ts 'list.ing.records', :what => Publisher.human_name(:count => :many).titleize %></h1>
+<table border="1" class="normal">
   <tr>
-    <th>Title</th>
-    <th>Place</th>
-    <th>Country</th>
+    <th><%= Publisher.human_name.titleize.s %></th>
+    <th><%= Country.human_name.titleize.s %></th>
   </tr>
-
-<% @publishers.each do |publisher| %>
+<% can_edit = authorized? hash_for_edit_publisher_path
+   for publisher in @publishers %>
   <tr>
-    <td><%=h publisher.title %></td>
-    <td><%=h publisher.place_id %></td>
-    <td><%=h publisher.country_id %></td>
-    <td><%= link_to 'Show', publisher %></td>
-    <td><%= link_to 'Edit', edit_publisher_path(publisher) %></td>
-    <td><%= link_to 'Destroy', publisher, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td>
+<%  if can_edit %>
+<%=   link_to h(publisher.title), edit_publisher_path(publisher) %>
+<%  else %>
+<%=   link_to h(publisher.title), publisher_path(publisher) %>
+<%  end %>
+	</td>
+    <td><%=h(publisher.country.title) if !publisher.country.nil? %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New publisher', new_publisher_path %>
+<p>&nbsp;<br/>
+<% authorized_only hash_for_new_publisher_path do %>
+<%=  link_to ts('new.record', :what => Publisher.human_name), new_publisher_path %> |
+<% end %>
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

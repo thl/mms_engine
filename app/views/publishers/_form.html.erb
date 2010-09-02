@@ -1,0 +1,9 @@
+<p>
+  <b><%= Publisher.human_attribute_name('title').s %></b><br />
+  <%= f.text_field :title %>
+</p>
+<p>
+    <b><%= Country.human_name.titleize.s %></b><br />
+<%= f.collection_select(:country_id, @countries, :id, :title, :include_blank => true) %> (<%= link_to ts('new.record', :what => Country.human_name), new_country_path, { :target => '_blank' } %>)
+</p>  
+

@@ -1,23 +1,9 @@
-<h1>New publisher</h1>
-
-<% form_for(@publisher) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
-  </p>
-  <p>
-    <%= f.label :place_id %><br />
-    <%= f.text_field :place_id %>
-  </p>
-  <p>
-    <%= f.label :country_id %><br />
-    <%= f.text_field :country_id %>
-  </p>
-  <p>
-    <%= f.submit 'Create' %>
-  </p>
-<% end %>
-
-<%= link_to 'Back', publishers_path %>
+<h1><%= ts 'new.record', :what => Publisher.human_name.titleize %></h1>
+<%= error_messages_for :publisher %>
+<%  form_for(:publisher, :url => publishers_path) do |f| %>
+<%=   render :partial => 'form', :locals => {:f => f} %>
+      <p><%= globalized_submit_tag 'create.this' %></p>
+<%  end %>
+<p>&nbsp;<br/>
+<%= link_to ts('cancel.record', :what => t('new.this')), publishers_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %></p>

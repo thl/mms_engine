@@ -1,18 +1,9 @@
-<p>
-  <b>Title:</b>
-  <%=h @publisher.title %>
+<%= display_if_not_blank Publisher.human_attribute_name('title').s, h(@publisher.title) %>
+<%= display_if_not_blank Publisher.human_attribute_name('country').s, h(@publisher.country.title) %>
+
+<p>&nbsp;<br/>
+<%  authorized_only hash_for_edit_publisher_path do %>
+<%=   link_to ts('edit.this'), edit_publisher_path(@publisher) %> |
+<%  end %>
+<%= render :partial => 'persistent_links' %>
 </p>
-
-<p>
-  <b>Place:</b>
-  <%=h @publisher.place_id %>
-</p>
-
-<p>
-  <b>Country:</b>
-  <%=h @publisher.country_id %>
-</p>
-
-
-<%= link_to 'Edit', edit_publisher_path(@publisher) %> |
-<%= link_to 'Back', publishers_path %>

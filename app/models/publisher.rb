@@ -1,6 +1,7 @@
 class Publisher < ActiveRecord::Base
   validates_presence_of :title
   has_many :media_publishers
+  belongs_to :country
 end
 
 # == Schema Information

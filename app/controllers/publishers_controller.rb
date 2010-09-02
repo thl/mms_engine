@@ -2,11 +2,11 @@ class PublishersController < AclController
   # GET /publishers
   # GET /publishers.xml
   def index
-    @publishers = Publisher.all
+    @publishers = Publisher.find(:all)
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @publishers }
+      format.xml  { render :xml => @publishers.to_xml }
     end
   end
 
@@ -17,7 +17,7 @@ class PublishersController < AclController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @publisher }
+      format.xml  { render :xml => @publisher.to_xml }
     end
   end
 
@@ -25,16 +25,18 @@ class PublishersController < AclController
   # GET /publishers/new.xml
   def new
     @publisher = Publisher.new
+    @countries = Country.find(:all)
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @publisher }
+      format.xml  { render :xml => @publisher.to_xml }
     end
   end
 
   # GET /publishers/1/edit
   def edit
     @publisher = Publisher.find(params[:id])
+    @countries = Country.find(:all)
   end
 
   # POST /publishers
@@ -44,12 +46,15 @@ class PublishersController < AclController
 
     respond_to do |format|
       if @publisher.save
-        flash[:notice] = 'Publisher was successfully created.'
-        format.html { redirect_to(@publisher) }
-        format.xml  { render :xml => @publisher, :status => :created, :location => @publisher }
+        flash[:notice] = ts('new.successful', :what => Publisher.human_name.capitalize)
+        format.html { redirect_to publishers_url }
+	format.xml  { head :created, :location => glossary_url(@publisher) }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @publisher.errors, :status => :unprocessable_entity }
+	format.html do
+          @countries = Country.find(:all)
+          render :action => 'new'
+        end
+        format.xml  { render :xml => @publisher.errors.to_xml }
       end
     end
   end
@@ -61,12 +66,12 @@ class PublishersController < AclController
 
     respond_to do |format|
       if @publisher.update_attributes(params[:publisher])
-        flash[:notice] = 'Publisher was successfully updated.'
-        format.html { redirect_to(@publisher) }
+        flash[:notice] = ts('edit.successful', :what => Publisher.human_name.capitalize)
+        format.html { redirect_to publishers_url }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @publisher.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @publisher.errors.to_xml }
       end
     end
   end
@@ -78,7 +83,7 @@ class PublishersController < AclController
     @publisher.destroy
 
     respond_to do |format|
-      format.html { redirect_to(publishers_url) }
+      format.html { redirect_to publishers_url }
       format.xml  { head :ok }
     end
   end

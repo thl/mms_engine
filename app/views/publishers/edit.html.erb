@@ -1,24 +1,8 @@
-<h1>Editing publisher</h1>
-
-<% form_for(@publisher) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
-  </p>
-  <p>
-    <%= f.label :place_id %><br />
-    <%= f.text_field :place_id %>
-  </p>
-  <p>
-    <%= f.label :country_id %><br />
-    <%= f.text_field :country_id %>
-  </p>
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
+<h1><%= ts 'edit.ing.record', :what => h(@publisher.title) %></h1>
+<%= error_messages_for :publisher %>
+<% form_for(:publisher, :url => publisher_path(@publisher), :html => { :method => :put }) do |f| %>
+<%=  render :partial => 'form', :locals => {:f => f} %>
+     <p><%= globalized_submit_tag 'update.this' %></p>
 <% end %>
-
-<%= link_to 'Show', @publisher %> |
-<%= link_to 'Back', publishers_path %>
+<p>&nbsp;<br/>
+<%= render :partial => 'persistent_links' %></p>
