@@ -1,23 +1,8 @@
-<h1>New media_publisher</h1>
-
-<% form_for(@media_publisher) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.label :publisher_id %><br />
-    <%= f.text_field :publisher_id %>
-  </p>
-  <p>
-    <%= f.label :medium_id %><br />
-    <%= f.text_field :medium_id %>
-  </p>
-  <p>
-    <%= f.label :date %><br />
-    <%= f.date_select :date %>
-  </p>
-  <p>
-    <%= f.submit 'Create' %>
-  </p>
+<h1><%= ts :for, :what => ts('new.record', :what => MediaPublisher.human_name.titleize), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<%= error_messages_for :media_publisher %>
+<% form_for(:media_publisher, :url => medium_media_publisher_path(@medium)) do |f| %>
+<%=  render :partial => 'form', :locals => {:f => f} %>
+     <p><%= globalized_submit_tag 'create.this' %></p>
 <% end %>
-
-<%= link_to 'Back', media_publishers_path %>
+<p>&nbsp;<br/>
+<%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'media_publishers'} %></p>

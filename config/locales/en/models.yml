@@ -61,6 +61,9 @@ en:
             media_keyword_association:
                 one: 'media keyword association'
                 other: 'media keyword associations'
+            media_publisher:
+                one: 'media publisher'
+                other: 'media publishers'
             media_source_association:
                 one: 'media source association'
                 other: 'media source associations'

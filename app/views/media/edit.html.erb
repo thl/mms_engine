@@ -105,7 +105,15 @@
 	   <b><%= Source.human_name(:count => media_source_associations.size).titleize.s %>:</b>
 <%=    media_source_associations.collect {|s| "#{link_to h(s.source.title).s, edit_medium_source_association_path(@medium, s)} #{"(#{s.shot_number})" if !s.shot_number.nil?}"}.join(', ') %>
      (<%= link_to ts('add.record', :what => Source.human_name), new_medium_source_association_path(@medium) %>)</p>
+<% end 
+   media_publisher = @medium.media_publisher 
+   if !media_publisher.nil? %>
+     <p><%= bookmark 'media_publisher' %>
+     <b><%= Publisher.human_name.titleize.s %>:</b>
+<%=     link_to h(media_publisher.publisher.title).s, edit_medium_media_publisher_path(@medium) %>
+</p>
 <% end %>
+
 <hr/>
 <p>
 <% if titles.empty? %>
@@ -153,6 +161,10 @@
    if affiliations.empty? %>
 <%=  bookmark 'affiliations' %>
 <%=  link_to ts('add.record', :what => Affiliation.human_name), new_medium_affiliation_path(@medium)%> |
+<% end %>
+<% if media_publisher.nil? %>
+<%=  bookmark 'media_publisher' %>
+<%=  link_to ts('add.record', :what => Publisher.human_name), new_medium_media_publisher_path(@medium)%> |
 <% end %></p>
 <% workflow = @medium.workflow
    if !workflow.nil? %>

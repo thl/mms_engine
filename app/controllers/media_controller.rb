@@ -206,6 +206,7 @@ class MediaController < AclController
     @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
     @recording_orientations = RecordingOrientation.find(:all, :order => 'title')
     @medium = Medium.find(params[:id])
+    @media_publisher = MediaPublisher.find(:all)
   end
 
   # PUT /media/1

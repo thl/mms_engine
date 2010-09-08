@@ -1,23 +1,37 @@
 class MediaPublishersController < AclController 
+  helper :media
+  before_filter :find_medium
+  caches_page :show, :if => :api_response?.to_proc
+  
+  def initialize
+    super
+    @guest_perms = []
+  end
+
   # GET /media_publishers
   # GET /media_publishers.xml
   def index
-    @media_publishers = MediaPublisher.all
+    if !@medium.nil?
+      @media_publisher = @medium.media_publisher.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @media_publishers }
-    end
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @media_publisher }
+      end
+    end  
   end
 
   # GET /media_publishers/1
   # GET /media_publishers/1.xml
   def show
-    @media_publisher = MediaPublisher.find(params[:id])
+    if !@medium.nil?
+      @media_publisher = @medium.media_publisher
+      @publishers = Publisher.find(:all)
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @media_publisher }
+      respond_to do |format|
+        format.html # show.html.erb
+        format.xml  { render :xml => @media_publisher }
+      end
     end
   end
 
@@ -25,48 +39,55 @@ class MediaPublishersController < AclController
   # GET /media_publishers/new.xml
   def new
     @media_publisher = MediaPublisher.new
+    @publishers = Publisher.find(:all)
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @media_publisher }
+      format.xml  { render :xml => @media_publisher.to_xml }
     end
   end
 
   # GET /media_publishers/1/edit
   def edit
-    @media_publisher = MediaPublisher.find(params[:id])
+    if !@medium.nil?
+      @publishers = Publisher.find(:all)
+      @media_publisher = @medium.media_publisher
+      @media_publisher = @medium.create_media_publisher if @media_publisher.nil?
+    end
   end
 
   # POST /media_publishers
   # POST /media_publishers.xml
   def create
-    @media_publisher = MediaPublisher.new(params[:media_publisher])
-
-    respond_to do |format|
-      if @media_publisher.save
-        flash[:notice] = 'MediaPublisher was successfully created.'
-        format.html { redirect_to(@media_publisher) }
-        format.xml  { render :xml => @media_publisher, :status => :created, :location => @media_publisher }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @media_publisher.errors, :status => :unprocessable_entity }
+    if !@medium.nil?
+      @media_publisher = @medium.build_media_publisher(params[:media_publisher])
+      respond_to do |format|
+        if @media_publisher.save
+          flash[:notice] = ts('new.successful', :what => MediaPublisher.human_name.capitalize)
+          format.html { redirect_to edit_medium_url(@medium, :anchor => 'media_publisher') }
+          format.xml  { render :xml => @media_publisher, :status => :created, :location => medium_media_publisher_url(@medium, @media_publisher) }
+        else
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @media_publisher.errors, :status => :unprocessable_entity }
+        end
       end
-    end
+    end  
   end
 
   # PUT /media_publishers/1
   # PUT /media_publishers/1.xml
   def update
-    @media_publisher = MediaPublisher.find(params[:id])
-
-    respond_to do |format|
-      if @media_publisher.update_attributes(params[:media_publisher])
-        flash[:notice] = 'MediaPublisher was successfully updated.'
-        format.html { redirect_to(@media_publisher) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @media_publisher.errors, :status => :unprocessable_entity }
+    if !@medium.nil?
+      @media_publisher = @medium.media_publisher
+      respond_to do |format|
+        if @media_publisher.update_attributes(params[:media_publisher])
+          flash[:notice] = ts('edit.successful', :what => MediaPublisher.human_name.capitalize)
+          format.html { redirect_to edit_medium_path(@medium, :anchor => 'media_publisher') }
+          format.xml  { head :ok }
+        else
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @media_publisher.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -74,12 +95,34 @@ class MediaPublishersController < AclController
   # DELETE /media_publishers/1
   # DELETE /media_publishers/1.xml
   def destroy
-    @media_publisher = MediaPublisher.find(params[:id])
-    @media_publisher.destroy
+    if !@medium.nil?    
+      @media_publisher = @medium.media_publisher
+      @media_publisher.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(media_publishers_url) }
-      format.xml  { head :ok }
+      respond_to do |format|
+        format.html { redirect_to edit_medium_url(@medium) }
+        format.xml  { head :ok }
+      end
     end
   end
+
+  private
+  
+  def find_medium
+    begin
+      medium_id = params[:medium_id]
+      @medium = medium_id.blank? ? nil : Medium.find(medium_id)
+    rescue ActiveRecord::RecordNotFound
+      @medium = nil
+    end
+    if @medium.nil?
+      flash[:notice] = 'Attempt to access invalid medium.'
+      redirect_to media_path
+    end
+  end
+  
+  def api_response?
+    request.format.xml?
+  end
+
 end
