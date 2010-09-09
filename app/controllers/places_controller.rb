@@ -2,96 +2,11 @@ class PlacesController < ApplicationController
   helper :media
   include ApplicationHelper
   
-  # To show browsing panel for admin units:
-  # GET /locations
-  # GET /locations.xml
-  # 
-  # To show all locations for a medium: 
-  # GET /locations?medium_id=1
-  # GET /locations.xml?medium_id=1
-  # 
-  # To show browsing panel defaulting to a specific unit expanded
-  # on the left panel and its media on the right panel:
-  # GET /locations?administrative_unit_id=1
-  # GET /locations.xml?administrative_unit_id=1
-  # 
-  # To show specific medium on the left panel and
-  # the media of a specific unit on the right panel:
-  # GET /locations?medium_id=1&administrative_unit_id=2
-  # GET /locations.xml?medium_id=1&administrative_unit_id=2
-  def index
-    medium_id = params[:medium_id]
-    element_id = params[@element_name.to_sym]
-    type = params[:type]
-    @medium = nil
-    @media = nil
-    if !medium_id.blank?
-      begin
-        @medium = Medium.find(medium_id)
-      rescue ActiveRecord::RecordNotFound
-        @medium = nil
-      else
-        @associations = @association_model.find_all_by_medium(@medium)
-      end
-    end
-    no_media = true
-    if !element_id.blank?
-      begin
-        @element = @model.find(element_id)
-      rescue ActiveRecord::RecordNotFound
-        @current = nil
-        @media = nil
-      else
-        descendant_ids = @element.descendants
-        no_media = false
-        if type.blank?
-          @pictures = @element.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Picture')
-          @videos = @element.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Video')
-          @documents = @element.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Document')
-          title = @element.title
-          @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
-          @more = { @element_name.to_sym => element_id, :type => '' }  
-        else
-         @medium_pages = Paginator.new self, @model.media_count(descendant_ids), Medium::ROWS * Medium::COLS, params[:page]
-         @media = @element.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset)
-         @pagination_params = { @element_name.to_sym => @element.id }
-         @pagination_prev_url = { @element_name.to_sym => @element.id, :page => @medium_pages.current.previous }
-         @pagination_next_url = { @element_name.to_sym => @element.id, :page => @medium_pages.current.next }
-         @title = "Media in #{@element.title}"
-        end
-        if @medium.nil?
-          @current = @element.ancestors.collect{|c| c.id}
-          @current << @element.id
-        end
-      end
-    end
-    @countries = Country.find(:all, :order => '`title`') if @medium.nil?
-    respond_to do |format|
-      format.html do # index.rhtml
-        if no_media
-          if @medium.nil?
-            render :template => 'locations/general_index'
-          else
-            render :template => 'main/hierarchy/mixed_associations/specific_index'
-          end
-        elsif @medium.nil?
-          render :template => 'locations/general_index'
-        else
-          render :template => 'main/hierarchy/mixed_associations/general_index_for_medium'
-        end
-      end
-      format.xml do
-        associations = @association_model.find(:all)
-        render :xml => associations.to_xml
-      end
-    end
-  end
-  
   # GET /places/1
   # GET /places/1.xml
   def show
-    @place = Place.find(params[:id])
     medium_id = params[:medium_id]
+    type = params[:type]
     @medium = nil
     if !medium_id.blank?
       begin
@@ -100,15 +15,45 @@ class PlacesController < ApplicationController
         @medium = nil
       end
     end
+    @place = Place.find(params[:id])    
     @pictures = @place.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Picture')
     @videos = @place.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Video')
     @documents = @place.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Document')
     title = @place.header
     @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
     @more = { :feature_id => @place.fid, :type => '' }
-    @tab_options ||= {}
-    @tab_options[:counts] = tab_counts_for_element(@place)
-    @tab_options[:urls] = tab_urls_for_element(@place)
+    render_media
+  end
+  
+  def pictures
+    get_media_by_type('Picture')
+    @title = ts :in, :what => Picture.human_name(:count => :many).titleize, :where => @place.header
+    render_media
+  end
+  
+  def videos
+    get_media_by_type('Video')
+    @title = ts :in, :what => Video.human_name(:count => :many).titleize, :where => @place.header
+    render_media
+  end
+  
+  def documents
+    get_media_by_type('Document')
+    @title = ts :in, :what => Document.human_name(:count => :many).titleize, :where => @place.header
+    render_media
+  end
+  
+  private
+  
+  def get_media_by_type(type)
+    @place = Place.find(params[:id])
+    @medium_pages = Paginator.new self, @place.media_count(:type => type), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
+    @media = @place.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset, type)
+    @pagination_params = { :feature_id => @place.fid, :type => type }
+  end
+  
+  def render_media
+    get_tab_options
     if request.xhr?
       render :update do |page|
         if !@medium.nil?
@@ -119,7 +64,13 @@ class PlacesController < ApplicationController
         page.call 'tb_init', 'a.thickbox, area.thickbox, input.thickbox'
       end
     else
-      respond_to { |format| format.html { render(:action => 'show_for_medium') if !@medium.nil? } }
+      respond_to { |format| format.html { render(:action => @medium.nil? ? 'show' : 'show_for_medium') } }
     end
+  end
+  
+  def get_tab_options
+    @tab_options ||= {}
+    @tab_options[:counts] = tab_counts_for_element(@place)
+    @tab_options[:urls] = tab_urls_for_element(@place)
   end
 end

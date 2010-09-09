@@ -1,7 +1,7 @@
-<h2>Media Associated with <%= @place.header %></h2>
 <% if !@pictures.nil? || !@videos.nil? || !@documents.nil? %>
+	<h2>Media Associated with <%= @place.header %></h2>
 <%=  render :partial => 'media/index' %>
 <% elsif !@media.nil? %>
-<%=  render :partial => 'media/paged_index' %>
+<%=  render :partial => 'media/paged_index_full' %>
 <% end %>
 <p><%= link_to ts(:in, :what => @place.header, :where => 'Places'), Feature.element_url(@place.fid, :format => 'html') %></p>

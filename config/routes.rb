@@ -40,7 +40,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :media_imports, :collection => { :confirm => :post, :status => :get }
   map.resources :media_processes, :collection => { :status => :get }
 
-  map.resources :places do |place|
+  map.resources :places, :member => {:pictures => :get, :videos => :get, :documents => :get} do |place|
     place.resources(:counts, :controller => 'place_counts', :only => 'index')
   end
     

@@ -1,13 +1,4 @@
-<!--<div id="primary">
-<h2><%= ts 'browse.by', :what => Medium.human_name(:count => :many).titleize, :whom => t('by.location').titleize %></h2>
-  <div id="navigation" class="normal">
-<%= render :partial => 'places/show' %>
-  </div>
-  <p>&nbsp;<br/>
-<span id="unframe"><%= link_to ts('back.to', :what => t(:all, :what => Medium.human_name(:count => :name))), media_path %></span>
-  </p>
-</div>-->
-<div>
+<div id="secondary">
 <%= render :partial => 'places/media_index' %>
 </div>
 <div class="clear"></div>
