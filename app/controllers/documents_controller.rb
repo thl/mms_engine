@@ -1,6 +1,7 @@
 class DocumentsController < AclController
   helper :media
-  caches_page :index, :show, :if => :api_response?.to_proc
+  caches_page :show, :if => :api_response?.to_proc
+  cache_sweeper :document_sweeper, :only => [:update, :destroy]
 
   def initialize
     super

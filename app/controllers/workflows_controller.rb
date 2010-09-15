@@ -2,7 +2,7 @@ class WorkflowsController < AclController
   helper :media
   before_filter :find_medium
   caches_page :show, :if => :api_response?.to_proc
-  cache_sweeper :workflow_sweeper, :only => [:create, :update, :destroy]
+  cache_sweeper :workflow_sweeper, :only => [:update, :destroy]
   
   def initialize
     super

@@ -1,4 +1,4 @@
-class CachedCategoryCountSweeper < ActiveRecord::Observer
+class PlaceCountSweeper < ActiveRecord::Observer
   observe Location
   
   def before_save(l)

@@ -2,7 +2,8 @@ class TitlesController < AclController
   helper :media
   before_filter :find_medium
   caches_page :index, :show, :if => :api_response?.to_proc
-  cache_sweeper :title_sweeper
+  cache_sweeper :title_sweeper, :only => [:create, :update, :destroy]
+  
   
   # GET /titles
   # GET /titles.xml
