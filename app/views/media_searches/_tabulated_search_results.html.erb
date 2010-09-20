@@ -19,12 +19,6 @@
 <%=    link_to @document_count, media_searches_path(@pagination_params.merge({:media_type => 'Document'})) %>
 	 </p>
 <% end 
-   if !@administrative_units.empty? 
-	 some_found = true %>
-     <p><b><%= ts :found, :what => Location.human_name(:count => :many).titleize %>:</b>
-<%=  @administrative_units.collect{|u| link_to h(u.title).s, places_path(:administrative_unit_id => u)}.join(", ") %>
-     </p>
-<% end 
    if !@keywords.empty?
 	 some_found = true %>
      <p><b><%= ts :found, :what => Keyword.human_name(:count => :many).titleize %>:</b>

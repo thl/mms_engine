@@ -114,7 +114,6 @@ class MediaSearchesController < AclController
     @picture_count = Medium.media_count_search(@media_search, 'Picture')
     @video_count = Medium.media_count_search(@media_search, 'Video')
     @document_count = Medium.media_count_search(@media_search, 'Document')
-    @administrative_units = AdministrativeUnit.find(:all, :conditions => [Util.search_condition_string(@media_search.type, 'title', true), @media_search.title])
     @keywords = Keyword.find(:all, :conditions => [Util.search_condition_string(@media_search.type, 'title', true), @media_search.title])
   end
 end
