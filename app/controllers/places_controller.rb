@@ -6,7 +6,6 @@ class PlacesController < ApplicationController
   # GET /places/1.xml
   def show
     medium_id = params[:medium_id]
-    type = params[:type]
     @medium = nil
     if !medium_id.blank?
       begin
