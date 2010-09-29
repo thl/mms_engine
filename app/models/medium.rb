@@ -340,7 +340,7 @@ class Medium < ActiveRecord::Base
   private
   
   def medium_path
-    ['media', self.id].join('/')
+    ['media_objects', self.id].join('/')
   end
 end
 
