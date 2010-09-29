@@ -156,8 +156,8 @@ class MediaController < AclController
   # GET /media/1.xml
   def show
     @medium = Medium.find(params[:id]) 
-    @un_options ||= {}
-    @un_options[:entity] = @medium   
+    @tab_options ||= {}
+    @tab_options[:entity] = @medium
     if request.xhr?
       render :partial => 'show'
     else      

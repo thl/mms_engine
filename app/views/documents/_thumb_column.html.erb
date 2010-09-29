@@ -6,4 +6,4 @@
 <%=    link_to image_tag(thumbnail.public_filename, :width => thumbnail.width, :height => thumbnail.height), medium_path(medium), {:class => 'media-thumb thl-pop no-view-alone no-main-site-ajax padding-10'} %>
      </td>
 <% end %>
-<td align="left" class="normal"><%= link_to medium.prioritized_title.s, medium_path(medium), {:class => 'media-thumb thl-pop no-view-alone no-main-site-ajax padding-10', :onclick => "universal_navigation.loadTabsFor(#{medium.id})"} %></td>
+<td align="left" class="normal"><%= link_to medium.prioritized_title.s, medium_path(medium), {:class => 'media-thumb thl-pop no-view-alone no-main-site-ajax padding-10'} %></td>

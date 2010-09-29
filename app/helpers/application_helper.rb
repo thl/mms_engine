@@ -76,6 +76,50 @@ module ApplicationHelper
     un_secondary_tabs tabs, current_tab_index
   end
   
+  def custom_secondary_tabs_list
+    # The :index values are necessary for this hash's elements to be sorted properly
+    {
+      :search => {:index => 1, :title => "Search", :url => new_media_search_url},
+      :browse => {:index => 2, :title => "Browse", :url => collections_url},
+      :picture => {:index => 3, :title => Picture.human_name.titleize.pluralize, :url => media_path(:type => 'Picture')},
+      :video => {:index => 4, :title => Video.human_name.titleize.pluralize, :url => media_path(:type => 'Video')},
+      :document => {:index => 5, :title => Document.human_name.titleize.pluralize, :url => media_path(:type => 'Document')}
+    }
+  end
+  
+  def custom_secondary_tabs(current_tab_id=:browse)
+
+    @tab_options ||= {}
+    @tab_options[:urls] ||= {}
+    @tab_options[:counts] ||= {}
+    @tab_options[:counts] = tab_counts_for_all_media if @tab_options[:counts].blank?
+    
+    tabs = custom_secondary_tabs_list
+    
+    current_tab_id = :browse unless (tabs.keys << :home).include? current_tab_id
+    
+    @tab_options[:urls].each do |tab_id, url|
+      tabs[tab_id][:url] = url unless tabs[tab_id].nil? || url.nil?
+    end
+    
+    @tab_options[:counts].each do |tab_id, count|
+      unless tabs[tab_id].nil? || count.nil?
+        if count == 0
+          tabs.delete(tab_id)
+        else
+          tabs[tab_id][:title] += " (#{number_with_delimiter(count.to_i, :delimiter => ',')})"
+        end
+      end
+    end
+    
+    tabs = tabs.sort{|a,b| a[1][:index] <=> b[1][:index]}.collect{|tab_id, tab| 
+      [tab_id, tab[:title], tab[:url]]
+    }
+    
+    tabs
+  end
+
+  
   def tab_counts_for_element(element)
     counts = {}
     Medium::TYPES.each do |type, display_names|

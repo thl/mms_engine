@@ -16,8 +16,8 @@
 <%   end %>
 <%=  display_if_not_blank ts(:id, :what => Medium.human_name.titleize), "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})" %>
 <%=  render :partial => 'titles/index_display_only', :locals => {:medium => @medium} %>
-<%   features = @medium.features %>
-<%=  display_if_not_blank(Location.human_name(:count => features.size).titleize.s, features.collect{|f| link_to f.header, Feature.element_url(f.fid, :format => 'html')}.join(', ')) if !features.empty? %>
+
+
 <% end %>  
 <% captions = @medium.captions
    if !captions.empty? && captions.size>1 %>
@@ -127,8 +127,22 @@
      if !media_source_associations.empty? %>
 <%=    display_if_not_blank Source.human_name(:count => media_source_associations.size).titleize.s, media_source_associations.collect {|s| "#{s.source.title} #{"(#{s.shot_number})" if !s.shot_number.nil?}"}.join(', ') %>
 <%   end %>
-<% end
-   authorized_only hash_for_medium_workflow_path do
+<% end %>
+
+<%
+  associated_resources = [
+    ["Places", @medium.feature_count, @medium.places_url],
+    ["Topics", @medium.category_count(:cumulative => true), @medium.kmaps_url]
+  ]
+%>
+<% if associated_resources.collect{|ar| ar[1]}.sum > 0 %>
+<h3>Associated Resources</h3>
+<ul class="normal">
+  <%= associated_resources.reject{|ar| ar[1] == 0}.collect{|ar| "<li>" + link_to("#{ar[0]} (#{ar[1]})", ar[2]) + "</li>" }.join("") %>
+</ul>
+<% end %>
+
+<%   authorized_only hash_for_medium_workflow_path do
      workflow = @medium.workflow
      if !workflow.nil? %>
 <%=    render :partial => 'workflows/show', :locals => {:workflow => workflow} %>
