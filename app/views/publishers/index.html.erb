@@ -2,19 +2,15 @@
 <table border="1" class="normal">
   <tr>
     <th><%= Publisher.human_name.titleize.s %></th>
-    <th><%= Country.human_name.titleize.s %></th>
+    <th><%= Publisher.human_attribute_name('country_id').s %></th>
   </tr>
 <% can_edit = authorized? hash_for_edit_publisher_path
    for publisher in @publishers %>
   <tr>
     <td>
-<%  if can_edit %>
-<%=   link_to h(publisher.title), edit_publisher_path(publisher) %>
-<%  else %>
-<%=   link_to h(publisher.title), publisher_path(publisher) %>
-<%  end %>
+<%=   link_to h(publisher.title), can_edit ? edit_publisher_path(publisher) : publisher_path(publisher) %>
 	</td>
-    <td><%=h(publisher.country.title) if !publisher.country.nil? %></td>
+    <td><%=h(publisher.country.header) if !publisher.country.nil? %></td>
   </tr>
 <% end %>
 </table>

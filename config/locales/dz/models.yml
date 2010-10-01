@@ -74,6 +74,9 @@ dz:
             picture: 'པར།'
             # one
             # other
+            publisher:
+                one: 'publisher'
+                other: 'publishers'
             project: 'ལས་འགུལ།'
             # one
             # other
@@ -192,6 +195,8 @@ dz:
                 # one
                 # other
                 photographer: 'པར་བཏབ་མི།'
+            publisher:
+                country_id: 'Country Feature ID'
             project:
                 title: 'Project Name'
             quality_type:

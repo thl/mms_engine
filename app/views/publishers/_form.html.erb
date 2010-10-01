@@ -3,7 +3,7 @@
   <%= f.text_field :title %>
 </p>
 <p>
-    <b><%= Country.human_name.titleize.s %></b><br />
-<%= f.collection_select(:country_id, @countries, :id, :title, :include_blank => true) %> (<%= link_to ts('new.record', :what => Country.human_name), new_country_path, { :target => '_blank' } %>)
-</p>  
+  <b><%= Publisher.human_attribute_name('country_id').s %></b> (<%= link_to ts('browse.records', :what => 'Places Dictionary'), PlacesResource.get_url, :target => '_blank' %>)<br />
+<%= f.text_field :country_id %>
+</p>
 

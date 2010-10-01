@@ -77,6 +77,9 @@ en:
             picture: 
                 one: 'photograph'
                 other: 'photographs'
+            publisher:
+                one: 'publisher'
+                other: 'publishers'
             project:
                 one: 'project'
                 other: 'projects'
@@ -195,6 +198,8 @@ en:
                     one: 'Caption'
                     other: 'Captions'
                 photographer: 'Photographer'
+            publisher:
+                country_id: 'Country Feature ID'
             project:
                 title: 'Project Name'
             quality_type:
