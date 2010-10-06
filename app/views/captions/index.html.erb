@@ -11,7 +11,7 @@
   </tr>
 <% for caption in @captions %>
   <tr>
-    <td><%= h(caption.title).s %></td>
+    <td><%= caption.title.s %></td>
 <%  if !caption.description_type.blank? %>
       <td><%= h(caption.description_type.title).s %></td>
 <%  else %>

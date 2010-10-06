@@ -1,7 +1,7 @@
 <p>
 <% chosen_caption = chosen_caption(@medium)
    if !chosen_caption.nil? %>
-     <h2><%=  h(chosen_caption.title).s %></h2>
+     <h2><%=  chosen_caption.title.s %></h2>
 <% end
    if defined?(large) && large %>
 <%=  render :partial => 'pictures/large' %>
@@ -24,7 +24,7 @@
      <p>
 <%   for caption in captions
        if caption != chosen_caption %>
-<%=      h(caption.title).s %><br/>
+<%=      caption.title.s %><br/>
 <%     end
      end %>
      </p>  

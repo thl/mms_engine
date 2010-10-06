@@ -3,7 +3,7 @@
 <p>
 <%= thumbnail_image_link(@medium) %>
 </p>
-<%= display_if_not_blank caption_title.s, h(@caption.title).s %>
+<%= display_if_not_blank caption_title.s, @caption.title.s %>
 <% if !@caption.description_type.nil? %>
 <%=  display_if_not_blank DescriptionType.column_name(:what => caption_title).titleize.s, h(@caption.description_type.title).s %>
 <% end 
