@@ -61,7 +61,7 @@ dz:
             media_keyword_association:
                 one: 'media keyword association'
                 other: 'media keyword associations'
-	    media_publisher:
+            media_publisher:
                 one: 'media publisher'
                 other: 'media publishers'
             media_source_association:
