@@ -18,13 +18,9 @@ class Subject < Category
   end
 
   def self.level_name
-    'subject'
+    I18n.t(:subject)
   end
-  
-  def self.next_level_name
-    'subsubject'
-  end
-  
+    
   def self.anchor_name
     'subjects'
   end

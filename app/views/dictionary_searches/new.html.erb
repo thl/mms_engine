@@ -4,7 +4,7 @@
 <%= f.text_field :title, fixed_language_options %> <%= globalized_submit_tag 'search.this' %><br/>
 <%= f.select(:language, @available_languages.collect {|l| [l.title, l.id]} + [[ t(:all, :what => ComplexScripts::Language.human_name(:count => :many)), 0]], {}, language_options) %>
 <%= f.radio_button :type, :simple %><%= ts 'search.full_text' %>
-<%= f.radio_button :type, :boolean %><%= ts :advanced %> (<%= link_to_remote(ts('what_is', :what => t(:this)), :update => 'results', :url => { :controller => 'help', :action => 'advanced_search'}, :loading => 'document.getElementById(\'advanced_search_type\').checked = true;') %>)
+<%= f.radio_button :type, :boolean %><%= ts :advanced %> (<%= link_to_remote(ts('what_is', :what => t('this.this')), :update => 'results', :url => { :controller => 'help', :action => 'advanced_search'}, :loading => 'document.getElementById(\'advanced_search_type\').checked = true;') %>)
   </p>
 <% end %>
 <% remote_form_for(:dictionary_search, :update => 'browse_panel', :url => dictionary_searches_path, :loading => javascript_searching('browse_panel') + javascript_load('results','')) do |f| %>

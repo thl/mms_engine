@@ -19,13 +19,9 @@ class Collection < Category
   end
 
   def self.level_name
-    'collection'
+    I18n.t(:collection)
   end
 
-  def self.next_level_name
-    'subcollection'
-  end
-  
   def self.anchor_name
     'collections'
   end

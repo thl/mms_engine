@@ -236,5 +236,5 @@ dz:
                 notes: 'Notes'
                 other_id: 'Other ID'
                 original_filename: 'Original Filename'
-                original_medium_id: 'Original Medium ID'
+                original_medium_id: 'Original Media Object ID'
                 sequence_order: 'Sequence order'

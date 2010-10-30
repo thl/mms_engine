@@ -18,11 +18,7 @@ class Ethnicity < Category
   end
 
   def self.level_name
-    'socio-cultural group'
-  end
-  
-  def self.next_level_name
-    'socio-cultural subgroup'
+    I18n.t(:ethnicity)
   end
   
   def self.anchor_name
