@@ -204,12 +204,13 @@ class MediaController < AclController
 
   # GET /media/1;edit
   def edit
+    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
+    @media_publisher = MediaPublisher.find(:all)
+    @medium = Medium.find(params[:id])
     @photographers = Person.find(:all, :order => 'fullname')
     @quality_types = QualityType.find(:all, :order => 'id')
-    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
     @recording_orientations = RecordingOrientation.find(:all, :order => 'title')
-    @medium = Medium.find(params[:id])
-    @media_publisher = MediaPublisher.find(:all)
+    @resource_types = Topic.find(2636).children
   end
 
   # PUT /media/1

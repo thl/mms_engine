@@ -25,6 +25,7 @@ class Medium < ActiveRecord::Base
   belongs_to :photographer, :class_name => 'Person', :foreign_key => 'photographer_id'
   belongs_to :quality_type
   belongs_to :recording_orientation
+  belongs_to :resource_type, :class_name => 'Topic'
   
   has_and_belongs_to_many :captions
   has_and_belongs_to_many :descriptions

@@ -35,20 +35,22 @@ class VideosController < AclController
 
   # GET /videos/new
   def new
+    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
+    @medium = Video.new(:resource_type_id => 2687)
     @photographers = Person.find(:all, :order => 'fullname')
     @quality_types = QualityType.find(:all, :order => 'id')
-    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
-    @recording_orientations = RecordingOrientation.find(:all, :order => 'title')          
-    @medium = Video.new
+    @recording_orientations = RecordingOrientation.find(:all, :order => 'title')
+    @resource_types = Topic.find(2636).children
   end
 
   # GET /videos/1;edit
   def edit
+    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
     @medium = Video.find(params[:id])
     @photographers = Person.find(:all, :order => 'fullname')
     @quality_types = QualityType.find(:all, :order => 'id')
-    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
     @recording_orientations = RecordingOrientation.find(:all, :order => 'title')          
+    @resource_types = Topic.find(2636).children
     render :template => 'media/edit'
   end
 
@@ -67,22 +69,23 @@ class VideosController < AclController
       end
     end
     if success
-      @video = Video.new(params[:video])
-      @video.movie = @movie
-      success = @video.save 
+      @medium = Video.new(params[:video])
+      @medium.movie = @movie
+      success = @medium.save 
     end
-    @video.process if success
+    @medium.process if success
     respond_to do |format|
       if success
         flash[:notice] = ts('new.successful', :what => Video.human_name.capitalize)
-        format.html { redirect_to medium_url(@video) }
-        format.xml  { head :created, :location => medium_url(@video) }
+        format.html { redirect_to medium_url(@medium) }
+        format.xml  { head :created, :location => medium_url(@medium) }
       else
         format.html do
+          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
           @photographers = Person.find(:all, :order => 'fullname')
           @quality_types = QualityType.find(:all, :order => 'id')
-          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
-          @recording_orientations = RecordingOrientation.find(:all, :order => 'title')          
+          @recording_orientations = RecordingOrientation.find(:all, :order => 'title')
+          @resource_types = Topic.find(2636).children
           render :action => 'new'
         end
         format.xml  { render :xml => @video.errors.to_xml }
@@ -102,10 +105,11 @@ class VideosController < AclController
         format.xml  { head :ok }
       else
         format.html do
+          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
           @photographers = Person.find(:all, :order => 'fullname')
           @quality_types = QualityType.find(:all, :order => 'id')
-          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
           @recording_orientations = RecordingOrientation.find(:all, :order => 'title')          
+          @resource_types = Topic.find(2687).children          
           render :action => 'media/edit'
         end
         format.xml  { render :xml => @video.errors.to_xml }

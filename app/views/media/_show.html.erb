@@ -16,8 +16,7 @@
 <%   end %>
 <%=  display_if_not_blank ts(:id, :what => Medium.human_name.titleize), "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})" %>
 <%=  render :partial => 'titles/index_display_only', :locals => {:medium => @medium} %>
-
-
+<%=  display_if_not_blank Medium.human_attribute_name('resource_type').s, @medium.resource_type.title %>
 <% end %>  
 <% captions = @medium.captions
    if !captions.empty? && captions.size>1 %>

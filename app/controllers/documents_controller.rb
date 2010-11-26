@@ -40,19 +40,23 @@ class DocumentsController < AclController
 
   # GET /documents/new
   def new
-    @medium = Document.new
+    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
+    @medium = Document.new(:resource_type_id => 2639)
     @photographers = Person.find(:all, :order => 'fullname')
     @quality_types = QualityType.find(:all, :order => 'id')
-    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
+    @recording_orientations = RecordingOrientation.find(:all, :order => 'title')    
+    @resource_types = Topic.find(2636).children
+    @transformations = Transformation.find(:all, :order => 'renderer_id, title')
   end
 
   # GET /documents/1;edit
   def edit
+    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
     @medium = Document.find(params[:id])
     @photographers = Person.find(:all, :order => 'fullname')
     @quality_types = QualityType.find(:all, :order => 'id')
-    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
     @recording_orientations = RecordingOrientation.find(:all, :order => 'title')    
+    @resource_types = Topic.find(2636).children
     @transformations = Transformation.find(:all, :order => 'renderer_id, title')
     render :template => 'media/edit'
   end
@@ -110,10 +114,11 @@ class DocumentsController < AclController
         format.xml  { head :created, :location => document_url(@medium) }
       else
         format.html do
+          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
           @photographers = Person.find(:all, :order => 'fullname')
           @quality_types = QualityType.find(:all, :order => 'id')
-          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
           @recording_orientations = RecordingOrientation.find(:all, :order => 'title')    
+          @resource_types = Topic.find(2636).children
           @transformations = Transformation.find(:all, :order => 'renderer_id, title')
           render :action => 'new'
         end
@@ -134,10 +139,11 @@ class DocumentsController < AclController
         format.xml  { head :ok }
       else
         format.html do
+          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
           @photographers = Person.find(:all, :order => 'fullname')
           @quality_types = QualityType.find(:all, :order => 'id')
-          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
           @recording_orientations = RecordingOrientation.find(:all, :order => 'title')    
+          @resource_types = Topic.find(2636).children
           @transformations = Transformation.find(:all, :order => 'renderer_id, title')
           render :action => 'edit'
         end

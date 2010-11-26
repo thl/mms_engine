@@ -23,22 +23,24 @@ class PicturesController < AclController
 
   # GET /pictures/new
   def new
+    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
     @photographers = Person.find(:all, :order => 'fullname')
     @quality_types = QualityType.find(:all, :order => 'id')
-    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
     @recording_orientations = RecordingOrientation.find(:all, :order => 'title')    
-    @medium = Picture.new
+    @resource_types = Topic.find(2636).children
+    @medium = Picture.new(:resource_type_id => 2660)
     @image = Image.new
     # render :template => 'media/edit'
   end
 
   # GET /pictures/1;edit
   def edit
+    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
     @medium = Picture.find(params[:id])
     @photographers = Person.find(:all, :order => 'fullname')
     @quality_types = QualityType.find(:all, :order => 'id')
-    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
     @recording_orientations = RecordingOrientation.find(:all, :order => 'title')    
+    @resource_types = Topic.find(2636).children
   end
 
   # POST /pictures
@@ -63,12 +65,13 @@ class PicturesController < AclController
         format.html { redirect_to picture_url(@medium) }
         format.xml  { head :created, :location => picture_url(@medium) }
       else
-        @medium = Picture.new(params[:medium]) if @medium.nil?
-        flash[:notice] = "Picture could not be saved."
+        @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
         @photographers = Person.find(:all, :order => 'fullname')
         @quality_types = QualityType.find(:all, :order => 'id')
-        @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
         @recording_orientations = RecordingOrientation.find(:all, :order => 'title')    
+        @resource_types = Topic.find(2636).children        
+        @medium = Picture.new(params[:medium]) if @medium.nil?
+        flash[:notice] = "Picture could not be saved."
         format.html { render :action => "new" }
         format.xml  { render :xml => @medium.errors.to_xml }
       end
@@ -87,10 +90,11 @@ class PicturesController < AclController
         format.xml  { head :ok }
       else
         format.html do
+          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
           @photographers = Person.find(:all, :order => 'fullname')
           @quality_types = QualityType.find(:all, :order => 'id')
-          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
-          @recording_orientations = RecordingOrientation.find(:all, :order => 'title')          
+          @recording_orientations = RecordingOrientation.find(:all, :order => 'title')    
+          @resource_types = Topic.find(2636).children          
           render :action => 'edit'
         end
         format.xml  { render :xml => @medium.errors.to_xml }
