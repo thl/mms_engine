@@ -1,6 +1,5 @@
 class PlacesController < ApplicationController
   helper :media
-  include ApplicationHelper
   
   # GET /places/1
   # GET /places/1.xml
@@ -46,7 +45,7 @@ class PlacesController < ApplicationController
   
   def get_media_by_type(type)
     @place = Place.find(params[:id])
-    @medium_pages = Paginator.new self, @place.media_count(:type => type), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
+    @medium_pages = Paginator.new self, @place.media_count(type), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
     @media = @place.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset, type)
     @pagination_params = { :feature_id => @place.fid, :type => type }
   end

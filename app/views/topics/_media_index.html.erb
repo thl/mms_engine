@@ -1,7 +1,11 @@
-<% if !@pictures.nil? || !@videos.nil? || !@documents.nil? %>
-	<h2>Media Associated with <%= @topic.title %></h2>
+<% if !@pictures.nil? || !@videos.nil? || !@documents.nil?
+     if !@topic.nil? %>
+	   <h2>Media Associated with <%= @topic.title %></h2>
+<%   end %>
 <%=  render :partial => 'media/index' %>
 <% elsif !@media.nil? %>
 <%=  render :partial => 'media/paged_index_full' %>
+<% end
+   if !@topic.nil? %>
+     <p><%= link_to ts(:in, :what => @topic.title, :where => 'Topics'), Category.element_url(@topic.id, :format => 'html') %></p>
 <% end %>
-<p><%= link_to ts(:in, :what => @topic.title, :where => 'Topics'), Category.element_url(@topic.id, :format => 'html') %></p>

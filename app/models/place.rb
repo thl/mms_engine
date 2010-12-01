@@ -23,8 +23,7 @@ class Place < Feature
     Medium.find(:all, :conditions => conditions, :joins => :locations, :order => 'media.created_on DESC')
   end
     
-  def media_count(options = {})
-    type = options[:type]
+  def media_count(type = nil)
     if type.nil?
       count = Location.count(:conditions => {'locations.feature_id' => self.fid})
     else

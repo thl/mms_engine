@@ -18,19 +18,14 @@ class MediaCategoryAssociation < ActiveRecord::Base
       CumulativeMediaCategoryAssociation.create(:category => current, :medium_id => self.medium_id)
       current = current.parent
     end
-    MediaCategoryAssociation.update_latest
+    Rails.cache.delete('media_category_associations/max_updated_at')
   end
   
   def self.latest_update
-    return @@max_updated_at if defined? @@max_updated_at
-    @@max_updated_at = self.update_latest
+    Rails.cache.fetch('media_category_associations/max_updated_at') { self.maximum(:updated_at) }
   end
     
   private
-  
-  def self.update_latest
-    @@max_updated_at = self.maximum(:updated_at)
-  end
   
   def self.delete_cumulative_information(category, medium_id, type)
     while !category.nil? && CumulativeMediaCategoryAssociation.count(:conditions => {:category_id => category.children.collect(&:id), :medium_id => medium_id})==0

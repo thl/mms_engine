@@ -20,14 +20,12 @@ class Topic < Category
     Medium.find(:all, :conditions => conditions, :joins => joins, :order => 'media.created_on DESC')
   end
     
-  def media_count(options = {})
-    type = options[:type]
-    association = options[:cumulative] || false ? CumulativeMediaCategoryAssociation : MediaCategoryAssociation
-    if type.nil?
-      count = association.count(:conditions => {:category_id => self.id})
-    else
-      count = association.count(:conditions => {:category_id => self.id, 'media.type' => type}, :joins => :medium)
-    end
+  def media_count(type = nil)
+    CachedCategoryCount.updated_count(self.id, type, force_update = false).count
+  end
+  
+  def self.roots_with_media
+    self.roots.select{ |topic| topic.media_count>0 }
   end
 
   alias count_inherited_media media_count

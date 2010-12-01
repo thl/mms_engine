@@ -118,44 +118,7 @@ module ApplicationHelper
     
     tabs
   end
-
-  
-  def tab_counts_for_element(element)
-    counts = {}
-    Medium::TYPES.each do |type, display_names|
-      counts[type] = element.media_count(:type => type.to_s.classify)
-    end
-    counts
-  end
-  
-  def tab_urls_for_element(element)
-    urls = {}
-    id_method = :id
-    id_method = :fid if element.class.name == "Place"
-    element_id = element.send(id_method)
-    element_name = (element.class.name.underscore+"_id").to_sym
-    Medium::TYPES.each do |type, display_names|
-      urls[type] = media_path(element_name => element_id, :type => type.to_s.classify)
-    end
-    urls
-  end
-  
-  def tab_counts_for_search(search)
-    counts = {}
-    Medium::TYPES.each do |type, display_names|
-      counts[type] = Medium.media_count_search(search, type.to_s.classify)
-    end
-    counts
-  end
-  
-  def tab_urls_for_search(search)
-    urls = {}
-    Medium::TYPES.each do |type, display_names|
-      urls[type] = media_searches_path(search.merge({:media_type => type.to_s.classify}))
-    end
-    urls
-  end
-  
+    
   def tab_counts_for_all_media
     counts = {}
     Medium::TYPES.each do |type, display_names|

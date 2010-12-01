@@ -16,7 +16,7 @@ class CachedCategoryCountSweeper < ActiveRecord::Observer
   end
   
   def expire_count_cache(c)
-    ApplicationController.expire_page("/categories/#{c}/counts.xml") if !c.nil?
+    (["/categories/#{c}/counts.xml", '/topics.html'] + ([c] + Category.find(c).ancestors.collect(&:id)).inject([]){ |array, c| array + ["/topics/#{c}.html", "/topics/#{c}/pictures.html", "/topics/#{c}/videos.html", "/topics/#{c}/documents.html"]}).each{|path| ApplicationController.expire_page(path)} if !c.nil?
   end
   
   def expire_media_cache(m)

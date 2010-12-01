@@ -1,10 +1,13 @@
 class TopicsController < ApplicationController
   helper :media
-  include ApplicationHelper
+  caches_page :index, :show, :pictures, :videos, :documents
   
-  # GET /places/1
-  # GET /places/1.xml
+  def index
+    @topics = Topic.roots_with_media
+  end
+    
   def show
+    @topic = Topic.find(params[:id])
     medium_id = params[:medium_id]
     @medium = nil
     if !medium_id.blank?
@@ -14,7 +17,11 @@ class TopicsController < ApplicationController
         @medium = nil
       end
     end
-    @topic = Topic.find(params[:id])
+    if @medium.nil?
+      @current = @topic.ancestors.collect{|c| c.id.to_i}
+      @current << @topic.id.to_i
+      @topics = Topic.roots_with_media
+    end
     @pictures = @topic.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Picture')
     @videos = @topic.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Video')
     @documents = @topic.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Document')
@@ -42,11 +49,19 @@ class TopicsController < ApplicationController
     render_media
   end
   
+  def expand
+    render :partial => 'expanded', :object => Topic.find(params[:id]), :locals => {:margin_depth => params[:margin_depth].to_i}
+  end
+
+  def contract
+    render :partial => 'contracted', :object => Topic.find(params[:id]), :locals => {:margin_depth => params[:margin_depth].to_i}
+  end
+  
   private
   
   def get_media_by_type(type)
     @topic = Topic.find(params[:id])
-    @medium_pages = Paginator.new self, @topic.media_count(:type => type), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
+    @medium_pages = Paginator.new self, @topic.media_count(type), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
     @media = @topic.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset, type)
     @pagination_params = { :category_id => @topic.id, :type => type }
   end
@@ -63,7 +78,15 @@ class TopicsController < ApplicationController
         page.call 'tb_init', 'a.thickbox, area.thickbox, input.thickbox'
       end
     else
-      respond_to { |format| format.html { render(:action => @medium.nil? ? 'show' : 'show_for_medium') } }
+      respond_to do |format|
+        format.html do
+          if @topics.nil?
+            render(:action => @medium.nil? ? 'show' : 'show_for_medium')
+          else
+            render :action => 'index'
+          end
+        end
+      end
     end
   end
   

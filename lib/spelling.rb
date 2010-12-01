@@ -7,6 +7,8 @@ module Spelling
   #ASPELL_PATH = "/opt/local/bin/aspell"
   ASPELL_PATH = "/usr/bin/aspell"
   
+  protected
+  
   def check_spelling(spell_check_text, command, lang)
     xml_response_values = Array.new
     spell_check_text = spell_check_text.join(' ') if command == 'checkWords'

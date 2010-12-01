@@ -1,0 +1,10 @@
+<div id="primary">
+  <h4>Browse Topics</h4>
+  <div id="navigation" class="normal">
+<%= render :partial => 'topics_index', :locals => {:topics => @topics, :margin_depth => 0} %>
+  </div>
+</div>
+<div id="secondary">
+<%= render :partial => 'media_index' %>
+</div>
+<div class="clear"></div>
