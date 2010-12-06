@@ -71,7 +71,7 @@ class Medium < ActiveRecord::Base
     self.media_ethnicity_associations.collect(&:category).select{|c| c}
   end
   
-  def categories(options = {})
+  def topics(options = {})
     cumulative = options[:cumulative] || false
     if cumulative
       return self.cumulative_media_category_associations.collect(&:category).select{|c| c}

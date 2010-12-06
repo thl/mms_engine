@@ -1,0 +1,5 @@
+<p><b><%= Medium.human_name.titleize.s %></b><br />
+<%= f.hidden_field :medium_id %>
+<%= thumbnail_image_link(@medium) %></td></p>
+<p><b><%= @media_category_association.root.nil? ? 'Topic' : @media_category_association.root.title %></b><br />
+<%= category_selector @media_category_association.root, :media_category_association, :category, false, :hasTree => 'true', :singleSelectionTree => 'true' %></p>

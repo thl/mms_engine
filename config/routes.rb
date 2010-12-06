@@ -27,16 +27,17 @@ ActionController::Routing::Routes.draw do |map|
     media.resources :collection_associations, :controller => 'media_collection_associations'
     media.resources :subject_associations, :controller => 'media_subject_associations'
     media.resources :ethnicity_associations, :controller => 'media_ethnicity_associations'
+    media.resource :media_publisher
     media.resources :titles do |title| 
       title.resources :citations
       title.resources :translated_titles, :as => 'translations' do |translated_title|
         translated_title.resources :citations
  		  end
     end
+    media.resources :topic_associations, :controller => 'media_category_associations'
     media.resource :workflow
-    media.resource :media_publisher
-
   end
+  
   map.resources :media_imports, :collection => { :confirm => :post, :status => :get }
   map.resources :media_processes, :collection => { :status => :get }
 
@@ -50,7 +51,8 @@ ActionController::Routing::Routes.draw do |map|
   :documents, :application_filters, :glossaries, :keywords, :media_keyword_associations, :media_searches,
   :organizations, :pictures, :projects, :quality_types, :recording_orientations, :renderers,
   :reproduction_types, :sources, :sponsors, :transformations, :videos, :statuses, :publishers
-  
+
+  map.resources :associations, :controller => 'media_category_associations', :path_prefix => 'media_objects/:medium_id/topics/:category_id'
   map.resources :topics, :member => {:pictures => :get, :videos => :get, :documents => :get, :expand => :get, :contract => :get}
   
   map.with_options :path_prefix => 'documents', :controller => 'documents' do |documents|

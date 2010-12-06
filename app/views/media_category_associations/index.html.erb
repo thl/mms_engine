@@ -1,0 +1,26 @@
+<% category_name = 'topic' %>
+<% if @medium.nil? %>
+     <h1><%=  ts 'list.ing.records', :what => category_name.titleize %></h1>
+<% else %>
+     <h1><%=  ts :for, :what => t('list.ing.records', :what => category_name.titleize), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+     <p><%= thumbnail_image_link(@medium) %></p>
+<% end %>
+<table border="1" class="normal">
+  <tr>
+    <th><%= category_name.titleize %></th>
+    <th colspan="2"><%= ts :options %></th>
+  </tr>
+<% for association in @media_category_associations %>
+<%   topic = association.category %>
+     <tr>
+       <td><%= h(([topic] + topic.ancestors).collect(&:title).reverse.join(' > ')) %></td>
+       <td><%= link_to ts('manage.this'), edit_association_path(association.medium_id, topic.root, association) %></td>
+       <td><%= link_to ts('back.to', :what => Medium.human_name(:count => :many)), topic_path(topic) %></td>
+     </tr>
+<% end %>
+</table>
+<% if !@medium.nil? %>
+	<p>&nbsp;<br/>
+<%= link_to(ts('associate.to', :what => t(:another, :what => category_name)), @topic.nil? ? new_medium_topic_association_path(@medium) : new_association_path(@medium, @topic)) %> |
+<%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'topics'} %></p>
+<% end %>

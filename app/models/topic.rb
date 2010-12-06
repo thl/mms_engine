@@ -3,18 +3,22 @@ class Topic < Category
   
   self.element_name = 'category'
   
+  def media_category_associations
+    MediaCategoryAssociation.find(:all, :conditions => {:category_id => self.id})
+  end
+  
   def paged_media(limit, offset = nil, type = nil)
     if type.nil?
-      media = Medium.find(:all, :conditions => {'media_category_associations.category_id' => self.id}, :joins => :media_category_associations, :limit => limit, :offset => offset, :order => 'media.created_on DESC')
+      media = Medium.find(:all, :conditions => {'cumulative_media_category_associations.category_id' => self.id}, :joins => :cumulative_media_category_associations, :limit => limit, :offset => offset, :order => 'media.created_on DESC')
     else
-      media = Medium.find(:all, :conditions => {'media_category_associations.category_id' => self.id, 'media.type' => type}, :joins => :media_category_associations, :limit => limit, :offset => offset, :order => 'media.created_on DESC')
+      media = Medium.find(:all, :conditions => {'cumulative_media_category_associations.category_id' => self.id, 'media.type' => type}, :joins => :cumulative_media_category_associations, :limit => limit, :offset => offset, :order => 'media.created_on DESC')
     end
     media
   end
   
   def media(options = {})
     type = options[:type]
-    joins = options[:cumulative] ? :cumulative_media_category_associations : :media_category_associations
+    joins = options[:cumulative].nil? || options[:cumulative] ? :cumulative_media_category_associations : :media_category_associations
     conditions = {"#{joins.to_s}.category_id" => self.id}
     conditions['media.type'] = type if !type.nil?
     Medium.find(:all, :conditions => conditions, :joins => joins, :order => 'media.created_on DESC')

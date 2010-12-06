@@ -1,0 +1,8 @@
+<h1><%= ts 'associate.record', :what => @media_category_association.root.nil? ? 'Topic' : @media_category_association.root.title, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<%= error_messages_for :media_category_association %>
+<% form_for(:media_category_association, :url => medium_topic_associations_path(@medium)) do |f| %>
+<%=  render :partial => 'form', :locals => {:f => f} %>
+     <p><%= globalized_submit_tag 'create.this' %></p>
+<% end %>
+<p>&nbsp;<br/>
+<%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'topics'} %></p>

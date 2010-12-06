@@ -1,8 +1,8 @@
 class MediaCategoryAssociation < ActiveRecord::Base
   validates_presence_of :category_id, :medium_id
-  belongs_to :category
+  belongs_to :category, :class_name => 'Topic'
   belongs_to :medium
-  belongs_to :root, :class_name => 'Category'
+  belongs_to :root, :class_name => 'Topic'
   
   def after_destroy
     MediaCategoryAssociation.delete_cumulative_information(self.category, self.medium_id, self.medium.class.name)

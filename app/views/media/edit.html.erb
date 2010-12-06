@@ -39,8 +39,9 @@
 	 <b><%= Location.human_name(:count => locations.size).titleize.s %></b>
 <%=  locations.collect {|l| link_to l.feature.header, edit_medium_location_path(@medium, l)}.join(', ') %>
 (<%= link_to ts('add.record', :what => Location.human_name), new_medium_location_path(@medium) %>)</p>
-<% end  
-   media_collection_associations = @medium.media_collection_associations
+<% end  %>
+<%= bookmark 'topics' %>
+<% media_collection_associations = @medium.media_collection_associations
    if !media_collection_associations.empty? %>
      <p><%= bookmark Collection.anchor_name %>
 	 <b><%= ts(:collection, :count => media_collection_associations.size).titleize %>:</b>

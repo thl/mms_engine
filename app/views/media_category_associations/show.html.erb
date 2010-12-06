@@ -1,0 +1,11 @@
+<% topic = @media_category_association.category
+   topic_name = topic.root.title.titleize %>
+<p><b><%= ts :for, :what => t('associate.ion', :what => topic_name), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></b></p>
+<p>
+<%=  thumbnail_image_link(@medium) %>
+</p>
+<%= display_if_not_blank ts('name.for', :what => topic_name), topic.ancestors.collect(&:title).reverse.join(' > ') %>
+<p>&nbsp;<br/>
+<%= link_to ts('edit.this'), edit_association_path(@medium, topic, @media_category_association) %> |
+<%= render :partial => 'persistent_links' %>
+</p>
