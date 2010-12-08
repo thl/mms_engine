@@ -1,9 +1,7 @@
 class TopicsController < ApplicationController
   helper :media
-  caches_page :index, :show, :pictures, :videos, :documents
-  
+    
   def index
-    @topics = Topic.roots_with_media
   end
     
   def show
@@ -16,11 +14,6 @@ class TopicsController < ApplicationController
       rescue ActiveRecord::RecordNotFound
         @medium = nil
       end
-    end
-    if @medium.nil?
-      @current = @topic.ancestors.collect{|c| c.id.to_i}
-      @current << @topic.id.to_i
-      @topics = Topic.roots_with_media
     end
     @pictures = @topic.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Picture')
     @videos = @topic.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Video')
@@ -80,11 +73,13 @@ class TopicsController < ApplicationController
     else
       respond_to do |format|
         format.html do
-          if @topics.nil?
-            render(:action => @medium.nil? ? 'show' : 'show_for_medium')
-          else
+          if !@medium.nil?
+            render :action => 'show_for_medium'
+          elsif !@topic.nil?
+            render(:action => @media.nil? ? 'index' : 'show')
+          elsif
             render :action => 'index'
-          end
+          end          
         end
       end
     end

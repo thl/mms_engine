@@ -1,9 +1,14 @@
-<div id="primary">
-  <h4>Browse Topics</h4>
-  <div id="navigation" class="normal">
-<%= render :partial => 'topics_index', :locals => {:topics => @topics, :margin_depth => 0} %>
-  </div>
-</div>
+<% cache_key = { :controller => controller.controller_name, :action => controller.action_name }
+   cache_key[:id] = @topic.id if !@topic.nil?
+   cache cache_key do
+	 @current = @topic.ancestor_and_self_ids if !@topic.nil? %>
+     <div id="primary">
+       <h4>Browse Topics</h4>
+       <div id="navigation" class="normal">
+<%=      render :partial => 'topics_index', :locals => {:topics => Topic.roots_with_media, :margin_depth => 0} %>
+       </div>
+     </div>
+<% end %>
 <div id="secondary">
 <%= render :partial => 'media_index' %>
 </div>

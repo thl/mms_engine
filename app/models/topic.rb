@@ -31,6 +31,10 @@ class Topic < Category
   def self.roots_with_media
     self.roots.select{ |topic| topic.media_count>0 }
   end
+  
+  def ancestor_and_self_ids
+    self.ancestors.collect{|c| c.id.to_i} + [self.id.to_i]
+  end
 
   alias count_inherited_media media_count
   # This helps with calls to count media for generalized elements

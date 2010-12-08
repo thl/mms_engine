@@ -1,4 +1,5 @@
 class MediaCategoryAssociationsController < AclController
+  cache_sweeper :media_category_association_sweeper, :only => [:create, :update, :destroy]
   before_filter :find_medium_and_topic
   helper :media
   
