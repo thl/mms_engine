@@ -1,5 +1,0 @@
-<% if !@pictures.nil? || !@videos.nil? || !@documents.nil? %>
-<%=  render :partial => 'media/index' %>
-<% elsif !@media.nil? %>
-<%=  render :partial => 'media/paged_index' %>
-<% end %>

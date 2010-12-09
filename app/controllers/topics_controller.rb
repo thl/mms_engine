@@ -1,5 +1,10 @@
 class TopicsController < ApplicationController
   helper :media
+  
+  def initialize
+    super
+    @current_tab_id = :browse
+  end
     
   def index
     @root = nil

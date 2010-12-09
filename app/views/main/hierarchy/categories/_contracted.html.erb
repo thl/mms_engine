@@ -1,9 +1,0 @@
-<%= Util::MARGIN * margin_depth %>
-<%  element_path = "#{controller.controller_name.singularize}_path"
-    contracted_div = "#{contracted.id}_div"
-    if contracted.children.empty? %>
-      &#9674;
-<%  else %>
-<%=   link_to_remote '+', { :update => contracted_div, :url => self.send("expand_#{element_path}", contracted, :margin_depth => margin_depth), :method => 'get' }, { :class => 'collapsable' } %>
-<%  end %>
-<%= "#{link_to h(contracted.title).s, contracted } (#{number_with_delimiter(contracted.count_inherited_media, :delimiter => ',')})" %><br/>

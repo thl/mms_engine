@@ -4,9 +4,7 @@ module ApplicationHelper
     str = "<h3 class=\"head\">#{link_to 'All Multimedia', '#nogo', {:hreflang => 'The media management system stores, organize and display pictures, videos and texts.'}}</h3>\n<ul>\n" +
           "<li>#{link_to 'Home', media_path, {:hreflang => 'Browse pictures, videos, and texts.'}}</li>\n" +
           "<li>#{link_to 'Advanced Search', new_media_search_path, {:hreflang => 'Search pictures, videos, and texts.'}}</li>\n" +
-          "<li>#{link_to "Collections <em class=\"browse\">Browse</em>", collections_path, {:hreflang => 'Browse pictures, videos, and texts by collection.'}}</li>\n" +
-          "<li>#{link_to "Cultures <em class=\"browse\">Browse</em>", ethnicities_path, {:hreflang => 'Browse pictures, videos, and texts by socio-cultural group.'}}</li>\n" +
-          "<li>#{link_to "Subjects <em class=\"browse\">Browse</em>", subjects_path, {:hreflang => 'Browse pictures, videos, and texts by subject.'}}</li>\n"
+          "<li>#{link_to "Topics <em class=\"browse\">Browse</em>", topics_path, {:hreflang => 'Browse pictures, videos, and texts by kmap topics.'}}</li>\n"
     authorized_only(hash_for_admin_path) { str += "<li>#{link_to 'Administration', admin_path, {:hreflang => 'Manage countries, keywords, glossaries, static pages, copyright holders, organizations, projects, sponsors, translations, people, users, roles, themes, languages, settings and media importation.'}}</li>\n" }
     str += "</ul>"
     return str
@@ -80,7 +78,7 @@ module ApplicationHelper
     # The :index values are necessary for this hash's elements to be sorted properly
     {
       :search => {:index => 1, :title => "Search", :url => new_media_search_url},
-      :browse => {:index => 2, :title => "Browse", :url => collections_url},
+      :browse => {:index => 2, :title => "Browse", :url => topics_url},
       :picture => {:index => 3, :title => Picture.human_name.titleize.pluralize, :url => media_path(:type => 'Picture')},
       :video => {:index => 4, :title => Video.human_name.titleize.pluralize, :url => media_path(:type => 'Video')},
       :document => {:index => 5, :title => Document.human_name.titleize.pluralize, :url => media_path(:type => 'Document')}
