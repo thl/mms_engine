@@ -17,8 +17,8 @@
 <%=  display_if_not_blank ts(:id, :what => Medium.human_name.titleize), "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})" %>
 <%=  render :partial => 'titles/index_display_only', :locals => {:medium => @medium} %>
 <%=  display_if_not_blank Medium.human_attribute_name('resource_type').s, @medium.resource_type.title %>
-<% end %>  
-<% captions = @medium.captions
+<% end 
+   captions = @medium.captions
    if !captions.empty? && captions.size>1 %>
      <p>
 <%   for caption in captions
@@ -47,15 +47,17 @@
    if authorized?(hash_for_edit_medium_path) && !@medium.private_note.nil? %>
      <p><b><%= Medium.human_attribute_name('private_note').s %>:</b></p>
 <%=  @medium.private_note %>
-<% end %>
-<% collections = @medium.collections
-   if !collections.empty? %>
-<%=  display_if_not_blank ts(:collection, :count => collections.size).titleize, collections.collect {|c| link_to h(c.title).s, collection_path(c)}.join(', ') %>
 <% end
-   ethnicities = @medium.ethnicities
-   if !ethnicities.empty? %>
-<%=  display_if_not_blank ts(:ethnicity, :count => ethnicities.size).titleize, ethnicities.collect {|e| link_to h(e.title).s, ethnicity_path(e)}.join(', ') %>
-<% end
+   grouped_topics = Hash.new
+   root_topics = Topic.roots_with_media
+   root_topics.each{ |topic| grouped_topics[topic.id] = Array.new }
+   @medium.media_category_associations.each{ |association| grouped_topics[association.root_id] << association.category }
+   for root_topic in root_topics
+	 topics = grouped_topics[root_topic.id]
+	 if !topics.empty? %>
+<%=    display_if_not_blank root_topic.title, topics.collect {|c| link_to h(c.title).s, topic_path(c)}.join(', ') %>
+<%   end
+   end
    descriptions = @medium.descriptions
    if !descriptions.empty? %>
      <p><b><%= Description.human_name(:count => descriptions.size).titleize.s %>:</b></p>
@@ -67,11 +69,7 @@
    if !keywords.empty? %>
 <%=  display_if_not_blank Keyword.human_name(:count => :many).titleize.s, keywords.collect {|k| link_to h(k.title).s, media_path(:keyword_id => k)}.join(", ") %>
 <% end
-   subjects = @medium.subjects
-   if !subjects.empty? %>
-<%=  display_if_not_blank ts(:subject, :count => subjects.size).titleize, subjects.collect {|s| link_to h(s.title).s, subject_path(s)}.join(', ') %>
-<% end %>
-<% affiliations = @medium.affiliations
+   affiliations = @medium.affiliations
    copyrights = @medium.copyrights
    if !affiliations.empty? || !copyrights.empty? %>
    <p>
@@ -117,31 +115,27 @@
 <%=  h(@medium.updated_on.strftime('%d/%b/%Y')) %><br/>
 <% end %>
 </p>
-<% if logged_in? %>
-<%   capture_device_model = @medium.capture_device_model
+<% if logged_in?
+     capture_device_model = @medium.capture_device_model
      if !capture_device_model.nil? %>
 <%=    display_if_not_blank CaptureDeviceModel.human_name.titleize.s, "#{h(capture_device_model.capture_device_maker.title)} - #{h(capture_device_model.title)}" %>
 <%   end
      media_source_associations = @medium.media_source_associations
      if !media_source_associations.empty? %>
 <%=    display_if_not_blank Source.human_name(:count => media_source_associations.size).titleize.s, media_source_associations.collect {|s| "#{s.source.title} #{"(#{s.shot_number})" if !s.shot_number.nil?}"}.join(', ') %>
-<%   end %>
-<% end %>
-
-<%
-  associated_resources = [
+<%   end
+   end
+   associated_resources = [
     ["Places", @medium.feature_count, @medium.places_url],
     ["Topics", @medium.category_count(:cumulative => true), @medium.kmaps_url]
-  ]
-%>
-<% if associated_resources.collect{|ar| ar[1]}.sum > 0 %>
-<h3>Associated Resources</h3>
-<ul class="normal">
-  <%= associated_resources.reject{|ar| ar[1] == 0}.collect{|ar| "<li>" + link_to("#{ar[0]} (#{ar[1]})", ar[2]) + "</li>" }.join("") %>
-</ul>
-<% end %>
-
-<%   authorized_only hash_for_medium_workflow_path do
+   ]
+   if associated_resources.collect{|ar| ar[1]}.sum > 0 %>
+     <h3>Associated Resources</h3>
+     <ul class="normal">
+<%=    associated_resources.reject{|ar| ar[1] == 0}.collect{|ar| "<li>" + link_to("#{ar[0]} (#{ar[1]})", ar[2]) + "</li>" }.join("") %>
+     </ul>
+<% end
+   authorized_only hash_for_medium_workflow_path do
      workflow = @medium.workflow
      if !workflow.nil? %>
 <%=    render :partial => 'workflows/show', :locals => {:workflow => workflow} %>
