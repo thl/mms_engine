@@ -12,15 +12,7 @@
 
 <table border="0">
   <tr valign="top">
-	<td><h3><%= ts 'browse.this' %></h3></td>
-  </tr>
-  <tr valign="top">
-    <td>
-      <ul>
-		<li><h4><%= link_to ts('by.collection'), collections_path %></h4></li>
-      	<li><h4><%= link_to ts('by.subject'), subjects_path %></h4></li>
-	  </ul>
-	</td>
+	<td><h3>Browse by <%= select_tag :root_topics, options_for_select([''] + Topic.roots_with_media.collect{|topic| [topic.title, topic_path(topic)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %></h3></td>
   </tr>
   <tr>
     <td valign="top">

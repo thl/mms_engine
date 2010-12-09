@@ -2,10 +2,12 @@ class TopicsController < ApplicationController
   helper :media
     
   def index
+    @root = nil
   end
     
   def show
     @topic = Topic.find(params[:id])
+    @root = @topic.root
     medium_id = params[:medium_id]
     @medium = nil
     if !medium_id.blank?
@@ -15,12 +17,14 @@ class TopicsController < ApplicationController
         @medium = nil
       end
     end
-    @pictures = @topic.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Picture')
-    @videos = @topic.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Video')
-    @documents = @topic.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Document')
-    title = @topic.title
-    @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
-    @more = { :category_id => @topic.id, :type => '' }
+    if @topic != @root
+      @pictures = @topic.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Picture')
+      @videos = @topic.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Video')
+      @documents = @topic.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Document')
+      title = @topic.title
+      @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
+      @more = { :category_id => @topic.id, :type => '' }
+    end
     render_media
   end
   
