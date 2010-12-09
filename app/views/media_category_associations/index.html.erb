@@ -14,7 +14,7 @@
 <%   topic = association.category %>
      <tr>
        <td><%= h(([topic] + topic.ancestors).collect(&:title).reverse.join(' > ')) %></td>
-       <td><%= link_to ts('manage.this'), edit_association_path(association.medium_id, topic.root, association) %></td>
+       <td><%= link_to ts('manage.this'), edit_association_path(association.medium, topic.root, association) %></td>
        <td><%= link_to ts('back.to', :what => Medium.human_name(:count => :many)), topic_path(topic) %></td>
      </tr>
 <% end %>

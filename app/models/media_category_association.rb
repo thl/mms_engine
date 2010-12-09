@@ -4,6 +4,10 @@ class MediaCategoryAssociation < ActiveRecord::Base
   belongs_to :medium
   belongs_to :root, :class_name => 'Topic'
   
+  def before_destroy
+    Rails.cache.delete('topics/roots_with_media') if Rails.cache.exist?('topics/roots_with_media') && Topic.roots_with_media.collect(&:id).include?(self.root_id)
+  end
+  
   def after_destroy
     MediaCategoryAssociation.delete_cumulative_information(self.category, self.medium_id, self.medium.class.name)
   end
@@ -19,6 +23,7 @@ class MediaCategoryAssociation < ActiveRecord::Base
       current = current.parent
     end
     Rails.cache.delete('media_category_associations/max_updated_at')
+    Rails.cache.delete('topics/roots_with_media') if Rails.cache.exist?('topics/roots_with_media') && !Topic.roots_with_media.collect(&:id).include?(self.root_id)
   end
   
   def self.latest_update

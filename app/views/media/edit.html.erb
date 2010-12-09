@@ -41,27 +41,19 @@
 (<%= link_to ts('add.record', :what => Location.human_name), new_medium_location_path(@medium) %>)</p>
 <% end  %>
 <%= bookmark 'topics' %>
-<% media_collection_associations = @medium.media_collection_associations
-   if !media_collection_associations.empty? %>
-     <p><%= bookmark Collection.anchor_name %>
-	 <b><%= ts(:collection, :count => media_collection_associations.size).titleize %>:</b>
-<%=  media_collection_associations.collect {|c| link_to h(c.category.title).s, edit_medium_collection_association_path(@medium, c)}.join(', ') %>
-(<%= link_to ts('add.record', :what => t(:collection)), new_medium_collection_association_path(@medium) %>)</p>
-<% end
-   media_subject_associations = @medium.media_subject_associations
-   if !media_subject_associations.empty? %>
-     <p><%= bookmark Subject.anchor_name %>
-	 <b><%= ts(:subject, :count => media_subject_associations.size).titleize %>:</b>
-<%=  media_subject_associations.collect {|s| link_to h(s.category.title).s, edit_medium_subject_association_path(@medium, s)}.join(', ') %>
-(<%= link_to ts('add.record', :what => t(:subject)), new_medium_subject_association_path(@medium) %>)</p>
-<% end
-   media_ethnicity_associations = @medium.media_ethnicity_associations
-   if !media_ethnicity_associations.empty? %>
-     <p><%= bookmark Ethnicity.anchor_name %>
-	 <b><%= ts(:ethnicity, :count => media_ethnicity_associations.size).titleize %>:</b>
-<%=  media_ethnicity_associations.collect {|e| link_to h(e.category.title).s, edit_medium_ethnicity_association_path(@medium, e)}.join(', ') %>
-(<%= link_to ts('add.record', :what => t(:ethnicity)), new_medium_ethnicity_association_path(@medium )%>)</p>
-<% end
+<% topic_associations = Hash.new
+   root_topics = Topic.roots_with_media
+   root_topics.each{ |topic| topic_associations[topic.id] = Array.new }
+   @medium.media_category_associations.each{ |association| topic_associations[association.root_id] << association }
+   for root_topic in root_topics
+     associations = topic_associations[root_topic.id] 
+     if !associations.empty? %>
+	   <p><%= bookmark "topics-#{root_topic.id}" %>
+	   <b><%= root_topic.title %>:</b>
+<%=    associations.collect{|a| link_to h(a.category.title).s, edit_association_path(@medium, root_topic, a)}.join(', ') %>
+       (<%= link_to ts('add.record', :what => root_topic.title.downcase), new_association_path(@medium, root_topic) %>)</p>
+<%   end
+   end
    media_keyword_associations = @medium.media_keyword_associations
    if !media_keyword_associations.empty? %>
      <p><%= bookmark 'keywords' %>
@@ -114,7 +106,6 @@
 <%=     link_to h(media_publisher.publisher.title).s, edit_medium_media_publisher_path(@medium) %>
 </p>
 <% end %>
-
 <hr/>
 <p>
 <% if titles.empty? %>
@@ -131,41 +122,37 @@
 <% end
    if media_keyword_associations.empty? %>
 <%=  bookmark 'keywords' %>
-<%=  link_to ts('associate.to', :what => Keyword.human_name), new_media_keyword_association_path(:medium_id => @medium) %> |
+<%=  link_to ts('associate.to', :what => Keyword.human_name), new_media_keyword_association_path(:medium_id => @medium) %>
 <% end %>
 <br/>
 <% if locations.empty? %>
 <%=  bookmark 'locations' %>
 <%=  link_to ts('associate.to', :what => Location.human_name), new_medium_location_path(@medium) %> |
 <% end
-   if media_collection_associations.empty? %>
-<%=   bookmark Collection.anchor_name %>
-<%=   link_to ts('associate.to', :what => t(:collection)), new_medium_collection_association_path(@medium) %> |
-<% end
-   if media_subject_associations.empty? %>
-<%=   bookmark Subject.anchor_name %>
-<%=   link_to ts('associate.to', :what => t(:subject)), new_medium_subject_association_path(@medium) %> |
-<% end
-   if media_ethnicity_associations.empty? %>
-<%=   bookmark Ethnicity.anchor_name %>
-<%=   link_to ts('associate.to', :what => t(:ethnicity)), new_medium_ethnicity_association_path(@medium) %> |
-<% end
-   if media_source_associations.empty? %>
+   for root_topic in root_topics
+     if topic_associations[root_topic.id].empty? %>
+<%=    bookmark "topics-#{root_topic.id}" %>
+<%=    link_to ts('associate.to', :what => root_topic.title.downcase), new_association_path(@medium, root_topic) %> |
+<%   end
+   end %>
+<%= link_to ts('associate.to', :what => 'knowledge map topic'), new_medium_topic_association_path(@medium) %>
+<br/>
+<% if media_source_associations.empty? %>
 <%=   bookmark 'sources' %>
-<%=   link_to ts('associate.to', :what => Source.human_name), new_medium_source_association_path(@medium) %> |
+<%=   link_to ts('associate.to', :what => Source.human_name), new_medium_source_association_path(@medium) %>
 <% end %>
 <br/>
 <% if copyrights.empty? %>
 <%=  bookmark 'copyrights' %>
-<%=  link_to ts('add.record', :what => Copyright.human_name), new_copyright_path(:medium_id => @medium)%> |
+<%=  link_to ts('add.record', :what => Copyright.human_name), new_copyright_path(:medium_id => @medium) %> |
 <% end
    if affiliations.empty? %>
 <%=  bookmark 'affiliations' %>
-<%=  link_to ts('add.record', :what => Affiliation.human_name), new_medium_affiliation_path(@medium)%> |
+<%=  link_to ts('add.record', :what => Affiliation.human_name), new_medium_affiliation_path(@medium) %> |
 <% end %>
 <% if media_publisher.nil? %>
 <%=  bookmark 'media_publisher' %>
-<%=  link_to ts('add.record', :what => Publisher.human_name), new_medium_media_publisher_path(@medium)%> |
+<%=  link_to ts('add.record', :what => Publisher.human_name), new_medium_media_publisher_path(@medium) %>
 <% end %></p>
 <% workflow = @medium.workflow
    if !workflow.nil? %>

@@ -22,7 +22,7 @@ class MediaCategoryAssociationsController < AclController
   def show
     @media_category_association = MediaCategoryAssociation.find(params[:id])
     if @medium != @media_category_association.medium
-      redirect_to medium_topic_association_url(@media_category_association.medium, @media_category_association)
+      redirect_to association_url(@media_category_association.medium, @media_category_association.root, @media_category_association)
     else
       respond_to do |format|
         format.html # show.html.erb
@@ -46,7 +46,7 @@ class MediaCategoryAssociationsController < AclController
   def edit
     @media_category_association = MediaCategoryAssociation.find(params[:id])
     if @medium != @media_category_association.medium
-      redirect_to edit_medium_topic_association_url(@media_category_association.medium, @media_category_association)
+      redirect_to edit_association_url(@media_category_association.medium, @media_category_association.root, @media_category_association)
     else
       respond_to do |format|
         format.html # edit.html.erb
@@ -64,7 +64,7 @@ class MediaCategoryAssociationsController < AclController
     respond_to do |format|
       if @media_category_association.save
         flash[:notice] = 'MediaCategoryAssociation was successfully created.'
-        format.html { redirect_to edit_medium_url(@medium) }
+        format.html { redirect_to edit_medium_url(@medium, :anchor => "topics-#{@media_category_association.root_id}") }
         format.xml  { render :xml => @media_category_association, :status => :created, :location => @media_category_association }
       else
         format.html { render :action => "new" }
@@ -82,7 +82,7 @@ class MediaCategoryAssociationsController < AclController
     respond_to do |format|
       if @media_category_association.update_attributes(media_category_association_hash)
         flash[:notice] = 'MediaCategoryAssociation was successfully updated.'
-        format.html { redirect_to edit_medium_url(@medium) }
+        format.html { redirect_to edit_medium_url(@medium, :anchor => "topics-#{@media_category_association.root_id}") }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -95,10 +95,10 @@ class MediaCategoryAssociationsController < AclController
   # DELETE /media_category_associations/1.xml
   def destroy
     @media_category_association = MediaCategoryAssociation.find(params[:id])
+    root_id = @media_category_association.root_id
     @media_category_association.destroy
-
     respond_to do |format|
-      format.html { redirect_to edit_medium_url(@medium) }
+      format.html { redirect_to edit_medium_url(@medium, :anchor => "topics-#{root_id}") }
       format.xml  { head :ok }
     end
   end
