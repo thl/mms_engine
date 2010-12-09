@@ -1,8 +1,0 @@
-<%= display_if_not_blank AdministrativeUnit.human_attribute_name('is_problematic').s, @element.is_problematic? ? ts(:affirmation) : ts(:negation) %>
-<%= display_if_not_blank 'FID', @element.feature_id %>
-<% parent = @element.parent
-   if !parent.nil? %>
-<%=  display_if_not_blank(ts('parent.of', :who => parent.level_name), link_to(h(parent.title).s, country_administrative_unit_path(@country, parent))) %>
-<% else %>
-<%=  display_if_not_blank ts('parent.of', :who => Country.human_name.titleize), link_to(h(@country.title).s, country_path(@country)) %>
-<% end %>

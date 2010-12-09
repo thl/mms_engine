@@ -12,11 +12,7 @@ ActionController::Routing::Routes.draw do |map|
     category.resources(:children, :controller => 'categories', :member => {:expand => :get, :contract => :get})
     category.resources(:counts, :controller => 'cached_category_counts', :only => 'index')
   end
-  
-  map.resources :countries, :has_many => :administrative_levels do |country|
-    country.resources :administrative_units, :member => {:expand => :get, :contract => :get}
-  end
-    
+      
   map.resources :media, :as => 'media_objects', :member => { :full_size => :get, :large => :get, :rename => :get }, :collection => { :rename_all => :get }, :has_many => [:affiliations, :captions, :descriptions, :locations, :places] do |media|
     media.resources :source_associations, :controller => 'media_source_associations'
     media.resource :media_publisher

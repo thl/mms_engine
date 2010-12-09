@@ -1,8 +1,0 @@
-<p><b><%= Country.human_name.titleize.s %></b><br />
-<%= f.hidden_field :country_id %>
-<%= link_to h(@country.title).s, country_path(@country) %></p>
-<p><b><%= AdministrativeLevel.human_attribute_name('title').s %></b><br />
-<%= f.text_field :title, language_options %></p>
-<p><b><%= AdministrativeLevel.human_attribute_name('level').s %></b><br />
-<%=  f.select(:level, Array.new(@administrative_level.level) {|i| i+1}) %>
-<%= javascript_tag "$('administrative_level_title').focus()" %>
