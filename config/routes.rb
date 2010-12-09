@@ -24,9 +24,6 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :media, :as => 'media_objects', :member => { :full_size => :get, :large => :get, :rename => :get }, :collection => { :rename_all => :get }, :has_many => [:affiliations, :captions, :collections, :descriptions, :ethnicities, :locations, :places, :subjects] do |media|
     media.resources :source_associations, :controller => 'media_source_associations'
-    media.resources :collection_associations, :controller => 'media_collection_associations'
-    media.resources :subject_associations, :controller => 'media_subject_associations'
-    media.resources :ethnicity_associations, :controller => 'media_ethnicity_associations'
     media.resource :media_publisher
     media.resources :titles do |title| 
       title.resources :citations
