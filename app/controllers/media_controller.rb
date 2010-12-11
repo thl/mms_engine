@@ -3,8 +3,8 @@ class MediaController < AclController
   cache_sweeper :medium_sweeper, :only => [:update, :destroy]
   
   # Adding redundant candidates (e.g. category_id and :topic_id) for now to prevent errors, but these should be consolidated
-  @@element_candidates = {:category_id => {:class => Topic, :association => 'topics', :name => 'topic'}, :topic_id => {:class => Topic, :association => 'topics', :name => 'topic'}, :feature_id => {:class => Place, :association => 'locations', :name => 'location'}, :place_id => {:class => Place, :association => 'locations', :name => 'location'}}
-  @@media_types = {:picture => Picture, :video => Video, :document => Document}
+  ELEMENT_CANDIDATES = {:category_id => {:class => Topic, :association => 'topics', :name => 'topic'}, :topic_id => {:class => Topic, :association => 'topics', :name => 'topic'}, :feature_id => {:class => Place, :association => 'locations', :name => 'location'}, :place_id => {:class => Place, :association => 'locations', :name => 'location'}}
+  MEDIA_TYPES = {:picture => Picture, :video => Video, :document => Document}
 
   def initialize
     super
@@ -28,16 +28,16 @@ class MediaController < AclController
       @pagination_params = Hash.new
       element_id = nil
       element_name = nil
-      @@element_candidates.each_key do |element_name|
+      ELEMENT_CANDIDATES.each_key do |element_name|
         element_id = params[element_name]
         next if element_id.blank?
         break
       end
       if !element_id.blank?
-        element_class = @@element_candidates[element_name][:class]
+        element_class = ELEMENT_CANDIDATES[element_name][:class]
         @element = element_class.find(element_id)
-        @human_name = @@element_candidates[element_name][:name]
-        @controller_name = @@element_candidates[element_name][:association]
+        @human_name = ELEMENT_CANDIDATES[element_name][:name]
+        @controller_name = ELEMENT_CANDIDATES[element_name][:association]
         @element_name = element_name.to_s
         if type.blank?
           @pictures = @element.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Picture')
@@ -45,7 +45,7 @@ class MediaController < AclController
           @documents = @element.paged_media(Medium::COLS, nil, 'Document')
           title = @element.title
           @titles = Hash.new
-          @@media_types.each{ |key, value| @titles[key] = ts(:in, :what => value.human_name(:count => :many).titleize, :where => title) }
+          MEDIA_TYPES.each{ |key, value| @titles[key] = ts(:in, :what => value.human_name(:count => :many).titleize, :where => title) }
           @more = { element_name => element_id, :type => '' }
           if @controller_name == 'locations'
             @place = @element
@@ -65,7 +65,7 @@ class MediaController < AclController
           @medium_pages = Paginator.new self, @element.media_count(type), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
           @media = @element.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset, type)
           @pagination_params[element_name] = element_id
-          @title = ts(:in, :what => @@media_types[type.downcase.to_sym].human_name(:count => :many).titleize, :where => @element.title)
+          @title = ts(:in, :what => MEDIA_TYPES[type.downcase.to_sym].human_name(:count => :many).titleize, :where => @element.title)
         end
         if !['locations', 'topics'].include? @controller_name
           @current = @element.ancestors.collect{|c| c.id.to_i}
@@ -132,17 +132,9 @@ class MediaController < AclController
           format.html do
             if !@medium_pages.nil?
               if type == 'Document'
-                if type.blank?
-                  render :template => 'documents/paged_index'
-                else
-                  render :template => 'documents/paged_index_full'
-                end
+                render :template => type.blank? ? 'documents/paged_index' : 'documents/paged_index_full'
               else
-                if type.blank?
-                  render :action => 'paged_index'
-                else
-                  render :action => 'paged_index_full'
-                end
+                render :action => type.blank? ? 'paged_index' : 'paged_index_full'
               end
             end # else render index.rhtml
           end

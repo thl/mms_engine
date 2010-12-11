@@ -1,34 +1,34 @@
 <br />
-<%= render :partial => 'media_searches/advanced' %>
-<% remote_form_for :goto, :url => {:controller => 'media', :action => 'goto'}, :update => 'primary' do |f| %>
-   <p>
-     <label for="goto_media_id"><b><%= ts :id, :what => Medium.human_name.titleize %></b></label>
-<%=  f.text_field :media_id, :size => 10 %>
-<%=  globalized_submit_tag :go %>
-   </p>
+<% cache :controller => controller.controller_name, :action => controller.action_name, :action_suffix => 'main' do %>
+<%=  render :partial => 'media_searches/advanced' %>
+<%   remote_form_for :goto, :url => {:controller => 'media', :action => 'goto'}, :update => 'primary' do |f| %>
+       <p>
+         <label for="goto_media_id"><b><%= ts :id, :what => Medium.human_name.titleize %></b></label>
+<%=      f.text_field :media_id, :size => 10 %>
+<%=      globalized_submit_tag :go %>
+       </p>
+<%   end %>
+     <div class="line"></div>
+     <table border="0">
+       <tr valign="top">
+	     <td><h3>Browse by <%= select_tag :root_topics, options_for_select([''] + Topic.roots_with_media.collect{|topic| [topic.title, topic_path(topic)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %></h3></td>
+       </tr>
+       <tr>
+         <td valign="top">
+           <ul>
+             <li><h4><%= ts 'by.keyword' %></h4>
+             <p>
+<%             for keyword in @keywords %>
+<%               font_size = (@keyword_font_size[keyword.id]) %>
+                 <FONT SIZE= "<%= font_size %>"><%= link_to h(keyword.title).s, media_path(:keyword_id => keyword) %></FONT>
+<%             end %>
+             </p>
+             </li>
+           </ul>
+         </td>
+       </tr>
+     </table>
 <% end %>
-
-<div class="line"></div>
-
-<table border="0">
-  <tr valign="top">
-	<td><h3>Browse by <%= select_tag :root_topics, options_for_select([''] + Topic.roots_with_media.collect{|topic| [topic.title, topic_path(topic)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %></h3></td>
-  </tr>
-  <tr>
-    <td valign="top">
-      <ul>
-      <li><h4><%= ts 'by.keyword' %></h4>
-      <p>
-<%      for keyword in @keywords %>
-<%        font_size = (@keyword_font_size[keyword.id]) %>
-          <FONT SIZE= "<%= font_size %>"><%= link_to h(keyword.title).s, media_path(:keyword_id => keyword) %></FONT>
-<%      end %>
-      </p>
-      </li>
-      </ul>
-    </td>
-  </tr>
-</table>
 <p>
 <% authorized_only hash_for_new_picture_path do %>
 <%=  link_to ts('new.record', :what => Picture.human_name), new_picture_path %> |

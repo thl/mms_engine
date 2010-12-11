@@ -2,7 +2,7 @@ class Letter < ActiveRecord::Base
   has_many :words, :dependent => :destroy, :order => '`order`'
   
   def self.letters_by_language(language_id)
-    Letter.find_by_sql(['SELECT DISTINCT letters.* FROM letters, words WHERE words.letter_id = letters.id AND words.language_id = ? ORDER BY letters.`order`', language_id])
+    Rails.cache.fetch("letters/by_language/#{language_id}") { Letter.find_by_sql(['SELECT DISTINCT letters.* FROM letters, words WHERE words.letter_id = letters.id AND words.language_id = ? ORDER BY letters.`order`', language_id]) }
   end
 end
 

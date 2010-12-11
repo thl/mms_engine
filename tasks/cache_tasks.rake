@@ -9,7 +9,7 @@ namespace :mms do
       options.merge!({:joins => :medium, :conditions => {'media.application_filter_id' => ApplicationFilter.application_filter.id}}) if !ApplicationFilter.application_filter.nil?
       MediaCategoryAssociation.find(:all, options).collect(&:category).each do |category|
         medium_ids = ApplicationFilter.application_filter.nil? ? MediaCategoryAssociation.find(:all, :conditions => {:category_id => category.id}).collect(&:medium_id) : MediaCategoryAssociation.find(:all, :joins => :medium, :conditions => {:category_id => category.id, 'media.application_filter_id' => ApplicationFilter.application_filter.id}).collect(&:medium_id)
-        ([category] + category.ancestors).each { |c| medium_ids.each { |medium_id| CumulativeMediaCategoryAssociation.create(:category => c, :medium_id => medium_id) if CumulativeMediaCategoryAssociation.find(:first, :conditions => {:category_id => c.id, :medium_id => medium_id}).nil? } }
+        ([category] + category.ancestors).each{ |c| medium_ids.each { |medium_id| CumulativeMediaCategoryAssociation.create(:category => c, :medium_id => medium_id) if CumulativeMediaCategoryAssociation.find(:first, :conditions => {:category_id => c.id, :medium_id => medium_id}).nil? } }
       end
     end
   end

@@ -12,11 +12,11 @@ class Word < ActiveRecord::Base
   end  
 
   def self.available_languages
-    Word.find_by_sql("SELECT DISTINCT language_id FROM words").collect { |word| word.language }
+    Rails.cache.fetch('words/available_languages') { Word.find_by_sql("SELECT DISTINCT language_id FROM words").collect{ |word| word.language } }    
   end
 
   def self.head_term_languages
-    Word.find_by_sql("SELECT DISTINCT language_id FROM words WHERE id IN (SELECT DISTINCT definiendum_id FROM definitions)").collect { |word| word.language }
+    Rails.cache.fetch('words/head_term_languages') { Word.find_by_sql("SELECT DISTINCT language_id FROM words WHERE id IN (SELECT DISTINCT definiendum_id FROM definitions)").collect { |word| word.language } }
   end
 end
 

@@ -1,4 +1,6 @@
 class KeywordsController < AclController
+  cache_sweeper :keyword_sweeper, :only => [:create, :update, :destroy]
+  
   # GET /keywords
   # GET /keywords.xml
   def index
