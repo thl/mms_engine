@@ -203,6 +203,7 @@ class MediaController < AclController
     @quality_types = QualityType.find(:all, :order => 'id')
     @recording_orientations = RecordingOrientation.find(:all, :order => 'title')
     @resource_types = Topic.find(2636).children
+    @root_topics = Topic.roots
   end
 
   # PUT /media/1
@@ -216,10 +217,13 @@ class MediaController < AclController
         format.xml  { head :ok }
       else
         format.html do
+          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
+          @media_publisher = MediaPublisher.find(:all)
           @photographers = Person.find(:all, :order => 'fullname')
           @quality_types = QualityType.find(:all, :order => 'id')
-          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
-          @recording_orientations = RecordingOrientation.find(:all, :order => 'title')          
+          @recording_orientations = RecordingOrientation.find(:all, :order => 'title')
+          @resource_types = Topic.find(2636).children
+          @root_topics = Topic.roots          
           render :action => 'edit'
         end
         format.xml  { render :xml => @medium.errors.to_xml }
