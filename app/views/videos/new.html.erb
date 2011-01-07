@@ -1,4 +1,4 @@
-<h1><%= ts 'new.record', :what => Video.human_name.titleize %></h1>
+<h1><%= ts 'new.record', :what => 'Audio-Video' %></h1>
 <%= error_messages_for :medium %>
 <%= error_messages_for :video %>
 <%  form_for(:medium, :url => videos_path, :html => {:multipart => true}) do |f| %>

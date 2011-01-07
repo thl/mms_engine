@@ -1,4 +1,4 @@
-<h1><%= ts 'new.record', :what => Picture.human_name.titleize %></h1>
+<h1><%= ts 'new.record', :what => 'Photo-Immersive Object' %></h1>
 <%= error_messages_for :medium %>
 <%= error_messages_for :image %>
 <%  form_for(:medium, :url => pictures_path, :html => {:multipart => true}) do |f| %>

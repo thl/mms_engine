@@ -1,4 +1,4 @@
-<h1><%= ts('new.record', :what => Document.human_name.titleize) %></h1>
+<h1><%= ts('new.record', :what => 'Text-Website') %></h1>
 <%= error_messages_for :medium %>
 <%= error_messages_for :document %>
 <%  form_for(:medium, :url => documents_path, :html => {:multipart => true}) do |f| %>
