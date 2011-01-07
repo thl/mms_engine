@@ -31,12 +31,12 @@
 <% end %>
 <p>
 <% authorized_only hash_for_new_picture_path do %>
-<%=  link_to ts('new.record', :what => Picture.human_name), new_picture_path %> |
+<%=  link_to ts('new.record', :what => 'Photo-Immersive Object'), new_picture_path %> |
 <% end
    authorized_only hash_for_new_video_path do %>
-<%=  link_to ts('new.record', :what => Video.human_name), new_video_path %> |
+<%=  link_to ts('new.record', :what => 'Audio-Video'), new_video_path %> |
 <% end
    authorized_only hash_for_new_document_path do %>
-<%=  link_to ts('new.record', :what => Document.human_name), new_document_path %> |
+<%=  link_to ts('new.record', :what => 'Text-Website'), new_document_path %>
 <% end %>
 </p>
