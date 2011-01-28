@@ -6,7 +6,7 @@ namespace :mms do
     "to search the entries and produces a tab delimited output with original filename, camera model, and\n" +
     "date the picture was taken.\n" +
     "Syntax:\n" +
-    "rake import:media_extractor FILENAME=file.csv"
+    "rake mms:media:extract FILENAME=file.csv"
 
     metadata_description = "Task used to import metadata for THL images.\n" +
     "Takes a CSV where first row are the column names. The following column names are accepted and interpreted:\n" +
