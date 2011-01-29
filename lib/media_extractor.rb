@@ -22,7 +22,7 @@ module MediaExtractor
       end
       model = medium.capture_device_model
       model_str = model.nil? ? "\t" : "#{model.capture_device_maker.title}\t#{model.title}"
-      taken_on = medium.taken_on
+      taken_on = medium.taken_on || medium.partial_taken_on
       puts "#{original_filename}\t#{model_str}\t#{taken_on}"
     end
   end

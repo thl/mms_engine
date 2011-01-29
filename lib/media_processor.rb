@@ -276,6 +276,14 @@ module MediaProcessor
       updated = self.save if updated
       return updated
     end
+    
+    def update_taken_on(year)
+      if self.taken_on.nil?
+        self.update_attribute(:partial_taken_on, year) if self.partial_taken_on.blank? || !self.partial_taken_on.include?(year)
+      elsif self.taken_on.year != year.to_i
+        self.update_attributes(:taken_on => nil, :partial_taken_on => year)
+      end
+    end
 
     private
 
