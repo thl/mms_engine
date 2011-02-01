@@ -36,6 +36,14 @@ module TagMedia
     end    
   end
   
+  def self.match_date_with_topics(topic_ids)
+    topics = topic_ids.split(/\D+/).reject(&:blank?).collect{ |id| Topic.find(id.to_i) }.reject(&:nil?)
+    topics.each do |t|
+      year = t.title.split(/\D+/).find{|id| !id.blank? && id.size==4}
+      t.media(:type => 'Picture').each{|p| Picture.find(p.id).update_taken_on(year)} if !year.nil?
+    end
+  end
+  
   def self.tag_current_media
     # collection_id, organization_id
     tag_media(1, 386, 2, 4, 4, 2)
