@@ -1,5 +1,5 @@
 <%= Util::MARGIN * margin_depth %>
-<%  if contracted.is_childless?
+<%  if contracted.children.empty?
     Util::MARGIN * margin_depth %>
       &#9674;
 <%  else %>
