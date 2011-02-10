@@ -9,7 +9,7 @@ module MultimediaImportation
     levels = Hash.new
     objects = Hash.new
     media = Array.new
-    models = {'administrative_unit' => AdministrativeUnit, 'subject' => Subject, 'collection' => Collection, 'ethnicity' => Ethnicity }
+    models = {'place' => Place, 'topic' => Topic }
     Dir.chdir(source) do
       Dir.glob('*').sort.each do |classification_title_0|
         next if !File.directory?(classification_title_0)
@@ -84,12 +84,12 @@ module MultimediaImportation
     classification.each do |c|
       c_class= c.class
       if c_class != String
-        class_name = c_class.name
-        if class_name == 'AdministrativeUnit'
+        case c_class.name
+        when 'Place'
           joins_array << :locations
           conditions_string << ' AND locations.feature_id = ?'
           conditions_array << c.id
-        elsif ['Collection', 'Subject', 'Ethnicity'].include? class_name
+        when 'Topic'
           joins_array << :media_category_associations
           conditions_string << ' AND media_category_associations.category_id = ?'
           conditions_array << c.id
@@ -226,7 +226,6 @@ module MultimediaImportation
     
   def do_media_importation(media, classification_types)
     objects = Hash.new
-    models = {'subject' => Subject, 'collection' => Collection, 'ethnicity' => Ethnicity }
     previous_classification = Array.new(3)
     for medium_to_import in media
       classification_ids = medium_to_import[:classification]
@@ -243,12 +242,14 @@ module MultimediaImportation
       rescue Exception => exc
         write_to_log("Import of #{medium_to_import[:file_name]} failed: #{exc}")
       else
+        roots = Hash.new
         objects.each do |model_name, object|
           next if object.nil?
           if model_name=='administrative_unit'
             Location.create :medium => medium, :administrative_unit_id => object
           elsif model_name != 'recording_note'
-            MediaCategoryAssociation.create :medium => medium, :category_id => object, :root_id => models[model_name].root_id
+            roots[object] ||= Topic.find(object).root.id
+            MediaCategoryAssociation.create :medium => medium, :category_id => object, :root_id => roots[object]
           end
         end
       end

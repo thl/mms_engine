@@ -346,7 +346,7 @@ class Medium < ActiveRecord::Base
 end
 
 # == Schema Info
-# Schema version: 20100811203819
+# Schema version: 20101209175910
 #
 # Table name: media
 #
@@ -357,6 +357,7 @@ end
 #  photographer_id          :integer(4)
 #  quality_type_id          :integer(4)
 #  recording_orientation_id :integer(4)
+#  resource_type_id         :integer(4)      not null
 #  private_note             :text
 #  recording_note           :text
 #  type                     :string(10)      not null

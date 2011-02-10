@@ -4,15 +4,14 @@ class Publisher < ActiveRecord::Base
   belongs_to :country, :class_name => 'Feature'
 end
 
-# == Schema Information
+# == Schema Info
+# Schema version: 20101209175910
 #
 # Table name: publishers
 #
 #  id         :integer(4)      not null, primary key
-#  title      :string(255)     not null
-#  place_id   :integer(4)
 #  country_id :integer(4)
+#  place_id   :integer(4)
+#  title      :string(255)     not null
 #  created_at :datetime
 #  updated_at :datetime
-#
-

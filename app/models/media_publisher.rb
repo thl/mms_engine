@@ -3,15 +3,14 @@ class MediaPublisher < ActiveRecord::Base
   belongs_to :publisher
 end
 
-# == Schema Information
+# == Schema Info
+# Schema version: 20101209175910
 #
 # Table name: media_publishers
 #
 #  id           :integer(4)      not null, primary key
-#  publisher_id :integer(4)
 #  medium_id    :integer(4)
+#  publisher_id :integer(4)
 #  date         :date
 #  created_at   :datetime
 #  updated_at   :datetime
-#
-

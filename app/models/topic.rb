@@ -35,6 +35,10 @@ class Topic < Category
   def ancestor_and_self_ids
     self.ancestors.collect{|c| c.id.to_i} + [self.id.to_i]
   end
+  
+  def full_lineage
+    self.ancestors.collect(&:title).reverse.join(' > ')
+  end
 
   alias count_inherited_media media_count
   # This helps with calls to count media for generalized elements

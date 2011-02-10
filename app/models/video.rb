@@ -8,6 +8,11 @@ class Video < Medium
   
   belongs_to :movie, :foreign_key => 'attachment_id'
   
+  def before_create
+    super
+    self.resource_type_id = 2687 if self.resource_type_id.nil?
+  end
+  
   def attachment
     movie
   end
@@ -144,7 +149,7 @@ class Video < Medium
 end
 
 # == Schema Info
-# Schema version: 20100811203819
+# Schema version: 20101209175910
 #
 # Table name: media
 #
@@ -155,6 +160,7 @@ end
 #  photographer_id          :integer(4)
 #  quality_type_id          :integer(4)
 #  recording_orientation_id :integer(4)
+#  resource_type_id         :integer(4)      not null
 #  private_note             :text
 #  recording_note           :text
 #  type                     :string(10)      not null

@@ -4,7 +4,7 @@ class Status < ActiveRecord::Base
 end
 
 # == Schema Info
-# Schema version: 20100811203819
+# Schema version: 20101209175910
 #
 # Table name: statuses
 #

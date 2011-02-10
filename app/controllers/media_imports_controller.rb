@@ -5,7 +5,7 @@ class MediaImportsController < AclController
   include MultimediaImportation
   
   @@import_types = ['File copy (no db manipulation)', 'Add new media to db', 'Update media file']
-  @@media_classification = ['administrative_unit', 'subject', 'collection', 'ethnicity', 'recording_note']
+  @@media_classification = ['topic', 'place', 'recording_note']
     
   # GET /media_imports
   # GET /media_imports.xml
