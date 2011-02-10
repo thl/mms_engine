@@ -3,6 +3,11 @@ class Topic < Category
   
   self.element_name = 'category'
   
+  def is_childless?
+  	return true if children_count? && children_count == '0' or !children_count? && children.empty? # 'or' should be lower precedence than '&&'
+  	return false
+  end
+  
   def media_category_associations
     MediaCategoryAssociation.find(:all, :conditions => {:category_id => self.id})
   end
