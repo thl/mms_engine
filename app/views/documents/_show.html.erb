@@ -1,11 +1,7 @@
-<% image = @medium.screen_size_image
-   typescript = @medium.typescript
-   url = (!typescript.nil? && typescript.content_type == 'application/pdf') ? typescript.public_filename : nil
-   if !image.nil? 
-	 screen_image_tag = image_tag(image.public_filename) %>
-<%=  url.nil? ? screen_image_tag : link_to(screen_image_tag, url) %>
-<% end 
-   if !url.nil? %>
-     <br/>
-     <p><%= link_to(ts(:get, :what => Document.human_name), url) %></p>
-<% end %>
+<%= render :partial => 'pictures/show' %>
+<%  typescript = @medium.typescript
+    url = (!typescript.nil? && typescript.content_type == 'application/pdf') ? typescript.public_filename : nil
+    if !url.nil? %>
+      <br/>
+      <p><%= link_to(ts(:get, :what => Document.human_name), url) %></p>
+<%  end %>

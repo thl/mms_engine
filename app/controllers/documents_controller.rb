@@ -104,7 +104,7 @@ class DocumentsController < AclController
       success = @medium.save
     end
     if success
-      has_preview = @medium.create_preview if has_typescript && !has_preview
+      has_preview = @medium.create_or_update_preview if has_typescript && !has_preview
       @medium.create_thumbnails if has_preview
     end
     respond_to do |format|

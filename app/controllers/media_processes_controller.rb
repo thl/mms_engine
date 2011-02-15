@@ -88,7 +88,11 @@ class MediaProcessesController < AclController
     else
       case process_type
       when 'update_all_thumbnails'
-        update_all_thumbnails(id_start, id_end)
+        if media_type=='Pictures'
+          update_all_thumbnails(id_start, id_end, @@media_types[media_type])
+        elsif media_type=='Documents'
+          create_all_previews_and_thumbnails
+        end
       when 'rename_all'
         rename_all(id_start, id_end, @@media_types[media_type])
       when 'move_all_to_partitioned_paths'

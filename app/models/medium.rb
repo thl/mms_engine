@@ -6,7 +6,7 @@ class Medium < ActiveRecord::Base
   PREVIEW_ROWS = 2
   FULL_ROWS = 4
   FULL_COLS = 8
-  COMMON_SIZES = {:compact => '70:95x95#', :thumb => '70:120x120#', :essay => '80:280x280>', :huge => '90:2000x2000>'}
+  COMMON_SIZES = {:compact => '70:95x95#', :thumb => '70:120x120#', :search => '70:150x150', :essay => '80:280x280>', :normal => '80:500x500>', :large => '80:800x700>', :huge => '90:2000x2000>'}
   # The keys of TYPES should correspond to class names
   TYPES = {
     :picture => {:singular => 'Picture', :plural => 'Pictures'},
@@ -110,8 +110,19 @@ class Medium < ActiveRecord::Base
   def screen_size_image
     att = attachment
     return nil if att.nil?
-    att.children.find(:first, :conditions => {:thumbnail => 'essay'} )
-  end  
+    #img = att.children.find(:first, :conditions => {:thumbnail => 'large'})
+    #return img if !img.nil?
+    img = att.children.find(:first, :conditions => {:thumbnail => 'normal'})
+    return img if !img.nil?
+    img = att.children.find(:first, :conditions => {:thumbnail => 'essay'})
+    return img
+  end
+  
+  def large_image
+    att = attachment
+    return nil if att.nil?
+    att.children.find(:first, :conditions => {:thumbnail => 'large'})
+  end
 
   #not meant to be called in itself but within the page_media of administrative_units, subjects, collections, and ethnicities
   def self.paged_media(descendant_ids, limit, offset = nil, type = nil)

@@ -117,10 +117,10 @@ module MultimediaImportation
         write_to_log("Spawning main process #{Process.pid}.")
         parent = Process.pid
         done = true
-        interval = 10
         current = 0
         size = media.size
         while current<size
+          interval = media[current][:type]=='typescripts' ? 1 : 10
           upper_limit = current+interval
           limit = upper_limit<=size ? upper_limit : size
           media_batch = media[current...limit]
@@ -306,21 +306,8 @@ module MultimediaImportation
     if typescript.id.nil?
       raise 'Something went wrong processing document!'
     end
-    name = typescript.full_filename
-    pos = name.rindex('.')
-    if pos>0
-      bare_name = name[0...pos]
-    else
-      bare_name = name
-    end
-    image = Magick::Image.read("#{orig_name}.png").first
-    normal = image.scale(400, 533)
-    normal.write("#{bare_name}_normal.png")
-    thumb = image.scale(75, 100)
-    thumb.write("#{bare_name}_thumb.png")
-    Typescript.create :content_type => 'image/png', :filename => "#{bare_name}_thumb.png", :parent_id => typescript.id, :thumbnail => 'thumb', :size => File.size("#{bare_name}_thumb.png"), :width => 75, :height => 100
-    Typescript.create :content_type => 'image/png', :filename => "#{bare_name}_normal.png", :parent_id => typescript.id, :thumbnail => 'normal', :size => File.size("#{bare_name}_normal.png"), :width => 400, :height => 533            
     medium = Document.create :typescript => typescript, :recording_note => recording_note
+    medium.create_thumbnails if medium.create_or_update_preview
     return medium
   end
   

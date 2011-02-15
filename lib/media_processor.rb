@@ -15,7 +15,6 @@ module MediaProcessor
           start_log('Beginning thumb regeneration.')
           write_to_log("Spawning main process #{Process.pid}.")
           parent = Process.pid
-          done = true
           interval = 10
           current = 0
           media = media_type.range(id_start, id_end)
@@ -44,6 +43,39 @@ module MediaProcessor
       end
     end
     
+    def create_all_previews_and_thumbnails
+      #avoids race condition
+      register_active_process
+      background_process do
+        begin
+          start_log('Beginning thumb regeneration.')
+          write_to_log("Spawning main process #{Process.pid}.")
+          parent = Process.pid
+          interval = 10
+          current = 0
+          documents = Document.find(:all, :conditions => 'attachment_id IS NOT NULL')
+          size = documents.size
+          while current<size
+            upper_limit = current+interval
+            limit = upper_limit<=size ? upper_limit : size
+            media_batch = documents[current...limit]
+            background_process(true, false) do
+              write_to_log("Spawning sub-process #{Process.pid}.")
+              register_active_process
+              media_batch.each { |document| write_to_log("Document #{document.id} preview generated.") if document.create_preview_and_thumbnails }
+              register_active_process(parent)
+            end
+            Process.wait
+            current = limit
+          end
+        rescue Exception => exc
+          finish_log("Thumb regeneration was abruptly terminated: #{exc.to_s}")
+        else
+          finish_log("Thumb regeneration finished normally.")
+        end
+      end
+    end
+    
     def rename_all(id_start = nil, id_end = nil, media_type = Medium)
       #avoids race condition
       register_active_process
@@ -52,7 +84,6 @@ module MediaProcessor
           start_log('Beginning renaming.')
           write_to_log("Spawning main process #{Process.pid}.")
           parent = Process.pid
-          done = true
           interval = 100
           current = 0
           media = media_type.range(id_start, id_end)
@@ -113,7 +144,6 @@ module MediaProcessor
           start_log('Beginning updating metadata from exif tags.')
           write_to_log("Spawning main process #{Process.pid}.")
           parent = Process.pid
-          done = true
           interval = 10
           current = 0
           media = Picture.range(id_start, id_end)
@@ -314,6 +344,78 @@ module MediaProcessor
         end
         return nil
       end      
+  end
+  
+  module DocumentExtension
+    # Used to generate a preview of the document. For now, it only works with PDFs.
+    def create_or_update_preview
+      typescript = self.typescript
+      return false if typescript.nil?
+      full_filename = typescript.full_filename
+      thumbnail = Magick::Image.read(full_filename).first
+      quality = ImageUtils::resize_image(thumbnail, Medium::COMMON_SIZES[Document::PREVIEW_TYPE])
+      filename_ending = "_#{Document::PREVIEW_TYPE.to_s}.jpg"
+      pos = full_filename.rindex('.')
+      full_path = full_filename[0...pos] + filename_ending
+      thumbnail.write(full_path) do
+        self.quality = quality if !quality.nil?
+        self.format = 'JPG'
+      end
+      filename = typescript.filename
+      pos = filename.rindex('.')
+      attributes = { :size => File.size(full_path), :width => thumbnail.columns, :height => thumbnail.rows, :content_type => 'image/jpeg', :filename => filename[0...pos] + filename_ending }
+      preview = self.preview_image
+      if preview.nil?
+        preview = Typescript.new attributes.merge(:parent_id => typescript.id, :thumbnail => Document::PREVIEW_TYPE.to_s)
+        return preview.save
+      else
+        return preview.update_attributes attributes
+      end
+    end
+
+    # This method assumes that there is already a "preview" image under the typescript.
+    def create_thumbnails
+      typescript = self.typescript
+      preview = self.preview_image
+      return false if preview.nil?
+      full_filename = typescript.full_filename
+      pos = full_filename.rindex('.')
+      main_full_beginning = full_filename[0...pos]
+      filename = typescript.filename
+      pos = filename.rindex('.')
+      main_beginning = filename[0...pos]
+      preview_full_filename = preview.full_filename
+      (Medium::COMMON_SIZES.keys - [Document::PREVIEW_TYPE]).each do |type|
+        thumbnail = Magick::Image.read(preview_full_filename).first
+        quality = ImageUtils::resize_image(thumbnail, Medium::COMMON_SIZES[type])
+        # write file
+        filename_ending = "_#{type.to_s}.jpg"
+        full_path = main_full_beginning + filename_ending
+        thumbnail.write(full_path) do
+          self.quality = quality if !quality.nil?
+          self.format = 'JPG'
+        end
+        # create db record
+        attributes = { :size => File.size(full_path), :width => thumbnail.columns, :height => thumbnail.rows, :content_type => 'image/jpeg', :filename => main_beginning + filename_ending }
+        derivative = typescript.children.find(:first, :conditions => {:thumbnail => type.to_s})
+        if derivative.nil?
+          Typescript.create attributes.merge(:parent_id => typescript.id, :thumbnail => type.to_s)
+        else
+          derivative.update_attributes attributes
+        end
+      end
+    end
+    
+    # Right now this only works for documents without a preview image
+    def create_preview_and_thumbnails
+      typescript = self.typescript
+      return false if typescript.nil? || typescript.content_type != 'application/pdf'
+      preview = self.preview_image
+      return false if !preview.nil?
+      self.create_or_update_preview
+      self.create_thumbnails
+      return true
+    end
   end
   
   module MediumExtension

@@ -1,6 +1,6 @@
 class Picture < Medium
-  validates_presence_of :attachment_id
   include MediaProcessor::PictureExtension
+  validates_presence_of :attachment_id
   belongs_to :image, :foreign_key => 'attachment_id'
   
   def attachment
@@ -16,21 +16,7 @@ class Picture < Medium
     super
     image.destroy
   end
-  
-  def screen_size_image
-    att = image
-    return nil if att.nil?
-    img = att.children.find(:first, :conditions => {:thumbnail => 'essay'})
-    img = image.children.find(:first, :conditions => {:thumbnail => 'normal'}) if img.nil?
-    return img
-  end
     
-  def large_image
-    att = attachment
-    return nil if att.nil?
-    att.children.find(:first, :conditions => {:thumbnail => 'large'})
-  end
-  
   def huge_image
     att = attachment
     return nil if att.nil?
