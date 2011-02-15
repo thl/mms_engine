@@ -120,7 +120,7 @@ module MultimediaImportation
         current = 0
         size = media.size
         while current<size
-          interval = media[current][:type]=='typescripts' ? 1 : 10
+          interval = 1 # media[current][:type]=='typescripts' ? 1 : 10
           upper_limit = current+interval
           limit = upper_limit<=size ? upper_limit : size
           media_batch = media[current...limit]
