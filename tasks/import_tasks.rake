@@ -25,11 +25,11 @@ namespace :mms do
     "media.recording_note, media.private_note, media.taken_on, media.photographer, recording_orientations.title,\n" +
     "locations.feature_id, geo_code_types.code, features.geo_code, locations.notes, locations.spot_feature,\n" +
     "captions.title,\n" +
-    "collections.title,\n" +
+    "topics.title | topics.id,\n" +
     "descriptions.title, descriptions.creator,\n" +
     "keywords.title,\n" +
     "sources.title, media_source_associations.shot_number"
-
+    
     desc media_import_description
     task :images do |t|
       require File.join(File.dirname(__FILE__), "../lib/multimedia_importation.rb")

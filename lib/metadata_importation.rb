@@ -3,7 +3,7 @@ require 'config/environment'
 require 'csv'
 
 class MetadataImportation
-  attr_accessor :fields, :medium, :workflow, :english
+  attr_accessor :fields, :medium, :workflow, :english, :topic_root_ids
   
   def populate_fields(row, field_names)
     self.fields = Hash.new
@@ -121,19 +121,26 @@ class MetadataImportation
     end
   end
   
-  def process_collection
-    collection_str = self.fields.delete('collections.title')
-    if !collection_str.nil?
+  def process_topic
+    topic_id = self.fields.delete('topics.id')
+    topic_str = self.fields.delete('topics.title') if topic_id.blank?
+    if !topic_id.blank? || !topic_str.blank?
       begin
-        collection = Collection.find_by_title(collection_str)
+        if topic_id.blank?
+          topic = topic_str.blank? ? nil : Topic.find_by_title(topic_str)
+        else
+          topic = Topic.find(topic_id)
+        end
       rescue
-        collection = nil
+        topic = nil
       end
-      if collection.nil?
-        puts "Collection #{collection_str} not found!"
+      if topic.nil?
+        puts "Topic #{topic_str} not found!"
       else
         associations = self.medium.media_category_associations
-        associations.create(:category_id => collection.id, :root_id => Collection.root_id) if !associations.collect{|a| a.category_id}.include?(collection.id)
+        root_ids = self.topic_root_ids
+        root_ids[topic.id] ||= topic.root.id
+        associations.create(:category_id => topic.id, :root_id => root_ids[topic.id]) if !associations.collect{|a| a.category_id}.include?(topic.id)
       end
     end
   end
@@ -242,7 +249,7 @@ class MetadataImportation
   # media.recording_note, media.private_note, media.taken_on, media.photographer, recording_orientations.title
   # locations.feature_id, geo_code_types.code, features.geo_code, locations.notes, locations.spot_feature
   # captions.title
-  # collections.title
+  # topics.title | topics.id
   # descriptions.title, descriptions.creator
   # keywords.title
   # sources.title, media_source_associations.shot_number
@@ -250,6 +257,7 @@ class MetadataImportation
     field_names = nil
     import = MetadataImportation.new
     import.english = ComplexScripts::Language.find_by_code('eng')
+    import.topic_root_ids = Hash.new
     
     CSV.open(filename, 'r', "\t") do |row|
       if field_names.nil?
@@ -260,7 +268,7 @@ class MetadataImportation
       next unless import.get_medium
       import.process_workflow
       import.process_caption
-      import.process_collection
+      import.process_topic
       import.process_location
       import.process_description
       import.process_keywords

@@ -4,6 +4,9 @@ class MediaImportsController < AclController
   include FileUtils
   include MultimediaImportation
   
+  cache_sweeper :media_category_association_sweeper, :only => [:create]
+  cache_sweeper :document_sweeper, :only => [:create]
+  
   @@import_types = ['File copy (no db manipulation)', 'Add new media to db', 'Update media file']
   @@media_classification = ['topic', 'place', 'recording_note']
     
