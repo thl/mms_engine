@@ -3,6 +3,6 @@
      <td>&nbsp;</td>
 <% else %>
      <td width="<%= thumbnail.width %>" height="<%= thumbnail.height %>">
-<%=    link_to image_tag('http://mms.thlib.org/' + thumbnail.public_filename, :width => thumbnail.width, :height => thumbnail.height), medium_path(medium), {:class => 'media-thumb thl-pop no-view-alone no-main-site-ajax padding-10'} %>
+<%=    link_to image_tag(thumbnail.public_filename, :width => thumbnail.width, :height => thumbnail.height), medium_path(medium), {:class => 'media-thumb thl-pop no-view-alone no-main-site-ajax padding-10'} %>
      </td>
 <% end %>
