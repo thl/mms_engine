@@ -1,9 +1,0 @@
-server = "#{request.protocol}#{request.host_with_port}"
-image = picture.thumbnail_image
-xml.url("#{server}#{image.public_filename}", :type => 'thumb') if !image.nil?
-image = picture.screen_size_image
-xml.url("#{server}#{image.public_filename}", :type => 'normal') if !image.nil?
-image = picture.large_image
-xml.url("#{server}#{image.public_filename}", :type => 'large') if !image.nil?
-image = picture.huge_image
-xml.url("#{server}#{image.public_filename}", :type => 'huge') if !image.nil?
