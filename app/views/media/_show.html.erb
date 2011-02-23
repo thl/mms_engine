@@ -7,11 +7,11 @@
 <%=  render :partial => 'pictures/large' %>
 <% else
      large = false
-     if @medium.class == Picture %>
+     if @medium.instance_of? Picture %>
 <%=    render :partial => 'pictures/show' %>
-<%   elsif @medium.class == Video %>
+<%   elsif @medium.instance_of? Video %>
 <%=    render :partial => 'videos/show' %>
-<%   elsif @medium.class == Document %>
+<%   elsif @medium.instance_of? Document %>
 <%=    render :partial => 'documents/show' %>
 <%   end %>
 <%=  display_if_not_blank ts(:id, :what => Medium.human_name.titleize), "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})" %>

@@ -327,11 +327,11 @@ class Medium < ActiveRecord::Base
       
   def delete_from_coldstorage
     message = String.new
-    if self.class==Document
+    if self.instance_of? Document
       return message
-    elsif self.class==Picture
+    elsif self.instance_of? Picture
       media_folder = 'images'
-    elsif self.class==Video
+    elsif self.instance_of? Video
       media_folder = 'movies'
     end
     actual_media = attachment_id

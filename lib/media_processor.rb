@@ -425,7 +425,7 @@ module MediaProcessor
       message = String.new
       save_to_cold_storage = true
       media_folder = self.class.public_folder
-      save_to_cold_storage = false if self.class==Document
+      save_to_cold_storage = false if self.instance_of? Document
       parent = attachment
       folder = File.expand_path(File.join(RAILS_ROOT, 'public', media_folder, *parent.partitioned_path))
       begin

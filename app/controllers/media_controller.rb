@@ -61,7 +61,7 @@ class MediaController < AclController
           @tab_options[:urls] = tab_urls_for_element(@element)
           @tab_options[:urls][:browse] = polymorphic_url(@element)
           # Need to use .fid if the element is a Place
-          @tab_options[:urls][:browse] = place_url(@element.fid) if @element.class.name == 'Place'
+          @tab_options[:urls][:browse] = place_url(@element.fid) if @element.instance_of? Place
           @medium_pages = Paginator.new self, @element.media_count(type), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
           @media = @element.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset, type)
           @pagination_params[element_name] = element_id

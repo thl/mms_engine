@@ -1,0 +1,1 @@
+xml.typescript(:url => "#{server}#{typescript.public_filename}", :size => typescript.size, :content_type => typescript.content_type)

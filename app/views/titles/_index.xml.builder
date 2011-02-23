@@ -1,9 +1,10 @@
 if !titles.empty?
   for title in titles
     lang = title.language
-    xml.title do
-      xml.lang_code(lang.code) if !lang.nil?
-      xml.title(title.title)
+    hash = {:id => title.id}
+    hash['xml:lang'] = lang.code if !lang.nil?
+    xml.title(hash) do
+      xml.title(title.title, :type => 'string')
       xml << render(:partial => 'translated_titles/index', :locals => {:translated_titles => title.translated_titles})        
     end
   end
