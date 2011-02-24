@@ -162,12 +162,14 @@ class Medium < ActiveRecord::Base
       conditions_array << type
     end
     if media_search.title.size > 3
-      conditions_string << ") UNION (SELECT DISTINCT media.* FROM media, workflows WHERE workflows.medium_id = media.id AND " + Util.search_condition_string(media_search.type, 'original_medium_id', true)
+      conditions_string << ") UNION (SELECT DISTINCT media.* FROM media, workflows WHERE workflows.medium_id = media.id AND (" + Util.search_condition_string(media_search.type, 'original_medium_id', true)
       conditions_array << media_search.title
     else
-      conditions_string << ") UNION (SELECT DISTINCT media.* FROM media, workflows WHERE workflows.medium_id = media.id AND " + Util.search_condition_string(media_search.type, 'original_medium_id', false)
+      conditions_string << ") UNION (SELECT DISTINCT media.* FROM media, workflows WHERE workflows.medium_id = media.id AND (" + Util.search_condition_string(media_search.type, 'original_medium_id', false)
       conditions_array << "%#{media_search.title}%"
     end
+    conditions_string << " OR workflows.original_filename LIKE ?)"
+    conditions_array << "%#{media_search.title}%"
     if !type.nil?
       conditions_string << ' AND media.type = ?'
       conditions_array << type
@@ -212,18 +214,20 @@ class Medium < ActiveRecord::Base
       ids = Medium.find(:first, :conditions => {:id => media_search.title, :type => type}).nil? ? 0 : 1
     end
     # for now asumming that its English; change later TODO
+    conditions_string = "SELECT COUNT(media.id) FROM media, workflows WHERE workflows.medium_id = media.id AND (workflows.original_filename LIKE ? OR "
     if media_search.title.size > 3
       conditions_array = [media_search.title]
-      conditions_string = "SELECT COUNT(media.id) FROM media, workflows WHERE workflows.medium_id = media.id AND " + Util.search_condition_string(media_search.type, 'original_medium_id', true)
+      conditions_string << Util.search_condition_string(media_search.type, 'original_medium_id', true)
     else
       conditions_array = ["%#{media_search.title}%"]
-      conditions_string = "SELECT COUNT(media.id) FROM media, workflows WHERE workflows.medium_id = media.id AND " + Util.search_condition_string(media_search.type, 'original_medium_id', false)
+      conditions_string << Util.search_condition_string(media_search.type, 'original_medium_id', false)
     end
+    conditions_string << ')'
     if !type.nil?
       conditions_string << ' AND media.type = ?'
       conditions_array << type
     end
-    original_ids = Medium.count_by_sql([conditions_string] + conditions_array)
+    original_ids = Medium.count_by_sql([conditions_string, "%#{media_search.title}%"] + conditions_array)
     conditions_array[0] = media_search.title
     conditions_string = "SELECT COUNT(media.id) FROM media, captions, captions_media WHERE captions_media.medium_id = media.id AND captions_media.caption_id = captions.id AND " + Util.search_condition_string(media_search.type, 'title', true)
     conditions_string << ' AND media.type = ?' if !type.nil?
