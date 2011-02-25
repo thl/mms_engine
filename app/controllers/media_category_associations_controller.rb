@@ -7,7 +7,7 @@ class MediaCategoryAssociationsController < AclController
   # GET /media_category_associations.xml
   def index
     if @medium.nil?
-      @media_category_associations = @topic.nil? ? MediaCategoryAssociation.all(:limit => 10) : MediaCategoryAssociation.all(:limit => 10, :conditions => {:root_id => @topic.id})
+      @media_category_associations = MediaCategoryAssociation.all(:limit => 10, :conditions => {:root_id => @topic.id})
     else
       @media_category_associations = @topic.nil? ? @medium.media_category_associations : @medium.media_category_associations.find(:all, :conditions => {:root_id => @topic.id})
     end
@@ -108,7 +108,7 @@ class MediaCategoryAssociationsController < AclController
   def find_medium_and_topic
     medium_id = params[:medium_id]
     @medium = medium_id.blank? ? nil : Medium.find(medium_id)
-    category_id = params[:category_id]
+    category_id = params[:topic_id]
     @topic = category_id.blank? ? nil : Topic.find(category_id)
   end
 end

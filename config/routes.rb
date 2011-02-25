@@ -40,8 +40,11 @@ ActionController::Routing::Routes.draw do |map|
   :organizations, :pictures, :projects, :quality_types, :recording_orientations, :renderers,
   :reproduction_types, :sources, :sponsors, :transformations, :videos, :statuses, :publishers
 
-  map.resources :associations, :controller => 'media_category_associations', :path_prefix => 'media_objects/:medium_id/topics/:category_id'
-  map.resources :topics, :member => {:pictures => :get, :videos => :get, :documents => :get, :expand => :get, :contract => :get}
+  map.resources :associations, :controller => 'media_category_associations', :path_prefix => 'media_objects/:medium_id/topics/:topic_id'
+  
+  map.resources :topics, :member => {:pictures => :get, :videos => :get, :documents => :get, :expand => :get, :contract => :get} do |topic|
+    topic.resources :associations, :controller => 'media_category_associations'
+  end
   
   map.with_options :path_prefix => 'documents', :controller => 'documents' do |documents|
     documents.by_title 'by_title/:title.:format', :action => 'by_title'

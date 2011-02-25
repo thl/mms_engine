@@ -1,5 +1,11 @@
-<p><b><%= Medium.human_name.titleize.s %></b><br />
+<p><b><%= Medium.human_name.titleize.s %></b><br/>
 <%= f.hidden_field :medium_id %>
 <%= thumbnail_image_link(@medium) %></td></p>
-<p><b><%= @media_category_association.root.nil? ? 'Topic' : @media_category_association.root.title %></b><br />
-<%= category_selector @media_category_association.root, :media_category_association, :category, false, :hasTree => 'true', :singleSelectionTree => 'true' %></p>
+<% if @media_category_association.root.nil? %>
+     <p><b>Characteristic</b><br />
+     Input name <%= category_selector nil, :media_category_association, :category, false, :hasTree => 'false', :singleSelectionTree => 'true' %></p>
+     <p>Or choose from a specific knowledge map <%= select_tag :root_topics, options_for_select([''] + Topic.roots.collect{|topic| [topic.title, new_association_path(@medium, topic)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %></p>
+<% else %>
+     <p><b><%= @media_category_association.root.title %></b><br />
+     Input name <%= category_selector @media_category_association.root, :media_category_association, :category, false, :hasTree => 'true', :singleSelectionTree => 'true' %></p>
+<% end %>
