@@ -1,9 +1,7 @@
 require 'config/environment'
 namespace :mms do
   namespace :cache do
-    cummulative_categories_cleanup_description = "Deletes cummulative information"
-    view_cleanup_description = "Deletes view cache"
-    
+    cummulative_categories_cleanup_description = "Deletes cummulative information"    
     desc cummulative_categories_cleanup_description
     task :cummulative_categories_cleanup do |t|
       [CumulativeMediaCategoryAssociation, CachedCategoryCount].each { |model| model.connection.execute("TRUNCATE TABLE #{model.table_name}") }
@@ -15,7 +13,7 @@ namespace :mms do
       end
     end
     
-    desc view_cleanup_description
+    desc "Deletes view cache"
     task :view_cleanup do |t|
       ['categories', 'documents', 'media_objects', 'places'].each{ |folder| `rm -rf #{File.join('public', folder)}` }
     end
