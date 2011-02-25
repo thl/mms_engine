@@ -16,6 +16,7 @@ namespace :mms do
     desc "Deletes view cache"
     task :view_cleanup do |t|
       ['categories', 'documents', 'media_objects', 'places'].each{ |folder| `rm -rf #{File.join('public', folder)}` }
+      `rm -rf #{File.join('tmp', 'cache', 'views')}`
     end
   end
 end
