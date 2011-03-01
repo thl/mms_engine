@@ -9,3 +9,11 @@
      <p><b><%= @media_category_association.root.title %></b><br />
      Input name <%= category_selector @media_category_association.root, :media_category_association, :category, false, :hasTree => 'true', :singleSelectionTree => 'true' %></p>
 <% end %>
+<p>
+    <b><%= MediaCategoryAssociation.human_attribute_name(:string_value).s %></b><br />
+<%= f.text_field :string_value %>
+</p>
+<p>
+    <b><%= MediaCategoryAssociation.human_attribute_name(:numeric_value).s %></b><br />
+<%= f.text_field :numeric_value %>
+</p>

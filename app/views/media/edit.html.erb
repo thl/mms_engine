@@ -50,7 +50,7 @@
      if !associations.empty? %>
 	   <p><%= bookmark "topics-#{root_topic.id}" %>
 	   <b><%= root_topic.title %>:</b>
-<%=    associations.collect{|a| link_to h(a.category.title).s, edit_association_path(@medium, root_topic, a)}.join(', ') %>
+<%=    associations.collect{|a| link_to h(a.title_with_value).s, edit_association_path(@medium, root_topic, a)}.join(', ') %>
        (<%= link_to ts('add.record', :what => root_topic.title.downcase), new_association_path(@medium, root_topic) %>)</p>
 <%   end
    end
@@ -135,7 +135,8 @@
 <%=    link_to ts('associate.to', :what => root_topic.title.downcase), new_association_path(@medium, root_topic) %> |
 <%   end
    end %>
-Associate to <%= select_tag :root_topics, options_for_select([''] + @root_topics.collect{|topic| [topic.title, new_association_path(@medium, topic)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %><br/>
+<%= link_to ts('associate.to', :what => 'topic'), new_medium_topic_association_path(@medium) %> |
+Associate to sub-category from specific root topic: <%= select_tag :root_topics, options_for_select([''] + @root_topics.collect{|topic| [topic.title, new_association_path(@medium, topic)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %><br/>
 <% if media_source_associations.empty? %>
 <%=   bookmark 'sources' %>
 <%=   link_to ts('associate.to', :what => Source.human_name), new_medium_source_association_path(@medium) %>

@@ -9,7 +9,7 @@ class Definition < ActiveRecord::Base
 end
 
 # == Schema Info
-# Schema version: 20101209175910
+# Schema version: 20110228181402
 #
 # Table name: definitions
 #
