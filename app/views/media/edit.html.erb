@@ -31,7 +31,7 @@
      <p><%= bookmark 'descriptions' %>
 	 <b><%= Description.human_name(:count => descriptions.size).titleize.s %></b>
 	 (<%=  link_to ts('new.record', :what => Description.human_name), new_medium_description_path(@medium) %>)</p>
-<%=  descriptions.collect{|description| "#{h(description.title).s}<p>#{link_to description.description_type.nil? ? ts('edit.this') : description.description_type.title, edit_medium_description_path(@medium, description)}</p><hr/>" }.join("\n") %>
+<%=  descriptions.collect{|description| "#{description.title.s}<p>#{link_to description.description_type.nil? ? ts('edit.this') : description.description_type.title, edit_medium_description_path(@medium, description)}</p><hr/>" }.join("\n") %>
 <% end %>
 <% locations = @medium.locations 
    if !locations.empty? %>

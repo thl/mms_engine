@@ -49,7 +49,7 @@
    if !descriptions.empty? %>
      <p><b><%= Description.human_name(:count => descriptions.size).titleize.s %>:</b></p>
 <%   for description in descriptions %>
-       <p><%= h(description.title).s %></p>
+       <p><%= description.title.s %></p>
 <%   end
    end
    associated_resources = [

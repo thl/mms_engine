@@ -1,9 +1,10 @@
 <b><%= ts :for, :what => Description.human_name.titleize, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></b>
-<p>
-<%= thumbnail_image_link(@medium) %>
-</p>
-<%= display_if_not_blank Description.human_attribute_name('title').s, h(@description.title).s %>
-<% description_type = @description.description_type
+<p><%= thumbnail_image_link(@medium) %></p>
+<% if !@description.title.blank? %>
+     <p><b><%= Description.human_attribute_name('title').s %></b></p>
+<%=  @description.title.s %>
+<% end
+   description_type = @description.description_type
    if !description_type.nil? %>
 <%=  display_if_not_blank DescriptionType.human_name(:what => Description.human_name).titleize.s, h(description_type.title).s %>
 <% end

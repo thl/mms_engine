@@ -13,7 +13,7 @@
 <% for description in @descriptions
      description_type = description.description_type %>
   <tr>
-    <td><%= h(description.title).s %></td>
+    <td><%= description.title.s %></td>
 <%  if description_type.nil? %>
       <td align="center">-</td>
 <%  else %>
