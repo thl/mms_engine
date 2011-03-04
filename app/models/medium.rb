@@ -72,17 +72,18 @@ class Medium < ActiveRecord::Base
   end
   
   def topics(options = {})
-    cumulative = options[:cumulative] || false
-    if cumulative
-      return self.cumulative_media_category_associations.collect(&:category).select{|c| c}
-    else
-      return self.media_category_associations.collect(&:category).select{|c| c}
-    end
+    #cumulative = options[:cumulative] || false
+    #if cumulative
+    #  return self.cumulative_media_category_associations.collect(&:category).select{|c| c}
+    #else
+      self.media_category_associations.collect(&:category).select{|c| c}
+    #end
   end
   
   def category_count(options = {})
-    association = options[:cumulative] || false ? CumulativeMediaCategoryAssociation : MediaCategoryAssociation
-    association.count(:conditions => {:medium_id => self.id})
+    # association = options[:cumulative] || false ? CumulativeMediaCategoryAssociation : MediaCategoryAssociation
+    # association.count(:conditions => {:medium_id => self.id})
+    MediaCategoryAssociation.count(:conditions => {:medium_id => self.id})
   end
   
   def features
