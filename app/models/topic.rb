@@ -4,8 +4,10 @@ class Topic < Category
   self.element_name = 'category'
   
   def is_childless?
-  	return true if children_count? && children_count == '0' or !children_count? && children.empty? # 'or' should be lower precedence than '&&'
-  	return false
+    # making sure expand link does not show up when children don't have media
+    self.children_count.to_i==0 || self.children.index{|element| element.media_count > 0}.nil?
+  	# return true if children_count? && children_count == '0' or !children_count? && children.empty? # 'or' should be lower precedence than '&&'
+  	# return false
   end
   
   def media_category_associations
