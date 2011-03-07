@@ -5,7 +5,7 @@ class Topic < Category
   
   def is_childless?
     # making sure expand link does not show up when children don't have media
-    self.children_count.to_i==0 || self.children.index{|element| element.media_count > 0}.nil?
+    self.children_count.to_i==0 || self.children.detect{|element| element.media_count > 0}.nil?
   	# return true if children_count? && children_count == '0' or !children_count? && children.empty? # 'or' should be lower precedence than '&&'
   	# return false
   end
