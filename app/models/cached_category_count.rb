@@ -2,11 +2,7 @@ class CachedCategoryCount < ActiveRecord::Base
   belongs_to :category
   
   def self.cached_count(category_id, type = nil)
-    if type.nil?
-      CachedCategoryCount.find(:first, :conditions => {:category_id => category_id})
-    else
-      CachedCategoryCount.find(:first, :conditions => {:category_id => category_id, :medium_type => type})
-    end
+    CachedCategoryCount.find(:first, :conditions => {:category_id => category_id, :medium_type => type})
   end
   
   def self.updated_count(category_id, type = nil, force_update = false)

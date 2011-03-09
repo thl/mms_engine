@@ -13,6 +13,11 @@ namespace :mms do
       end
     end
     
+    desc 'Deletes media category count caches'
+    task :category_counts_cleanup do |t|
+      CachedCategoryCount.connection.execute("TRUNCATE TABLE #{CachedCategoryCount.table_name}")
+    end
+    
     desc "Deletes view cache"
     task :view_cleanup do |t|
       ['categories', 'documents', 'media_objects', 'places'].each{ |folder| `rm -rf #{File.join('public', folder)}` }

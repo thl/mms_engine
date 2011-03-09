@@ -31,8 +31,8 @@ class Topic < Category
     Medium.find(:all, :conditions => conditions, :joins => joins, :order => 'media.created_on DESC')
   end
     
-  def media_count(type = nil)
-    CachedCategoryCount.updated_count(self.id, type, force_update = false).count
+  def media_count(type = nil, force_update = false)
+    CachedCategoryCount.updated_count(self.id, type, force_update).count
   end
   
   def self.roots_with_media
