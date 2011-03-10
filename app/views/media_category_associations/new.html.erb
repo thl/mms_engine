@@ -1,6 +1,3 @@
-<style type="text/css" media="screen">
-	#mobj td { padding: 5px; font-family: verdana, arial, sans-serif; color:#404040; font-size:9pt;}
-</style>
 <h1><%= ts 'associate.record', :what => 'Topic', :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
 <%= error_messages_for :media_category_association %>
 <% form_for(:media_category_association, :url => @topic.nil? ? medium_topic_associations_path(@medium) : associations_path(@medium, @topic)) do |f| %>
