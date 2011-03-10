@@ -58,15 +58,33 @@ class MediaCategoryAssociationsController < AclController
   # POST /media_category_associations
   # POST /media_category_associations.xml
   def create
-    media_category_association_hash = params[:media_category_association]
-    media_category_association_hash[:root_id] = Topic.find(media_category_association_hash[:category_id]).root.id
-    @media_category_association = @medium.media_category_associations.build(media_category_association_hash)
+    mca_hash = params[:media_category_association]
+    mca_cats = mca_hash[:category_id].split(',')
+    errors = []
+    mca_cats.each do |c|
+      unless c.blank?
+        c = c.to_i
+        mca_hash_temp = mca_hash
+        mca_hash_temp[:category_id] = c
+        mca_hash_temp[:root_id] = Topic.find(c).root.id
+        @media_category_association = @medium.media_category_associations.build(mca_hash_temp)
+        begin
+          @media_category_association.save
+        rescue ActiveRecord::StatementInvalid
+          # ignore duplicate issues. how to add ignore parameter to sql query here without changing to sql completely?
+        else
+         #errors.push( @media_category_association.errors )
+        end
+      end
+    end
+    #puts "ez: #{errors}"
     respond_to do |format|
-      if @media_category_association.save
+      unless errors.length > 0
         flash[:notice] = 'MediaCategoryAssociation was successfully created.'
         format.html { redirect_to edit_medium_url(@medium, :anchor => "topics-#{@media_category_association.root_id}") }
         format.xml  { render :xml => @media_category_association, :status => :created, :location => @media_category_association }
       else
+        flash[:notice] = errors.join(', ')
         format.html { render :action => "new" }
         format.xml  { render :xml => @media_category_association.errors, :status => :unprocessable_entity }
       end

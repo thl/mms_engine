@@ -1,19 +1,26 @@
-<p><b><%= Medium.human_name.titleize.s %></b><br/>
-<%= f.hidden_field :medium_id %>
-<%= thumbnail_image_link(@medium) %></td></p>
-<% if @media_category_association.root.nil? %>
-     <p><b>Characteristic</b><br />
-     Input name <%= category_selector nil, :media_category_association, :category, false, :hasTree => 'false', :singleSelectionTree => 'true' %></p>
-     <p>Or choose from a specific knowledge map <%= select_tag :root_topics, options_for_select([''] + Topic.roots.collect{|topic| [topic.title, new_association_path(@medium, topic)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %></p>
-<% else %>
-     <p><b><%= @media_category_association.root.title %></b><br />
-     Input name <%= category_selector @media_category_association.root, :media_category_association, :category, false, :hasTree => 'true', :singleSelectionTree => 'true' %></p>
-<% end %>
-<p>
-    <b><%= MediaCategoryAssociation.human_attribute_name(:string_value).s %></b><br />
-<%= f.text_field :string_value %>
-</p>
-<p>
-    <b><%= MediaCategoryAssociation.human_attribute_name(:numeric_value).s %></b><br />
-<%= f.text_field :numeric_value %>
-</p>
+	<tr>
+		<td style='text-align: right; font-size:11pt;font-weight:bold;font-size:10pt;white-space:nowrap'><%= f.hidden_field :medium_id %></td>
+		<td style=''><%= thumbnail_image_link(@medium) %></td>
+	</tr>
+	<tr>
+		<td> </td>
+	</tr>
+	<tr>
+		<td style='background-color: #f1f1f1;text-align: right; font-size:10pt;border: 1pt solid #ccc; border-right-style: none'>Topic Filter</td>
+		<td style='width:100%;background-color: #f1f1f1;border: 1pt solid #ccc; border-left-style: none'><%= topic_filter %></td>
+	</tr>
+	<tr>
+		<td></td>
+	</tr>
+	<tr id='characteristic-row'>
+		<td style='text-align:right;font-weight:bold'>Characteristic</td>
+		<td><%= category_selector (@media_category_association.root || nil), :media_category_association, :category, :hasTree => 'false', :singleSelectionTree => 'true' %></td>
+	</tr>
+	<tr class='annotation'>
+		<td style='text-align:right;'><%= MediaCategoryAssociation.human_attribute_name(:string_value).s %></td>
+		<td><%= f.text_field :string_value, :style => 'padding:3px; width: 300px' %></td>
+	</tr>
+	<tr class='annotation'>
+		<td style='text-align:right;'><%= MediaCategoryAssociation.human_attribute_name(:numeric_value).s %></td>
+		<td><%= f.text_field :numeric_value, :style => 'padding:3px; width: 300px' %></td>
+	</tr>
