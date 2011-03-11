@@ -2,16 +2,7 @@
 		<td style='text-align: right; font-size:11pt;font-weight:bold;font-size:10pt;white-space:nowrap'><%= f.hidden_field :medium_id %></td>
 		<td style=''><%= thumbnail_image_link(@medium) %></td>
 	</tr>
-	<tr>
-		<td> </td>
-	</tr>
-	<tr>
-		<td style='background-color: #f1f1f1;text-align: right; font-size:10pt;border: 1pt solid #ccc; border-right-style: none'>Topic Filter</td>
-		<td style='width:100%;background-color: #f1f1f1;border: 1pt solid #ccc; border-left-style: none'><%= topic_filter %></td>
-	</tr>
-	<tr>
-		<td></td>
-	</tr>
+	<%= topic_filter %>
 	<tr id='characteristic-row'>
 		<td style='text-align:right;font-weight:bold'>Characteristic</td>
 		<td><%= category_selector (@media_category_association.root || nil), :media_category_association, :category, :hasTree => 'false', :singleSelectionTree => 'true' %></td>
