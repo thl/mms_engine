@@ -4,8 +4,8 @@
 <%= f.hidden_field :attachment_id %>
   <p><b><%= Medium.human_name.titleize.s %></b><br />
 <%= thumbnail_image_link(@medium) %></p>
+<%= render(:partial => 'pictures/form', :locals => {:f => f}) if @medium.instance_of? Picture %>
 <%= render :partial => 'media/form', :locals => {:f => f} %>
-<%= render(:partial => 'videos/form') if @medium.instance_of? Video %>
   <p><%= globalized_submit_tag 'update.this' %></p>
 <% end %>
 <hr/>

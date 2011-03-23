@@ -8,7 +8,7 @@ class Title < ActiveRecord::Base
 end
 
 # == Schema Info
-# Schema version: 20110228181402
+# Schema version: 20110319012021
 #
 # Table name: titles
 #

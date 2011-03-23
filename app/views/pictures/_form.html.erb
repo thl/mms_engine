@@ -1,0 +1,4 @@
+<p>
+  <b><%= Picture.human_attribute_name(:rotation).s %></b><br />
+<%= f.select(:rotation, [-90, 0, 90, 180], { :include_blank => true }) %> degrees
+</p>

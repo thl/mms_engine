@@ -11,20 +11,23 @@ class ApplicationSetting < ActiveRecord::Base
   end
     
   def self.cold_storage_folder
-    cold_storage_setting = ApplicationSetting.find_by_title('cold_storage_folder')
-    if !cold_storage_setting.nil?
-      cold_storage_folder = cold_storage_setting.string_value
-      if !cold_storage_folder.blank?
-        full_path = File.expand_path(cold_storage_folder)
-        return full_path if File.exist?(full_path)
+    Rails.cache.fetch("application_settings/cold_storage_folder") do
+      full_path = nil
+      cold_storage_setting = ApplicationSetting.find_by_title('cold_storage_folder')
+      if !cold_storage_setting.nil?
+        cold_storage_folder = cold_storage_setting.string_value
+        if !cold_storage_folder.blank?
+          full_path = File.expand_path(cold_storage_folder)
+          full_path = nil if !File.exist?(full_path)
+        end
       end
+      full_path
     end
-    return nil
   end  
 end
 
 # == Schema Info
-# Schema version: 20110228181402
+# Schema version: 20110319012021
 #
 # Table name: application_settings
 #

@@ -213,7 +213,11 @@ class MediaController < AclController
   def update
     @medium = Medium.find(params[:id])
     respond_to do |format|
-      if @medium.update_attributes(params[:medium])
+      @medium.attributes=params[:medium]
+      is_picture = @medium.instance_of? Picture
+      redo_thumbs = @medium.rotation_changed? if is_picture
+      if @medium.save # @medium.update_attributes(params[:medium])
+        @medium.update_thumbnails if is_picture && redo_thumbs
         flash[:notice] = ts('edit.successful', :what => Medium.human_name.capitalize)
         format.html { redirect_to medium_url(@medium) }
         format.xml  { head :ok }

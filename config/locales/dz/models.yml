@@ -198,6 +198,7 @@ dz:
                 # one
                 # other
                 photographer: 'པར་བཏབ་མི།'
+                rotation: 'Rotation'
             publisher:
                 country_id: 'Country Feature ID'
             project:
