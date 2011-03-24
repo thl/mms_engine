@@ -1,17 +1,14 @@
-	<tr>
-		<td style='text-align: right; font-size:11pt;font-weight:bold;font-size:10pt;white-space:nowrap'><%= f.hidden_field :medium_id %></td>
-		<td style=''><%= thumbnail_image_link(@medium) %></td>
-	</tr>
-	<%= topic_filter %>
-	<tr id='characteristic-row'>
-		<td style='text-align:right;font-weight:bold'>Characteristic</td>
-		<td><%= category_selector (@media_category_association.root || nil), :media_category_association, :category, :hasTree => 'false', :singleSelectionTree => 'true' %></td>
-	</tr>
-	<tr class='annotation'>
-		<td style='text-align:right;'><%= MediaCategoryAssociation.human_attribute_name(:string_value).s %></td>
-		<td><%= f.text_field :string_value, :style => 'padding:3px; width: 300px' %></td>
-	</tr>
-	<tr class='annotation'>
-		<td style='text-align:right;'><%= MediaCategoryAssociation.human_attribute_name(:numeric_value).s %></td>
-		<td><%= f.text_field :numeric_value, :style => 'padding:3px; width: 300px' %></td>
-	</tr>
+<%
+	options = {
+		:f => f,
+		:subject_label => (f.hidden_field :medium_id),
+		:subject => thumbnail_image_link(@medium),
+		:root => @media_category_association.root || nil,
+		:varname => :media_category_association,
+		:hastree => 'false',
+		:labels => MediaCategoryAssociation.human_attribute_name(:string_value).s,
+		:labeln => MediaCategoryAssociation.human_attribute_name(:numeric_value).s
+	}
+%>
+
+<%= category_fields( options ) %>
