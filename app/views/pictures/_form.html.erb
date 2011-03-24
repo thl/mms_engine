@@ -1,0 +1,4 @@
+<p>
+  <b><%= Picture.human_attribute_name(:rotation).s %></b><br />
+<%= f.select(:rotation, [['Counter-clockwise', 270], ['Original', 0], ['Clockwise', 90], ['Upside down', 180]], { :include_blank => true }) %> degrees
+</p>

@@ -198,6 +198,7 @@ en:
                     one: 'Caption'
                     other: 'Captions'
                 photographer: 'Photographer'
+                rotation: 'Rotation'
             publisher:
                 country_id: 'Country Feature ID'
             project:

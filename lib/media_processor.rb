@@ -267,7 +267,7 @@ module MediaProcessor
       if !original.nil?
         image.temp_path=original
         # image.filename = id_name # now thumbnails have their names as ids.
-        image.update_thumbnails
+        image.update_thumbnails(self.rotation)
       end
     end
 

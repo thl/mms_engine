@@ -149,7 +149,7 @@ class Video < Medium
 end
 
 # == Schema Info
-# Schema version: 20110228181402
+# Schema version: 20110319012021
 #
 # Table name: media
 #
@@ -163,6 +163,7 @@ end
 #  resource_type_id         :integer(4)      not null
 #  private_note             :text
 #  recording_note           :text
+#  rotation                 :integer(4)
 #  type                     :string(10)      not null
 #  created_on               :datetime
 #  partial_taken_on         :string(255)
