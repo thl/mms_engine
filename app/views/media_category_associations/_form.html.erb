@@ -1,6 +1,5 @@
-<%
-	options = {
-		:f => f,
+<%=
+	category_fields({
 		:subject_label => (f.hidden_field :medium_id),
 		:subject => thumbnail_image_link(@medium),
 		:root => @media_category_association.root || nil,
@@ -8,7 +7,5 @@
 		:hastree => 'false',
 		:labels => MediaCategoryAssociation.human_attribute_name(:string_value).s,
 		:labeln => MediaCategoryAssociation.human_attribute_name(:numeric_value).s
-	}
+	}, f )
 %>
-
-<%= category_fields( options ) %>
