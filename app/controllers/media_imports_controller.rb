@@ -1,7 +1,6 @@
 require 'fileutils'
 
 class MediaImportsController < AclController
-  include FileUtils
   include MultimediaImportation
   
   cache_sweeper :media_category_association_sweeper, :only => [:create]

@@ -1,0 +1,6 @@
+<h1>Processing Rotation of Media Object <%= @medium.id %> by <%= @user.screen_name %></h1>
+<%= periodically_call_remote(:url => status_medium_rotations_path(@medium, :user_id => @user.id), :method => :get) %>
+<p><%= render :partial => 'status' %></p>
+<p>&nbsp;<br/>
+<%= render :partial => 'media/back_to_edit', :locals => {:anchor => nil} %>
+</p>

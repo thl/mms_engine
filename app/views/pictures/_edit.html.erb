@@ -1,0 +1,3 @@
+<% authorized_only hash_for_medium_rotations_path do %>
+     <p><b>Update picture:</b> <%= link_to_remote 'Rotate picture', :url => medium_rotations_path(@medium), :method => :get, :update => 'edit_div' %></p>
+<% end %>

@@ -1,0 +1,7 @@
+<p><b><%= Picture.human_attribute_name(:rotation).s %></b><br />
+<table cellspacing="5">
+<% rotations = Rotation.all %>
+  <tr><%= rotations.collect{|rotation| "<td align=\"center\">#{rotation.title}</td>"}.join %></tr>
+  <tr><%= rotations.collect{|rotation| "<td>#{image_tag(medium_rotation_path(medium, rotation.id, :format => 'jpg'))}</td>"}.join %></tr>
+  <tr><%= rotations.collect{|rotation| "<td align=\"center\">#{f.radio_button(:rotation, rotation.id)}</td>"}.join %></tr>
+</table></p>

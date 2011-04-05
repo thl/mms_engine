@@ -10,6 +10,7 @@ require File.join(sweeper_folder, 'place_count_sweeper')
 require File.join(sweeper_folder, 'title_sweeper')
 require File.join(sweeper_folder, 'word_sweeper')
 require File.join(sweeper_folder, 'workflow_sweeper')
+require File.join(File.dirname(__FILE__), 'lib', 'mime_types')
 # Instead of having this in environment.rb:
 # config.active_record.observers = :cached_category_count_sweeper, :place_count_sweeper
 # this is how observers are instantiated in plugins (the above doesn't work here at least in rails 2.3.4)
