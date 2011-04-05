@@ -19,7 +19,7 @@ class RotationsController < AclController
       respond_to do |format|
         format.html # show.html.erb
         format.jpg do
-          image = Magick::Image.read(@medium.thumbnail_image.full_filename).first.rotate((360 - @medium.rotation + @rotation.to_i) % 360)
+          image = Magick::Image.read(@medium.thumbnail_image.full_filename).first.rotate((360 - @medium.rotation.to_i + @rotation.to_i) % 360)
           send_data image.to_blob, :filename => "#{@rotation}.jpg", :disposition => 'inline', :type => 'image/jpeg'
         end
       end
