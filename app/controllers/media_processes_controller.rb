@@ -1,7 +1,6 @@
 require 'fileutils'
 
 class MediaProcessesController < AclController
-  include FileUtils
   include MediaProcessor::ControllerExtension
   
   @@media_process_types = { 'Cold storage partitioning' => 'partition_all_cold_storage', 'Path partitioning' => 'move_all_to_partitioned_paths', 'Rename' => 'rename_all', 'Thumb regeneration' => 'update_all_thumbnails', 'Update metadata from image properties' => 'update_from_image_properties', 'Update sizes' => 'update_all_sizes' }
