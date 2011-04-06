@@ -33,23 +33,16 @@ class RotationsController < AclController
         register_active_process
         start_log('Beginning rotation.')
         background_process do
-          parent = Process.pid
-          write_to_log("Spawning main process #{parent}.")
-          background_process(true, false) do
-            write_to_log("Spawning sub-process #{Process.pid}.")
-            write_to_log("Rotating medium #{@medium.id}.")
-            register_active_process
-            begin
-              @medium.update_thumbnails
-            rescue Exception => exc
-              write_to_log("Rotation was abruptly terminated: #{exc.to_s}")
-            else
-              write_to_log("Rotation finished normally.")
-            end
-            register_active_process(parent)
+          register_active_process
+          write_to_log("Spawning main process #{Process.pid}.")
+          write_to_log("Rotating medium #{@medium.id}.")
+          begin
+            @medium.update_thumbnails
+          rescue Exception => exc
+            finish_log("Rotation was abruptly terminated: #{exc.to_s}")
+          else
+            finish_log("Rotation finished normally.")
           end
-          Process.wait
-          finish_log("Rotation process done.")
         end
         render(:update) { |page| page.replace_html 'edit_div', :partial => 'rotations/notice' }
       else
