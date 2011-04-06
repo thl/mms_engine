@@ -47,9 +47,9 @@ class RotationsController < AclController
               write_to_log("Rotation finished normally.")
             end
             register_active_process(parent)
-            finish_log("Rotation process done.")
           end
           Process.wait
+          finish_log("Rotation process done.")
         end
         render(:update) { |page| page.replace_html 'edit_div', :partial => 'rotations/notice' }
       else
