@@ -32,9 +32,9 @@ class RotationsController < AclController
       if request.xhr?
         register_active_process
         start_log('Beginning rotation.')
-        write_to_log("Spawning main process #{Process.pid}.")
         background_process do
           parent = Process.pid
+          write_to_log("Spawning main process #{parent}.")
           background_process(true, false) do
             write_to_log("Spawning sub-process #{Process.pid}.")
             write_to_log("Rotating medium #{@medium.id}.")
