@@ -1,7 +1,11 @@
 class RotationsController < AclController
   include ForkedNotifier
-  
   before_filter :find_medium_and_user
+  
+  def initialize
+    super
+    @guest_perms = []
+  end
   
   # GET /rotations
   # GET /rotations.xml
