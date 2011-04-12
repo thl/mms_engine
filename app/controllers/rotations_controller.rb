@@ -34,11 +34,12 @@ class RotationsController < AclController
   def create
     if @medium.update_attributes(params[:medium])
       if request.xhr?
-        register_active_process
         start_log('Beginning rotation.')
-        spawn do
-          register_active_process
-          write_to_log("Spawning main process #{Process.pid}.")
+        spawn(:method => :thread) do
+          workflow = @medium.workflow
+          workflow = @medium.create_workflow if workflow.nil?
+          workflow.update_attribute(:processing_status_id, 1)
+          write_to_log("Spawning thread from main process #{Process.pid}.")
           write_to_log("Rotating medium #{@medium.id}.")
           begin
             @medium.update_thumbnails
@@ -46,6 +47,8 @@ class RotationsController < AclController
             finish_log("Rotation was abruptly terminated: #{exc.to_s}")
           else
             finish_log("Rotation finished normally.")
+          ensure
+            workflow.update_attribute(:processing_status_id, nil)
           end
         end
         render(:update) { |page| page.replace_html 'edit_div', :partial => 'rotations/notice' }
@@ -60,6 +63,9 @@ class RotationsController < AclController
   
   def status
     done = fork_done?(@user.id)
+    workflow = @medium.workflow
+    workflow = @medium.create_workflow if workflow.nil?
+    done = workflow.processing_status.nil?
     @log = get_log_messages(@user.id)
     if request.xhr?
       render :update do |page|
