@@ -61,22 +61,12 @@ class MetadataImportation
     if !taken_on_str.blank?
       taken_on_str.strip!
       if !taken_on_str.blank?
-        if self.medium.taken_on.nil?
-          begin
-            taken_on = DateTime.parse(taken_on_str)
-          rescue
-            self.medium.partial_taken_on = taken_on_str if self.medium.partial_taken_on.blank?
-          else
-            self.medium.taken_on = taken_on
-          end
+        begin
+          taken_on = DateTime.parse(taken_on_str)
+        rescue
+          self.medium.partial_taken_on = taken_on_str if self.medium.partial_taken_on.blank?
         else
-          begin
-            taken_on = DateTime.parse(taken_on_str)
-          rescue
-            self.medium.partial_taken_on = taken_on_str if self.medium.partial_taken_on.blank?
-          else
-            self.medium.partial_taken_on = taken_on_str if self.medium.taken_on != taken_on
-          end
+          self.medium.taken_on = taken_on
         end
       end
     end
@@ -266,6 +256,7 @@ class MetadataImportation
       end
       import.populate_fields(row, field_names)
       next unless import.get_medium
+      import.process_media_core_fields
       import.process_workflow
       import.process_caption
       import.process_topic
