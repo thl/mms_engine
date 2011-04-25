@@ -49,7 +49,7 @@
 <%          if classification.is_a?(String) %>
 <%=           classification %>
 <%          else %>
-<%=           classification.full_lineage %>
+<%=           "#{classification.full_lineage} > #{classification.title}" %>
 <%          end %>
 		    </td>
 	        <td>&nbsp;-&nbsp;</td>

@@ -111,7 +111,7 @@ module MultimediaImportation
   def fork_media_importation(media, classification_types)
     #avoids race condition
     register_active_process
-    background_process do
+    spawn do
       begin
         start_log('Beginning importation.')
         write_to_log("Spawning main process #{Process.pid}.")
@@ -124,13 +124,13 @@ module MultimediaImportation
           upper_limit = current+interval
           limit = upper_limit<=size ? upper_limit : size
           media_batch = media[current...limit]
-          background_process(true, false) do
+          sid = spawn do
             write_to_log("Spawning sub-process #{Process.pid}.")
             register_active_process
             do_media_importation(media_batch, classification_types)
             register_active_process(parent)
           end
-          Process.wait
+          wait([sid])
           current = limit
         end
       rescue Exception => exc
