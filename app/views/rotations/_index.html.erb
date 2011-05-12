@@ -1,0 +1,4 @@
+<% remote_form_for :medium, :url => medium_rotations_path(@medium) do |f| %>
+<%=  render :partial => 'rotations/form', :locals => {:medium => @medium, :f => f} %>
+     <p><%= globalized_submit_tag 'update.this' %></p>
+<% end %>

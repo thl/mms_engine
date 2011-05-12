@@ -21,12 +21,12 @@ class MetadataImportation
       original_filename = self.fields.delete('workflows.original_filename')
       if original_filename.blank?
       else
-        self.workflow = Workflow.find(:first, :conditions => ['original_filename LIKE ?', '%s.%' % original_filename])
-        if self.workflow.nil?
+        workflow = Workflow.find(:first, :conditions => ['original_filename LIKE ?', '%s.%' % original_filename])
+        if workflow.nil?
           puts "Media with original filename #{original_filename} not found!"
           return false
         else
-          self.medium = self.workflow.medium
+          self.medium = workflow.medium
         end
       end
     else
@@ -45,12 +45,12 @@ class MetadataImportation
     sequence_order = self.fields.delete('workflows.sequence_order')
     workflow_notes = self.fields.delete('workflows.notes')
     if !original_medium_id.blank? || !other_id.blank? || !sequence_order.blank? || !workflow_notes.blank?
-      self.workflow = self.medium.create_workflow if self.workflow.nil?
-      self.workflow.original_medium_id = original_medium_id if !original_medium_id.blank? && self.workflow.original_medium_id.blank?
-      self.workflow.other_id = other_id if !other_id.blank? && self.workflow.other_id.blank?
-      self.workflow.sequence_order = sequence_order if !sequence_order.blank? && self.workflow.sequence_order.blank?
-      self.workflow.notes = workflow_notes if !workflow_notes.blank? && self.workflow.notes.blank?
-      self.workflow.save if self.workflow.changed?      
+      workflow = self.medium.workflow || self.medium.create_workflow
+      workflow.original_medium_id = original_medium_id if !original_medium_id.blank? && workflow.original_medium_id.blank?
+      workflow.other_id = other_id if !other_id.blank? && workflow.other_id.blank?
+      workflow.sequence_order = sequence_order if !sequence_order.blank? && workflow.sequence_order.blank?
+      workflow.notes = workflow_notes if !workflow_notes.blank? && workflow.notes.blank?
+      workflow.save if workflow.changed?      
     end    
   end
     
@@ -61,22 +61,12 @@ class MetadataImportation
     if !taken_on_str.blank?
       taken_on_str.strip!
       if !taken_on_str.blank?
-        if self.medium.taken_on.nil?
-          begin
-            taken_on = DateTime.parse(taken_on_str)
-          rescue
-            self.medium.partial_taken_on = taken_on_str if self.medium.partial_taken_on.blank?
-          else
-            self.medium.taken_on = taken_on
-          end
+        begin
+          taken_on = DateTime.parse(taken_on_str)
+        rescue
+          self.medium.partial_taken_on = taken_on_str if self.medium.partial_taken_on.blank?
         else
-          begin
-            taken_on = DateTime.parse(taken_on_str)
-          rescue
-            self.medium.partial_taken_on = taken_on_str if self.medium.partial_taken_on.blank?
-          else
-            self.medium.partial_taken_on = taken_on_str if self.medium.taken_on != taken_on
-          end
+          self.medium.taken_on = taken_on
         end
       end
     end
@@ -266,6 +256,7 @@ class MetadataImportation
       end
       import.populate_fields(row, field_names)
       next unless import.get_medium
+      import.process_media_core_fields
       import.process_workflow
       import.process_caption
       import.process_topic

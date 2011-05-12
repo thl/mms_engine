@@ -14,8 +14,9 @@ ActionController::Routing::Routes.draw do |map|
   end
       
   map.resources :media, :as => 'media_objects', :member => { :full_size => :get, :large => :get, :rename => :get }, :collection => { :rename_all => :get }, :has_many => [:affiliations, :captions, :descriptions, :locations, :places] do |media|
-    media.resources :source_associations, :controller => 'media_source_associations'
+    media.resources :rotations, :only => [:index, :show, :create], :collection => { :status => :get }
     media.resource :media_publisher
+    media.resources :source_associations, :controller => 'media_source_associations'
     media.resources :titles do |title| 
       title.resources :citations
       title.resources :translated_titles, :as => 'translations' do |translated_title|
