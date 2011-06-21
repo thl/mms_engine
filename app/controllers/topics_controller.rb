@@ -7,7 +7,7 @@ class TopicsController < ApplicationController
   end
     
   def index
-    @root = nil
+    redirect_to topic_url(2823)
   end
     
   def show

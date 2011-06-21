@@ -85,7 +85,7 @@ module ApplicationHelper
     # The :index values are necessary for this hash's elements to be sorted properly
     {
       :search => {:index => 1, :title => "Search", :url => new_media_search_url},
-      :browse => {:index => 2, :title => "Browse", :url => topics_url},
+      :browse => {:index => 2, :title => "Browse", :url => topic_url(2823)},
       :picture => {:index => 3, :title => Picture.human_name.titleize.pluralize, :url => media_path(:type => 'Picture')},
       :video => {:index => 4, :title => Video.human_name.titleize.pluralize, :url => media_path(:type => 'Video')},
       :document => {:index => 5, :title => Document.human_name.titleize.pluralize, :url => media_path(:type => 'Document')}
