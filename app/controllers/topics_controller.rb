@@ -4,6 +4,7 @@ class TopicsController < AclController
   def initialize
     super
     @current_tab_id = :browse
+    @guest_perms += ['topics/pictures', 'topics/videos', 'topics/documents', 'topics/expand', 'topics/contract']
   end
   
   # GET /topics
