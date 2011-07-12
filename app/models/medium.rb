@@ -282,7 +282,8 @@ class Medium < ActiveRecord::Base
       description.destroy
     end
     descriptions.clear
-    delete_from_coldstorage
+    delete_setting = ApplicationSetting.find_by_title('delete_from_cold_storage')
+    delete_from_coldstorage if delete_setting.nil? || delete_setting.value==1
   end
   
   def id_name
@@ -327,26 +328,11 @@ class Medium < ActiveRecord::Base
   private
       
   def delete_from_coldstorage
-    message = String.new
-    if self.instance_of? Document
-      return message
-    elsif self.instance_of? Picture
-      media_folder = 'images'
-    elsif self.instance_of? Video
-      media_folder = 'movies'
-    end
-    actual_media = attachment_id
+    media_full_path = cold_storage_if_exists
+    return if media_full_path.nil?
     begin
-      cold_storage_folder = ApplicationSetting.cold_storage_folder
-      if !cold_storage_folder.nil?
-        media_full_path = File.join(cold_storage_folder, media_folder)
-        if File.exist?(media_full_path)
-          original = File.join(media_full_path, id_name)
-          rm_f(original) if File.exist?(original)
-        end
-      end
+      rm_f(media_full_path)
     rescue Exception => exc
-      message << "#{exc.to_s}<br/>"
     end
   end
   

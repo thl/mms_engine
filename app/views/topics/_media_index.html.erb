@@ -5,7 +5,12 @@
 <%=  render :partial => 'media/index' %>
 <% elsif !@media.nil? %>
 <%=  render :partial => 'media/paged_index_full' %>
-<% end
-   if !@topic.nil? %>
-     <p><%= link_to ts(:in, :what => @topic.title, :where => 'Topics'), Category.element_url(@topic.id, :format => 'html') %></p>
 <% end %>
+<p>
+<%= link_to ts(:in, :what => @topic.title, :where => 'Topics'), Category.element_url(@topic.id, :format => 'html') %>
+<%  authorized_only hash_for_sponsor_path(:action => 'destroy') do
+      if !@topic.nil? && @topic.media_count - @topic.media_category_associations.size <= 0 %>
+        | <%= link_to 'Delete all associations with topic', topic_path(@topic), :confirm => te('delete.confirmation'), :method => :delete %>
+<%    end
+    end %>
+</p>
