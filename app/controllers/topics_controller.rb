@@ -1,5 +1,6 @@
 class TopicsController < AclController
   helper :media
+  cache_sweeper :media_category_association_sweeper, :only => [:destroy]
   
   def initialize
     super
@@ -38,7 +39,7 @@ class TopicsController < AclController
   def destroy
     @topic = Topic.find(params[:id])
     MediaCategoryAssociation.destroy_all(:category_id => @topic.id)
-    redirect_to topic_url(@topic)
+    redirect_to topic_url(@topic.parent)
   end
 
   # GET /topics/1/pictures
