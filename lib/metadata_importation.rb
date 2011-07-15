@@ -53,7 +53,7 @@ class MetadataImportation
       workflow.save if workflow.changed?      
     end    
   end
-    
+  
   def process_media_core_fields
     recording_note = self.fields.delete('media.recording_note')
     private_note = self.fields.delete('media.private_note')
@@ -62,7 +62,8 @@ class MetadataImportation
       taken_on_str.strip!
       if !taken_on_str.blank?
         begin
-          taken_on = DateTime.parse(taken_on_str)
+          # taken_on = DateTime.parse(taken_on_str)
+          taken_on = Date.strptime(taken_on_str, '%d/%m/%Y')
         rescue
           self.medium.partial_taken_on = taken_on_str if self.medium.partial_taken_on.blank?
         else
