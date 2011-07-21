@@ -1,0 +1,252 @@
+# Localization file for Chinese of mms engine.
+zh:
+    activerecord:
+        # Model names will be kept in lower case. Invoke .capitalize or .titleize if you need them in uppercase.
+        models:
+            administrative_level:
+                one: '管理级别'
+                other: '管理级别(复数)'
+            administrative_unit:
+                one: '管理单元'
+                other: '管理单元(复数)'
+            affiliation:
+                one: '从属'
+                other: '从属'
+            application_setting:
+                one: '应用程序设置(复数)'
+                other: '应用程序设置'
+            application_filter:
+                one: '应用程序过滤器'
+                other: '应用程序过滤器(复数)'
+            caption:
+                one: '标题'
+                other: '标题(复数)'
+            capture_device_maker:
+                one: '撷取设备制造商'
+                other: '撷取设备制造商(复数)'
+            capture_device_model:
+                one: '相机型号'
+                other: '相机型号(复数)'
+            citation:
+                one: '注释'
+                other: '注释(复数)'
+            copyright:
+                one: '版权'
+                other: '版权(复数)'
+            copyright_holder:
+                one: '版权所有者'
+                other: '版权所有者(复数)'
+            country:
+                one: '国家'
+                other: '国家(复数)'
+            description:
+                one: '描述'
+                other: '描述(复数)'
+            description_type:
+                one: '描述类别'
+                other: '描述类别(复数)'
+            dialect:
+                one: '方言'
+                other: '方言(复数)'
+            document:
+                one: '文字'
+                other: '文字(复数)'
+            glossary:
+                one: '词汇表'
+                other: '词汇表(复数)'
+            keyword:
+                one: '关键词'
+                other: '关键词(复数)'
+            loan_type:
+                one: '借贷类型'
+                other: '借贷类型(复数)'
+            location:
+                one: '地点'
+                other: '地点(复数)'
+            media_keyword_association:
+                one: '媒体关键词协会'
+                other: '媒体关键词协会(复数)'
+            media_publisher:
+                one: '媒体发布者'
+                other: '媒体发布者(复数)'
+            media_source_association:
+                one: '媒体资源协会'
+                other: '媒体资源协会(复数)'
+            medium:
+                one: '媒体对象'
+                other: '媒体对象(复数)'
+            movie:
+                one: '影片'
+                other: '影片(复数)'
+            organization:
+                one: '组织'
+                other: '组织(复数)'
+            picture:
+                one: '照片'
+                other: '照片(复数)'
+            publisher:
+                one: '发布者'
+                other: '发布者(复数)'
+            project:
+                one: '项目'
+                other: '项目(复数)'
+            quality_type:
+                one: '质量类型'
+                other: '质量类型(复数)'
+            recording_orientation:
+                one: '录音录影指南'
+                other: '录音录影指南(复数)'
+            renderer:
+                one: '渲染'
+                other: '渲染(复数)'
+            reproduction_type:
+                one: '许可证类型'
+                other: '许可证类型(复数)'
+            setting:
+                one: '设置'
+                other: '设置(复数)'
+            source:
+                one: '信息来源(复数)'
+                other: '信息来源'
+            sponsor:
+                one: '推荐者'
+                other: '推荐者(复数)'
+            title:
+                one: '标题'
+                other: '标题(复数)'
+            transformation:
+                one: '转换'
+                other: '转换(复数)'
+            translated_title:
+                one: '译文标题'
+                other: '译文标题(复数)'
+            video:
+                one: '影片'
+                other: '影片(复数)'
+            workflow:
+                one: '工作流程信息'
+        # Attribute names will be titleized.:
+        attributes:
+            administrative_level:
+                level: '层级'
+                title: '行政级别名称'
+            administrative_unit:
+                created_on: '创建于'
+                creator: '创建者'
+                description: '描述'
+                is_problematic: '有问题吗?'
+                parent: '父系'
+                title: '行政单位名称'
+            application_filter:
+                title: '职位'
+            application_setting:
+                description: 'Description'
+                title: '应用程序设置名称'
+                value: '值(整数)'
+                string_value: '值(字符串)'
+            caption:
+                creator: 'Creator'
+            capture_device_maker:
+                title: '相机制造厂商名称'
+                exif_tag: '生产厂商EXIF标签'
+            capture_device_model:
+                title: '相机型号名称'
+                exif_tag: '型号EXIF标签'
+            citation:
+                line_number: '行号'
+                medium_id: '引用资源的中级代码'
+                note: 'Note'
+                page_number: '页码'
+                page_side: '页边'
+            copyright:
+                notes: 'Notes'
+            copyright_holder:
+                title: '版权所有者的名称'
+                website: '网站'
+            country:
+                title: '国家名称'
+            description:
+                creator: '创建者'
+                title: 'Description'
+            description_type:
+                title: '描述类型的名称'
+            document:
+                capture_device_model: '扫描仪型号'
+                caption:
+                    one: 'Title'
+                    other: 'Titles'
+                photographer: '作者'
+            glossary:
+                abbreviation: '缩写'
+                description: 'Description'
+                is_public: '为公共消费?'
+                title: 'Glossary Name'
+            image:
+                uploaded_data: '图片'
+            keyword:
+                title: '关键词名称'
+            location:
+                feature_id: '特征编码'
+                notes: 'Notes'
+                spot_feature: '现场特写'
+            media_source_association:
+                shot_number: '拍摄编号'
+            medium:
+                caption:
+                    one: '说明文字'
+                    other: '说明文字(复数)'
+                capture_device_model: 'Camera Model'
+                created_on: 'Created on'
+                photographer: '拍摄者'
+                private_note: '个人注释'
+                updated_on: '更新于'
+                recording_note: '拍摄注释'
+                taken_on: '媒体对象日期'
+            organization:
+                title: '组织名称'
+                website: '网址'
+            picture:
+                caption:
+                    one: 'Caption'
+                    other: 'Captions'
+                photographer: 'Photographer'
+            publisher:
+                country_id: '国家特征编号'
+            project:
+                title: '项目名称'
+            quality_type:
+                title: 'Quality Type Name'
+            recording_orientation:
+                title: '录音录影指南名称'
+            renderer:
+                title: '渲染名称'
+                path: '路径'
+            reproduction_type:
+                order: '顺序'
+                title: '执照类型名称'
+                website: 'Website'
+            source:
+                title: '源名称'
+            sponsor:
+                title: '推荐者名称'
+            status:
+                title: 'title'
+                description: 'description'
+                position: 'position'
+            transformation:
+                path: 'Path'
+                title: '转换名称'
+            typescript:
+                thumbnail: '预览'
+                uploaded_data: '文档'
+            video:
+                caption:
+                    one: 'Title'
+                    other: 'Titles'
+                photographer: 'Videographer'
+            workflow:
+                notes: 'Notes'
+                other_id: '其它编号'
+                original_filename: '初始文件名'
+                original_medium_id: '初始媒体对象编号'
+                sequence_order: '序列'
