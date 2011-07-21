@@ -1,15 +1,19 @@
-class TopicsController < ApplicationController
+class TopicsController < AclController
   helper :media
+  cache_sweeper :media_category_association_sweeper, :only => [:destroy]
   
   def initialize
     super
     @current_tab_id = :browse
+    @guest_perms += ['topics/pictures', 'topics/videos', 'topics/documents', 'topics/expand', 'topics/contract']
   end
-    
+  
+  # GET /topics
   def index
     redirect_to topic_url(2823)
   end
     
+  # GET /topics/1
   def show
     @topic = Topic.find(params[:id])
     @root = @topic.root
@@ -31,28 +35,40 @@ class TopicsController < ApplicationController
     render_media
   end
   
+  # DELETE /topics/1
+  def destroy
+    @topic = Topic.find(params[:id])
+    MediaCategoryAssociation.destroy_all(:category_id => @topic.id)
+    redirect_to topic_url(@topic.parent)
+  end
+
+  # GET /topics/1/pictures
   def pictures
     get_media_by_type('Picture')
     @title = ts :in, :what => Picture.human_name(:count => :many).titleize, :where => @topic.title
     render_media
   end
   
+  # GET /topics/1/videos
   def videos
     get_media_by_type('Video')
     @title = ts :in, :what => Video.human_name(:count => :many).titleize, :where => @topic.title
     render_media
   end
   
+  # GET /topics/1/documents
   def documents
     get_media_by_type('Document')
     @title = ts :in, :what => Document.human_name(:count => :many).titleize, :where => @topic.title
     render_media
   end
   
+  # GET /topics/1/expand
   def expand
     render :partial => 'expanded', :object => Topic.find(params[:id]), :locals => {:margin_depth => params[:margin_depth].to_i}
   end
 
+  # GET /topics/1/contract
   def contract
     render :partial => 'contracted', :object => Topic.find(params[:id]), :locals => {:margin_depth => params[:margin_depth].to_i}
   end

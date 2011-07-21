@@ -53,7 +53,7 @@ class MetadataImportation
       workflow.save if workflow.changed?      
     end    
   end
-    
+  
   def process_media_core_fields
     recording_note = self.fields.delete('media.recording_note')
     private_note = self.fields.delete('media.private_note')
@@ -62,7 +62,8 @@ class MetadataImportation
       taken_on_str.strip!
       if !taken_on_str.blank?
         begin
-          taken_on = DateTime.parse(taken_on_str)
+          # taken_on = DateTime.parse(taken_on_str)
+          taken_on = Date.strptime(taken_on_str, '%d/%m/%Y')
         rescue
           self.medium.partial_taken_on = taken_on_str if self.medium.partial_taken_on.blank?
         else
@@ -114,6 +115,9 @@ class MetadataImportation
   def process_topic
     topic_id = self.fields.delete('topics.id')
     topic_str = self.fields.delete('topics.title') if topic_id.blank?
+    delete_topics = self.fields.delete('topics.delete')
+    associations = self.medium.media_category_associations
+    associations.clear if !delete_topics.blank? && delete_topics.downcase == 'yes'
     if !topic_id.blank? || !topic_str.blank?
       begin
         if topic_id.blank?
@@ -127,7 +131,6 @@ class MetadataImportation
       if topic.nil?
         puts "Topic #{topic_str} not found!"
       else
-        associations = self.medium.media_category_associations
         root_ids = self.topic_root_ids
         root_ids[topic.id] ||= topic.root.id
         associations.create(:category_id => topic.id, :root_id => root_ids[topic.id]) if !associations.collect{|a| a.category_id}.include?(topic.id)
@@ -239,7 +242,7 @@ class MetadataImportation
   # media.recording_note, media.private_note, media.taken_on, media.photographer, recording_orientations.title
   # locations.feature_id, geo_code_types.code, features.geo_code, locations.notes, locations.spot_feature
   # captions.title
-  # topics.title | topics.id
+  # topics.title | topics.id, topics.delete
   # descriptions.title, descriptions.creator
   # keywords.title
   # sources.title, media_source_associations.shot_number
