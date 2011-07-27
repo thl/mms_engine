@@ -1,5 +1,5 @@
 <br />
-<% cache :controller => controller.controller_name, :action => controller.action_name, :action_suffix => 'main' do %>
+<% cache :controller => controller.controller_name, :action => controller.action_name, :action_suffix => 'main', :locale => I18n.locale.to_s do %>
 <%=  render :partial => 'media_searches/advanced' %>
 <%   remote_form_for :goto, :url => {:controller => 'media', :action => 'goto'}, :update => 'primary' do |f| %>
        <p>

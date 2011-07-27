@@ -1,4 +1,4 @@
-<% cache_key = { :controller => controller.controller_name, :action => controller.action_name }
+<% cache_key = { :controller => controller.controller_name, :action => controller.action_name, :locale => I18n.locale.to_s }
    cache_key[:id] = @topic.id if !@topic.nil?
    cache cache_key do
      @current = @topic.ancestor_and_self_ids if !@topic.nil? %>
