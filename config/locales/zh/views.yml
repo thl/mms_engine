@@ -1,0 +1,46 @@
+# Localization file for Chinese of mms engine.
+zh:
+    admin:     
+        accounts: '帐户'
+        application_management: '应用程序管理'
+        content: '内容'
+        files: '文件'
+        media_importation: '媒体输入'
+        media_processes: '媒体处理'
+        page: '管理页面'
+        static_pages: '静态页面'
+        tab: '管理'
+        web_interface: '网页界面'
+    by:
+        collection: '按作品集'
+        ethnicity: '按民族'
+        keyword: '按关键词'
+        location: '按位置'
+        subject: '按学科'
+        topic: '按题目'
+    catalog_record: '编目记录'
+    collection:
+        one: '作品集'
+        other: '作品集(复数)'
+    daily: '{{what}} 的天'
+    dictionaries:
+        tab: '字典'
+        title: '搜索喜马拉雅语言字典'
+    document:
+        description:
+            preview: '如果有PDF格式文件,系统将自动生成预览;否则如果需要预览,请将文件包含在此'
+            typescript: '如果原始PDF文件存在,请将文件包含在此'
+    ethnicity:
+        one: '社会文化群体'
+        other: '社会文化群体'
+    import: '输入'
+    keyword: '关键词{{what}}'
+    sponsored_by: '由{{what}}资助'
+    subject:
+        one: '学科'
+        other: '学科(复数)'
+    transcript: '文本'
+    unicode_range: '国际码范围'
+    video:
+        needs_flash: '您需要Flash播放器来播放本视频'
+        not_ready: '视频文件正在转换为适当的格式, 稍后即将提供服务'

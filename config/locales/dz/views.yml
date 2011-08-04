@@ -1,17 +1,13 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-# According to Rails 2.2, this should be at config/locales.
-# Left it at lib/locale following globalize2.
-# View messages are capitalized.
+# Localization file for Dzongkha of mms engine.
 dz:
-    admin: 
+    admin:                 
         accounts: 'རྩིས་ཐོ།'
-        application_management: 'ལག་ལེན་འཛིན་སྐྱོང་།'
+        application_management: 'གློག་རིམ་འཛིན་སྐྱོང་།'
         content: 'ནང་དོན།'
         files: 'ཡིག་སྣོད།'
-        media_importation: 'Media Importation'
-        media_processes: 'Media Processes'
-        page: 'Admin Page'
+        media_importation: 'བརྡ་བརྒྱུད་ནང་འདྲེན།'
+        media_processes: 'བརྡ་བརྒྱུད་ལས་སྦྱོར།'
+        page: 'བདག་སྐྱོང་པའི་ཤོག་ལེབ།'
         static_pages: 'འགྱུར་མེད་ཤོག་ལེབ།'
         tab: 'བདག་སྐྱོང་པ།'
         web_interface: 'ཝེབ་ཀྱི་ངོས་འདྲ་བ།'
@@ -21,30 +17,30 @@ dz:
         keyword: 'གཙོ་ཚིག་གི་ཐོག་ལས།'
         location: 'གནས་ཁོངས་ཀྱི་ཐོག་ལས།'
         subject: 'དོན་ཚན་གྱི་ཐོག་ལས།'
-        topic: 'By topic'      
-    catalog_record: 'catalog record'
-    collection: 'བསྡུ་གསོག།'
-    # one
-    # other
+        topic: 'བརྗོད་གཞིའི་ཐོག་ལས།'
+    catalog_record: 'ཐོ་གཞུང་དྲན་ཐོ།'
+    collection:
+        one: 'བསྡུ་གསོག།'
+        other: 'བསྡུ་གསོག་ཚུ།'
     daily: 'ད་རིས་ཀྱི་ {{what}}།'
     dictionaries:
         tab: 'ཚིག་མཛོད།'
         title: 'ཧི་མ་ལ་ཡཱན་སྐད་ཡིག་ཚུ་གི་ཚིག་མཛོད་ཚུ་འཚོལ་ཞིབ་འབད།'
     document:
         description:
-            preview: 'if pdf is available, preview will be generated automatically; otherwise if preview is available, include it here'
-            typescript: 'if original pdf is available, include it here'
-    ethnicity: 'མི་རིགས།'
-    # one
-    # other
-    import: 'ནང་འདྲེན'
+            preview: 'གལ་སྲིད་ པི་ཌི་ཨེཕ་འདི་ཡོད་པ་ཅིན་ རང་བཞིན་གྱིས་སྔེོན་ལྟ་འབད་ཚུགས། གལ་སྲིད་སྔོན་ལྟ་མེད་པ་ཅིན་ ནཱ་ལུ་བཙུགས།'
+            typescript: 'གལ་སྲིད་པི་ཌི་ཨེཕ་ངོ་མ་འདི་ཡོད་པ་ཅིན་ ནཱ་ལུ་བཙུགས།'
+    ethnicity:
+        one: 'མི་རིགས།'
+        other: 'མི་རིགས་ཚུ།'
+    import: 'ནང་འདྲེན།'
     keyword: 'གཙོ་ཚིག {{what}}།'
     sponsored_by: '{{what}} གི་རྒྱབ་སྐྱོར་ཐོག་ལས།'
-    subject: 'དོན་ཚན།'
-    # one
-    # other
+    subject:
+        one: 'དོན་ཚན།'
+        other: 'དོན་ཚན་ཚུ།'
     transcript: 'ཡིག་ཕབ།'
     unicode_range: 'ཡུ་ནི་ཀོཌི་ཁྱབ་ཚད།'
     video:
-        needs_flash: 'བརྙན་སྟོན་འདི་བལྟ་ནིའི་དོན་ལུ་ཕེལེཤ་གཏང་འཕྲུལ་དགོ་པས།'
-        not_ready: 'བརྙན་སྟོན་འདི་འོས་འབབ་ཅན་གི་སྒྲིག་བཀོད་ཚུ་ལུ་གཞི་བསྒྱུར་འབད་དོ། དུས་ཡུན་དུམ་གྲ་ཅིག་ལས་འཐོབ་ཚུགས།'
+        needs_flash: 'གློག་བརྙན་འདི་བལྟ་ནིའི་དོན་ལུ་ཕེལེཤ་གཏང་འཕྲུལ་དགོ་པས།'
+        not_ready: 'གློག་བརྙན་འདི་འོས་འབབ་ཅན་གི་སྒྲིག་བཀོད་ཚུ་ལུ་གཞི་བསྒྱུར་འབད་དོ། དུས་ཡུན་དུམ་གྲ་ཅིག་ལས་འཐོབ་ཚུགས།'
