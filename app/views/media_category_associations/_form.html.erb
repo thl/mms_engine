@@ -4,6 +4,7 @@
 		:root => @media_category_association.root || nil,
 		:varname => :media_category_association,
 		:include_js => false,
+		:selectable => selectable,
 		:extrafields => [
 			{:field => f.text_field(:string_value), :label => MediaCategoryAssociation.human_attribute_name(:string_value).s},
 			{:field => f.text_field(:numeric_value), :label => MediaCategoryAssociation.human_attribute_name(:numeric_value).s}

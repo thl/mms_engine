@@ -4,7 +4,7 @@
 <%  form_for(:media_category_association, :url => association_path(@medium, @media_category_association.root, @media_category_association), :html => { :method => :put }) do |f| %>
 	<%=
 		category_form_table({
-			:locals			=> { :f => f },
+			:locals			=> { :f => f , :selectable => false},
 			:form_partial 	=> 'media_category_associations/form',
 			:footer			=> (globalized_submit_tag 'update.this', :style => 'margin-top:8px;')
 		})
