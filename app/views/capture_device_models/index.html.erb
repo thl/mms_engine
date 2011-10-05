@@ -16,6 +16,6 @@
 <% authorized_only hash_for_new_capture_device_maker_model_path do %>
 <%=  link_to ts(:for, :what => t('new.record', :what => CaptureDeviceModel.human_name), :whom => @capture_device_maker.title), new_capture_device_maker_model_path(@capture_device_maker) %> |
 <% end %>
-<%= link_to ts('back.to', :what => t(:all, :what => CaptureDeviceMaker.human_name(:count => :many))), capture_device_makers_path %> |
+<%= link_to ts('back.to', :what => t('all.these', :what => CaptureDeviceMaker.human_name(:count => :many))), capture_device_makers_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

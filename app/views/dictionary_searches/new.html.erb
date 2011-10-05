@@ -2,14 +2,14 @@
 <% remote_form_for(:dictionary_search, :update => 'results', :url => dictionary_searches_path, :loading => javascript_searching('results') + javascript_load('browse_panel','')) do |f| %>
   <p>
 <%= f.text_field :title, fixed_language_options %> <%= globalized_submit_tag 'search.this' %><br/>
-<%= f.select(:language, @available_languages.collect {|l| [l.title, l.id]} + [[ t(:all, :what => ComplexScripts::Language.human_name(:count => :many)), 0]], {}, language_options) %>
+<%= f.select(:language, @available_languages.collect {|l| [l.title, l.id]} + [[ t('all.these', :what => ComplexScripts::Language.human_name(:count => :many)), 0]], {}, language_options) %>
 <%= f.radio_button :type, :simple %><%= ts 'search.full_text' %>
 <%= f.radio_button :type, :boolean %><%= ts :advanced %> (<%= link_to_remote(ts('what_is', :what => t('this.this')), :update => 'results', :url => { :controller => 'help', :action => 'advanced_search'}, :loading => 'document.getElementById(\'advanced_search_type\').checked = true;') %>)
   </p>
 <% end %>
 <% remote_form_for(:dictionary_search, :update => 'browse_panel', :url => dictionary_searches_path, :loading => javascript_searching('browse_panel') + javascript_load('results','')) do |f| %>
 <p>
-<%= ts :or %> <%= globalized_submit_tag 'browse.this', :id => 'browse' %>
+<%= ts('or.this') %> <%= globalized_submit_tag 'browse.this', :id => 'browse' %>
 <%= f.collection_select(:language, @head_term_languages, :id, :title, {:include_blank => true}, {:onclick => "document.getElementById('browse').disabled=(document.getElementById('browse_language').selectedIndex==0);", :id => 'browse_language'}) %>
 <input id="dictionary_search_type" name="dictionary_search[type]" type="hidden" value="browse" />
 </p>
