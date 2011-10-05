@@ -1,5 +1,5 @@
 <%  authorized_only hash_for_transformation_path(:action => 'destroy') do %>
 <%=   link_to ts('delete.this'), transformation_path(@transformation), :confirm => te('delete.confirmation'), :method => :delete %> |
 <%  end %>
-<%= link_to ts('back.to', :what => t('all.these', :what => Transformation.human_name(:count => :many))), transformations_path %> |
+<%= link_to ts('back.to', :what => t('all.records', :what => Transformation.human_name(:count => :many))), transformations_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>

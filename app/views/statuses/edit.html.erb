@@ -21,5 +21,5 @@
 <%  authorized_only hash_for_statuses_path(:action => 'destroy') do %>
 <td><%= link_to 'Delete', @status, :confirm => 'Are you sure?', :method => :delete %></td> |
 <%  end %>
-<%= link_to ts('back.to', :what => t('all.these', :what => Status.human_name(:count => :many))), statuses_path %> |
+<%= link_to ts('back.to', :what => t('all.records', :what => Status.human_name(:count => :many))), statuses_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>
