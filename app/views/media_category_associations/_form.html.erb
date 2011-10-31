@@ -2,7 +2,7 @@
 	category_fields({
 		:subject => {:display => thumbnail_image_link(@medium), :label => f.hidden_field(:medium_id)}, # 6/21/11 jev3a asks why is this hidden field in the label?
 		:root => @media_category_association.root || nil,
-		:varname => :media_category_association,
+		:var_name => :media_category_association,
 		:include_js => false,
 		:selectable => selectable,
 		:extrafields => [

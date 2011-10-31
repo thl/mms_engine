@@ -2,7 +2,7 @@
 <%= error_messages_for :application_setting %>
 <% form_for(:application_setting, :url => application_settings_path) do |f| %>
 <%=  render :partial => 'form', :locals => {:f => f} %>
-     <p><%= globalized_submit_tag 'create.this' %></p>
+     <p><%= globalized_submit_tag 'creat.e.this' %></p>
 <% end %>
 <p>&nbsp;<br/>
 <%= link_to ts('cancel.record', :what => t('new.this')), application_settings_path %> |
