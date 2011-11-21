@@ -2,7 +2,7 @@
 require 'config/environment'
 require 'csv'
 
-class MetadataImportation
+class MetadataImportation < CsvImportation
   attr_accessor :medium, :workflow, :english, :topic_root_ids
     
   def get_medium
