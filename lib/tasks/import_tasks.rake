@@ -133,7 +133,7 @@ namespace :mms do
       if filename.blank?
         puts metadata_description
       else
-        MetadataImportation.do_metadata_importation(filename)
+        MetadataImportation.new.do_metadata_importation(filename)
       end
     end    
   end

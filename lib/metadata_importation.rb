@@ -3,18 +3,8 @@ require 'config/environment'
 require 'csv'
 
 class MetadataImportation
-  attr_accessor :fields, :medium, :workflow, :english, :topic_root_ids
-  
-  def populate_fields(row, field_names)
-    self.fields = Hash.new
-    row.each_with_index do |field, index|
-      if !field.nil?
-        field.strip!
-        self.fields[field_names[index]] = field if !field.empty?
-      end
-    end
-  end
-  
+  attr_accessor :medium, :workflow, :english, :topic_root_ids
+    
   def get_medium
     medium_id = self.fields.delete('media.id')
     if medium_id.blank?
@@ -246,33 +236,24 @@ class MetadataImportation
   # descriptions.title, descriptions.creator
   # keywords.title
   # sources.title, media_source_associations.shot_number
-  def self.do_metadata_importation(filename)
-    field_names = nil
-    import = MetadataImportation.new
-    import.english = ComplexScripts::Language.find_by_code('eng')
-    import.topic_root_ids = Hash.new
-    
-    CSV.open(filename, 'r', "\t") do |row|
-      if field_names.nil?
-        field_names = row
-        next
-      end
-      import.populate_fields(row, field_names)
-      next unless import.get_medium
-      import.process_media_core_fields
-      import.process_workflow
-      import.process_caption
-      import.process_topic
-      import.process_location
-      import.process_description
-      import.process_keywords
-      import.process_source
-      if import.fields.empty?
-        puts "#{import.medium.id} processed."
+  def do_metadata_importation(filename)
+    self.english = ComplexScripts::Language.find_by_code('eng')
+    self.topic_root_ids = Hash.new
+    self.do_csv_import(filename) do
+      next unless self.get_medium
+      self.process_media_core_fields
+      self.process_workflow
+      self.process_caption
+      self.process_topic
+      self.process_location
+      self.process_description
+      self.process_keywords
+      self.process_source
+      if self.fields.empty?
+        puts "#{self.medium.id} processed."
       else
-        puts "#{import.medium.id}: the following fields have been ignored: #{import.fields.keys.join(', ')}"
-      end
-      
+        puts "#{self.medium.id}: the following fields have been ignored: #{self.fields.keys.join(', ')}"
+      end      
     end
   end
   
