@@ -93,7 +93,7 @@ module ApplicationHelper
     }
     else
       {
-        :himalayan_search => {:index => 9, :title => "Search", :url => new_dictionary_search_url},
+        :dictionary_search => {:index => 9, :title => "Search", :url => new_dictionary_search_url},
       }
     end
   end
