@@ -83,6 +83,7 @@ module ApplicationHelper
   
   def custom_secondary_tabs_list
     # The :index values are necessary for this hash's elements to be sorted properly
+    if @current_tab_id != :dictionary_search 
     {
       :search => {:index => 1, :title => "Search", :url => new_media_search_url},
       :browse => {:index => 2, :title => "Browse", :url => topic_url(2823)},
@@ -90,6 +91,11 @@ module ApplicationHelper
       :video => {:index => 4, :title => Video.human_name.titleize.pluralize, :url => media_path(:type => 'Video')},
       :document => {:index => 5, :title => Document.human_name.titleize.pluralize, :url => media_path(:type => 'Document')}
     }
+    else
+      {
+        :himalayan_search => {:index => 9, :title => "Search", :url => new_dictionary_search_url},
+      }
+    end
   end
   
   def custom_secondary_tabs(current_tab_id=:browse)

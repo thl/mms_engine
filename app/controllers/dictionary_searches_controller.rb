@@ -45,6 +45,7 @@ class DictionarySearchesController < AclController
 
   # GET /dictionary_searches/new
   def new #main dictionary search page
+    @current_tab_id = :dictionary_search
     @available_languages = Word.available_languages
     @head_term_languages = Word.head_term_languages
     @onload = "document.getElementById('browse').disabled=true;"
