@@ -1,16 +1,11 @@
 <h1><%= ts :for, :what => t('edit.ing.record', :what => t('associate.ion', :what => @media_category_association.root.nil? ? 'Topic' : @media_category_association.root.title)), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
-<%= error_messages_for :association %>
-
+<%= error_messages_for :media_category_association %>
 <%  form_for(:media_category_association, :url => association_path(@medium, @media_category_association.root, @media_category_association), :html => { :method => :put }) do |f| %>
-	<%=
-		category_form_table({
-			:locals			=> { :f => f , :selectable => false},
-			:form_partial 	=> 'media_category_associations/form',
-			:footer			=> (globalized_submit_tag 'update.this', :style => 'margin-top:8px;')
-		})
-	%>
-<% end %>
-
+<%=   category_form_table({
+        :locals			=> { :f => f, :single_selection => true },
+        :form_partial 	=> 'media_category_associations/form',
+        :footer			=> (globalized_submit_tag 'update.this', :style => 'margin-top:8px;')
+      }) %>
+<%  end %>
 <br/>
-
 <p><%= render :partial => 'persistent_links' %></p>

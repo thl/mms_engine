@@ -1,13 +1,12 @@
-<%=
-	category_fields({
-		:subject => {:display => thumbnail_image_link(@medium), :label => f.hidden_field(:medium_id)}, # 6/21/11 jev3a asks why is this hidden field in the label?
+<%= category_fields({
+		:subject => {:display => thumbnail_image_link(@medium)},
 		:root => @media_category_association.root || nil,
 		:var_name => :media_category_association,
 		:include_js => false,
-		:selectable => selectable,
+		:include_styles => true,
+		:selectable => true,
+		:single_selection => single_selection,
 		:extrafields => [
 			{:field => f.text_field(:string_value), :label => MediaCategoryAssociation.human_attribute_name(:string_value).s},
 			{:field => f.text_field(:numeric_value), :label => MediaCategoryAssociation.human_attribute_name(:numeric_value).s}
-		]
-	})
-%>
+		]}) %>

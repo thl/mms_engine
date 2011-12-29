@@ -1,13 +1,9 @@
 <h1><%= ts 'associate.record', :what => 'Topic', :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
 <%= error_messages_for :media_category_association %>
-
-
 <% 	form_for(:media_category_association, :url => @topic.nil? ? medium_topic_associations_path(@medium) : associations_path(@medium, @topic)) do |f| %>
-	<%=
-		category_form_table({
-			:locals 		=> { :f => f , :selectable => true},
-			:form_partial 	=> 'media_category_associations/form',
-			:footer			=> "#{globalized_submit_tag 'creat.e.this', :style => 'margin-top:8px;'} &nbsp;<p style='font-size:8pt;margin-left:15px;display:inline'>#{render :partial => 'media/back_to_edit', :locals => {:anchor => 'topics'}}"
-		})
-	%>
-<% end %>
+<%=   category_form_table({
+        :locals 		=> { :f => f, :single_selection => false },
+        :form_partial 	=> 'media_category_associations/form',
+        :footer			=> "#{globalized_submit_tag 'creat.e.this', :style => 'margin-top:8px;'} &nbsp;<p style='font-size:8pt;margin-left:15px;display:inline'>#{render :partial => 'media/back_to_edit', :locals => {:anchor => 'topics'}}"
+      }) %>
+<%  end %>

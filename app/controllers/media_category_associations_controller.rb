@@ -34,7 +34,7 @@ class MediaCategoryAssociationsController < AclController
   # GET /media_category_associations/new
   # GET /media_category_associations/new.xml
   def new
-    @media_category_association = MediaCategoryAssociation.new(:root => @topic)
+    @media_category_association = MediaCategoryAssociation.new(:root_id => @topic.id)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -59,7 +59,7 @@ class MediaCategoryAssociationsController < AclController
   # POST /media_category_associations.xml
   def create
     mca_hash = params[:media_category_association]
-    mca_cats = mca_hash[:category_id].split(',')
+    mca_cats = mca_hash[:category_id]
     errors = []
     mca_cats.each do |c|
       unless c.blank?
@@ -96,15 +96,23 @@ class MediaCategoryAssociationsController < AclController
   def update
     @media_category_association = MediaCategoryAssociation.find(params[:id])
     media_category_association_hash = params[:media_category_association]
-    media_category_association_hash[:root_id] = Topic.find(media_category_association_hash[:category_id]).root.id
     respond_to do |format|
-      if @media_category_association.update_attributes(media_category_association_hash)
-        flash[:notice] = 'MediaCategoryAssociation was successfully updated.'
-        format.html { redirect_to edit_medium_url(@medium, :anchor => "topics-#{@media_category_association.root_id}") }
+      category_id = media_category_association_hash[:category_id]
+      if category_id.blank?
+        root_id = @media_category_association.root_id
+        @media_category_association.destroy
+        format.html { redirect_to edit_medium_url(@medium, :anchor => "topics-#{root_id}") }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @media_category_association.errors, :status => :unprocessable_entity }
+        media_category_association_hash[:root_id] = Topic.find(category_id).root.id
+        if @media_category_association.update_attributes(media_category_association_hash)
+          flash[:notice] = 'MediaCategoryAssociation was successfully updated.'
+          format.html { redirect_to edit_medium_url(@medium, :anchor => "topics-#{@media_category_association.root_id}") }
+          format.xml  { head :ok }
+        else
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @media_category_association.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end

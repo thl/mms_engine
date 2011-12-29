@@ -39,6 +39,6 @@ module KnowledgeMapsDeployer
     elsif remote_class==Subject
       associations = MediaSubjectAssociation.find(:all, :conditions => {:subject_id => local.id})
     end  
-    associations.each { |a| MediaCategoryAssociation.create(:category => remote, :medium => a.medium, :root => remote_class.root) }
+    associations.each { |a| MediaCategoryAssociation.create(:category_id => remote.id, :medium => a.medium, :root_id => remote_class.root.id) }
   end
 end
