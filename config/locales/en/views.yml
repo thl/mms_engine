@@ -16,8 +16,8 @@ en:
         ethnicity: 'By ethnicity'
         keyword: 'By keyword'
         location: 'By location'
-        subject: 'By subject'  
-        topic: 'By topic'      
+        subject: 'By subject'
+        topic: 'By subject'
     catalog_record: 'catalog record'
     collection:
         one: 'collection'

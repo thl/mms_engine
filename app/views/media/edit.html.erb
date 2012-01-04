@@ -135,8 +135,9 @@
 <%=    link_to ts('associate.to', :what => root_topic.title.downcase), new_association_path(@medium, root_topic) %> |
 <%   end
    end %>
-<%= link_to ts('associate.to', :what => 'topic'), new_medium_topic_association_path(@medium) %> |
-Associate to sub-category from specific root topic: <%= select_tag :root_topics, options_for_select([''] + @root_topics.collect{|topic| [topic.title, new_association_path(@medium, topic)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %><br/>
+<%= link_to ts('associate.to', :what => Topic.human_name), new_medium_topic_association_path(@medium) %> |
+<%= ts 'associate.to_from', :what => Topic.human_attribute_name(:child).downcase, :whom => Topic.human_attribute_name(:root).downcase %>:
+<%= select_tag :root_topics, options_for_select([''] + @root_topics.collect{|topic| [topic.title, new_association_path(@medium, topic)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %><br/>
 <% if media_source_associations.empty? %>
 <%=   bookmark 'sources' %>
 <%=   link_to ts('associate.to', :what => Source.human_name), new_medium_source_association_path(@medium) %>

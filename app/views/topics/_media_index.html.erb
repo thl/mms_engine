@@ -7,10 +7,10 @@
 <%=  render :partial => 'media/paged_index_full' %>
 <% end %>
 <p>
-<%= link_to ts(:in, :what => @topic.title, :where => 'Topics'), Category.element_url(@topic.id, :format => 'html') %>
+<%= link_to ts(:in, :what => @topic.title, :where => Topic.human_name(:count => :many).titleize), Category.element_url(@topic.id, :format => 'html') %>
 <%  authorized_only hash_for_sponsor_path(:action => 'destroy') do
       if !@topic.nil? && @topic.media_count - @topic.media_category_associations.size <= 0 %>
-        | <%= link_to 'Delete all associations with topic', topic_path(@topic), :confirm => te('delete.confirmation'), :method => :delete %>
+        | <%= link_to "Delete all associations with #{Topic.human_name}", topic_path(@topic), :confirm => te('delete.confirmation'), :method => :delete %>
 <%    end
     end %>
 </p>

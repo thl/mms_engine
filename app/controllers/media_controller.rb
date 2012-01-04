@@ -3,7 +3,7 @@ class MediaController < AclController
   cache_sweeper :medium_sweeper, :only => [:update, :destroy]
   
   # Adding redundant candidates (e.g. category_id and :topic_id) for now to prevent errors, but these should be consolidated
-  ELEMENT_CANDIDATES = {:category_id => {:class => Topic, :association => 'topics', :name => 'topic'}, :topic_id => {:class => Topic, :association => 'topics', :name => 'topic'}, :feature_id => {:class => Place, :association => 'locations', :name => 'location'}, :place_id => {:class => Place, :association => 'locations', :name => 'location'}}
+  ELEMENT_CANDIDATES = {:category_id => {:class => Topic, :association => 'topics', :name => Topic.human_name}, :topic_id => {:class => Topic, :association => 'topics', :name => Topic.human_name}, :feature_id => {:class => Place, :association => 'locations', :name => 'location'}, :place_id => {:class => Place, :association => 'locations', :name => 'location'}}
   MEDIA_TYPES = {:picture => Picture, :video => Video, :document => Document}
 
   def initialize
