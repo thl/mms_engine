@@ -197,6 +197,7 @@ dz:
                     other: 'འགོ་བརྗོད་ཚུ།'
                 capture_device_model: 'པར་ཆས་དཔེ་གཟུགས།'
                 created_on: 'གསར་བསྐྲུན་འབད་བའི་དུས་ཚེས།'
+                id: 'Resource #'
                 photographer: 'པར་བཏབ་མི།'
                 private_note: 'སྒེར་གྱི་དྲན་འཛིན།'
                 updated_on: 'དུས་མཐུན་བཟོ་བའི་དུས་ཚེས།'
@@ -210,6 +211,7 @@ dz:
                     one: 'འགོ་བརྗོད།'
                     other: 'འགོ་བརྗོད།'
                 photographer: 'པར་བཏབ་མི།'
+                rotation: 'Rotation'
             publisher:
                 country_id: 'རྒྱབ་ཁབ་ཁྱད་ཆོས་ཨའི་ཌི།'
             project:

@@ -4,9 +4,9 @@
 <%= f.select(:process_type, @media_process_types.collect {|key, value| [ key, value ] }, { :include_blank => true }) %></p>
 <p><b>Apply to</b><br/>
 <%= f.select(:media_type, @media_types.collect {|key, value| [ key, key ] }, { :include_blank => false }) %></p>
-<p><b>From medium ID</b><br />
+<p><b><%= ts :from, :where => Medium.human_attribute_name(:id) %></b><br />
 <%= f.text_field :id_start %></p>
-<p><b>To medium ID</b><br />
+<p><b><%= ts :to, :where => Medium.human_attribute_name(:id) %></b><br />
 <%= f.text_field :id_end %></p>
 <p><%= globalized_submit_tag :execute %></p>
 <% end %>

@@ -42,8 +42,12 @@ en:
             description:
                 one: 'description'
                 other: 'descriptions'
-            description_type: '{{what}} type'
-            dialect: 'dialect'
+            description_type:
+                one: '{{what}} type'
+                other: '{{what}} types'
+            dialect:
+                one: 'dialect'
+                other: 'dialects'
             document: 
                 one: 'text'
                 other: 'texts'
@@ -53,7 +57,9 @@ en:
             keyword:
                 one: 'keyword'
                 other: 'keywords'
-            loan_type: 'loan type'
+            loan_type:
+                one: 'loan type'
+                other: 'loan types'
             location:
                 one: 'location'
                 other: 'locations'
@@ -67,9 +73,11 @@ en:
                 one: 'media source association'
                 other: 'media source associations'
             medium:
-                one: 'media object'
-                other: 'media objects'
-            movie: 'movie'
+                one: 'resource'
+                other: 'resources'
+            movie:
+                one: 'movie'
+                other: 'movies'
             organization:
                 one: 'organization'
                 other: 'organizations'
@@ -88,7 +96,9 @@ en:
             recording_orientation: 
                 one: 'recording orientation'
                 other: 'recording orientations'
-            renderer: 'renderer'
+            renderer:
+                one: 'renderer'
+                other: 'renderers'
             reproduction_type:
                 one: 'license type'
                 other: 'license types'
@@ -104,14 +114,17 @@ en:
             title:
                 one: 'title'
                 other: 'titles'
-            transformation: 'transformation'
+            transformation:
+                one: 'transformation'
+                one: 'transformations'
             translated_title:
                 one: 'translated title'
                 other: 'translated titles'
             video: 
                 one: 'video'
                 other: 'videos'
-            workflow: 'workflow information'
+            workflow:
+                one: 'workflow information'
         # Attribute names will be titleized.
         attributes:
             administrative_level:
@@ -141,7 +154,7 @@ en:
                 exif_tag: 'EXIF Tag for Model'
             citation:
                 line_number: 'Line Number'
-                medium_id: 'Medium ID for Cited Resource'
+                medium_id: 'Resouce ID # for Cited Resource'
                 note: 'Note'
                 page_number: 'Page Number'
                 page_side: 'Page Side'
@@ -184,6 +197,7 @@ en:
                     other: 'Captions'
                 capture_device_model: 'Camera Model'
                 created_on: 'Created on'
+                id: 'Resource #'
                 photographer: 'Photographer'
                 private_note: 'Private Note'
                 updated_on: 'Updated on'
@@ -236,5 +250,5 @@ en:
                 notes: 'Notes'
                 other_id: 'Other ID'
                 original_filename: 'Original Filename'
-                original_medium_id: 'Original Media Object ID'
+                original_medium_id: 'Original Resource ID #'
                 sequence_order: 'Sequence order'

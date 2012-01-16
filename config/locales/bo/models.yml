@@ -197,6 +197,7 @@ bo:
                     other: 'གསལ་བཤད་ཡི་གེ་དག'
                 capture_device_model: 'Camera Model'
                 created_on: 'Created on'
+                id: 'Resource #'
                 photographer: 'བརྙན་བཟོ་མཁན'
                 private_note: 'རང་ཉིད་འགྲེལ་པ'
                 updated_on: 'ལ་གསར་བརྗེ་བྱས'
@@ -210,6 +211,7 @@ bo:
                     one: 'Caption'
                     other: 'Captions'
                 photographer: 'Photographer'
+                rotation: 'Rotation'
             publisher:
                 country_id: 'རྒྱལ་ཁབ་ཁྱད་རྟགས་སྒྲིག་ཨང'
             project:

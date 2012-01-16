@@ -197,6 +197,7 @@ zh:
                     other: '说明文字(复数)'
                 capture_device_model: 'Camera Model'
                 created_on: 'Created on'
+                id: 'Resource #'
                 photographer: '拍摄者'
                 private_note: '个人注释'
                 updated_on: '更新于'
@@ -210,6 +211,7 @@ zh:
                     one: 'Caption'
                     other: 'Captions'
                 photographer: 'Photographer'
+                rotation: 'Rotation'
             publisher:
                 country_id: '国家特征编号'
             project:
