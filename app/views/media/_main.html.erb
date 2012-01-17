@@ -3,7 +3,7 @@
 <%=  render :partial => 'media_searches/advanced' %>
 <%   remote_form_for :goto, :url => {:controller => 'media', :action => 'goto'}, :update => 'primary' do |f| %>
        <p>
-         <label for="goto_media_id"><b><%= ts :id, :what => Medium.human_name.titleize %></b></label>
+         <label for="goto_media_id"><b><%= Medium.human_attribute_name(:id).s %></b></label>
 <%=      f.text_field :media_id, :size => 10 %>
 <%=      globalized_submit_tag :go %>
        </p>

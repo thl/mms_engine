@@ -14,7 +14,7 @@
 <%   elsif @medium.instance_of? Document %>
 <%=    render :partial => 'documents/show' %>
 <%   end %>
-<%=  display_if_not_blank ts(:id, :what => Medium.human_name.titleize), "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})" %>
+<%=  display_if_not_blank Medium.human_attribute_name(:id).s, "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})" %>
 <%=  render :partial => 'titles/index_display_only', :locals => {:medium => @medium} %>
 <% end 
    captions = @medium.captions
