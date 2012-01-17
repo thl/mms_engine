@@ -1,4 +1,4 @@
-<h1><%= ts :for, :what => t('new.record', :what => Copyright.human_name.titleize), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<h1><%= ts :for, :what => t('new.record', :what => Copyright.human_name.titleize), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <%= error_messages_for :copyright %>
 <% form_for(:copyright, :url => copyrights_path) do |f| %>
 <%=  render :partial => 'form', :locals => {:f => f} %>

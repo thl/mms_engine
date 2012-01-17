@@ -1,5 +1,5 @@
 <% title =  Title.human_name.capitalize %>
-<b><%= ts :for, :what => title, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></b>
+<b><%= ts :for, :what => title, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></b>
 <p><%= thumbnail_image_link(@medium) %></p>
 <%= display_if_not_blank title.s, h(@title.title).s %>
 <%= display_if_not_blank ComplexScripts::Language.human_name.titleize.s, h(@title.language.title).s %>

@@ -1,5 +1,5 @@
 <%  @medium = @workflow.medium %>
-<h1><%= ts :for, :what => Workflow.human_name.titleize, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<h1><%= ts :for, :what => Workflow.human_name.titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <p>
     <b><%= Medium.human_name.titleize.s %></b><br />    
 <%= thumbnail_image_link(@medium) %></td>

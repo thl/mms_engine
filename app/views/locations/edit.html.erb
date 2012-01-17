@@ -1,4 +1,4 @@
-<h1><%= ts :for, :what => t('edit.ing.record', :what => Location.human_name.titleize.s), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<h1><%= ts :for, :what => t('edit.ing.record', :what => Location.human_name.titleize.s), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <%= error_messages_for :location %>
 <% form_for(:location, :url => medium_location_path(@medium, @location), :html => { :method => :put }) do |f| %>
 <%=  render :partial => 'form', :locals => {:f => f} %>

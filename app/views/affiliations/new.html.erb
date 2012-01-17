@@ -1,4 +1,4 @@
-<h1><%= ts :for, :what => ts('new.record', :what => Affiliation.human_name.titleize), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<h1><%= ts :for, :what => ts('new.record', :what => Affiliation.human_name.titleize), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <%= error_messages_for :affiliation %>
 <% form_for(:affiliation, :url => medium_affiliations_path(@medium)) do |f| %>
 <%=  render :partial => 'form', :locals => {:f => f} %>

@@ -1,4 +1,4 @@
-<h1><%= ts :in, :what => t(:for, :what => t('new.record', :what => Citation.human_name.capitalize), :whom => @reference.title), :where => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<h1><%= ts :in, :what => t(:for, :what => t('new.record', :what => Citation.human_name.capitalize), :whom => @reference.title), :where => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <% form_for(:citation, :url => polymorphic_path(@reference_stack + [@citation])) do |f| %>
 <%=  render :partial => 'form', :locals => {:f => f } %>
      <p><%= globalized_submit_tag 'creat.e.this' %></p>

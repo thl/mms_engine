@@ -1,4 +1,4 @@
-<h1><%= ts 'list.ing.records', :what => Keyword.human_name(:count => :many).titleize, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<h1><%= ts 'list.ing.records', :what => Keyword.human_name(:count => :many).titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <p>
 <%= thumbnail_image_link(@medium) %>
 </p>

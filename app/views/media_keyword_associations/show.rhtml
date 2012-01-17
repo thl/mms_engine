@@ -1,5 +1,5 @@
 <p>
-  <b><%= ts :for, :what => Keyword.human_name.titleize, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></b>
+  <b><%= ts :for, :what => Keyword.human_name.titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></b>
 </p>
 <p>
 <%=  thumbnail_image_link(@medium) %>

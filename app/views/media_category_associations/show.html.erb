@@ -1,6 +1,6 @@
 <% topic = @media_category_association.category
    topic_name = topic.root.title.titleize %>
-<p><b><%= ts :for, :what => t('associate.ion', :what => topic_name), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></b></p>
+<p><b><%= ts :for, :what => t('associate.ion', :what => topic_name), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></b></p>
 <p>
 <%=  thumbnail_image_link(@medium) %>
 </p>

@@ -1,7 +1,7 @@
 <% if @medium.nil? %>
      <h1><%= ts 'list.ing.records', :what => Topic.human_name.titleize %></h1>
 <% else %>
-     <h1><%= ts :for, :what => t('list.ing.records', :what => Topic.human_name.titleize), :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+     <h1><%= ts :for, :what => t('list.ing.records', :what => Topic.human_name.titleize), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
      <p><%= thumbnail_image_link(@medium) %></p>
 <% end %>
 <table border="1" class="normal">

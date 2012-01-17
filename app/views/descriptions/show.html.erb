@@ -1,4 +1,4 @@
-<h1><%= ts :for, :what => Description.human_name.titleize, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<h1><%= ts :for, :what => Description.human_name.titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <p><%= thumbnail_image_link(@medium) %></p>
 <% if !@description.title.blank? %>
      <p><b><%= Description.human_attribute_name('title').s %></b></p>

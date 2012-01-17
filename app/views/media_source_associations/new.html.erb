@@ -1,4 +1,4 @@
-<h1><%= ts 'associate.record', :what => Source.human_name.titleize, :whom => "#{Medium.human_name.titleize} #{@medium.id}" %></h1>
+<h1><%= ts 'associate.record', :what => Source.human_name.titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <%= error_messages_for :media_source_association %>
 <% form_for(:media_source_association, :url => medium_source_associations_path(@medium)) do |f| %>
 <%= render :partial => 'form', :locals => {:f => f} %>
