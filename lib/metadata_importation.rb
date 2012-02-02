@@ -129,33 +129,37 @@ class MetadataImportation < CsvImportation
   end
   
   def process_location
-    feature_str = self.fields.delete('locations.feature_id')
-    if feature_str.blank?
-      geo_code_type = self.fields.delete('geo_code_types.code')
-      geo_code = self.fields.delete('features.geo_code')
-      if !geo_code_type.blank? && !geo_code.blank?
-        feature = Feature.find_by_geo_code(geo_code_type, geo_code)
-        puts "Place with geo code #{geo_code} not found!" if feature.nil?
-      end
-    else
-      feature = Feature.find(feature_str)
-      puts "Place with FID #{feature_str} not found!" if feature.nil?
-    end
-    if !feature.nil?
-      location_note = self.fields.delete('locations.notes')
-      spot = self.fields.delete('locations.spot_feature')
-      lat = self.fields.delete('locations.lat')
-      lng = self.fields.delete('locations.lng')
-      location = Location.find(:first, :conditions => {:medium_id => medium.id, :feature_id => feature.fid})
-      if location.nil?
-        location = Location.create(:medium => medium, :feature_id => feature.fid, :spot_feature => spot, :notes => location_note, :lat => lat, :lng => lng)
+    0.upto(2) do |i|
+      prefix = i>0 ? "#{i}." : ''
+      feature_str = self.fields.delete("#{prefix}locations.feature_id")
+      if feature_str.blank?
+        geo_code_type = self.fields.delete("#{prefix}geo_code_types.code")
+        geo_code = self.fields.delete("#{prefix}features.geo_code")
+        if !geo_code_type.blank? && !geo_code.blank?
+          feature = Feature.find_by_geo_code(geo_code_type, geo_code)
+          puts "Place with geo code #{geo_code} not found!" if feature.nil?
+        end
       else
-        location.spot_feature = spot if !spot.nil? && location.spot_feature.blank?
-        location.notes = location_note if !location_note.nil? && location.notes.blank?
-        location.lat = lat if !lat.nil? && location.lat.nil?
-        location.lng = lng if !lng.nil? && location.lng.nil?
-        location.save
-      end      
+        feature = Feature.find(feature_str)
+        puts "Place with FID #{feature_str} not found!" if feature.nil?
+      end
+      if !feature.nil?
+        location_note = self.fields.delete("#{prefix}locations.notes")
+        spot = self.fields.delete("#{prefix}locations.spot_feature")
+        lat = self.fields.delete("#{prefix}locations.lat")
+        lng = self.fields.delete("#{prefix}locations.lng")
+        locations = medium.locations
+        location = locations.first(:conditions => {:feature_id => feature.fid})
+        if location.nil?
+          location = locations.create(:feature_id => feature.fid, :spot_feature => spot, :notes => location_note, :lat => lat, :lng => lng)
+        else
+          location.spot_feature = spot if !spot.nil? && location.spot_feature.blank?
+          location.notes = location_note if !location_note.nil? && location.notes.blank?
+          location.lat = lat if !lat.nil? && location.lat.nil?
+          location.lng = lng if !lng.nil? && location.lng.nil?
+          location.save
+        end
+      end
     end
   end
   

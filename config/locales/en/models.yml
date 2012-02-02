@@ -116,7 +116,7 @@ en:
                 other: 'titles'
             transformation:
                 one: 'transformation'
-                one: 'transformations'
+                other: 'transformations'
             translated_title:
                 one: 'translated title'
                 other: 'translated titles'
