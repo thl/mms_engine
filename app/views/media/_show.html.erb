@@ -113,14 +113,14 @@
 <%=  @medium.private_note %>
 <% end %>
 <p>
-<% if @medium.taken_on.nil? 
-	 if !@medium.partial_taken_on.nil? %>
+<% if @medium.partial_taken_on.nil? 
+	 if !@medium.taken_on.nil? %>
        <b><%= Medium.human_attribute_name('taken_on', :what => @medium.class.human_name.titleize).s %>:</b>
-<%=    h(@medium.partial_taken_on) %>
+<%=    h(@medium.taken_on.strftime('%d/%b/%Y')) %>
 <%   end
    else %>
      <b><%= Medium.human_attribute_name('taken_on', :what => @medium.class.human_name.titleize).s %>:</b>
-<%= h(@medium.taken_on.strftime('%d/%b/%Y')) %>
+<%=  h(@medium.partial_taken_on) %>
 <% end
    if logged_in? %>
      <br/><b><%= Medium.human_attribute_name('created_on').s %>:</b>
