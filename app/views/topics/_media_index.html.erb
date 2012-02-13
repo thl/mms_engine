@@ -1,6 +1,6 @@
 <% if !@pictures.nil? || !@videos.nil? || !@documents.nil?
      if !@topic.nil? %>
-	   <h2>Media Associated with <%= @topic.title %></h2>
+	   <h2><%= Medium.human_name(:count => :many).titleize.s %> Associated with <%= @topic.title %></h2>
 <%   end %>
 <%=  render :partial => 'media/index' %>
 <% elsif !@media.nil? %>

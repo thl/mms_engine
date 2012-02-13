@@ -45,7 +45,7 @@ class MediaController < AclController
           @documents = @element.paged_media(Medium::COLS, nil, 'Document')
           title = @element.title
           @titles = Hash.new
-          MEDIA_TYPES.each{ |key, value| @titles[key] = ts(:in, :what => value.human_name(:count => :many).titleize, :where => title) }
+          MEDIA_TYPES.each{ |key, value| @titles[key] = "#{value.human_name(:count => :many).titleize} Associated with #{title}".s }
           @more = { element_name => element_id, :type => '' }
           if @controller_name == 'locations'
             @place = @element
@@ -65,7 +65,7 @@ class MediaController < AclController
           @medium_pages = Paginator.new self, @element.media_count(type), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
           @media = @element.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset, type)
           @pagination_params[element_name] = element_id
-          @title = ts(:in, :what => MEDIA_TYPES[type.downcase.to_sym].human_name(:count => :many).titleize, :where => @element.title)
+          @title = "#{MEDIA_TYPES[type.downcase.to_sym].human_name(:count => :many).titleize} Associated with #{@element.title}".s
         end
         if !['locations', 'topics'].include? @controller_name
           @current = @element.ancestors.collect{|c| c.id.to_i}
@@ -77,7 +77,7 @@ class MediaController < AclController
         @medium_pages = Paginator.new self, @keyword.media.size, Medium::COLS * Medium::ROWS, params[:page]
         @media = @keyword.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset)
         @pagination_params[:keyword_id] = @keyword.id
-        @title = ts(:in, :what => Medium.human_name(:count => :many).titleize, :where => ts(:keyword, :what => @keyword.title))
+        @title = "#{Medium.human_name(:count => :many).titleize} Associated with Keyword \"#{@keyword.title}\"".s
       else
         if !type.blank?
           @medium_pages = Paginator.new self, Medium.count(:conditions => { :type => type }), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]

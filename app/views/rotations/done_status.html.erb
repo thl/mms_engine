@@ -1,4 +1,4 @@
-<h1>Done Rotation of Media Object <%= @medium.id %> by <%= @user.screen_name %></h1>
+<h1>Done Rotation of <%= Picture.human_name.titleize.s %> #<%= @medium.id %> by <%= @user.screen_name %></h1>
 <p><%= render :partial => 'status' %></p>
 <p>&nbsp;<br/>
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => nil} %>

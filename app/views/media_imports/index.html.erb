@@ -1,4 +1,4 @@
-<h1>Media Importations</h1>
+<h1><%= Medium.human_name.titleize.s %> Importations</h1>
 <% if !@active_users.empty? %>
      <h2>Users Currently Importing</h2>
      <ul class="normal">
@@ -17,6 +17,6 @@
 <% end %>
 <p>&nbsp;<br/>
 <%= link_to 'Status of last importation', status_media_imports_path %> |
-<%= link_to 'New media importation', new_media_import_path %> |
+<%= link_to "New #{Medium.human_name.s} importation", new_media_import_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

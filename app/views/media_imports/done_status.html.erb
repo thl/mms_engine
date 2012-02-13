@@ -3,7 +3,7 @@
 <%= render :partial => 'status' %>
 </p>
 <p>&nbsp;<br/>
-<%= link_to 'New media importation', new_media_import_path %> |
-<%= link_to 'Media Importation Home', media_imports_path %> |
+<%= link_to "New #{Medium.human_name.s} importation", new_media_import_path %> |
+<%= link_to "#{Medium.human_name.titleize.s} Importation Home", media_imports_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>
