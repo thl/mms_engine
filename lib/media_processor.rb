@@ -291,7 +291,7 @@ module MediaProcessor
           if model.nil?
             maker_str = image.make
             if !maker_str.blank?
-              maker = CaptureDeviceMaker.find_by_exif_tag(maker_str)
+              maker = CaptureDeviceMaker.first(['exif_tag = ? OR title = ?', maker_str, maker_str.titleize])
               maker = CaptureDeviceMaker.create(:title => maker_str.titleize, :exif_tag => maker_str) if maker.nil?
               model = maker.capture_device_models.create(:title => model_str, :exif_tag => model_str) 
               self.capture_device_model = model
