@@ -25,7 +25,7 @@ module MultimediaImportation
         levels[0] = classifications[0]
         Dir.chdir(classification_title_0) do
           Dir.glob('*').sort.each do |classification_title_1|
-            next if classification_title_1.downcase =~ /\.db$|\.ini$/
+            next if invalid_extension(classification_title_1, type)
             if File.directory?(classification_title_1)
               if classifications[1].blank?
                 raise "Second level folder <i>#{classification_title_1}</i> found but no second level classification defined!"
@@ -37,7 +37,7 @@ module MultimediaImportation
               levels[1] = classifications[1]
               Dir.chdir(classification_title_1) do
                 Dir.glob('*').sort.each do |classification_title_2|
-                  next if classification_title_2.downcase =~ /\.db$|\.ini$/         
+                  next if invalid_extension(classification_title_2, type)
                   if File.directory?(classification_title_2)
                     if classifications[2].blank?
                       raise "Third level folder <i>#{classification_title_2}</i> found but no third level classification defined!"
@@ -52,7 +52,7 @@ module MultimediaImportation
                         if File.directory?(classification_title_3)
                           raise "Found fourth level folder <i>#{classification_title_3}</i> found but importation does not support fourth level classifications!"
                         end
-                        next if classification_title_3.downcase =~ /\.db$|\.ini$/
+                        next if invalid_extension(classification_title_3, type)
                         classification = classifications.collect { |c| objects[c]  }
                         media << media_hash(type, classification, classification_title_3, File.join(source, classification_title_0, classification_title_1, classification_title_2, classification_title_3), check_existence)
                       end
@@ -75,6 +75,11 @@ module MultimediaImportation
       end
     end
     return media
+  end
+  
+  def invalid_extension(filename, type)
+    extension = FilenameUtils.extension_without_dot(filename).downcase
+    return ['db', 'ini'].include?(extension) || type == 'images' && !Image::VALID_TYPES.keys.include?(extension)
   end
   
   def search_media_by_classification(classification, filename)
