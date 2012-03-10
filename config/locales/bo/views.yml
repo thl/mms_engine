@@ -9,7 +9,6 @@ bo:
         media_processes: 'སྨྱན་གཟུགས་ཐག་གཅོད།'
         page: 'ངོས་དོ་དམ།'
         static_pages: 'འཇེགས་རྣམ་ངོས།'
-        tab: 'དོ་དམ།'
         web_interface: 'དྲ་ངོས་མཚམས་ངོས།'
     by:
         collection: 'བརྩམས་ཆས་འདུ་ལྟར།'

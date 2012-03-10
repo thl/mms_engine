@@ -9,7 +9,6 @@ en:
         media_processes: 'Media Processes'
         page: 'Admin Page'
         static_pages: 'Static Pages'
-        tab: 'Admin'
         web_interface: 'Web Interface'
     by:
         collection: 'By collection'

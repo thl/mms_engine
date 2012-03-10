@@ -9,7 +9,6 @@ zh:
         media_processes: '媒体处理'
         page: '管理页面'
         static_pages: '静态页面'
-        tab: '管理'
         web_interface: '网页界面'
     by:
         collection: '按作品集'
