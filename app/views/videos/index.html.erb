@@ -1,15 +1,15 @@
 <h1><%= ts 'list.ing', :what => Video.human_name(:count => :many).titleize %></h1>
 <table border="1" class="normal">
   <tr>
-  	<th><%= ts :id, :what => Video.human_name.titleize %></th>
-	<th><%= Video.human_attribute_name('photographer').s %></th>
-	<th><%= QualityType.human_name.titleize.s %></th>
+    <th><%= ts 'id.record', :what => Video.human_name.titleize %></th>
+    <th><%= Video.human_attribute_name('photographer').s %></th>
+    <th><%= QualityType.human_name.titleize.s %></th>
   </tr>
 <% for video in @videos %>
   <tr>
     <td><%= link_to picture.id, picture_path(video) %></td>
-	<td><%=h video.photographer.fullname %></td>
-	<td><%=h(video.quality_type.title).s %></td>
+    <td><%=h video.photographer.fullname %></td>
+    <td><%=h(video.quality_type.title).s %></td>
   </tr>
 <% end %>
 </table>
