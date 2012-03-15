@@ -15,7 +15,7 @@
 <%  if !caption.description_type.blank? %>
       <td><%= h(caption.description_type.title).s %></td>
 <%  else %>
-      <td><%= ts :none %></td>
+      <td><%= ts 'found.none.this' %></td>
 <%  end 
     if caption.creator.nil? %>
     <td>&nbsp;</td>
