@@ -43,8 +43,8 @@ zh:
                 one: '描述'
                 other: '描述(复数)'
             description_type:
-                one: '描述类别'
-                other: '描述类别(复数)'
+                one: '%{what}类别'
+                other: '%{what}类别(复数)'
             dialect:
                 one: '方言'
                 other: '方言(复数)'

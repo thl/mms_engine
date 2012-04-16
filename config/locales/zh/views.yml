@@ -21,7 +21,7 @@ zh:
     collection:
         one: '作品集'
         other: '作品集(复数)'
-    daily: '{{what}} 的天'
+    daily: '%{what} 的天'
     dictionaries:
         tab: '字典'
         title: '搜索喜马拉雅语言字典'
@@ -33,8 +33,8 @@ zh:
         one: '社会文化群体'
         other: '社会文化群体'
     import: '输入'
-    keyword: '关键词{{what}}'
-    sponsored_by: '由{{what}}资助'
+    keyword: '关键词%{what}'
+    sponsored_by: '由%{what}资助'
     subject:
         one: '学科'
         other: '学科(复数)'

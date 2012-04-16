@@ -21,7 +21,7 @@ dz:
     collection:
         one: 'བསྡུ་གསོག།'
         other: 'བསྡུ་གསོག་ཚུ།'
-    daily: 'ད་རིས་ཀྱི་ {{what}}།'
+    daily: 'ད་རིས་ཀྱི་ %{what}།'
     dictionaries:
         tab: 'ཚིག་མཛོད།'
         title: 'ཧི་མ་ལ་ཡཱན་སྐད་ཡིག་ཚུ་གི་ཚིག་མཛོད་ཚུ་འཚོལ་ཞིབ་འབད།'
@@ -33,8 +33,8 @@ dz:
         one: 'མི་རིགས།'
         other: 'མི་རིགས་ཚུ།'
     import: 'ནང་འདྲེན།'
-    keyword: 'གཙོ་ཚིག {{what}}།'
-    sponsored_by: '{{what}} གི་རྒྱབ་སྐྱོར་ཐོག་ལས།'
+    keyword: 'གཙོ་ཚིག %{what}།'
+    sponsored_by: '%{what} གི་རྒྱབ་སྐྱོར་ཐོག་ལས།'
     subject:
         one: 'དོན་ཚན།'
         other: 'དོན་ཚན་ཚུ།'

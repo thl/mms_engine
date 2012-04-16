@@ -43,8 +43,8 @@ en:
                 one: 'description'
                 other: 'descriptions'
             description_type:
-                one: '{{what}} type'
-                other: '{{what}} types'
+                one: '%{what} type'
+                other: '%{what} types'
             dialect:
                 one: 'dialect'
                 other: 'dialects'
@@ -202,7 +202,7 @@ en:
                 private_note: 'Private Note'
                 updated_on: 'Updated on'
                 recording_note: 'Recording Note'
-                taken_on: '{{what}} Date'
+                taken_on: '%{what} Date'
             organization:
                 title: 'Organization Name'
                 website: 'Website'

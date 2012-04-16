@@ -21,7 +21,7 @@ en:
     collection:
         one: 'collection'
         other: 'collections'
-    daily: '{{what}} of the day'
+    daily: '%{what} of the day'
     dictionaries: 
         tab: 'Dictionaries'
         title: 'Search Himalayan Languages Dictionaries'
@@ -33,8 +33,8 @@ en:
         one: 'socio-cultural group'
         other: 'socio-cultural groups'
     import: 'Import'
-    keyword: 'Keyword {{what}}'
-    sponsored_by: 'sponsored by {{what}}'
+    keyword: 'Keyword %{what}'
+    sponsored_by: 'sponsored by %{what}'
     subject:
         one: 'subject'
         other: 'subjects'

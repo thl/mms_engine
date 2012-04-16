@@ -43,8 +43,8 @@ dz:
                 one: 'འགྲེལ་བཤད།'
                 other: 'འགྲེལ་བཤད་ཚུ།'
             description_type:
-                one: '{{what}} དབྱེ་བ།'
-                other: '{{what}} དབྱེ་བ་ཚུ།'
+                one: '%{what} དབྱེ་བ།'
+                other: '%{what} དབྱེ་བ་ཚུ།'
             dialect:
                 one: 'ཁ་སྐད།'
                 other: 'ཁ་སྐད་ཚུ།'

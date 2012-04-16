@@ -38,7 +38,7 @@ class DescriptionTypesController < AclController
 
     respond_to do |format|
       if @description_type.save
-        flash[:notice] = ts('new.successful', :what => DescriptionType.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => DescriptionType.human_name(:what => Description.human_name).capitalize)
         format.html { redirect_to description_type_url(@description_type) }
         format.xml  { head :created, :location => description_type_url(@description_type) }
       else
@@ -55,7 +55,7 @@ class DescriptionTypesController < AclController
 
     respond_to do |format|
       if @description_type.update_attributes(params[:description_type])
-        flash[:notice] =ts('edit.successful', :what => DescriptionType.human_name.capitalize)
+        flash[:notice] =ts('edit.successful', :what => DescriptionType.human_name(:what => Description.human_name).capitalize)
         format.html { redirect_to description_type_url(@description_type) }
         format.xml  { head :ok }
       else

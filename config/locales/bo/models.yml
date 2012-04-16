@@ -43,8 +43,8 @@ bo:
                 one: 'ཞིབ་བརྗོད'
                 other: ' ཞིབ་བརྗོད་དག'
             description_type:
-                one: ' ཞིབ་བརྗོད་ཀྱི་རིགས'
-                other: 'ཞིབ་བརྗོད་ཀྱི་རིགས་དག'
+                one: '%{what}ཀྱི་རིགས'
+                other: '%{what}ཀྱི་རིགས་དག'
             dialect:
                 one: 'ཡུལ་སྐད'
                 other: 'ཡུལ་སྐད་དག'

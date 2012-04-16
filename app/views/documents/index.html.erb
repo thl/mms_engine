@@ -4,7 +4,7 @@
   </tr>
 <% for document in @documents %>
   <tr>
-    <td><%= link_to ts(:show), document_path(document) %></td>
+    <td><%= link_to ts('show.this'), document_path(document) %></td>
     <td><%= link_to ts('edit.this'), edit_document_path(document) %></td>
     <td><%= link_to ts('delete.this'), document_path(document), :confirm => te('delete.confirmation'), :method => :delete %></td>
   </tr>
