@@ -1,4 +1,4 @@
-# Localization file for English of mms engine.
+# Sample localization file for English. Add more files in this directory for other locales.
 en:
     activerecord:
         # Model names will be kept in lower case. Invoke .capitalize or .titleize if you need them in uppercase.
@@ -18,7 +18,7 @@ en:
             application_filter:
                 one: 'Application Filter'
                 other: 'Application Filters'
-            caption: 
+            caption:
                 one: 'caption'
                 other: 'captions'
             capture_device_maker:
@@ -36,7 +36,7 @@ en:
             copyright_holder:
                 one: 'copyright holder'
                 other: 'copyright holders'
-            country: 
+            country:
                 one: 'country'
                 other: 'countries'
             description:
@@ -48,10 +48,10 @@ en:
             dialect:
                 one: 'dialect'
                 other: 'dialects'
-            document: 
+            document:
                 one: 'text'
                 other: 'texts'
-            glossary: 
+            glossary:
                 one: 'glossary'
                 other: 'glossaries'
             keyword:
@@ -81,7 +81,7 @@ en:
             organization:
                 one: 'organization'
                 other: 'organizations'
-            picture: 
+            picture:
                 one: 'photograph'
                 other: 'photographs'
             publisher:
@@ -93,7 +93,7 @@ en:
             quality_type:
                 one: 'quality type'
                 other: 'quality types'
-            recording_orientation: 
+            recording_orientation:
                 one: 'recording orientation'
                 other: 'recording orientations'
             renderer:
@@ -105,7 +105,7 @@ en:
             setting:
                 one: 'Setting'
                 other: 'Settings'
-            source: 
+            source:
                 one: 'source'
                 other: 'sources'
             sponsor:
@@ -120,7 +120,7 @@ en:
             translated_title:
                 one: 'translated title'
                 other: 'translated titles'
-            video: 
+            video:
                 one: 'video'
                 other: 'videos'
             workflow:
@@ -154,7 +154,7 @@ en:
                 exif_tag: 'EXIF Tag for Model'
             citation:
                 line_number: 'Line Number'
-                medium_id: 'Resouce ID # for Cited Resource'
+                medium_id: 'Medium ID for Cited Resource'
                 note: 'Note'
                 page_number: 'Page Number'
                 page_side: 'Page Side'
@@ -171,7 +171,7 @@ en:
             description_type:
                 title: 'Name of Description Type'
             document:
-                capture_device_model: 'Scanner Model'                
+                capture_device_model: 'Scanner Model'
                 caption:
                     one: 'Title'
                     other: 'Titles'
@@ -226,7 +226,7 @@ en:
             reproduction_type:
                 order: 'Order'
                 title: 'License Type Name'
-                website: 'Website' 
+                website: 'Website'
             source:
                 title: 'Source Name'
             sponsor:
@@ -250,5 +250,5 @@ en:
                 notes: 'Notes'
                 other_id: 'Other ID'
                 original_filename: 'Original Filename'
-                original_medium_id: 'Original Resource ID #'
+                original_medium_id: 'Original Media Object ID'
                 sequence_order: 'Sequence order'

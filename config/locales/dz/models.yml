@@ -1,254 +1,254 @@
 # Localization file for Dzongkha of mms engine.
 dz:
     activerecord:
-        # Model names will be kept in lower case. Invoke .capitalize or .titleize if you need them in uppercase.
-        models:
-            administrative_level:
-                one: 'བདག་སྐྱོང་གནས་རིམ།'
-                other: 'བདག་སྐྱོང་གནས་རིམ་ཚུ།'
-            administrative_unit:
-                one: 'བདག་སྐྱོང་ལས་ཚན།'
-                other: 'བདག་སྐྱོང་ལས་ཚན་ཚུ།'
-            affiliation:
-                one: 'འབྲེལ་གཏོགས།'
-                other: 'འབྲེལ་གཏོགས་ཚུ།'
-            application_setting:
-                one: 'གློག་རིམ་སྒྲིག་སྟངས།'
-                other: 'གློག་རིམ་སྒྲིག་སྟངས་ཚུ།'
-            application_filter:
-                one: 'གློག་རིམ་ཚགས་མ།'
-                other: 'གློག་རིམ་ཚགས་མ་ཚུ།'
-            caption:
-                one: 'འགོ་བརྗོད།'
-                other: 'འགོ་བརྗོད་ཚུ།'
-            capture_device_maker:
-                one: 'འཛིན་བཟུང་ཐབས་འཕྲུལ་བཟོ་བསྐྲུན་པ།'
-                other: 'འཛིན་བཟུང་ཐབས་འཕྲུལ་བཟོ་བསྐྲུན་པ་ཚུ།'
-            capture_device_model:
-                one: 'པར་ཆས་དཔེ་གཟུགས།'
-                other: 'པར་ཆས་དཔེ་གཟུགས་ཚུ།'
-            citation:
-                one: 'བསྔགས་བརྗོད།'
-                other: 'བསྔགས་བརྗོད་ཚུ།'
-            copyright:
-                one: 'འདྲ་བཤུས་དབང་ཆ།'
-                other: 'འདྲ་བཤུས་དབང་ཆ་ཚུ།'
-            copyright_holder:
-                one: 'འདྲ་བཤུས་དབང་ཆ་འཆང་མི།'
-                other: 'འདྲ་བཤུས་དབང་ཆ་འཆང་མི་ཚུ།'
-            country:
-                one: 'རྒྱལ་ཁབ།'
-                other: 'རྒྱལ་ཁབ་ཚུ།'
-            description:
-                one: 'འགྲེལ་བཤད།'
-                other: 'འགྲེལ་བཤད་ཚུ།'
-            description_type:
-                one: '%{what} དབྱེ་བ།'
-                other: '%{what} དབྱེ་བ་ཚུ།'
-            dialect:
-                one: 'ཁ་སྐད།'
-                other: 'ཁ་སྐད་ཚུ།'
-            document:
-                one: 'ཡིག་ཆ།'
-                other: 'ཡིག་ཆ་ཚུ།'
-            glossary:
-                one: 'ཚིག་ཐོ།'
-                other: 'ཚིག་ཐོ་ཚུ།'
-            keyword:
-                one: 'གཙོ་ཚིག།'
-                other: 'གཙོ་ཚིག་ཚུ།'
-            loan_type:
-                one: 'བརྙ་ལེན་དབྱེ་བ།'
-                other: 'བརྙ་ལེན་དབྱེ་བ་ཚུ།'
-            location:
-                one: 'གནས་ཁོངས།'
-                other: 'གནས་ཁོངས་ཚུ།'
-            media_keyword_association:
-                one: 'བརྡ་བརྒྱུད་གཙོ་ཚིག་ཚོགས་པ།'
-                other: 'བརྡ་བརྒྱུད་གཙོ་ཚིག་ཚོགས་པ་ཚུ།'
-            media_publisher:
-                one: 'བརྡ་བརྒྱུད་དཔེ་བསྐྲུན་པ།'
-                other: 'བརྡ་བརྒྱུད་དཔེ་བསྐྲུན་པ་ཚུ།'
-            media_source_association:
-                one: 'བརྡ་བརྒྱུད་འབྱུང་ས་་ཚོགས་པ།'
-                other: 'བརྡ་བརྒྱུད་འབྱུང་ས་་ཚོགས་པ་ཚུ།'
-            medium:
-                one: 'བརྡ་སྟོན་ལམ།'
-                other: 'བརྡ་སྟོན་ལམ་ཚུ།'
-            movie:
-                one: 'གློག་བརྙན།'
-                other: 'གློག་བརྙན་ཚུ།'
-            organization:
-                one: 'ཚོགས་སྡེ།'
-                other: 'ཚོགས་སྡེ་ཚུ།'
-            picture:
-                one: 'པར།'
-                other: 'པར་ཚུ།'
-            publisher:
-                one: 'དཔེ་བསྐྲུན་པ།'
-                other: 'དཔེ་བསྐྲུན་པ་ཚུ།'
-            project:
-                one: 'ལས་འགུལ།'
-                other: 'ལས་འགུལ་ཚུ།'
-            quality_type:
-                one: 'སྤུས་ཚད་ཀྱི་དབྱེ་བ།'
-                other: 'སྤུས་ཚད་ཀྱི་དབྱེ་བ་ཚུ།'
-            recording_orientation:
-                one: 'སྒྲ་བཟུང་ཁ་ཕྱོགས།'
-                other: 'སྒྲ་བཟུང་ཁ་ཕྱོགས་ཚུ།'
-            renderer:
-                one: 'བྱིན་མིའི་མིང་།'
-                other: 'བྱིན་མིའི་མིང་ཚུ།'
-            reproduction_type:
-                one: 'ཆོག་ཐམ་གྱི་དབྱེ་བ།'
-                other: 'ཆོག་ཐམ་གྱི་དབྱེ་བ་ཚུ།'
-            setting:
-                one: 'སྒྲིག་སྟངས།'
-                other: 'སྒྲིག་སྟངས་ཚུ།'
-            source:
-                one: 'འབྱུང་ས།'
-                other: 'འབྱུང་ས་ཚུ།'
-            sponsor:
-                one: 'ཟད་འགྲོ་གནང་མི།'
-                other: 'ཟད་འགྲོ་གནང་མི་ཚུ།'
-            title:
-                one: 'མགོ་མིང་།'
-                other: 'མགོ་མིང་ཚུ།'
-            transformation:
-                one: 'བསྒྱུར་བ།'
-                other: 'བསྒྱུར་བ་ཚུ།'
-            translated_title:
-                one: 'སྐད་བསྒྱུར་འབད་ཡོད་པའི་མགོ་མིང་།'
-                other: 'སྐད་བསྒྱུར་འབད་ཡོད་པའི་མགོ་མིང་ཚུ།'
-            video:
-                one: 'བརྙན་སྟོན།'
-                other: 'བརྙན་སྟོན་ཚུ།'
-            workflow:
-                one: 'ལཱ་རྒྱུན་བརྡ་དོན།'
-        # Attribute names will be titleized.:
-        attributes:
-            administrative_level:
-                level: 'གནས་རིམ་ཨང་།'
-                title: 'བདག་སྐྱོང་པའི་གནས་རིམ་མིང་།'
-            administrative_unit:
-                created_on: 'གསར་བསྐྲུན་འབད་བའི་དུས་ཚེས།'
-                creator: 'གསར་བསྐྲུན་པ།'
-                description: 'འགྲེལ་བཤད།'
-                is_problematic: 'ལཱ་ཁག་འདུག་ཡ?'
-                parent: 'རྩ་ལག'
-                title: 'བདག་སྐྱོང་ལས་ཚན།'
-            application_filter:
-                title: 'མགོ་མིང་།'
-            application_setting:
-                description: 'འགྲེལ་བཤད།'
-                title: 'གློག་རིམ་སྒྲིགས་སྟངས་མིང་།'
-                value: 'བེ་ལུ། (integer)'
-                string_value: 'བེ་ལུ། (string)'
-            caption:
-                creator: 'གསར་བསྐྲུན་པ།'
-            capture_device_maker:
-                title: 'པར་ཆས་བཟོ་བསྐྲུན་པའི་མིང་།'
-                exif_tag: 'བཟོ་བསྐྲུན་པའི་ EXIF ངོ་རྟགས།'
-            capture_device_model:
-                title: 'པར་ཆས་དཔེ་གཟུགས་ཀྱི་མིང་།'
-                exif_tag: 'དཔེ་གཟུགས་ཀྱི་ EXIF ངོ་རྟགས།'
-            citation:
-                line_number: 'གྲལ་ཐིག་ཨང་།'
-                medium_id: 'བསྔགས་བརྗོད་འབྱུང་སའི་ཨའི་ཌི་བར་མ།'
-                note: 'དྲན་འཛིན།'
-                page_number: 'ཤོག་ལེབ་ཨང་།'
-                page_side: 'ཤོག་ལེབ་ཟུར།'
-            copyright:
-                notes: 'དྲན་འཛིན་ཚུ།'
-            copyright_holder:
-                title: 'འདྲ་བཤུས་དབང་ཆ་འཆང་མིའི་མིང་།'
-                website: 'ཝེབ་ས་ཁོངས།'
-            country:
-                title: 'རྒྱལ་ཁབ་མིང་།'
-            description:
-                creator: 'གསར་བསྐྲུན་པ།'
-                title: 'འགྲེལ་བཤད།'
-            description_type:
-                title: 'འགྲེལ་བཤད་དབྱེ་བའི་མིང་།'
-            document:
-                capture_device_model: 'པར་ལེན་འཕྲུལ་ཆས་ཀྱི་དཔེ་གཟུགས།'
-                caption:
-                    one: 'མགོ་མིང་།'
-                    other: 'མགོ་མིང་།'
-                photographer: 'རྩོམ་པ་པོ།'
-            glossary:
-                abbreviation: 'བསྡུས་ཚིག'
-                description: 'འགྲེལ་བཤད།'
-                is_public: 'མི་སྡེ་གིས་སྤྱོད་ནི་ཨིན་ན?'
-                title: 'ཚིག་ཐོ་མིང་།'
-            image:
-                uploaded_data: 'གཟུགས་བརྙན།'
-            keyword:
-                title: 'གཙོ་ཚིག་མིང་།'
-            location:
-                feature_id: 'ཁྱད་ཆོས་ཨའི་ཌི།'
-                notes: 'དྲན་འཛིན་ཚུ།'
-                spot_feature: 'ས་གནས་ཁྱད་ཆོས།'
-            media_source_association:
-                shot_number: 'པར་བཏབ་ཨང་།'
-            medium:
-                caption:
-                    one: 'འགོ་བརྗོད།'
-                    other: 'འགོ་བརྗོད་ཚུ།'
-                capture_device_model: 'པར་ཆས་དཔེ་གཟུགས།'
-                created_on: 'གསར་བསྐྲུན་འབད་བའི་དུས་ཚེས།'
-                id: 'Resource #'
-                photographer: 'པར་བཏབ་མི།'
-                private_note: 'སྒེར་གྱི་དྲན་འཛིན།'
-                updated_on: 'དུས་མཐུན་བཟོ་བའི་དུས་ཚེས།'
-                recording_note: 'སྒྲ་པར་བཟུང་ནིའི་དྲན་འཛིན།'
-                taken_on: 'པར་བཏབ་དུས་ཚེས།'
-            organization:
-                title: 'ཚོགས་སྡེའི་མིང་།'
-                website: 'ཝེབ་ས་ཁོངས།'
-            picture:
-                caption:
-                    one: 'འགོ་བརྗོད།'
-                    other: 'འགོ་བརྗོད།'
-                photographer: 'པར་བཏབ་མི།'
-                rotation: 'Rotation'
-            publisher:
-                country_id: 'རྒྱབ་ཁབ་ཁྱད་ཆོས་ཨའི་ཌི།'
-            project:
-                title: 'ལས་འགུལ་མིང་།'
-            quality_type:
-                title: 'སྤུས་ཚད་དབྱེ་བའི་མིང་།'
-            recording_orientation:
-                title: 'སྒྲ་བཟུང་བསྒྱུར་བཅོས་མིང་།'
-            renderer:
-                title: 'བྱིན་མིའི་མིང་།'
-                path: 'འགྲུལ་ལམ།'
-            reproduction_type:
-                order: 'གོ་རིམ།'
-                title: 'ཆོག་ཐམ་དབྱེ་བའི་མིང་།'
-                website: 'ཝེབ་ས་ཁོངས།'
-            source:
-                title: 'འབྱུང་སའི་མིང་།'
-            sponsor:
-                title: 'ཟད་འགྲོ་གནང་མིའི་མིང་།'
-            status:
-                title: 'མགོ་མིང་།'
-                description: 'འགྲེལ་བཤད།'
-                position: 'གནས་རིམ།'
-            transformation:
-                path: 'འགྲུལ་ལམ།'
-                title: 'བསྒྱུར་མིང་།'
-            typescript:
-                thumbnail: 'སྔོན་ལྟ།'
-                uploaded_data: 'ཡིག་ཆ།'
-            video:
-                caption:
-                    one: 'མགོ་མིང་།'
-                    other: 'མགོ་མིང་།'
-                photographer: 'གློག་བརྙན་བཟོ་མི།'
-            workflow:
-                notes: 'དྲན་འཛིན་ཚུ།'
-                other_id: 'ཨའི་ཌི་གཞན།'
-                original_filename: 'ཡིག་སྣོད་མིང་ངོ་མ།'
-                original_medium_id: 'བརྡ་བརྒྱུད་དངོས་པོའི་ཨའི་ཌི་ངོ་མ།'
-                sequence_order: 'གོ་རིམ།'
+    	# Model names will be kept in lower case. Invoke .capitalize or .titleize if you need them in uppercase.
+    	models:
+    		administrative_level:
+    			one: 'བདག་སྐྱོང་གནས་རིམ།'
+    			other: 'བདག་སྐྱོང་གནས་རིམ་ཚུ།'
+    		administrative_unit:
+    			one: 'བདག་སྐྱོང་ལས་ཚན།'
+    			other: 'བདག་སྐྱོང་ལས་ཚན་ཚུ།'
+    		affiliation:
+    			one: 'འབྲེལ་གཏོགས།'
+    			other: 'འབྲེལ་གཏོགས་ཚུ།'
+    		application_setting:
+    			one: 'གློག་རིམ་སྒྲིག་སྟངས།'
+    			other: 'གློག་རིམ་སྒྲིག་སྟངས་ཚུ།'
+    		application_filter:
+    			one: 'གློག་རིམ་ཚགས་མ།'
+    			other: 'གློག་རིམ་ཚགས་མ་ཚུ།'
+    		caption:
+    			one: 'འགོ་བརྗོད།'
+    			other: 'འགོ་བརྗོད་ཚུ།'
+    		capture_device_maker:
+    			one: 'འཛིན་བཟུང་ཐབས་འཕྲུལ་བཟོ་བསྐྲུན་པ།'
+    			other: 'འཛིན་བཟུང་ཐབས་འཕྲུལ་བཟོ་བསྐྲུན་པ་ཚུ།'
+    		capture_device_model:
+    			one: 'པར་ཆས་དཔེ་གཟུགས།'
+    			other: 'པར་ཆས་དཔེ་གཟུགས་ཚུ།'
+    		citation:
+    			one: 'བསྔགས་བརྗོད།'
+    			other: 'བསྔགས་བརྗོད་ཚུ།'
+    		copyright:
+    			one: 'འདྲ་བཤུས་དབང་ཆ།'
+    			other: 'འདྲ་བཤུས་དབང་ཆ་ཚུ།'
+    		copyright_holder:
+    			one: 'འདྲ་བཤུས་དབང་ཆ་འཆང་མི།'
+    			other: 'འདྲ་བཤུས་དབང་ཆ་འཆང་མི་ཚུ།'
+    		country:
+    			one: 'རྒྱལ་ཁབ།'
+    			other: 'རྒྱལ་ཁབ་ཚུ།'
+    		description:
+    			one: 'འགྲེལ་བཤད།'
+    			other: 'འགྲེལ་བཤད་ཚུ།'
+    		description_type:
+    			one: '%{what} དབྱེ་བ།'
+    			other: '%{what} དབྱེ་བ་ཚུ།'
+    		dialect:
+    			one: 'ཁ་སྐད།'
+    			other: 'ཁ་སྐད་ཚུ།'
+    		document:
+    			one: 'ཡིག་ཆ།'
+    			other: 'ཡིག་ཆ་ཚུ།'
+    		glossary:
+    			one: 'ཚིག་ཐོ།'
+    			other: 'ཚིག་ཐོ་ཚུ།'
+    		keyword:
+    			one: 'གཙོ་ཚིག།'
+    			other: 'གཙོ་ཚིག་ཚུ།'
+    		loan_type:
+    			one: 'བརྙ་ལེན་དབྱེ་བ།'
+    			other: 'བརྙ་ལེན་དབྱེ་བ་ཚུ།'
+    		location:
+    			one: 'གནས་ཁོངས།'
+    			other: 'གནས་ཁོངས་ཚུ།'
+    		media_keyword_association:
+    			one: 'བརྡ་བརྒྱུད་གཙོ་ཚིག་ཚོགས་པ།'
+    			other: 'བརྡ་བརྒྱུད་གཙོ་ཚིག་ཚོགས་པ་ཚུ།'
+    		media_publisher:
+    			one: 'བརྡ་བརྒྱུད་དཔེ་བསྐྲུན་པ།'
+    			other: 'བརྡ་བརྒྱུད་དཔེ་བསྐྲུན་པ་ཚུ།'
+    		media_source_association:
+    			one: 'བརྡ་བརྒྱུད་འབྱུང་ས་་ཚོགས་པ།'
+    			other: 'བརྡ་བརྒྱུད་འབྱུང་ས་་ཚོགས་པ་ཚུ།'
+    		medium:
+    			one: 'བརྡ་སྟོན་ལམ།'
+    			other: 'བརྡ་སྟོན་ལམ་ཚུ།'
+    		movie:
+    			one: 'གློག་བརྙན།'
+    			other: 'གློག་བརྙན་ཚུ།'
+    		organization:
+    			one: 'ཚོགས་སྡེ།'
+    			other: 'ཚོགས་སྡེ་ཚུ།'
+    		picture:
+    			one: 'པར།'
+    			other: 'པར་ཚུ།'
+    		publisher:
+    			one: 'དཔེ་བསྐྲུན་པ།'
+    			other: 'དཔེ་བསྐྲུན་པ་ཚུ།'
+    		project:
+    			one: 'ལས་འགུལ།'
+    			other: 'ལས་འགུལ་ཚུ།'
+    		quality_type:
+    			one: 'སྤུས་ཚད་ཀྱི་དབྱེ་བ།'
+    			other: 'སྤུས་ཚད་ཀྱི་དབྱེ་བ་ཚུ།'
+    		recording_orientation:
+    			one: 'སྒྲ་བཟུང་ཁ་ཕྱོགས།'
+    			other: 'སྒྲ་བཟུང་ཁ་ཕྱོགས་ཚུ།'
+    		renderer:
+    			one: 'བྱིན་མིའི་མིང་།'
+    			other: 'བྱིན་མིའི་མིང་ཚུ།'
+    		reproduction_type:
+    			one: 'ཆོག་ཐམ་གྱི་དབྱེ་བ།'
+    			other: 'ཆོག་ཐམ་གྱི་དབྱེ་བ་ཚུ།'
+    		setting:
+    			one: 'སྒྲིག་སྟངས།'
+    			other: 'སྒྲིག་སྟངས་ཚུ།'
+    		source:
+    			one: 'འབྱུང་ས།'
+    			other: 'འབྱུང་ས་ཚུ།'
+    		sponsor:
+    			one: 'ཟད་འགྲོ་གནང་མི།'
+    			other: 'ཟད་འགྲོ་གནང་མི་ཚུ།'
+    		title:
+    			one: 'མགོ་མིང་།'
+    			other: 'མགོ་མིང་ཚུ།'
+    		transformation:
+    			one: 'བསྒྱུར་བ།'
+    			other: 'བསྒྱུར་བ་ཚུ།'
+    		translated_title:
+    			one: 'སྐད་བསྒྱུར་འབད་ཡོད་པའི་མགོ་མིང་།'
+    			other: 'སྐད་བསྒྱུར་འབད་ཡོད་པའི་མགོ་མིང་ཚུ།'
+    		video:
+    			one: 'བརྙན་སྟོན།'
+    			other: 'བརྙན་སྟོན་ཚུ།'
+    		workflow:
+    			one: 'ལཱ་རྒྱུན་བརྡ་དོན།'
+    	# Attribute names will be titleized.
+    	attributes:
+    		administrative_level:
+    			level: 'གནས་རིམ་ཨང་།'
+    			title: 'བདག་སྐྱོང་པའི་གནས་རིམ་མིང་།'
+    		administrative_unit:
+    			created_on: 'གསར་བསྐྲུན་འབད་བའི་དུས་ཚེས།'
+    			creator: 'གསར་བསྐྲུན་པ།'
+    			description: 'འགྲེལ་བཤད།'
+    			is_problematic: 'ལཱ་ཁག་འདུག་ཡ?'
+    			parent: 'རྩ་ལག'
+    			title: 'བདག་སྐྱོང་ལས་ཚན།'
+    		application_filter:
+    			title: 'མགོ་མིང་།'
+    		application_setting:
+    			description: 'འགྲེལ་བཤད།'
+    			title: 'གློག་རིམ་སྒྲིགས་སྟངས་མིང་།'
+    			value: 'བེ་ལུ། (integer)'
+    			string_value: 'བེ་ལུ། (string)'
+    		caption:
+    			creator: 'གསར་བསྐྲུན་པ།'
+    		capture_device_maker:
+    			title: 'པར་ཆས་བཟོ་བསྐྲུན་པའི་མིང་།'
+    			exif_tag: 'བཟོ་བསྐྲུན་པའི་ EXIF ངོ་རྟགས།'
+    		capture_device_model:
+    			title: 'པར་ཆས་དཔེ་གཟུགས་ཀྱི་མིང་།'
+    			exif_tag: 'དཔེ་གཟུགས་ཀྱི་ EXIF ངོ་རྟགས།'
+    		citation:
+    			line_number: 'གྲལ་ཐིག་ཨང་།'
+    			medium_id: 'བསྔགས་བརྗོད་འབྱུང་སའི་ཨའི་ཌི་བར་མ།'
+    			note: 'དྲན་འཛིན།'
+    			page_number: 'ཤོག་ལེབ་ཨང་།'
+    			page_side: 'ཤོག་ལེབ་ཟུར།'
+    		copyright:
+    			notes: 'དྲན་འཛིན་ཚུ།'
+    		copyright_holder:
+    			title: 'འདྲ་བཤུས་དབང་ཆ་འཆང་མིའི་མིང་།'
+    			website: 'ཝེབ་ས་ཁོངས།'
+    		country:
+    			title: 'རྒྱལ་ཁབ་མིང་།'
+    		description:
+    			creator: 'གསར་བསྐྲུན་པ།'
+    			title: 'འགྲེལ་བཤད།'
+    		description_type:
+    			title: 'འགྲེལ་བཤད་དབྱེ་བའི་མིང་།'
+    		document:
+    			capture_device_model: 'པར་ལེན་འཕྲུལ་ཆས་ཀྱི་དཔེ་གཟུགས།'
+    			caption:
+    				one: 'མགོ་མིང་།'
+    				other: 'མགོ་མིང་།'
+    			photographer: 'རྩོམ་པ་པོ།'
+    		glossary:
+    			abbreviation: 'བསྡུས་ཚིག'
+    			description: 'འགྲེལ་བཤད།'
+    			is_public: 'མི་སྡེ་གིས་སྤྱོད་ནི་ཨིན་ན?'
+    			title: 'ཚིག་ཐོ་མིང་།'
+    		image:
+    			uploaded_data: 'གཟུགས་བརྙན།'
+    		keyword:
+    			title: 'གཙོ་ཚིག་མིང་།'
+    		location:
+    			feature_id: 'ཁྱད་ཆོས་ཨའི་ཌི།'
+    			notes: 'དྲན་འཛིན་ཚུ།'
+    			spot_feature: 'ས་གནས་ཁྱད་ཆོས།'
+    		media_source_association:
+    			shot_number: 'པར་བཏབ་ཨང་།'
+    		medium:
+    			caption:
+    				one: 'འགོ་བརྗོད།'
+    				other: 'འགོ་བརྗོད་ཚུ།'
+    			capture_device_model: 'པར་ཆས་དཔེ་གཟུགས།'
+    			created_on: 'གསར་བསྐྲུན་འབད་བའི་དུས་ཚེས།'
+    			id: 'Resource #'
+    			photographer: 'པར་བཏབ་མི།'
+    			private_note: 'སྒེར་གྱི་དྲན་འཛིན།'
+    			updated_on: 'དུས་མཐུན་བཟོ་བའི་དུས་ཚེས།'
+    			recording_note: 'སྒྲ་པར་བཟུང་ནིའི་དྲན་འཛིན།'
+    			taken_on: '%{what} དུས་ཚེས།'
+    		organization:
+    			title: 'ཚོགས་སྡེའི་མིང་།'
+    			website: 'ཝེབ་ས་ཁོངས།'
+    		picture:
+    			caption:
+    				one: 'འགོ་བརྗོད།'
+    				other: 'འགོ་བརྗོད།'
+    			photographer: 'པར་བཏབ་མི།'
+    			rotation: 'Rotation'
+    		publisher:
+    			country_id: 'རྒྱབ་ཁབ་ཁྱད་ཆོས་ཨའི་ཌི།'
+    		project:
+    			title: 'ལས་འགུལ་མིང་།'
+    		quality_type:
+    			title: 'སྤུས་ཚད་དབྱེ་བའི་མིང་།'
+    		recording_orientation:
+    			title: 'སྒྲ་བཟུང་བསྒྱུར་བཅོས་མིང་།'
+    		renderer:
+    			title: 'བྱིན་མིའི་མིང་།'
+    			path: 'འགྲུལ་ལམ།'
+    		reproduction_type:
+    			order: 'གོ་རིམ།'
+    			title: 'ཆོག་ཐམ་དབྱེ་བའི་མིང་།'
+    			website: 'ཝེབ་ས་ཁོངས།'
+    		source:
+    			title: 'འབྱུང་སའི་མིང་།'
+    		sponsor:
+    			title: 'ཟད་འགྲོ་གནང་མིའི་མིང་།'
+    		status:
+    			title: 'མགོ་མིང་།'
+    			description: 'འགྲེལ་བཤད།'
+    			position: 'གནས་རིམ།'
+    		transformation:
+    			path: 'འགྲུལ་ལམ།'
+    			title: 'བསྒྱུར་མིང་།'
+    		typescript:
+    			thumbnail: 'སྔོན་ལྟ།'
+    			uploaded_data: 'ཡིག་ཆ།'
+    		video:
+    			caption:
+    				one: 'མགོ་མིང་།'
+    				other: 'མགོ་མིང་།'
+    			photographer: 'གློག་བརྙན་བཟོ་མི།'
+    		workflow:
+    			notes: 'དྲན་འཛིན་ཚུ།'
+    			other_id: 'ཨའི་ཌི་གཞན།'
+    			original_filename: 'ཡིག་སྣོད་མིང་ངོ་མ།'
+    			original_medium_id: 'བརྡ་བརྒྱུད་དངོས་པོའི་ཨའི་ཌི་ངོ་མ།'
+    			sequence_order: 'གོ་རིམ།'
