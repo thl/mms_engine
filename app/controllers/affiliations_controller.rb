@@ -6,11 +6,10 @@ class AffiliationsController < AclController
   # GET /affiliations.xml
   def index
     if !@medium.nil?
-      @projects = Project.find(:all)
-      @sponsors = Sponsor.find(:all)
-      @organizations = Organization.find(:all)
+      @projects = Project.order('title')
+      @sponsors = Sponsor.order('title')
+      @organizations = Organization.order('title')
       @affiliations= @medium.affiliations
-      
       respond_to do |format|
         format.html # index.rhtml
         format.xml  { render :xml => @affiliations.to_xml }
@@ -23,7 +22,6 @@ class AffiliationsController < AclController
   def show
     @affiliation = Affiliation.find(params[:id])
     @medium = @affiliation.medium if @medium.nil?
-    
     respond_to do |format|
       format.html # show.rhtml
       format.xml  { render :xml => @caption.to_xml }
@@ -34,9 +32,9 @@ class AffiliationsController < AclController
   def new
     if !@medium.nil?
       @affiliation = @medium.affiliations.build
-      @sponsors = Sponsor.find(:all)
-      @organizations = Organization.find(:all)
-      @projects = Project.find(:all)
+      @sponsors = Sponsor.order('title')
+      @organizations = Organization.order('title')
+      @projects = Project.order('title')
     end
   end
 
@@ -44,9 +42,9 @@ class AffiliationsController < AclController
   def edit
     @affiliation = Affiliation.find(params[:id])
     @medium = @affiliation.medium if @medium.nil?
-    @sponsors = Sponsor.find(:all)
-    @organizations = Organization.find(:all)
-    @projects = Project.find(:all)
+    @sponsors = Sponsor.order('title')
+    @organizations = Organization.order('title')
+    @projects = Project.order('title')
   end
 
   # POST /affiliations
@@ -61,9 +59,9 @@ class AffiliationsController < AclController
         format.xml  { head :created, :location => medium_affiliation_url(@medium, @affiliation) }
       else
         @medium = @affiliation.medium if @medium.nil?
-        @sponsors = Sponsor.find(:all)
-        @organizations = Organization.find(:all)
-        @projects = Project.find(:all)
+        @sponsors = Sponsor.order('title')
+        @organizations = Organization.order('title')
+        @projects = Project.order('title')
         format.html { render :action => 'new' }
         format.xml  { render :xml => @affiliation.errors.to_xml }
       end
@@ -81,9 +79,9 @@ class AffiliationsController < AclController
         format.html { redirect_to edit_medium_url(@medium, :anchor => 'affiliations') }
         format.xml  { head :ok }
       else
-        @sponsors = Sponsor.find(:all)
-        @organizations = Organization.find(:all)
-        @projects = Project.find(:all)        
+        @sponsors = Sponsor.order('title')
+        @organizations = Organization.order('title')
+        @projects = Project.order('title')
         format.html { render :action => "edit" }
         format.xml  { render :xml => @affiliation.errors.to_xml }
       end

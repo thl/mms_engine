@@ -15,15 +15,16 @@ class DictionarySearchesController < AclController
         @language = ComplexScripts::Language.find(options[:language])
         @letters = Letter.letters_by_language(@language.id)
         respond_to do |format|
-          format.html { render :partial => 'browse_panel' }
+          format.js
           format.xml  { render :xml => @letters.to_xml }
         end
       else
         options.delete(:type)
+        @letters = nil
         @word_pages, @words = paginate(:words, options)
         #@words = Word.find(:all, :conditions => @conditions_array)    
         respond_to do |format|
-          format.html { render :partial => 'index' }
+          format.js
           format.xml  { render :xml => @words.to_xml }
         end
       end
@@ -35,7 +36,6 @@ class DictionarySearchesController < AclController
   def show #for browsing letters
     letter_id = params[:id]
     @language = ComplexScripts::Language.find(params[:language_id])
-    
     @word_pages, @words = paginate(:words, :conditions => {:letter_id => letter_id, :language_id => @language}, :order => '`order`')
     respond_to do |format|
       format.html { render :partial => 'index' if request.xhr? }

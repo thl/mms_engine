@@ -4,9 +4,9 @@
     <b><%= Medium.human_name.titleize.s %></b><br />    
 <%= thumbnail_image_link(@medium) %></td>
 </p>
-<% form_for(:status, :url => statuses_path(@statuses)) do |f| %>
-<%=    render :partial => 'form', :locals => {:f => f} %>
-<% end %>
+<%= form_for(:status, :url => statuses_path(@statuses)) do |f| %>
+<%=   render :partial => 'form', :locals => {:f => f} %>
+<%  end %>
 <%= render :partial => 'show', :locals => {:workflow => @workflow} %>
 <p>
 <% authorized_only hash_for_edit_medium_workflow_path do %>

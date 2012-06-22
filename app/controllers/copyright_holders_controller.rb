@@ -2,7 +2,7 @@ class CopyrightHoldersController < AclController
   # GET /copyright_holders
   # GET /copyright_holders.xml
   def index
-    @copyright_holders = CopyrightHolder.find(:all)
+    @copyright_holders = CopyrightHolder.order('title')
 
     respond_to do |format|
       format.html # index.rhtml

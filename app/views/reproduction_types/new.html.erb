@@ -1,6 +1,6 @@
 <h1><%= ts 'new.record', :what => ReproductionType.human_name.titleize %></h1>
 <%= error_messages_for :reproduction_type %>
-<%  form_for(:reproduction_type, :url => reproduction_types_path) do |f| %>
+<%= form_for(:reproduction_type, :url => reproduction_types_path) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>
       <p><%= globalized_submit_tag 'creat.e.this' %></p>
 <%  end %>

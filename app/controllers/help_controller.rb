@@ -5,6 +5,5 @@ class HelpController < AclController
   end
   
   def advanced_search
-    render(:partial => 'advanced_search') if request.xhr? 
-  end
+  end # advanced_search.js.erb
 end

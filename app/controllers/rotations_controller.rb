@@ -10,8 +10,7 @@ class RotationsController < AclController
   # GET /rotations
   # GET /rotations.xml
   def index
-    render :partial => 'index' if request.xhr?
-  end
+  end # index.js.erb
 
   # GET /rotations/1
   # GET /rotations/1.xml
@@ -33,28 +32,30 @@ class RotationsController < AclController
   # POST /rotations
   def create
     if @medium.update_attributes(params[:medium])
-      if request.xhr?
-        start_log('Beginning rotation.')
-        spawn(:method => :thread) do
-          workflow = @medium.workflow
-          workflow = @medium.create_workflow if workflow.nil?
-          workflow.update_attribute(:processing_status_id, 1)
-          write_to_log("Spawning thread from main process #{Process.pid}.")
-          write_to_log("Rotating medium #{@medium.id}.")
-          begin
-            @medium.update_thumbnails
-          rescue Exception => exc
-            finish_log("Rotation was abruptly terminated: #{exc.to_s}")
-          else
-            finish_log("Rotation finished normally.")
-          ensure
-            workflow.update_attribute(:processing_status_id, nil)
+      respond_to do |format|
+        format.js do
+          start_log('Beginning rotation.')
+          spawn(:method => :thread) do
+            workflow = @medium.workflow
+            workflow = @medium.create_workflow if workflow.nil?
+            workflow.update_attribute(:processing_status_id, 1)
+            write_to_log("Spawning thread from main process #{Process.pid}.")
+            write_to_log("Rotating medium #{@medium.id}.")
+            begin
+              @medium.update_thumbnails
+            rescue Exception => exc
+              finish_log("Rotation was abruptly terminated: #{exc.to_s}")
+            else
+              finish_log("Rotation finished normally.")
+            ensure
+              workflow.update_attribute(:processing_status_id, nil)
+            end
           end
+        end # create.js.erb
+        format.html do
+          flash[:notice] = 'Rotation was successfully updated.'
+          redirect_to medium_url(@medium)          
         end
-        render(:update) { |page| page.replace_html 'edit_div', :partial => 'rotations/notice' }
-      else
-        flash[:notice] = 'Rotation was successfully updated.'
-        redirect_to medium_url(@medium)
       end
     else
       render :action => "index"

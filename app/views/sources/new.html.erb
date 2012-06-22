@@ -1,6 +1,6 @@
 <h1><%= ts 'new.record', :what => Source.human_name.titleize %></h1>
 <%= error_messages_for :source %>
-<%  form_for(@source) do |f| %>
+<%= form_for(@source) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>
       <p><%= globalized_submit_tag 'creat.e.this' %></p>
 <%  end %>

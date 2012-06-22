@@ -30,8 +30,8 @@ class DescriptionsController < AclController
   # GET /media/1/descriptions/new
   def new
     if !@medium.nil?
-      @description_types = DescriptionType.find(:all)
-      @languages = ComplexScripts::Language.find(:all, :order => 'title')
+      @description_types = DescriptionType.order('title')
+      @languages = ComplexScripts::Language.order('title')
       language = ComplexScripts::Language.find_iso_code(I18n.locale)
       @description = Description.new(:language => language, :description_type => @description_types.first, :creator => current_user.person)
     end
@@ -40,8 +40,8 @@ class DescriptionsController < AclController
   # GET /media/1/descriptions/1;edit
   def edit
     if !@medium.nil?
-      @description_types = DescriptionType.find(:all)
-      @languages = ComplexScripts::Language.find(:all, :order => 'title')
+      @description_types = DescriptionType.order('title')
+      @languages = ComplexScripts::Language.order('title')
       @description = @medium.descriptions.find(params[:id])
     end
   end
@@ -60,8 +60,8 @@ class DescriptionsController < AclController
           format.html { redirect_to edit_medium_url(@medium) }
           format.xml  { head :created, :location => medium_description_url(@medium, @description) }
         else
-          @description_types = DescriptionType.find(:all)
-          @languages = ComplexScripts::Language.find(:all, :order => 'title')
+          @description_types = DescriptionType.order('title')
+          @languages = ComplexScripts::Language.order('title')
           format.html { render media_url }
           format.xml  { render :xml => @description.errors.to_xml }
         end

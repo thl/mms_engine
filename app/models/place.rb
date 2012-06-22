@@ -5,9 +5,9 @@ class Place < Feature
   
   def paged_media(limit, offset = nil, type = nil)
     if type.nil?
-      media = Medium.find(:all, :conditions => {'locations.feature_id' => self.fid}, :joins => :locations, :limit => limit, :offset => offset, :order => 'media.created_on DESC')
+      media = Medium.where('locations.feature_id' => self.fid).joins(:locations).limit(limit).offset(offset).order('media.created_on DESC')
     else
-      media = Medium.find(:all, :conditions => {'locations.feature_id' => self.fid, 'media.type' => type}, :joins => :locations, :limit => limit, :offset => offset, :order => 'media.created_on DESC')
+      media = Medium.where('locations.feature_id' => self.fid, 'media.type' => type).joins(:locations).limit(limit).offset(offset).order('media.created_on DESC')
     end
     media
   end
@@ -20,14 +20,14 @@ class Place < Feature
     type = options[:type]
     conditions = {'locations.feature_id' => self.fid}
     conditions['media.type'] = type if !type.nil?
-    Medium.find(:all, :conditions => conditions, :joins => :locations, :order => 'media.created_on DESC')
+    Medium.where(conditions).joins(:locations).order('media.created_on DESC')
   end
     
   def media_count(type = nil)
     if type.nil?
-      count = Location.count(:conditions => {'locations.feature_id' => self.fid})
+      count = Location.where('locations.feature_id' => self.fid).count
     else
-      count = Location.count(:conditions => {'locations.feature_id' => self.fid, 'media.type' => type}, :joins => :medium)
+      count = Location.where('locations.feature_id' => self.fid, 'media.type' => type).joins(:medium).count
     end
     count
   end

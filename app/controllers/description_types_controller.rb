@@ -2,7 +2,7 @@ class DescriptionTypesController < AclController
   # GET /description_types
   # GET /description_types.xml
   def index
-    @description_types = DescriptionType.find(:all)
+    @description_types = DescriptionType.order('title')
 
     respond_to do |format|
       format.html # index.rhtml

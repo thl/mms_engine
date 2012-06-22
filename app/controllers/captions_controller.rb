@@ -29,8 +29,8 @@ class CaptionsController < AclController
   # GET /media/1/captions/new
   def new
     if !@medium.nil?
-      @description_types = DescriptionType.find(:all)
-      @languages = ComplexScripts::Language.find(:all, :order => 'title')
+      @description_types = DescriptionType.order('title')
+      @languages = ComplexScripts::Language.order('title')
       language = ComplexScripts::Language.find_iso_code(I18n.locale)
       @caption = Caption.new(:language => language, :description_type => @description_types.first, :creator => current_user.person)
     end
@@ -39,8 +39,8 @@ class CaptionsController < AclController
   # GET /media/1/captions/1;edit
   def edit
     if !@medium.nil?
-      @description_types = DescriptionType.find(:all)
-      @languages = ComplexScripts::Language.find(:all, :order => 'title')
+      @description_types = DescriptionType.order('title')
+      @languages = ComplexScripts::Language..order('title')
       @caption = @medium.captions.find(params[:id])
     end
   end
@@ -59,8 +59,8 @@ class CaptionsController < AclController
           format.html { redirect_to edit_medium_url(@medium) }
           format.xml  { head :created, :location => medium_caption_url(@medium, @caption) }
         else
-          @description_types = DescriptionType.find(:all)
-          @languages = ComplexScripts::Language.find(:all, :order => 'title')          
+          @description_types = DescriptionType.order('title')
+          @languages = ComplexScripts::Language.order('title')
           format.html { render :action => 'new' }
           format.xml  { render :xml => @caption.errors.to_xml }
         end
@@ -88,8 +88,8 @@ class CaptionsController < AclController
           format.html { redirect_to edit_medium_url(@medium) }
           format.xml  { head :ok }
         else
-          @description_types = DescriptionType.find(:all)
-          @languages = ComplexScripts::Language.find(:all, :order => 'title')
+          @description_types = DescriptionType.order('title')
+          @languages = ComplexScripts::Language.order('title')
           format.html { render :action => 'edit' }
           format.xml  { render :xml => @caption.errors.to_xml }
         end

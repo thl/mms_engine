@@ -1,7 +1,7 @@
 <h1><%= ts :in, :what => ts(:for, :what => t('edit.ing.record', :what => Citation.human_name.titleize), :whom => @reference.title), :where => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
-<% form_for(:citation, :url => polymorphic_path(@reference_stack + [@citation]), :html => {:method => :put}) do |f| %>
-<%=  render :partial => 'form', :locals => {:f => f } %>
-     <p><%= globalized_submit_tag 'update.this' %></p>
-<% end %>
+<%= form_for(:citation, :url => polymorphic_path(@reference_stack + [@citation]), :html => {:method => :put}) do |f| %>
+<%=   render :partial => 'form', :locals => {:f => f } %>
+      <p><%= globalized_submit_tag 'update.this' %></p>
+<%  end %>
 <p>&nbsp;<br/>
 <%= render :partial => 'persistent_links' %></p>

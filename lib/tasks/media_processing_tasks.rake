@@ -1,4 +1,4 @@
-require 'config/environment'
+# require 'config/environment'
 namespace :mms do
   namespace :media do
     media_extractor_description = "Extracts date and model from selected media in DB.\n" +

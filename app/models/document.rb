@@ -23,13 +23,13 @@ class Document < Medium
   end
   
   def prioritized_title
-    titles = self.titles.find(:all, :order => :id)
+    titles = self.titles.order(:id)
     return titles.empty? ? self.id.to_s : titles.first.title
   end
   
   def preview_image
     typescript = self.typescript
-    return typescript.nil? ? nil : typescript.children.first(:conditions => {:thumbnail => PREVIEW_TYPE.to_s})
+    return typescript.nil? ? nil : typescript.children.where(:thumbnail => PREVIEW_TYPE.to_s).first
   end
     
   def self.paged_media_search(media_search, limit = 10, offset = 0)

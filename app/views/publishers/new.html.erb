@@ -1,6 +1,6 @@
 <h1><%= ts 'new.record', :what => Publisher.human_name.titleize %></h1>
 <%= error_messages_for :publisher %>
-<%  form_for(:publisher, :url => publishers_path) do |f| %>
+<%= form_for(:publisher, :url => publishers_path) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>
       <p><%= globalized_submit_tag 'creat.e.this' %></p>
 <%  end %>

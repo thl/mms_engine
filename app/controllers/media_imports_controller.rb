@@ -79,7 +79,7 @@ class MediaImportsController < AclController
     media_import = MediaImport.new(params[:media_import])
     setting = ApplicationSetting.find_by_title('batch_processing_folder')
     folder = setting.nil? ? '' : setting.string_value
-    source_folder = File.expand_path(File.join(RAILS_ROOT, folder, media_import.batch_processing_folder))
+    source_folder = File.expand_path(Rails.root.join(folder, media_import.batch_processing_folder))
     no_subfolder = media_import.media_type_subfolder=='no'
     types_to_import = Array.new
     types_to_import << 'images' if media_import.has_images.to_i==1
@@ -89,7 +89,7 @@ class MediaImportsController < AclController
     case import_type_id
     when 0 # File copy (no db manipulation)
       begin
-        destination_folder = File.expand_path(File.join(RAILS_ROOT,'public'))
+        destination_folder = File.expand_path(Rails.root.join('public'))
         if no_subfolder
           subfolder = types_to_import.first
           get_folder_names("#{source_folder}").each { |folder| cp_r(File.join(source_folder, folder), File.join(destination_folder, subfolder)) }

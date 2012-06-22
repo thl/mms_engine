@@ -5,7 +5,7 @@ class CitationsController < AclController
   # GET /citations.xml
   def index
    if !@reference_stack.any?(&:nil?)
-    @citations = @reference.citations.all
+    @citations = @reference.citations
 
     respond_to do |format|
       format.html # index.html.erb
@@ -32,7 +32,7 @@ class CitationsController < AclController
   def new
    if !@reference_stack.any?(&:nil?)
     #@citation = Citation.new
-      @languages = ComplexScripts::Language.find(:all, :order => 'title')
+      @languages = ComplexScripts::Language.order('title')
       language = ComplexScripts::Language.find_iso_code(I18n.locale)
       @citation = @reference.citations.new(:language => language, :creator => current_user.person)
 
@@ -46,7 +46,7 @@ class CitationsController < AclController
   # GET /citations/1/edit
   def edit
     if !@reference_stack.any?(&:nil?)
-      @languages = ComplexScripts::Language.find(:all, :order => 'title')
+      @languages = ComplexScripts::Language.order('title')
       @citation = Citation.find(params[:id])
     end
   end
@@ -62,7 +62,7 @@ class CitationsController < AclController
           format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
           format.xml  { render :xml => @citation, :status => :created, :location => @citation }
         else
-          @languages = ComplexScripts::Language.find(:all, :order => 'title')
+          @languages = ComplexScripts::Language.order('title')
           format.html { render :action => "new" }
           format.xml  { render :xml => @citation.errors, :status => :unprocessable_entity }
         end
@@ -81,7 +81,7 @@ class CitationsController < AclController
           format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
           format.xml  { head :ok }
         else
-          @languages = ComplexScripts::Language.find(:all, :order => 'title')
+          @languages = ComplexScripts::Language.order('title')
           format.html { render :action => "edit" }
           format.xml  { render :xml => @citation.errors, :status => :unprocessable_entity }
         end

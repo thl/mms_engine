@@ -1,4 +1,4 @@
-require 'config/environment'
+# require 'config/environment'
 namespace :mms do
   namespace :cache do
     cummulative_categories_cleanup_description = "Deletes cummulative information"    

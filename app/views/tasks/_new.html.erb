@@ -1,9 +1,9 @@
 <h1>Execute new task</h1>
-<% form_tag tasks_path do %>
-     <p><b>Command</b><br/>
+<%= form_tag tasks_path do %>
+      <p><b>Command</b><br/>
 <%=   text_field_tag 'task' %></p>
-     <p><%= globalized_submit_tag 'Execute' %></p>
-<% end %>
+      <p><%= globalized_submit_tag 'Execute' %></p>
+<%  end %>
 <p>&nbsp;<br/>
 <%= link_to 'Back to tasks', tasks_path %> |
 <%= link_to 'Back to admin', admin_path %>

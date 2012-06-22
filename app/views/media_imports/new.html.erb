@@ -32,7 +32,7 @@
 	}
 </script>
 <h1>New <%= Medium.human_name.s %> importation</h1>
-<% form_for(:media_import, :url => confirm_media_imports_path) do |f| %>
+<%= form_for(:media_import, :url => confirm_media_imports_path) do |f| %>
 <p><b>Media types</b>
 <%= f.check_box :has_images, :onclick => 'updateRadioButton();' %>Images
 <%= f.check_box :has_movies, :onclick => 'updateRadioButton();' %>Movies

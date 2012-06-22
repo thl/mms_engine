@@ -23,13 +23,10 @@ class VideosController < AclController
       @transcript_params[:language] = language if !language.nil?
       @transcript_params[:form] = form if !form.nil?
     end
-    if request.xhr?
-      render :partial => 'media/show'
-    else
-      respond_to do |format|
-        format.html # show.rhtml
-        format.xml  { render :xml => @medium.to_xml }
-      end
+    respond_to do |format|
+      format.html # show.rhtml
+      format.js
+      format.xml  { render :xml => @medium.to_xml }
     end
   end
 

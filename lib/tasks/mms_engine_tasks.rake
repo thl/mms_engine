@@ -1,4 +1,4 @@
-require 'config/environment'
+# require 'config/environment'
 namespace :mms do
   desc "Syncronize extra files for MMS"
   task :sync do

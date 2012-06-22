@@ -1,8 +1,8 @@
 <% translated_title_name = TranslatedTitle.human_name.titleize %>
 <h1><%= ts :for, :what => t('new.record', :what => translated_title_name), :whom => @title.title.titleize %></h1>
-<% form_for(:translated_title, :url => medium_title_translated_titles_path(@medium, @title)) do |f| %>
-<%=  render :partial => 'form', :locals => {:f => f, :translated_title_name => translated_title_name} %>
-   <p><%= globalized_submit_tag 'creat.e.this' %></p>
-<% end %>
+<%= form_for(:translated_title, :url => medium_title_translated_titles_path(@medium, @title)) do |f| %>
+<%=   render :partial => 'form', :locals => {:f => f, :translated_title_name => translated_title_name} %>
+      <p><%= globalized_submit_tag 'creat.e.this' %></p>
+<%  end %>
 <p>&nbsp;<br/>
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'captions'} %></p>

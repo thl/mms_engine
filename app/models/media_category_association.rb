@@ -26,7 +26,7 @@ class MediaCategoryAssociation < ActiveRecord::Base
   
   def after_save
     current = self.category
-    while !current.nil? && CumulativeMediaCategoryAssociation.find(:first, :conditions => {:category_id => current.id, :medium_id => medium_id}).nil?
+    while !current.nil? && CumulativeMediaCategoryAssociation.where(:category_id => current.id, :medium_id => medium_id).first.nil?
       CumulativeMediaCategoryAssociation.create(:category_id => current.id, :medium_id => self.medium_id)
       current = current.parent
     end
@@ -57,7 +57,7 @@ class MediaCategoryAssociation < ActiveRecord::Base
   private
   
   def self.delete_cumulative_information(category, medium_id, type)
-    while !category.nil? && CumulativeMediaCategoryAssociation.count(:conditions => {:category_id => category.children.collect(&:id), :medium_id => medium_id})==0
+    while !category.nil? && CumulativeMediaCategoryAssociation.where(:category_id => category.children.collect(&:id), :medium_id => medium_id).count==0
       CumulativeMediaCategoryAssociation.delete_all(:category_id => category.id.to_i, :medium_id => medium_id)
       CachedCategoryCount.updated_count(category.id.to_i, nil, true).count
       CachedCategoryCount.updated_count(category.id.to_i, type, true).count

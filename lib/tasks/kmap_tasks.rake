@@ -1,4 +1,4 @@
-require 'config/environment'
+# require 'config/environment'
 namespace :mms do
   namespace :kmaps do
     desc "Deploys collections to knowledge maps (authenticating through TMB_USER arguments) making the appropriate replacements."  

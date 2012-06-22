@@ -1,6 +1,7 @@
 <p>
 <% lang_code = @language.code
    for letter in @letters %>
-<%=  link_to_remote letter.title.s, :update => 'results', :url => dictionary_search_path(:id => letter, :language_id => @language), :method => :get, :loading => javascript_searching('results') %>&nbsp;
+<%=  link_to letter.title.s, dictionary_search_path(letter, :language_id => @language), :remote => true, :id => "#{letter.id}_link" %>&nbsp;
+<%=  javascript_tag("$('#{letter.id}_link').bind('ajax:loading', function(){ #{javascript_searching('results')} })") %>
 <% end %>
 </p>

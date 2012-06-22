@@ -1,6 +1,6 @@
 <h1><%= ts('edit.ing.record', :what => Renderer.human_name.titleize) %></h1>
 <%= error_messages_for :renderer %>
-<%  form_for(:renderer, :url => renderer_path(@renderer), :html => { :method => :put }) do |f| %>
+<%= form_for(:renderer, :url => renderer_path(@renderer), :method => :put) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>
       <p><%= globalized_submit_tag 'update.this' %></p>
 <%  end %>

@@ -1,8 +1,8 @@
 <% title_name = Title.human_name.capitalize %>
 <h1><%= ts :for, :what => t('edit.ing.record', :what => title_name), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
-<% form_for(:title, :url => medium_title_path(@medium, @title), :html => {:method => :put}) do |f| %>
-<%=    render :partial => 'form', :locals => {:f => f, :title_name => title_name} %>
-<p><%= globalized_submit_tag 'update.this' %></p>
-<% end %>
+<%= form_for(:title, :url => medium_title_path(@medium, @title), :method => :put) do |f| %>
+<%=   render :partial => 'form', :locals => {:f => f, :title_name => title_name} %>
+      <p><%= globalized_submit_tag 'update.this' %></p>
+<%  end %>
 <p>&nbsp;<br/>
 <%= render :partial => 'persistent_links' %></p>

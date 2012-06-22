@@ -1,8 +1,8 @@
 <h1><%= ts :for, :what => ts('new.record', :what => MediaPublisher.human_name.titleize), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <%= error_messages_for :media_publisher %>
-<% form_for(:media_publisher, :url => medium_media_publisher_path(@medium)) do |f| %>
-<%=  render :partial => 'form', :locals => {:f => f} %>
-     <p><%= globalized_submit_tag 'creat.e.this' %></p>
-<% end %>
+<%= form_for(:media_publisher, :url => medium_media_publisher_path(@medium)) do |f| %>
+<%=   render :partial => 'form', :locals => {:f => f} %>
+      <p><%= globalized_submit_tag 'creat.e.this' %></p>
+<%  end %>
 <p>&nbsp;<br/>
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'media_publishers'} %></p>

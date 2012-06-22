@@ -10,8 +10,8 @@ class CopyrightsController < AclController
       logger.error("Attempt to access invalid medium #{params[:medium_id]}")
       redirect_to media_path
     else
-      @copyright_holders = CopyrightHolder.find(:all)
-      @reproduction_types = ReproductionType.find(:all, :order => '`order`')
+      @copyright_holders = CopyrightHolder.order('title')
+      @reproduction_types = ReproductionType.order('`order`')
       @copyrights = @medium.copyrights
       
       respond_to do |format|
@@ -44,16 +44,16 @@ class CopyrightsController < AclController
       logger.error("Attempt to access invalid medium #{params[:medium_id]}")
       redirect_to media_path
     else
-      @copyright_holders = CopyrightHolder.find(:all)
-      @reproduction_types = ReproductionType.find(:all, :order => '`order`')
+      @copyright_holders = CopyrightHolder.order('title')
+      @reproduction_types = ReproductionType.order('`order`')
       @copyright = Copyright.new(:medium => @medium)
     end
   end
 
   # GET /copyrights/1;edit
   def edit
-    @copyright_holders = CopyrightHolder.find(:all)
-    @reproduction_types = ReproductionType.find(:all, :order => '`order`')
+    @copyright_holders = CopyrightHolder.order('title')
+    @reproduction_types = ReproductionType.order('`order`')
     @copyright = Copyright.find(params[:id])
     @medium = @copyright.medium
   end

@@ -49,23 +49,17 @@ class MediaSearchesController < AclController
       @tab_options[:urls] = tab_urls_for_search(@pagination_params)
       @tab_options[:urls][:search] = media_searches_path(@pagination_params.reject{|param,value| param == :media_type})
       @current_tab_id = @media_type.underscore.to_sym unless @media_type.blank?
-      if request.xhr?
-        respond_to do |format|
-          format.html { render :partial => @media_type=='Document' ? 'media_searches/paged_documents' : 'media_searches/paged_media_full' }
-          #format.xml  { render :xml => TODO }
-        end
-      else
-        calculate_sorrounding_search
-        respond_to do |format|
-          format.html do
-            if @media_type.blank?
-              render :action => @media_type=='Document' ? 'paged_documents' : 'paged_media'
-            else
-              render :action => @media_type=='Document' ? 'paged_documents_full' : 'paged_media_full'
-            end
+      respond_to do |format|
+        format.html do
+          calculate_sorrounding_search
+          if @media_type.blank?
+            render :action => @media_type=='Document' ? 'paged_documents' : 'paged_media'
+          else
+            render :action => @media_type=='Document' ? 'paged_documents_full' : 'paged_media_full'
           end
-          #format.xml  { render :xml => TODO }
         end
+        #format.xml  { render :xml => TODO }
+        format.js # index.js.erb
       end
     end
   end

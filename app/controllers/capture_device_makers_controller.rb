@@ -2,7 +2,7 @@ class CaptureDeviceMakersController < AclController
   # GET /capture_device_makers
   # GET /capture_device_makers.xml
   def index
-    @capture_device_makers = CaptureDeviceMaker.find(:all)
+    @capture_device_makers = CaptureDeviceMaker.order(title)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -76,7 +76,6 @@ class CaptureDeviceMakersController < AclController
   def destroy
     @capture_device_maker = CaptureDeviceMaker.find(params[:id])
     @capture_device_maker.destroy
-
     respond_to do |format|
       format.html { redirect_to(capture_device_makers_url) }
       format.xml  { head :ok }

@@ -2,7 +2,7 @@ class CachedCategoryCount < ActiveRecord::Base
   belongs_to :category
   
   def self.cached_count(category_id, type = nil)
-    CachedCategoryCount.find(:first, :conditions => {:category_id => category_id, :medium_type => type})
+    CachedCategoryCount.where(:category_id => category_id, :medium_type => type).first
   end
   
   def self.updated_count(category_id, type = nil, force_update = false)
@@ -18,9 +18,9 @@ class CachedCategoryCount < ActiveRecord::Base
       end
     end
     if type.nil?
-      cached_count.count = CumulativeMediaCategoryAssociation.count(:conditions => {:category_id => category_id})
+      cached_count.count = CumulativeMediaCategoryAssociation.where(:category_id => category_id).count
     else
-      cached_count.count = CumulativeMediaCategoryAssociation.count(:conditions => {'cumulative_media_category_associations.category_id' => category_id, 'media.type' => type}, :joins => :medium)
+      cached_count.count = CumulativeMediaCategoryAssociation.where('cumulative_media_category_associations.category_id' => category_id, 'media.type' => type).joins(:medium).count
     end
     cached_count.save
     return cached_count

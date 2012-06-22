@@ -1,6 +1,6 @@
 <h1><%= ts 'new.record', :what => RecordingOrientation.human_name.titleize %></h1>
 <%= error_messages_for :recording_orientation %>
-<%  form_for(@recording_orientation) do |f| %>
+<%= form_for(@recording_orientation) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>
       <p><%= globalized_submit_tag 'creat.e.this' %></p>
 <%  end %>

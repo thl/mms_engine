@@ -1,5 +1,4 @@
 require 'fileutils'
-
 class Medium < ActiveRecord::Base
   ROWS = 5
   COLS = 4
@@ -48,15 +47,15 @@ class Medium < ActiveRecord::Base
   has_many :titles, :dependent => :destroy
   
   def media_collection_associations
-    self.media_category_associations.find(:all, :conditions => {:root_id => Collection.root_id})
+    self.media_category_associations.where(:root_id => Collection.root_id)
   end
   
   def media_subject_associations
-    self.media_category_associations.find(:all, :conditions => {:root_id => Subject.root_id})
+    self.media_category_associations.where(:root_id => Subject.root_id)
   end
     
   def media_ethnicity_associations
-    self.media_category_associations.find(:all, :conditions => {:root_id => Ethnicity.root_id})
+    self.media_category_associations.where(:root_id => Ethnicity.root_id)
   end
   
   def collections
@@ -83,7 +82,7 @@ class Medium < ActiveRecord::Base
   def category_count(options = {})
     # association = options[:cumulative] || false ? CumulativeMediaCategoryAssociation : MediaCategoryAssociation
     # association.count(:conditions => {:medium_id => self.id})
-    MediaCategoryAssociation.count(:conditions => {:medium_id => self.id})
+    MediaCategoryAssociation.where(:medium_id => self.id).count
   end
   
   def features
@@ -91,7 +90,7 @@ class Medium < ActiveRecord::Base
   end
   
   def feature_count
-    Location.count(:conditions => {:medium_id => self.id})
+    Location.where(:medium_id => self.id).count
   end
   
   def kmaps_url
@@ -105,7 +104,7 @@ class Medium < ActiveRecord::Base
   def thumbnail_image
     att = attachment
     return nil if att.nil?
-    att.children.find(:first, :conditions => {:thumbnail => 'compact'} )
+    att.children.where(:thumbnail => 'compact').first
   end
   
   def screen_size_image
@@ -113,16 +112,16 @@ class Medium < ActiveRecord::Base
     return nil if att.nil?
     #img = att.children.find(:first, :conditions => {:thumbnail => 'large'})
     #return img if !img.nil?
-    img = att.children.find(:first, :conditions => {:thumbnail => 'normal'})
+    img = att.children.where(:thumbnail => 'normal').first
     return img if !img.nil?
-    img = att.children.find(:first, :conditions => {:thumbnail => 'essay'})
+    img = att.children.where(:thumbnail => 'essay').first
     return img
   end
   
   def large_image
     att = attachment
     return nil if att.nil?
-    att.children.find(:first, :conditions => {:thumbnail => 'large'})
+    att.children.where(:thumbnail => 'large').first
   end
 
   #not meant to be called in itself but within the page_media of administrative_units, subjects, collections, and ethnicities
@@ -205,14 +204,14 @@ class Medium < ActiveRecord::Base
   end
   
   def self.media_count_for_type(type)
-    Medium.count(:conditions => { :type => type })
+    Medium.where(:type => type)
   end
   
   def self.media_count_search(media_search, type = nil)
     if type.nil?
-      ids = Medium.find(:first, :conditions => {:id => media_search.title}).nil? ? 0 : 1
+      ids = Medium.where(:id => media_search.title).first.nil? ? 0 : 1
     else
-      ids = Medium.find(:first, :conditions => {:id => media_search.title, :type => type}).nil? ? 0 : 1
+      ids = Medium.where(:id => media_search.title, :type => type).first.nil? ? 0 : 1
     end
     # for now asumming that its English; change later TODO
     conditions_string = "SELECT COUNT(media.id) FROM media, workflows WHERE workflows.medium_id = media.id AND (workflows.original_filename LIKE ? OR "
@@ -249,15 +248,15 @@ class Medium < ActiveRecord::Base
   def self.range(id_start, id_end)
     if id_end.nil?
       if id_start.nil?
-        media = self.find(:all)
+        media = self.all
       else
-        media = self.find(:all, :conditions => ['id >= ?', id_start])
+        media = self.where(['id >= ?', id_start])
       end
     else
       if id_start.nil?
-        media = self.find(:all, :conditions => ['id <= ?', id_end])
+        media = self.where(['id <= ?', id_end])
       else
-        media = self.find(:all, :conditions => ['id >= ? AND id <= ?', id_start, id_end])
+        media = self.where(['id >= ? AND id <= ?', id_start, id_end])
       end
     end   
   end

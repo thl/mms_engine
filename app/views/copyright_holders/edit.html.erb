@@ -1,6 +1,6 @@
 <h1><%= ts('edit.ing.record', :what => CopyrightHolder.human_name.titleize) %></h1>
 <%= error_messages_for :copyright_holder %>
-<%  form_for(:copyright_holder, :url => copyright_holder_path(@copyright_holder), :html => { :method => :put }) do |f| %>
+<%= form_for(:copyright_holder, :url => copyright_holder_path(@copyright_holder), :method => :put) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>
       <p><%= globalized_submit_tag 'update.this' %></p>
 <%  end %>

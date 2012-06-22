@@ -65,12 +65,14 @@ class TopicsController < AclController
   
   # GET /topics/1/expand
   def expand
-    render :partial => 'expanded', :object => Topic.find(params[:id]), :locals => {:margin_depth => params[:margin_depth].to_i}
+    @topic = Topic.find(params[:id])
+    @margin_depth = params[:margin_depth].to_i
   end
 
   # GET /topics/1/contract
   def contract
-    render :partial => 'contracted', :object => Topic.find(params[:id]), :locals => {:margin_depth => params[:margin_depth].to_i}
+    @topic = Topic.find(params[:id])
+    @margin_depth = params[:margin_depth].to_i
   end
   
   private

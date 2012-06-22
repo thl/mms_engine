@@ -1,9 +1,9 @@
 <h1><%= ts 'associate.record', :what => Location.human_name(:count => :many).titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <%= error_messages_for :association %>
-<% form_for(:location, :url => medium_locations_path(@medium)) do |f| %>
-<%=  render :partial => 'form', :locals => {:f => f} %>
-     <p><%= globalized_submit_tag 'creat.e.this' %></p>
-<% end %>
+<%= form_for(:location, :url => medium_locations_path(@medium)) do |f| %>
+<%=   render :partial => 'form', :locals => {:f => f} %>
+      <p><%= globalized_submit_tag 'creat.e.this' %></p>
+<%  end %>
 <p>&nbsp;<br/>
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'locations'} %>
 </p>

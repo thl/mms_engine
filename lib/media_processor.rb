@@ -182,7 +182,7 @@ module MediaProcessor
     end
     
     def move_to_partitioned_paths(path)
-      Dir.chdir(File.expand_path(File.join(RAILS_ROOT, 'public', path))) do
+      Dir.chdir(File.expand_path(Rails.root.join('public', path))) do
         Dir.glob('*').sort.each do |folder_name|
           next if !File.directory?(folder_name) || folder_name[0]==48 || (folder_name !~ /\A\d+\z/)
           dest_folders = ('%08d' % folder_name.to_i).scan(/..../)
@@ -427,7 +427,7 @@ module MediaProcessor
       media_folder = self.class.public_folder
       save_to_cold_storage = false if self.instance_of? Document
       parent = attachment
-      folder = File.expand_path(File.join(RAILS_ROOT, 'public', media_folder, *parent.partitioned_path))
+      folder = File.expand_path(Rails.root.join('public', media_folder, *parent.partitioned_path))
       begin
         filename = parent.filename
         original = File.join(folder, filename)

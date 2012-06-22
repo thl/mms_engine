@@ -1,6 +1,6 @@
 <h1><%= ts 'edit.ing.record', :what => ApplicationSetting.human_name.titleize %></h1>
 <%= error_messages_for :application_setting %>
-<% form_for(:application_setting, :url => application_setting_path(@application_setting), :html => { :method => :put }) do |f| %>
+<%= form_for(:application_setting, :url => application_setting_path(@application_setting), :method => :put) do |f| %>
 <%=  render :partial => 'form', :locals => {:f => f} %>
      <p><%= globalized_submit_tag 'update.this' %></p>
 <% end %>

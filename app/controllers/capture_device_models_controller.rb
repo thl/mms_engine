@@ -25,7 +25,7 @@ class CaptureDeviceModelsController < AclController
   # GET /capture_device_models/new.xml
   def new
     @capture_device_model = CaptureDeviceModel.new(:capture_device_maker => @capture_device_maker)
-    @capture_device_makers = CaptureDeviceMaker.find(:all, :order => 'title')
+    @capture_device_makers = CaptureDeviceMaker.order('title')
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @capture_device_model }
@@ -35,7 +35,7 @@ class CaptureDeviceModelsController < AclController
   # GET /capture_device_models/1/edit
   def edit
     @capture_device_model = CaptureDeviceModel.find(params[:id])
-    @capture_device_makers = CaptureDeviceMaker.find(:all, :order => 'title')
+    @capture_device_makers = CaptureDeviceMaker.order('title')
   end
 
   # POST /capture_device_models
@@ -49,7 +49,7 @@ class CaptureDeviceModelsController < AclController
         format.html { redirect_to capture_device_makers_url }
         format.xml  { render :xml => @capture_device_model, :status => :created, :location => @capture_device_model }
       else
-        @capture_device_makers = CaptureDeviceMaker.find(:all, :order => 'title')
+        @capture_device_makers = CaptureDeviceMaker.order('title')
         format.html { render :action => "new" }
         format.xml  { render :xml => @capture_device_model.errors, :status => :unprocessable_entity }
       end
@@ -66,7 +66,7 @@ class CaptureDeviceModelsController < AclController
         format.html { redirect_to capture_device_makers_url }
         format.xml  { head :ok }
       else
-        @capture_device_makers = CaptureDeviceMaker.find(:all, :order => 'title')
+        @capture_device_makers = CaptureDeviceMaker.order('title')
         format.html { render :action => "edit" }
         format.xml  { render :xml => @capture_device_model.errors, :status => :unprocessable_entity }
       end

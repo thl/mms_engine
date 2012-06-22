@@ -1,5 +1,5 @@
 <h1><%= ts('edit.ing.record', :what => ApplicationFilter.human_name.titleize) %></h1>
-<% form_for(@filter) do |f| %>
+<%= form_for(@filter) do |f| %>
   <%= f.error_messages %>
 
   <p>

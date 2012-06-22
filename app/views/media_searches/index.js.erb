@@ -1,0 +1,1 @@
+$("#secondary").html("<%= escape_javascript(render(:partial => @media_type=='Document' ? 'media_searches/paged_documents' : 'media_searches/paged_media_full')) %>")

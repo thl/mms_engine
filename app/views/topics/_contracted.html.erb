@@ -3,6 +3,6 @@
 	    Util::MARGIN * margin_depth %>
 	    &#9674;
 <%	else %>
-<%=   link_to_remote '+', { :update => "#{contracted.id}_div", :url => expand_topic_path(contracted, :margin_depth => margin_depth), :method => 'get' }, { :class => 'collapsable' } %>
+<%=   link_to '+', expand_topic_path(contracted, :margin_depth => margin_depth), :remote => true, :class => 'collapsable' %>
 <%  end %>
 <%= "#{link_to h(contracted.title).s, contracted } (#{number_with_delimiter(contracted.media_count, :delimiter => ',')})" %><br/>

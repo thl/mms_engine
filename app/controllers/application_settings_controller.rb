@@ -3,7 +3,7 @@ class ApplicationSettingsController < AclController
   # GET /application_settings
   # GET /application_settings.xml
   def index
-    @application_settings = ApplicationSetting.find(:all)
+    @application_settings = ApplicationSetting.order('title')
 
     respond_to do |format|
       format.html # index.rhtml
