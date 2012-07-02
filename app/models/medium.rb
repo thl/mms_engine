@@ -204,7 +204,7 @@ class Medium < ActiveRecord::Base
   end
   
   def self.media_count_for_type(type)
-    Medium.where(:type => type)
+    Medium.where(:type => type).count
   end
   
   def self.media_count_search(media_search, type = nil)

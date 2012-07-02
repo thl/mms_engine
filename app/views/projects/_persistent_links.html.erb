@@ -1,4 +1,4 @@
-<%  authorized_only hash_for_project_path(:action => 'destroy') do %>
+<%  if authorized?(hash_for_project_path(:action => 'destroy')) %>
 <%=   link_to ts('delete.this'), project_path(@project), :confirm => te('delete.confirmation'), :method => :delete %> |
 <%  end %>
 <%= link_to ts('back.to', :what => t('all.records', :what => Project.human_name(:count => :many))), projects_path %> |

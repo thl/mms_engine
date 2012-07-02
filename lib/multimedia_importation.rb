@@ -1,5 +1,5 @@
 # ImportMedia
-require 'config/environment'
+# require 'config/environment'
 
 module MultimediaImportation
   include ForkedNotifier

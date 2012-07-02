@@ -2,8 +2,7 @@ class RecordingOrientationsController < AclController
   # GET /recording_orientations
   # GET /recording_orientations.xml
   def index
-    @recording_orientations = RecordingOrientation.find(:all)
-
+    @recording_orientations = RecordingOrientation.order('title')
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @recording_orientations }
@@ -14,7 +13,6 @@ class RecordingOrientationsController < AclController
   # GET /recording_orientations/1.xml
   def show
     @recording_orientation = RecordingOrientation.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @recording_orientation }
@@ -25,7 +23,6 @@ class RecordingOrientationsController < AclController
   # GET /recording_orientations/new.xml
   def new
     @recording_orientation = RecordingOrientation.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @recording_orientation }
@@ -41,14 +38,13 @@ class RecordingOrientationsController < AclController
   # POST /recording_orientations.xml
   def create
     @recording_orientation = RecordingOrientation.new(params[:recording_orientation])
-
     respond_to do |format|
       if @recording_orientation.save
         flash[:notice] = ts('new.successful', :what => RecordingOrientation.human_name.capitalize)
         format.html { redirect_to recording_orientations_url }
         format.xml  { render :xml => @recording_orientation, :status => :created, :location => @recording_orientation }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => 'new' }
         format.xml  { render :xml => @recording_orientation.errors, :status => :unprocessable_entity }
       end
     end
@@ -58,14 +54,13 @@ class RecordingOrientationsController < AclController
   # PUT /recording_orientations/1.xml
   def update
     @recording_orientation = RecordingOrientation.find(params[:id])
-
     respond_to do |format|
       if @recording_orientation.update_attributes(params[:recording_orientation])
         flash[:notice] = ts('edit.successful', :what => RecordingOrientation.human_name.capitalize)
         format.html { redirect_to recording_orientations_url }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => 'edit' }
         format.xml  { render :xml => @recording_orientation.errors, :status => :unprocessable_entity }
       end
     end
@@ -76,7 +71,6 @@ class RecordingOrientationsController < AclController
   def destroy
     @recording_orientation = RecordingOrientation.find(params[:id])
     @recording_orientation.destroy
-
     respond_to do |format|
       format.html { redirect_to(recording_orientations_url) }
       format.xml  { head :ok }

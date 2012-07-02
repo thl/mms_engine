@@ -4,8 +4,7 @@ class VideosController < AclController
   # GET /videos
   # GET /videos.xml
   def index
-    @videos = Video.find(:all)
-
+    @videos = Video.all
     respond_to do |format|
       format.html # index.rhtml
       format.xml  { render :xml => @videos.to_xml }
@@ -32,21 +31,21 @@ class VideosController < AclController
 
   # GET /videos/new
   def new
-    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
+    @capture_device_models = CaptureDeviceMaker.order('title').collect{|maker| maker.capture_device_models}.flatten
     @medium = Video.new(:resource_type_id => 2687)
-    @photographers = Person.find(:all, :order => 'fullname')
-    @quality_types = QualityType.find(:all, :order => 'id')
-    @recording_orientations = RecordingOrientation.find(:all, :order => 'title')
+    @photographers = Person.order('fullname')
+    @quality_types = QualityType.order('id')
+    @recording_orientations = RecordingOrientation.order('title')
     @resource_types = Topic.find(2636).children
   end
 
   # GET /videos/1;edit
   def edit
-    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
+    @capture_device_models = CaptureDeviceMaker.order('title').collect{|maker| maker.capture_device_models}.flatten
     @medium = Video.find(params[:id])
-    @photographers = Person.find(:all, :order => 'fullname')
-    @quality_types = QualityType.find(:all, :order => 'id')
-    @recording_orientations = RecordingOrientation.find(:all, :order => 'title')          
+    @photographers = Person.order('fullname')
+    @quality_types = QualityType.order('id')
+    @recording_orientations = RecordingOrientation.order('title')          
     @resource_types = Topic.find(2636).children
     render :template => 'media/edit'
   end
@@ -78,10 +77,10 @@ class VideosController < AclController
         format.xml  { head :created, :location => medium_url(@medium) }
       else
         format.html do
-          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
-          @photographers = Person.find(:all, :order => 'fullname')
-          @quality_types = QualityType.find(:all, :order => 'id')
-          @recording_orientations = RecordingOrientation.find(:all, :order => 'title')
+          @capture_device_models = CaptureDeviceMaker.order('title').collect{|maker| maker.capture_device_models}.flatten
+          @photographers = Person.order('fullname')
+          @quality_types = QualityType.order('id')
+          @recording_orientations = RecordingOrientation.order('title')
           @resource_types = Topic.find(2636).children
           render :action => 'new'
         end
@@ -94,7 +93,6 @@ class VideosController < AclController
   # PUT /videos/1.xml
   def update
     @video = Video.find(params[:id])
-
     respond_to do |format|
       if @video.update_attributes(params[:video])
         flash[:notice] = ts('edit.successful', :what => Video.human_name.capitalize)
@@ -102,10 +100,10 @@ class VideosController < AclController
         format.xml  { head :ok }
       else
         format.html do
-          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
-          @photographers = Person.find(:all, :order => 'fullname')
-          @quality_types = QualityType.find(:all, :order => 'id')
-          @recording_orientations = RecordingOrientation.find(:all, :order => 'title')          
+          @capture_device_models = CaptureDeviceMaker.order('title').collect{|maker| maker.capture_device_models}.flatten
+          @photographers = Person.order('fullname')
+          @quality_types = QualityType.order('id')
+          @recording_orientations = RecordingOrientation.order('title')          
           @resource_types = Topic.find(2687).children          
           render :action => 'media/edit'
         end
@@ -119,7 +117,6 @@ class VideosController < AclController
   def destroy
     @video = Video.find(params[:id])
     @video.destroy
-
     respond_to do |format|
       format.html { redirect_to videos_url }
       format.xml  { head :ok }

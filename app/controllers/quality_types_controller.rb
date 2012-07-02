@@ -2,8 +2,7 @@ class QualityTypesController < AclController
   # GET /quality_types
   # GET /quality_types.xml
   def index
-    @quality_types = QualityType.find(:all)
-
+    @quality_types = QualityType.order('title')
     respond_to do |format|
       format.html # index.rhtml
       format.xml  { render :xml => @quality_types.to_xml }
@@ -14,7 +13,6 @@ class QualityTypesController < AclController
   # GET /quality_types/1.xml
   def show
     @quality_type = QualityType.find(params[:id])
-
     respond_to do |format|
       format.html # show.rhtml
       format.xml  { render :xml => @quality_type.to_xml }
@@ -35,7 +33,6 @@ class QualityTypesController < AclController
   # POST /quality_types.xml
   def create
     @quality_type = QualityType.new(params[:quality_type])
-
     respond_to do |format|
       if @quality_type.save
         flash[:notice] = ts('new.successful', :what => QualityType.human_name.capitalize)
@@ -70,7 +67,6 @@ class QualityTypesController < AclController
   def destroy
     @quality_type = QualityType.find(params[:id])
     @quality_type.destroy
-
     respond_to do |format|
       format.html { redirect_to quality_types_url }
       format.xml  { head :ok }

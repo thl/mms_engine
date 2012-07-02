@@ -39,7 +39,7 @@ class MediaPublishersController < AclController
   # GET /media_publishers/new.xml
   def new
     @media_publisher = MediaPublisher.new
-    @publishers = Publisher.find(:all)
+    @publishers = Publisher.order('title')
 
     respond_to do |format|
       format.html # new.html.erb
@@ -50,7 +50,7 @@ class MediaPublishersController < AclController
   # GET /media_publishers/1/edit
   def edit
     if !@medium.nil?
-      @publishers = Publisher.find(:all)
+      @publishers = Publisher.order('title')
       @media_publisher = @medium.media_publisher
       @media_publisher = @medium.create_media_publisher if @media_publisher.nil?
     end
@@ -124,5 +124,4 @@ class MediaPublishersController < AclController
   def api_response?
     request.format.xml?
   end
-
 end

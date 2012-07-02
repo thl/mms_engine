@@ -1,4 +1,4 @@
-<%  authorized_only hash_for_sponsor_path(:action => 'destroy') do %>
+<%  if authorized?(hash_for_sponsor_path(:action => 'destroy')) %>
 <%=   link_to ts('delete.this'), sponsor_path(@sponsor), :confirm => te('delete.confirmation'), :method => :delete %> |
 <%  end %>
 <%= link_to ts('back.to', :what => t('all.records', :what => Sponsor.human_name(:count => :many))), sponsors_path %> |

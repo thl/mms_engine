@@ -28,7 +28,7 @@ class MediaSourceAssociationsController < AclController
   # GET /media_source_associations/new.xml
   def new
     @media_source_association = MediaSourceAssociation.new(:medium => @medium)
-    @sources = Source.find(:all, :order => 'title')
+    @sources = Source.order('title')
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @media_source_association }
@@ -38,7 +38,7 @@ class MediaSourceAssociationsController < AclController
   # GET /media_source_associations/1/edit
   def edit
     @media_source_association = MediaSourceAssociation.find(params[:id])
-    @sources = Source.find(:all, :order => 'title')
+    @sources = Source.order('title')
   end
 
   # POST /media_source_associations
@@ -52,7 +52,7 @@ class MediaSourceAssociationsController < AclController
         format.xml  { render :xml => @media_source_association, :status => :created, :location => @media_source_association }
       else
         format.html do
-          @sources = Source.find(:all, :order => 'title')
+          @sources = Source.order('title')
           render :action => 'new'
         end
         format.xml  { render :xml => @media_source_association.errors, :status => :unprocessable_entity }
@@ -72,7 +72,7 @@ class MediaSourceAssociationsController < AclController
         format.xml  { head :ok }
       else
         format.html do
-          @sources = Source.find(:all, :order => 'title')
+          @sources = Source.order('title')
           render :action => 'edit'
         end
         format.xml  { render :xml => @media_source_association.errors, :status => :unprocessable_entity }

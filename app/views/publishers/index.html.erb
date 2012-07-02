@@ -15,7 +15,7 @@
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<% authorized_only hash_for_new_publisher_path do %>
+<% if authorized? hash_for_new_publisher_path %>
 <%=  link_to ts('new.record', :what => Publisher.human_name), new_publisher_path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>

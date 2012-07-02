@@ -6,7 +6,7 @@
 <%= display_if_not_blank ReproductionType.human_name.titleize.s, h(@copyright.reproduction_type.title).s %>
 <%= display_if_not_blank Copyright.human_attribute_name('notes').s, h(@copyright.notes) %>
 <p>&nbsp;<br/>
-<% authorized_only hash_for_edit_copyright_path do %>
+<% if authorized? hash_for_edit_copyright_path %>
 <%=  link_to ts('edit.this'), edit_copyright_path(@copyright) %> |
 <% end %>
 <%= render :partial => 'persistent_links' %>

@@ -3,34 +3,31 @@ class StatusesController < AclController
   # GET /statuses
   # GET /statuses.xml
   def index
-    @statuses = Status.all(:order => :position)
-
-      respond_to do |format|
-        format.html # index.html.erb
-        format.xml  { render :xml => @statuses }
-      end
+    @statuses = Status.order('position')
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @statuses }
+    end
   end
 
   # GET /statuses/1
   # GET /statuses/1.xml
   def show
     @status = Status.find(params[:id])
-
-      respond_to do |format|
-        format.html # show.html.erb
-        format.xml  { render :xml => @status }
-      end
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @status }
+    end
   end
 
   # GET /statuses/new
   # GET /statuses/new.xml
   def new
     @status = Status.new(:position => Status.maximum(:position)+1)
-
-      respond_to do |format|
-        format.html # new.html.erb
-        format.xml  { render :xml => @status }
-      end
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @status }
+    end
   end
 
   # GET /statuses/1/edit
@@ -42,7 +39,6 @@ class StatusesController < AclController
   # POST /statuses.xml
   def create
       @status = Status.new(params[:status])
-
       respond_to do |format|
         if @status.save
           flash[:notice] = ts('new.successful', :what => Status.human_name.capitalize)
@@ -59,7 +55,6 @@ class StatusesController < AclController
   # PUT /statuses/1.xml
   def update
       @status = Status.find(params[:id])
-
       respond_to do |format|
         if @status.update_attributes(params[:status])
           flash[:notice] = ts('edit.successful', :what => Status.human_name.capitalize)
@@ -77,7 +72,6 @@ class StatusesController < AclController
   def destroy
       @status = Status.find(params[:id])
       @status.destroy
-
       respond_to do |format|
         format.html { redirect_to statuses_url }
         format.xml  { head :ok }

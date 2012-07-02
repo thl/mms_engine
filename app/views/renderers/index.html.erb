@@ -19,7 +19,7 @@
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<% authorized_only hash_for_new_renderer_path do %>
+<% if authorized? hash_for_new_renderer_path %>
 <%=  link_to ts('new.record', :what => Renderer.human_name), new_renderer_path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>

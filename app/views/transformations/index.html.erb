@@ -21,7 +21,7 @@
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<% authorized_only hash_for_transformation_path do %>
+<% if authorized? hash_for_transformation_path %>
 <%=  link_to ts('new.record', :what => Transformation.human_name), new_transformation_path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>

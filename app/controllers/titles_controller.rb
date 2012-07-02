@@ -4,13 +4,11 @@ class TitlesController < AclController
   caches_page :index, :show, :if => :api_response?.to_proc
   cache_sweeper :title_sweeper, :only => [:create, :update, :destroy]
   
-  
   # GET /titles
   # GET /titles.xml
   def index
     if !@medium.nil?
       @titles = @medium.titles.all
-
       respond_to do |format|
         format.html # index.html.erb
         format.xml  { render :xml => @titles }
@@ -23,7 +21,6 @@ class TitlesController < AclController
   def show
     if !@medium.nil?
       @title = Title.find(params[:id])
-
       respond_to do |format|
         format.html # show.html.erb
         format.xml  { render :xml => @title }
@@ -35,7 +32,7 @@ class TitlesController < AclController
   # GET /titles/new.xml
   def new
     if !@medium.nil?
-      @languages = ComplexScripts::Language.find(:all, :order => 'title')
+      @languages = ComplexScripts::Language.order('title')
       language = ComplexScripts::Language.find_iso_code(I18n.locale)
       @title = @medium.titles.new(:language => language, :creator => current_user.person)
       respond_to do |format|
@@ -48,7 +45,7 @@ class TitlesController < AclController
   # GET /titles/1/edit
   def edit
     if !@medium.nil?
-      @languages = ComplexScripts::Language.find(:all, :order => 'title')
+      @languages = ComplexScripts::Language.order('title')
       @title = Title.find(params[:id])      
     end
   end
@@ -64,7 +61,7 @@ class TitlesController < AclController
           format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
           format.xml  { render :xml => @title, :status => :created, :location => medium_title_url(@medium, @title) }
         else
-          @languages = ComplexScripts::Language.find(:all, :order => 'title')
+          @languages = ComplexScripts::Language.order('title')
           format.html { render :action => "new" }
           format.xml  { render :xml => @title.errors, :status => :unprocessable_entity }
         end

@@ -30,13 +30,13 @@
      </table>
 <% end %>
 <p>
-<% authorized_only hash_for_new_picture_path do %>
+<% if authorized? hash_for_new_picture_path %>
 <%=  link_to ts('new.record', :what => 'Photo-Immersive Object'), new_picture_path %> |
 <% end
-   authorized_only hash_for_new_video_path do %>
+   if authorized? hash_for_new_video_path %>
 <%=  link_to ts('new.record', :what => 'Audio-Video'), new_video_path %> |
 <% end
-   authorized_only hash_for_new_document_path do %>
+   if authorized? hash_for_new_document_path %>
 <%=  link_to ts('new.record', :what => 'Text-Website'), new_document_path %>
 <% end %>
 </p>

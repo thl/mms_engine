@@ -1,4 +1,4 @@
-<%  authorized_only hash_for_recording_orientation_path(:action => 'destroy') do %>
+<%  if authorized?(hash_for_recording_orientation_path(:action => 'destroy')) %>
 <%=   link_to ts('delete.this'), recording_orientation_path(@recording_orientation), :confirm => te('delete.confirmation'), :method => :delete %> |
 <%  end %>
 <%= link_to ts('back.to', :what => t('all.records', :what => RecordingOrientation.human_name(:count => :many))), recording_orientations_path %> |

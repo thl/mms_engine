@@ -8,7 +8,7 @@
 <%= display_if_not_blank Location.human_attribute_name('spot_feature').s, h(@location.spot_feature) %>
 <%= display_if_not_blank Location.human_attribute_name('notes').s, h(@location.notes) %>
 <p>&nbsp;<br/>
-<% authorized_only hash_for_edit_medium_location_path do %>
+<% if authorized? hash_for_edit_medium_location_path %>
 <%=  link_to ts('edit.this'), edit_medium_location_path(@medium, @location) %> |
 <% end %>
 <%= render :partial => 'persistent_links' %>

@@ -4,7 +4,7 @@ class KeywordsController < AclController
   # GET /keywords
   # GET /keywords.xml
   def index
-    @keywords = Keyword.find(:all, :order => 'title')
+    @keywords = Keyword.order('title')
       
     respond_to do |format|
       format.html # index.rhtml

@@ -23,10 +23,10 @@ class PicturesController < AclController
 
   # GET /pictures/new
   def new
-    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
-    @photographers = Person.find(:all, :order => 'fullname')
-    @quality_types = QualityType.find(:all, :order => 'id')
-    @recording_orientations = RecordingOrientation.find(:all, :order => 'title')    
+    @capture_device_models = CaptureDeviceMaker.order('title').collect{|maker| maker.capture_device_models}.flatten
+    @photographers = Person.order('fullname')
+    @quality_types = QualityType.order('id')
+    @recording_orientations = RecordingOrientation.order('title')    
     @resource_types = Topic.find(2636).children
     @medium = Picture.new(:resource_type_id => 2660)
     @image = Image.new
@@ -35,11 +35,11 @@ class PicturesController < AclController
 
   # GET /pictures/1;edit
   def edit
-    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
+    @capture_device_models = CaptureDeviceMaker.order('title').collect{|maker| maker.capture_device_models}.flatten
     @medium = Picture.find(params[:id])
-    @photographers = Person.find(:all, :order => 'fullname')
-    @quality_types = QualityType.find(:all, :order => 'id')
-    @recording_orientations = RecordingOrientation.find(:all, :order => 'title')    
+    @photographers = Person.order('fullname')
+    @quality_types = QualityType.order('id')
+    @recording_orientations = RecordingOrientation.order('title')    
     @resource_types = Topic.find(2636).children
   end
 
@@ -65,10 +65,10 @@ class PicturesController < AclController
         format.html { redirect_to picture_url(@medium) }
         format.xml  { head :created, :location => picture_url(@medium) }
       else
-        @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
-        @photographers = Person.find(:all, :order => 'fullname')
-        @quality_types = QualityType.find(:all, :order => 'id')
-        @recording_orientations = RecordingOrientation.find(:all, :order => 'title')    
+        @capture_device_models = CaptureDeviceMaker.order('title').collect{|maker| maker.capture_device_models}.flatten
+        @photographers = Person.order('fullname')
+        @quality_types = QualityType.order('id')
+        @recording_orientations = RecordingOrientation.order('title')    
         @resource_types = Topic.find(2636).children        
         @medium = Picture.new(params[:medium]) if @medium.nil?
         flash[:notice] = "Picture could not be saved."
@@ -82,7 +82,6 @@ class PicturesController < AclController
   # PUT /pictures/1.xml
   def update
     @medium = Picture.find(params[:id])
-
     respond_to do |format|
       if @medium.update_attributes(params[:picture])
         flash[:notice] = ts('edit.successful', :what => Picture.human_name.capitalize)
@@ -90,10 +89,10 @@ class PicturesController < AclController
         format.xml  { head :ok }
       else
         format.html do
-          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
-          @photographers = Person.find(:all, :order => 'fullname')
-          @quality_types = QualityType.find(:all, :order => 'id')
-          @recording_orientations = RecordingOrientation.find(:all, :order => 'title')    
+          @capture_device_models = CaptureDeviceMaker.order('title').collect{|maker| maker.capture_device_models}.flatten
+          @photographers = Person.order('fullname')
+          @quality_types = QualityType.order('id')
+          @recording_orientations = RecordingOrientation.order('title')    
           @resource_types = Topic.find(2636).children          
           render :action => 'edit'
         end
@@ -107,7 +106,6 @@ class PicturesController < AclController
   def destroy
     @picture = Picture.find(params[:id])
     @picture.destroy
-
     respond_to do |format|
       format.html { redirect_to pictures_url }
       format.xml  { head :ok }

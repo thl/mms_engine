@@ -1,4 +1,4 @@
-<%  authorized_only hash_for_capture_device_maker_path(:action => 'destroy') do %>
+<%  if authorized?(hash_for_capture_device_maker_path(:action => 'destroy')) %>
 <%=   link_to ts('delete.this'), capture_device_maker_path(@capture_device_maker), :confirm => te('delete.confirmation'), :method => :delete %> |
 <%  end %>
 <%= link_to ts('back.to', :what => CaptureDeviceMaker.human_name(:count => :many)), capture_device_makers_path %> |

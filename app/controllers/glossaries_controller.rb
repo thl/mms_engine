@@ -8,7 +8,7 @@ class GlossariesController < AclController
   end
   
   def index
-    @glossaries = Glossary.find(:all)
+    @glossaries = Glossary.order('title')
 
     respond_to do |format|
       format.html # index.rhtml
@@ -29,14 +29,14 @@ class GlossariesController < AclController
 
   # GET /glossaries/new
   def new
-    @glossary = Glossary.new
-    @organizations = Organization.find(:all)
+    @glossary = Glossary.order('title')
+    @organizations = Organization.order('title')
   end
 
   # GET /glossaries/1;edit
   def edit
     @glossary = Glossary.find(params[:id])
-    @organizations = Organization.find(:all)
+    @organizations = Organization.order('title')
   end
 
   # POST /glossaries
@@ -51,7 +51,7 @@ class GlossariesController < AclController
         format.xml  { head :created, :location => glossary_url(@glossary) }
       else
         format.html do
-          @organizations = Organization.find(:all)
+          @organizations = Organization.order('title')
           render :action => 'new'
         end
         format.xml  { render :xml => @glossary.errors.to_xml }

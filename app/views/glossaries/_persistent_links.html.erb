@@ -1,4 +1,4 @@
-<%  authorized_only hash_for_glossary_path(:action => 'destroy') do %>
+<%  if authorized?(hash_for_glossary_path(:action => 'destroy')) %>
 <%=   link_to ts('delete.this'), glossary_path(@glossary), :confirm => te('delete.confirmation'), :method => :delete %> |
 <%  end %>
 <%= link_to ts('back.to', :what => t('all.records', :what => Glossary.human_name(:count => :many))), glossaries_path %> |

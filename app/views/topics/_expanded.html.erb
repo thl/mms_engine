@@ -1,7 +1,7 @@
 <% if margin_depth.nil?
      margin_depth = expanded.ancestors.size
    end %>
-<%= Util::MARGIN * margin_depth %>
+<%= (Util::MARGIN * margin_depth).html_safe %>
 <% childless = expanded.is_childless?
    if childless %>
      &#9674;
@@ -12,7 +12,7 @@
    if selected %>
      <span class="selected_branch">
 <% end %>
-<%= "#{link_to h(expanded.title).s, expanded} (#{number_with_delimiter(expanded.media_count, :delimiter => ',')})" %>
+<%= link_to h(expanded.title).s, expanded %> (<%= number_with_delimiter expanded.media_count, :delimiter => ',' %>)
 <% if selected %>
      </span>
 <% end %>

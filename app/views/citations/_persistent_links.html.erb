@@ -1,4 +1,4 @@
-<% authorized_only hash_for_medium_title_citation_path(:action => 'destroy') do %>
+<% if authorized?(hash_for_medium_title_citation_path(:action => 'destroy')) %>
 <%= link_to 'Delete', polymorphic_path(@reference_stack + [@citation]), :confirm => 'Are you sure?', :method => :delete %> |
 <% end %>
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'titles'} %>

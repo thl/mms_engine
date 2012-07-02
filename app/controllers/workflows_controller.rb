@@ -14,8 +14,7 @@ class WorkflowsController < AclController
   def show
     if !@medium.nil?
       @workflow = @medium.workflow
-      @statuses = Status.all(:order => :position)
-  
+      @statuses = Status.order('position')
       respond_to do |format|
         format.html # show.html.erb
         format.xml  { render :xml => @workflow }
@@ -76,7 +75,6 @@ class WorkflowsController < AclController
     if !@medium.nil?
       @workflow = @medium.workflow
       @workflow.destroy
-
       respond_to do |format|
         format.html { redirect_to media_url }
         format.xml  { head :ok }

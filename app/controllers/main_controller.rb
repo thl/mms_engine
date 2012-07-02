@@ -1,7 +1,7 @@
 class MainController < AclController
   def initialize
     super
-    @guest_perms += ['main/ims', 'main/change_language', 'main/login', 'main/logout', 'main/banner_start', 'main/banner_end']
+    @guest_perms += ['main/ims', 'main/change_language', 'main/login', 'main/logout', 'main/banner_start', 'main/banner_end', 'main/blank']
   end
 
   def index
@@ -17,5 +17,9 @@ class MainController < AclController
 
   def banner_end
     render :partial => 'main/banner_end'
-  end  
+  end
+  
+  def blank
+    render :nothing => true
+  end
 end

@@ -2,8 +2,7 @@ class ReproductionTypesController < AclController
   # GET /reproduction_types
   # GET /reproduction_types.xml
   def index
-    @reproduction_types = ReproductionType.find(:all, :order => '`order`')
-
+    @reproduction_types = ReproductionType.order('`order`')
     respond_to do |format|
       format.html # index.rhtml
       format.xml  { render :xml => @reproduction_types.to_xml }
@@ -14,7 +13,6 @@ class ReproductionTypesController < AclController
   # GET /reproduction_types/1.xml
   def show
     @reproduction_type = ReproductionType.find(params[:id])
-
     respond_to do |format|
       format.html # show.rhtml
       format.xml  { render :xml => @reproduction_type.to_xml }
@@ -58,7 +56,6 @@ class ReproductionTypesController < AclController
   # PUT /reproduction_types/1.xml
   def update
     @reproduction_type = ReproductionType.find(params[:id])
-
     respond_to do |format|
       if @reproduction_type.update_attributes(params[:reproduction_type])
         flash[:notice] = ts('edit.successful', :what => ReproductionType.human_name.capitalize)
@@ -76,7 +73,6 @@ class ReproductionTypesController < AclController
   def destroy
     @reproduction_type = ReproductionType.find(params[:id])
     @reproduction_type.destroy
-
     respond_to do |format|
       format.html { redirect_to reproduction_types_url }
       format.xml  { head :ok }

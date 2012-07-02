@@ -28,7 +28,7 @@
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<% authorized_only hash_for_new_medium_caption_path do %>
+<% if authorized? hash_for_new_medium_caption_path %>
 <%=  link_to ts(:for, :what => t('new.record', :what => caption_title.downcase), :whom => @medium.class.human_name), new_medium_caption_path(@medium) %> |
 <% end %>
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'captions'} %>

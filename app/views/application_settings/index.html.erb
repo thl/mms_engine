@@ -30,7 +30,7 @@
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<% authorized_only hash_for_new_application_setting_path do %>
+<% if authorized? hash_for_new_application_setting_path %>
 <%=  link_to ts('new.record', :what => ApplicationSetting.human_name), new_application_setting_path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>

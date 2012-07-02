@@ -1,3 +1,4 @@
+<%= javascript_on_load(reset_animation_script('.thl-popup-content')) %>
 <p>
 <% chosen_caption = chosen_caption(@medium)
    if !chosen_caption.nil? %>
@@ -14,7 +15,7 @@
 <%   elsif @medium.instance_of? Document %>
 <%=    render :partial => 'documents/show' %>
 <%   end %>
-<%=  display_if_not_blank Medium.human_attribute_name(:id).s, "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})" %>
+<%=  display_if_not_blank Medium.human_attribute_name(:id).s, "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})".html_safe %>
 <%=  render :partial => 'titles/index_display_only', :locals => {:medium => @medium} %>
 <% end 
    captions = @medium.captions
@@ -59,7 +60,7 @@
    if associated_resources.collect{|ar| ar[1]}.sum > 0 %>
      <h3>Associated Resources</h3>
      <ul class="normal">
-<%=    associated_resources.reject{|ar| ar[1] == 0}.collect{|ar| "<li>" + link_to("#{ar[0]} (#{ar[1]})", ar[2]) + "</li>" }.join("") %>
+<%=    associated_resources.reject{|ar| ar[1] == 0}.collect{ |ar| "<li>#{link_to("#{ar[0]} (#{ar[1]})", ar[2])}</li>" }.join.html_safe %>
      </ul>
 <% end
    affiliations = @medium.affiliations
@@ -82,12 +83,12 @@
          else
            parenthesis = ''
          end
-         "#{title}#{parenthesis}"
+         "#{title}#{parenthesis}".html_safe
 	   end %>
 <%=    ts 'copyright.message.provider', :what => Medium.human_name, :whom => affiliations_list.join(', ') %>
 <%   end
      if !copyrights.empty? %>
-<%=    ts 'copyright.message.holder', :count => copyrights.size, :whom => copyrights.collect{|c| "#{c.copyright_holder.website.blank? ? h(c.copyright_holder.title): link_to(h(c.copyright_holder.title), c.copyright_holder.website)} (#{c.reproduction_type.website.blank? ? h(c.reproduction_type.title).downcase : link_to(h(c.reproduction_type.title).downcase, c.reproduction_type.website)})"}.join(', ') %>
+<%=    ts 'copyright.message.holder', :count => copyrights.size, :whom => copyrights.collect{|c| "#{c.copyright_holder.website.blank? ? h(c.copyright_holder.title): link_to(h(c.copyright_holder.title), c.copyright_holder.website)} (#{c.reproduction_type.website.blank? ? h(c.reproduction_type.title).downcase : link_to(h(c.reproduction_type.title).downcase, c.reproduction_type.website)})".html_safe}.join(', ') %>
 <%   end %>
    </p>
 <% end %>
@@ -132,14 +133,14 @@
 <% if logged_in?
      capture_device_model = @medium.capture_device_model
      if !capture_device_model.nil? %>
-<%=    display_if_not_blank CaptureDeviceModel.human_name.titleize.s, "#{h(capture_device_model.capture_device_maker.title)} - #{h(capture_device_model.title)}" %>
+<%=    display_if_not_blank CaptureDeviceModel.human_name.titleize.s, "#{h(capture_device_model.capture_device_maker.title)} - #{h(capture_device_model.title)}".html_safe %>
 <%   end
      media_source_associations = @medium.media_source_associations
      if !media_source_associations.empty? %>
-<%=    display_if_not_blank Source.human_name(:count => media_source_associations.size).titleize.s, media_source_associations.collect {|s| "#{s.source.title} #{"(#{s.shot_number})" if !s.shot_number.nil?}"}.join(', ') %>
+<%=    display_if_not_blank Source.human_name(:count => media_source_associations.size).titleize.s, media_source_associations.collect {|s| "#{s.source.title} #{"(#{s.shot_number})" if !s.shot_number.nil?}".html_safe}.join(', ') %>
 <%   end
    end
-   authorized_only hash_for_medium_workflow_path do
+   if authorized? hash_for_medium_workflow_path
      workflow = @medium.workflow
      if !workflow.nil? %>
 <%=    render :partial => 'workflows/show', :locals => {:workflow => workflow} %>
@@ -147,11 +148,11 @@
    end %>
 <p>
 <% has_previous = false
-   authorized_only hash_for_edit_medium_path do %>
+   if authorized? hash_for_edit_medium_path %>
 <%=  link_to ts('edit.record', :what => t(:catalog_record)), edit_medium_path(@medium) %>
 <%   has_previous = true
    end
-   authorized_only hash_for_medium_path(:action => 'destroy') do 
+   if authorized?(hash_for_medium_path(:action => 'destroy'))
 	 if has_previous %>
 	   |
 <%   else

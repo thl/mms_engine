@@ -2,7 +2,7 @@ class OrganizationsController < AclController
   # GET /organizations
   # GET /organizations.xml
   def index
-    @organizations = Organization.find(:all)
+    @organizations = Organization.order('title')
 
     respond_to do |format|
       format.html # index.rhtml

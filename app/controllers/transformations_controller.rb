@@ -2,8 +2,7 @@ class TransformationsController < AclController
   # GET /transformations
   # GET /transformations.xml
   def index
-    @transformations = Transformation.find(:all)
-
+    @transformations = Transformation.order('title')
     respond_to do |format|
       format.html # index.rhtml
       format.xml  { render :xml => @transformations.to_xml }
@@ -14,7 +13,6 @@ class TransformationsController < AclController
   # GET /transformations/1.xml
   def show
     @transformation = Transformation.find(params[:id])
-
     respond_to do |format|
       format.html # show.rhtml
       format.xml  { render :xml => @transformation.to_xml }
@@ -35,7 +33,6 @@ class TransformationsController < AclController
   # POST /transformations.xml
   def create
     @transformation = Transformation.new(params[:transformation])
-
     respond_to do |format|
       if @transformation.save
         flash[:notice] = ts('new.successful', :what => Transformation.human_name.capitalize)
@@ -52,7 +49,6 @@ class TransformationsController < AclController
   # PUT /transformations/1.xml
   def update
     @transformation = Transformation.find(params[:id])
-
     respond_to do |format|
       if @transformation.update_attributes(params[:transformation])
         flash[:notice] = ts('edit.successful', :what => Transformation.human_name.capitalize)
@@ -70,7 +66,6 @@ class TransformationsController < AclController
   def destroy
     @transformation = Transformation.find(params[:id])
     @transformation.destroy
-
     respond_to do |format|
       format.html { redirect_to transformations_url }
       format.xml  { head :ok }

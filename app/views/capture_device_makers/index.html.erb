@@ -13,14 +13,14 @@
     <td><%= capture_device_maker.exif_tag %></td>
     <td>
 <%= capture_device_maker.capture_device_models.collect{ |model| can_edit_model ? link_to(h(model.title), edit_capture_device_maker_model_path(capture_device_maker, model)) : link_to(h(model.title), capture_device_maker_model_path(capture_device_maker, model))}.join(', ') %></td>
-<%  authorized_only hash_for_new_capture_device_maker_model_path do %>
+<%  if authorized? hash_for_new_capture_device_maker_model_path %>
 	  <td><%= link_to ts('new.record', :what => CaptureDeviceModel.human_name), new_capture_device_maker_model_path(capture_device_maker) %></td>
 <% end %>
   </tr>
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<% authorized_only hash_for_new_capture_device_maker_path do %>
+<% if authorized? hash_for_new_capture_device_maker_path %>
 <%=  link_to ts('new.record', :what => CaptureDeviceMaker.human_name), new_capture_device_maker_path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>

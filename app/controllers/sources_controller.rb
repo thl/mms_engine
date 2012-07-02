@@ -2,8 +2,7 @@ class SourcesController < AclController
   # GET /sources
   # GET /sources.xml
   def index
-    @sources = Source.find(:all)
-
+    @sources = Source.order('title')
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @sources }
@@ -14,7 +13,6 @@ class SourcesController < AclController
   # GET /sources/1.xml
   def show
     @source = Source.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @source }
@@ -25,7 +23,6 @@ class SourcesController < AclController
   # GET /sources/new.xml
   def new
     @source = Source.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @source }
@@ -41,7 +38,6 @@ class SourcesController < AclController
   # POST /sources.xml
   def create
     @source = Source.new(params[:source])
-
     respond_to do |format|
       if @source.save
         flash[:notice] = ts('new.successful', :what => Source.human_name.capitalize)
@@ -58,7 +54,6 @@ class SourcesController < AclController
   # PUT /sources/1.xml
   def update
     @source = Source.find(params[:id])
-
     respond_to do |format|
       if @source.update_attributes(params[:source])
         flash[:notice] = ts('edit.successful', :what => Source.human_name.capitalize)
@@ -76,7 +71,6 @@ class SourcesController < AclController
   def destroy
     @source = Source.find(params[:id])
     @source.destroy
-
     respond_to do |format|
       format.html { redirect_to(sources_url) }
       format.xml  { head :ok }

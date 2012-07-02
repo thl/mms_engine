@@ -1,3 +1,3 @@
-<% authorized_only hash_for_medium_rotations_path do %>
+<% if authorized? hash_for_medium_rotations_path %>
      <p><b>Update picture:</b> <%= link_to 'Rotate picture', medium_rotations_path(@medium), :remote => true %></p>
 <% end %>

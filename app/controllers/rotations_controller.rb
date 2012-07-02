@@ -58,7 +58,7 @@ class RotationsController < AclController
         end
       end
     else
-      render :action => "index"
+      render :action => 'index'
     end
   end
   

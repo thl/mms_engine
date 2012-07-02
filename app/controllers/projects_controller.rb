@@ -2,7 +2,7 @@ class ProjectsController < AclController
   # GET /projects
   # GET /projects.xml
   def index
-    @projects = Project.find(:all)
+    @projects = Project.order('title')
 
     respond_to do |format|
       format.html # index.rhtml
@@ -42,7 +42,7 @@ class ProjectsController < AclController
         format.html { redirect_to project_url(@project) }
         format.xml  { head :created, :location => project_url(@project) }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => 'new' }
         format.xml  { render :xml => @project.errors.to_xml }
       end
     end
@@ -52,7 +52,6 @@ class ProjectsController < AclController
   # PUT /projects/1.xml
   def update
     @project = Project.find(params[:id])
-
     respond_to do |format|
       if @project.update_attributes(params[:project])
         flash[:notice] = ts('edit.successful', :what => Project.human_name.capitalize)
@@ -70,7 +69,6 @@ class ProjectsController < AclController
   def destroy
     @project = Project.find(params[:id])
     @project.destroy
-
     respond_to do |format|
       format.html { redirect_to projects_url }
       format.xml  { head :ok }

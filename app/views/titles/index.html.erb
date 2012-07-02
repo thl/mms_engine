@@ -2,7 +2,7 @@
 <p><%= thumbnail_image_link(@medium) %></p>
 <%= render :partial => 'index', :locals => {:titles => @titles} %>
 <p>&nbsp;<br/>
-<% authorized_only hash_for_new_medium_title_path do %>
+<% if authorized? hash_for_new_medium_title_path %>
 <%=  link_to ts(:for, :what => t('new.record', :what => Title.human_name), :whom => @medium.class.human_name), new_medium_title_path(@medium) %> |
 <% end %>
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'titles'} %>

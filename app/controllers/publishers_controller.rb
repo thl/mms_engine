@@ -2,7 +2,7 @@ class PublishersController < AclController
   # GET /publishers
   # GET /publishers.xml
   def index
-    @publishers = Publisher.find(:all)
+    @publishers = Publisher.order('title')
 
     respond_to do |format|
       format.html # index.html.erb

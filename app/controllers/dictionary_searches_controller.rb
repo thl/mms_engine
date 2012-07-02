@@ -21,7 +21,7 @@ class DictionarySearchesController < AclController
       else
         options.delete(:type)
         @letters = nil
-        @word_pages, @words = paginate(:words, options)
+        @word_pages, @words = Word.paginate(options)
         #@words = Word.find(:all, :conditions => @conditions_array)    
         respond_to do |format|
           format.js
@@ -36,9 +36,9 @@ class DictionarySearchesController < AclController
   def show #for browsing letters
     letter_id = params[:id]
     @language = ComplexScripts::Language.find(params[:language_id])
-    @word_pages, @words = paginate(:words, :conditions => {:letter_id => letter_id, :language_id => @language}, :order => '`order`')
+    @word_pages, @words = Word.where(:letter_id => letter_id, :language_id => @language).order('`order`').paginate
     respond_to do |format|
-      format.html { render :partial => 'index' if request.xhr? }
+      format.js
       format.xml  { render :xml => @words.to_xml }
     end
   end
@@ -57,8 +57,8 @@ class DictionarySearchesController < AclController
     redirect_to new_dictionary_search_url
   end
 
-  # POST /searches
-  # POST /searches.xml
+  # POST /dictionary_searches
+  # POST /dictionary_searches.xml
   def create # actually creates the new search query
     search = DictionarySearch.new(params[:dictionary_search])
     term = search.title
