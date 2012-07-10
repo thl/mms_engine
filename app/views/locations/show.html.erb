@@ -1,10 +1,10 @@
 <p>
-  <b><%= ts :for, :what => Location.human_name(:count => :many).titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></b>
+  <b><%= ts :for, :what => Location.model_name.human(:count => :many).titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></b>
 </p>
 <p>
 <%=  thumbnail_image_link(@medium) %>
 </p>
-<%= display_if_not_blank Location.human_name(:count => 1).titleize.s, link_to(@location.feature.header, medium_places_path(@medium, @location.feature_id)) %>
+<%= display_if_not_blank Location.model_name.human(:count => 1).titleize.s, link_to(@location.feature.header, medium_places_path(@medium, @location.feature_id)) %>
 <%= display_if_not_blank Location.human_attribute_name('spot_feature').s, h(@location.spot_feature) %>
 <%= display_if_not_blank Location.human_attribute_name('notes').s, h(@location.notes) %>
 <p>&nbsp;<br/>

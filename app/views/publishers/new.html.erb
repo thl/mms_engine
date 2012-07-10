@@ -1,4 +1,4 @@
-<h1><%= ts 'new.record', :what => Publisher.human_name.titleize %></h1>
+<h1><%= ts 'new.record', :what => Publisher.model_name.human.titleize %></h1>
 <%= error_messages_for :publisher %>
 <%= form_for(:publisher, :url => publishers_path) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>

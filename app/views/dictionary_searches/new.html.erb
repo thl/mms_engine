@@ -2,7 +2,7 @@
 <%= form_for(:dictionary_search, :url => dictionary_searches_path, :remote => true, :html => { :id => 'search_form' }) do |f| %>
     <p>
 <%=   f.text_field :title, fixed_language_options %> <%= globalized_submit_tag 'search.this' %><br/>
-<%=   f.select(:language, @available_languages.collect {|l| [l.title, l.id]} + [[ t('all.records', :what => ComplexScripts::Language.human_name(:count => :many)), 0]], {}, language_options) %>
+<%=   f.select(:language, @available_languages.collect {|l| [l.title, l.id]} + [[ t('all.records', :what => ComplexScripts::Language.model_name.human(:count => :many)), 0]], {}, language_options) %>
 <%=   f.radio_button :type, :simple %><%= ts 'search.full_text' %>
 <%=   f.radio_button :type, :boolean %><%= ts :advanced %> (<%= link_to(ts('what_is', :what => t('this.this')), { :controller => 'help', :action => 'advanced_search'}, :remote => true, :id => 'advanced_search_link') %>)
 <%=   javascript_tag("$(\'#advanced_search_link\').bind(\'ajax:loading\', function(){ document.getElementById(\'advanced_search_type\').checked = true; });") %>

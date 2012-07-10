@@ -1,10 +1,10 @@
-<h1><%= ts 'list.ing.records', :what => Keyword.human_name(:count => :many).titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
+<h1><%= ts 'list.ing.records', :what => Keyword.model_name.human(:count => :many).titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <p>
 <%= thumbnail_image_link(@medium) %>
 </p>
 <table border="1" class="normal">
   <tr>
-    <th><%= Keyword.human_name.titleize.s %></th>
+    <th><%= Keyword.model_name.human.titleize.s %></th>
     <th colspan="2"><%= ts :options %></th>
   </tr>
 <% for media_keyword_association in @media_keyword_associations %>
@@ -16,6 +16,6 @@
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<%= link_to ts('associate.to', :what => t(:another, :what => Keyword.human_name)), new_media_keyword_association_path(:medium_id => @medium) %> |
+<%= link_to ts('associate.to', :what => t(:another, :what => Keyword.model_name.human)), new_media_keyword_association_path(:medium_id => @medium) %> |
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'keywords'} %>
 </p>

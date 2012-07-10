@@ -41,7 +41,7 @@ class KeywordsController < AclController
       
     respond_to do |format|
       if success
-        flash[:notice] = ts('new.successful', :what => Keyword.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => Keyword.model_name.human.capitalize)
         format.html { redirect_to keywords_url }
         format.xml  { head :created, :location => keyword_url(@keyword) }
       else
@@ -58,7 +58,7 @@ class KeywordsController < AclController
 
     respond_to do |format|
       if @keyword.update_attributes(params[:keyword])
-        flash[:notice] = ts('edit.successful', :what => Keyword.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => Keyword.model_name.human.capitalize)
         format.html { redirect_to keywords_url }
         format.xml  { head :ok }
       else

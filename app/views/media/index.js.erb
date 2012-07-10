@@ -1,14 +1,20 @@
 <% if @media.nil? && @pictures.nil? && @videos.nil? && @documents.nil? %>
      $("#primary").html("<%= escape_javascript(render(:partial => 'media/main')) %>")
 <% else
-     if @medium_pages.nil? %>
+     if !defined? @media.offset %>
        $("#secondary").html("<%= escape_javascript(render(:partial => 'media/index')) %>")
 <%     if !element_id.blank? %>
          $("#navigation").html("<%= escape_javascript(render(:partial => @partial)) %>")
 <%     end
-     else %>
-       $("#secondary").html("<%= escape_javascript(render(:partial => @type == 'Document' ? 'documents/paged_index' : 'media/paged_index_full')) %>")
-<%   end %>
+     else 
+       if @type=='Document' %>
+         $("#secondary").html("<%= escape_javascript(render(:partial => 'documents/paged_index')) %>")
+<%     elsif !@keyword.nil? %>
+         $("#secondary").html("<%= escape_javascript(render(:partial => 'media/paged_index')) %>")
+<%     else %>
+         $("#secondary").html("<%= escape_javascript(render(:partial => 'media/paged_index_full')) %>")
+<%     end
+     end %>
      ActivateThlPopups('#secondary');
      tb_init(a.thickbox, area.thickbox, input.thickbox);
 <% end %>

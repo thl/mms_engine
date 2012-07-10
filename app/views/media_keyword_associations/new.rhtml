@@ -1,4 +1,4 @@
-<h1><%= ts 'associate.record', :what => Keyword.human_name.titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
+<h1><%= ts 'associate.record', :what => Keyword.model_name.human.titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <%= error_messages_for :media_keyword_association %>
 <%= form_for(:media_keyword_association, :url => media_keyword_associations_path) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>

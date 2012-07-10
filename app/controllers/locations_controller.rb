@@ -18,7 +18,7 @@ class LocationsController < AclController
     @location = @medium.locations.new(params[:location])
     if @location.save
       respond_to do |format|
-        flash[:notice] = ts('new.successful', :what => Location.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => Location.model_name.human.capitalize)
         format.html { redirect_to edit_medium_url(@medium, :anchor => 'locations') }
         format.xml  { head :created, :location => location_url(@location) }
       end
@@ -37,7 +37,7 @@ class LocationsController < AclController
 
     if @location.update_attributes(params[:location])
       respond_to do |format|
-        flash[:notice] = ts('edit.successful', :what => Location.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => Location.model_name.human.capitalize)
         format.html { redirect_to edit_medium_url(@medium, :anchor => 'locations') }
         format.xml  { head :ok }
       end

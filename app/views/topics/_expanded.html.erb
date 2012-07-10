@@ -12,7 +12,7 @@
    if selected %>
      <span class="selected_branch">
 <% end %>
-<%= link_to h(expanded.title).s, expanded %> (<%= number_with_delimiter expanded.media_count, :delimiter => ',' %>)
+<%= link_to h(expanded.title).s, topic_path(expanded, :margin_depth => margin_depth), :remote => true %> (<%= number_with_delimiter expanded.media_count, :delimiter => ',' %>)
 <% if selected %>
      </span>
 <% end %>

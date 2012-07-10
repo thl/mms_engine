@@ -1,10 +1,10 @@
 <p>
-  <b><%= ts :for, :what => Keyword.human_name.titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></b>
+  <b><%= ts :for, :what => Keyword.model_name.human.titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></b>
 </p>
 <p>
 <%=  thumbnail_image_link(@medium) %>
 </p>
-<%= display_if_not_blank Keyword.human_name.titleize.s, link_to(h(@keyword.title).s, keyword_path(@keyword)) %>
+<%= display_if_not_blank Keyword.model_name.human.titleize.s, link_to(h(@keyword.title).s, keyword_path(@keyword)) %>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_edit_media_keyword_association_path %>
 <%= link_to 'Edit'.ts, edit_media_keyword_association_path(@media_keyword_association) %> |

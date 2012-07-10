@@ -1,12 +1,12 @@
 <% if @medium.nil? %>
-     <h1><%= ts 'list.ing.records', :what => Topic.human_name.titleize %></h1>
+     <h1><%= ts 'list.ing.records', :what => Topic.model_name.human.titleize %></h1>
 <% else %>
-     <h1><%= ts :for, :what => t('list.ing.records', :what => Topic.human_name.titleize), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
+     <h1><%= ts :for, :what => t('list.ing.records', :what => Topic.model_name.human.titleize), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
      <p><%= thumbnail_image_link(@medium) %></p>
 <% end %>
 <table border="1" class="normal">
   <tr>
-    <th><%= Topic.human_name.titleize.s %></th>
+    <th><%= Topic.model_name.human.titleize.s %></th>
     <th><%= MediaCategoryAssociation.human_attribute_name(:string_value).s %></th>
     <th><%= MediaCategoryAssociation.human_attribute_name(:numeric_value).s %></th>
     <th colspan="2"><%= ts :options %></th>
@@ -18,12 +18,12 @@
        <td><%= association.string_value %></td>
        <td><%= association.numeric_value %></td>
        <td><%= link_to ts('manage.this'), edit_association_path(association.medium, topic.root, association) %></td>
-       <td><%= link_to ts('back.to', :what => Medium.human_name(:count => :many)), topic_path(topic) %></td>
+       <td><%= link_to ts('back.to', :what => Medium.model_name.human(:count => :many)), topic_path(topic) %></td>
      </tr>
 <% end %>
 </table>
 <% if !@medium.nil? %>
 	<p>&nbsp;<br/>
-<%= link_to(ts('associate.to', :what => t(:another, :what => Topic.human_name)), @topic.nil? ? new_medium_topic_association_path(@medium) : new_association_path(@medium, @topic)) %> |
+<%= link_to(ts('associate.to', :what => t(:another, :what => Topic.model_name.human)), @topic.nil? ? new_medium_topic_association_path(@medium) : new_association_path(@medium, @topic)) %> |
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'topics'} %></p>
 <% end %>

@@ -41,7 +41,7 @@ class StatusesController < AclController
       @status = Status.new(params[:status])
       respond_to do |format|
         if @status.save
-          flash[:notice] = ts('new.successful', :what => Status.human_name.capitalize)
+          flash[:notice] = ts('new.successful', :what => Status.model_name.human.capitalize)
           format.html { redirect_to statuses_url }
           format.xml  { render :xml => @status, :status => :created, :location => @status }
         else
@@ -57,7 +57,7 @@ class StatusesController < AclController
       @status = Status.find(params[:id])
       respond_to do |format|
         if @status.update_attributes(params[:status])
-          flash[:notice] = ts('edit.successful', :what => Status.human_name.capitalize)
+          flash[:notice] = ts('edit.successful', :what => Status.model_name.human.capitalize)
           format.html { redirect_to statuses_url }
           format.xml  { head :ok }
         else

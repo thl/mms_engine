@@ -19,10 +19,8 @@ class DictionarySearchesController < AclController
           format.xml  { render :xml => @letters.to_xml }
         end
       else
-        options.delete(:type)
         @letters = nil
-        @word_pages, @words = Word.paginate(options)
-        #@words = Word.find(:all, :conditions => @conditions_array)    
+        @words = Word.where(options[:conditions]).paginate(:page => params[:page] || 1)
         respond_to do |format|
           format.js
           format.xml  { render :xml => @words.to_xml }
@@ -36,7 +34,7 @@ class DictionarySearchesController < AclController
   def show #for browsing letters
     letter_id = params[:id]
     @language = ComplexScripts::Language.find(params[:language_id])
-    @word_pages, @words = Word.where(:letter_id => letter_id, :language_id => @language).order('`order`').paginate
+    @words = Word.where(:letter_id => letter_id, :language_id => @language).order('`order`').paginate(:page => params[:page] || 1)
     respond_to do |format|
       format.js
       format.xml  { render :xml => @words.to_xml }

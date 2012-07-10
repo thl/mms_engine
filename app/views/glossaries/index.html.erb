@@ -1,9 +1,9 @@
-<h1><%= ts 'list.ing.records', :what => Glossary.human_name(:count => :many).titleize %></h1>
+<h1><%= ts 'list.ing.records', :what => Glossary.model_name.human(:count => :many).titleize %></h1>
 <table border="1" class="normal">
   <tr>
-    <th><%= Glossary.human_name.titleize.s %></th>
+    <th><%= Glossary.model_name.human.titleize.s %></th>
 	<th><%= Glossary.human_attribute_name('abbreviation').s %></th>
-    <th><%= Organization.human_name.titleize.s %></th>
+    <th><%= Organization.model_name.human.titleize.s %></th>
     <th><%= Glossary.human_attribute_name('is_public').s %></th>
   </tr>
 <% can_edit = authorized? hash_for_edit_glossary_path
@@ -24,7 +24,7 @@
 </table>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_new_glossary_path %>
-<%=  link_to ts('new.record', :what => Glossary.human_name), new_glossary_path %> |
+<%=  link_to ts('new.record', :what => Glossary.model_name.human), new_glossary_path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_dicts' %>
 </p>

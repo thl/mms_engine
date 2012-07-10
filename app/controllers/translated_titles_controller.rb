@@ -55,7 +55,7 @@ class TranslatedTitlesController < AclController
       @translated_title = @title.translated_titles.new(params[:translated_title])
       respond_to do |format|
         if @translated_title.save
-          flash[:notice] = ts('new.successful', :what => TranslatedTitle.human_name.capitalize)
+          flash[:notice] = ts('new.successful', :what => TranslatedTitle.model_name.human.capitalize)
           format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
           format.xml  { render :xml => @translated_title, :status => :created, :location => @translated_title }
         else
@@ -74,7 +74,7 @@ class TranslatedTitlesController < AclController
       @translated_title = TranslatedTitle.find(params[:id])
       respond_to do |format|
         if @translated_title.update_attributes(params[:translated_title])
-          flash[:notice] = ts('edit.successful', :what => TranslatedTitle.human_name.capitalize)
+          flash[:notice] = ts('edit.successful', :what => TranslatedTitle.model_name.human.capitalize)
           format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
           format.xml  { head :ok }
         else

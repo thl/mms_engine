@@ -5,12 +5,12 @@
 </p>
 <%= f.hidden_field :medium_id %>
 <p>
-    <b><%= CopyrightHolder.human_name.titleize.s %></b><br />
-<%= f.collection_select(:copyright_holder_id, @copyright_holders, :id, :title) %> (<%= link_to ts('new.record', :what => CopyrightHolder.human_name), new_copyright_holder_path, { :target => '_blank' } %>)
+    <b><%= CopyrightHolder.model_name.human.titleize.s %></b><br />
+<%= f.collection_select(:copyright_holder_id, @copyright_holders, :id, :title) %> (<%= link_to ts('new.record', :what => CopyrightHolder.model_name.human), new_copyright_holder_path, { :target => '_blank' } %>)
 </p>
 <p>
-    <b><%= ReproductionType.human_name.titleize.s %></b><br />
-<%= f.collection_select(:reproduction_type_id, @reproduction_types, :id, :title) %> (<%= link_to ts('new.record', :what => ReproductionType.human_name), new_reproduction_type_path, { :target => '_blank' } %>)
+    <b><%= ReproductionType.model_name.human.titleize.s %></b><br />
+<%= f.collection_select(:reproduction_type_id, @reproduction_types, :id, :title) %> (<%= link_to ts('new.record', :what => ReproductionType.model_name.human), new_reproduction_type_path, { :target => '_blank' } %>)
 </p>
 <p>
     <b><%= Copyright.human_attribute_name('notes').s %></b><br />

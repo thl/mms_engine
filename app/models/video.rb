@@ -8,10 +8,8 @@ class Video < Medium
   
   belongs_to :movie, :foreign_key => 'attachment_id'
   
-  def before_create
-    super
-    self.resource_type_id = 2687 if self.resource_type_id.nil?
-  end
+  before_create  { |record| record.resource_type_id = 2687 if record.resource_type_id.nil? }
+  before_destroy { |record| record.movie.destroy }  
   
   def attachment
     movie
@@ -81,12 +79,7 @@ class Video < Medium
       end
     end    
   end
-  
-  def before_destroy
-    super
-    movie.destroy
-  end
-  
+    
   def self.maker_title
     'Videographer'
   end

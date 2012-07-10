@@ -46,7 +46,7 @@ class GlossariesController < AclController
 
     respond_to do |format|
       if @glossary.save
-        flash[:notice] = ts('new.successful', :what => Glossary.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => Glossary.model_name.human.capitalize)
         format.html { redirect_to glossaries_url }
         format.xml  { head :created, :location => glossary_url(@glossary) }
       else
@@ -66,7 +66,7 @@ class GlossariesController < AclController
 
     respond_to do |format|
       if @glossary.update_attributes(params[:glossary])
-        flash[:notice] = ts('edit.successful', :what => Glossary.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => Glossary.model_name.human.capitalize)
         format.html { redirect_to glossaries_url }
         format.xml  { head :ok }
       else

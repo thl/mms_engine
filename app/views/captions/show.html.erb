@@ -1,4 +1,4 @@
-<% caption_title = Caption.human_name.capitalize %>
+<% caption_title = Caption.model_name.human.capitalize %>
 <b><%= ts :for, :what => caption_title, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></b>
 <p>
 <%= thumbnail_image_link(@medium) %>
@@ -10,7 +10,7 @@
    if !@caption.creator.nil? %>
 <%= display_if_not_blank Caption.human_attribute_name('creator').s, h(@caption.creator.fullname).s %>
 <% end %>
-<%= display_if_not_blank ComplexScripts::Language.human_name.titleize.s, h(@caption.language.title).s %>
+<%= display_if_not_blank ComplexScripts::Language.model_name.human.titleize.s, h(@caption.language.title).s %>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_edit_medium_caption_path %>
 <%=  link_to ts('edit.this'), edit_medium_caption_path(@medium, @caption) %> |

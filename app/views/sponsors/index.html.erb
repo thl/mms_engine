@@ -1,7 +1,7 @@
-<h1><%= ts 'list.ing.records', :what => Sponsor.human_name(:count => :many).titleize %></h1>
+<h1><%= ts 'list.ing.records', :what => Sponsor.model_name.human(:count => :many).titleize %></h1>
 <table border="1" class="normal">
   <tr>
-    <th><%= Sponsor.human_name.titleize.s %></th>
+    <th><%= Sponsor.model_name.human.titleize.s %></th>
   </tr>
 <% can_edit = authorized? hash_for_edit_sponsor_path
    for sponsor in @sponsors %>
@@ -17,6 +17,6 @@
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<%= link_to ts('new.record', :what => Sponsor.human_name), new_sponsor_path %> |
+<%= link_to ts('new.record', :what => Sponsor.model_name.human), new_sponsor_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

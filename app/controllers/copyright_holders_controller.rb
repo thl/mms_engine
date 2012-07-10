@@ -38,7 +38,7 @@ class CopyrightHoldersController < AclController
 
     respond_to do |format|
       if @copyright_holder.save
-        flash[:notice] = ts('new.successful', :what => CopyrightHolder.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => CopyrightHolder.model_name.human.capitalize)
         format.html { redirect_to copyright_holder_url(@copyright_holder) }
         format.xml  { head :created, :location => copyright_holder_url(@copyright_holder) }
       else
@@ -54,7 +54,7 @@ class CopyrightHoldersController < AclController
     @copyright_holder = CopyrightHolder.find(params[:id])
     respond_to do |format|
       if @copyright_holder.update_attributes(params[:copyright_holder])
-        flash[:notice] = ts('edit.successful', :what => CopyrightHolder.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => CopyrightHolder.model_name.human.capitalize)
         format.html { redirect_to copyright_holder_url(@copyright_holder) }
         format.xml  { head :ok }
       else

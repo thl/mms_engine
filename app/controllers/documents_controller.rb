@@ -109,7 +109,7 @@ class DocumentsController < AclController
     end
     respond_to do |format|
       if success
-        flash[:notice] = ts('new.successful', :what => Document.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => Document.model_name.human.capitalize)
         format.html { redirect_to document_url(@medium) }
         format.xml  { head :created, :location => document_url(@medium) }
       else
@@ -134,7 +134,7 @@ class DocumentsController < AclController
 
     respond_to do |format|
       if @document.update_attributes(params[:document])
-        flash[:notice] = ts('edit.successful', :what => Document.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => Document.model_name.human.capitalize)
         format.html { redirect_to document_url(@document) }
         format.xml  { head :ok }
       else

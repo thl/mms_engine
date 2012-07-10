@@ -1,21 +1,21 @@
-<h1><%= ts :for, :what => t('list.ing.records', :what => Location.human_name(:count => :many).titleize), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
+<h1><%= ts :for, :what => t('list.ing.records', :what => Location.model_name.human(:count => :many).titleize), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <p>
 <%= thumbnail_image_link(@medium) %>
 </p>
 <table border="1" class="normal">
   <tr>
-    <th><%= Location.human_name(:count => 1).titleize.s %></th>
+    <th><%= Location.model_name.human(:count => 1).titleize.s %></th>
     <th colspan="2"><%= ts :options %></th>
   </tr>
 <% for location in @locations %>
      <tr>
        <td><%= location.feature.header %></td>
        <td><%= link_to ts('manage.this'), edit_medium_location_path(@medium, location) %></td>
-       <td><%= link_to ts('back.to', :what => t('all.records', :what => Medium.human_name(:count => :many))), medium_place_path(@medium, location.feature_id) %></td>
+       <td><%= link_to ts('back.to', :what => t('all.records', :what => Medium.model_name.human(:count => :many))), medium_place_path(@medium, location.feature_id) %></td>
      </tr>
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<%= link_to(ts('associate.to', :what => t(:another, :what => Location.human_name(:count => 1))), new_medium_location_path(@medium)) %> |
+<%= link_to(ts('associate.to', :what => t(:another, :what => Location.model_name.human(:count => 1))), new_medium_location_path(@medium)) %> |
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'locations'} %>
 </p>

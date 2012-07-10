@@ -7,7 +7,7 @@
 <%=  f.text_area :title, fixed_language_options.merge({:rows => 3}) %>
 </p>
 <p>  
-<%   description_type_title = DescriptionType.human_name(:what => caption_title) %>
+<%   description_type_title = DescriptionType.model_name.human(:what => caption_title) %>
      <b><%= description_type_title.titleize.s %></b><br />
 <%=  f.collection_select(:description_type_id, @description_types, :id, :title, :include_blank => true) %> (<%= link_to ts('new.record', :what => description_type_title), new_description_type_path, { :target => '_blank' } %>)
 </p>
@@ -15,7 +15,7 @@
 <%   creator = @caption.creator %>
 <%=  display_if_not_blank(Caption.human_attribute_name('creator').s, h(creator.fullname).s) if !creator.nil? %>
 <p>
-     <b><%= ComplexScripts::Language.human_name.titleize.s %></b><br />
-<%=  f.collection_select(:language_id, @languages, :id, :title) %> (<%= link_to ts('new.record', :what => ComplexScripts::Language.human_name), new_language_path, { :target => '_blank' } %>)
+     <b><%= ComplexScripts::Language.model_name.human.titleize.s %></b><br />
+<%=  f.collection_select(:language_id, @languages, :id, :title) %> (<%= link_to ts('new.record', :what => ComplexScripts::Language.model_name.human), new_language_path, { :target => '_blank' } %>)
 </p>
 <%= javascript_tag "$('caption_title').focus()" %>

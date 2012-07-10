@@ -1,4 +1,4 @@
-<h1><%= ts :in, :what => t(:for, :what => t('list.ing.records', :what => Citation.human_name.capitalize), :whom => @reference.title), :where => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
+<h1><%= ts :in, :what => t(:for, :what => t('list.ing.records', :what => Citation.model_name.human.capitalize), :whom => @reference.title), :where => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <p><%= thumbnail_image_link(@medium) %></p>
 <table border="1" class="normal">
   <tr>
@@ -34,7 +34,7 @@
 </table>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_new_medium_title_citation_path %>
-<%=  link_to ts(:for, :what => t('new.record', :what => Citation.human_name), :whom => @reference.class.human_name), new_polymorphic_path(@reference_stack + [Citation]) %> |
+<%=  link_to ts(:for, :what => t('new.record', :what => Citation.model_name.human), :whom => @reference.class.model_name.human), new_polymorphic_path(@reference_stack + [Citation]) %> |
 <% end %>
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'titles'} %>
 </p>

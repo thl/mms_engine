@@ -56,7 +56,7 @@ class DescriptionsController < AclController
       
       respond_to do |format|
         if success
-          flash[:notice] = ts('new.successful', :what => Description.human_name.capitalize)
+          flash[:notice] = ts('new.successful', :what => Description.model_name.human.capitalize)
           format.html { redirect_to edit_medium_url(@medium) }
           format.xml  { head :created, :location => medium_description_url(@medium, @description) }
         else
@@ -86,7 +86,7 @@ class DescriptionsController < AclController
       
       respond_to do |format|
         if success
-          flash[:notice] = ts('edit.successful', :what => Description.human_name.capitalize)
+          flash[:notice] = ts('edit.successful', :what => Description.model_name.human.capitalize)
           format.html { redirect_to edit_medium_url(@medium) }
           format.xml  { head :ok }
         else

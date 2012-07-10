@@ -39,7 +39,7 @@ class ApplicationSettingsController < AclController
 
     respond_to do |format|
       if @application_setting.save
-        flash[:notice] = ts('new.successful', :what => ApplicationSetting.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => ApplicationSetting.model_name.human.capitalize)
         format.html { redirect_to application_settings_url }
         format.xml  { head :created, :location => application_setting_url(@application_setting) }
       else
@@ -55,7 +55,7 @@ class ApplicationSettingsController < AclController
     @application_setting = ApplicationSetting.find(params[:id])
     respond_to do |format|
       if @application_setting.update_attributes(params[:application_setting])
-        flash[:notice] = ts('edit.successful', :what => ApplicationSetting.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => ApplicationSetting.model_name.human.capitalize)
         format.html { redirect_to application_settings_url }
         format.xml  { head :ok }
       else

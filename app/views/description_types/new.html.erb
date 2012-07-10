@@ -1,4 +1,4 @@
-<h1><%= ts('new.record', :what => "#{Caption.human_name.titleize}/#{Description.human_name.titleize}") %></h1>
+<h1><%= ts('new.record', :what => "#{Caption.model_name.human.titleize}/#{Description.model_name.human.titleize}") %></h1>
 <%= error_messages_for :description_type %>
 <%= form_for(:description_type, :url => description_types_path) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>

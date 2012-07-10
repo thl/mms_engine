@@ -1,4 +1,4 @@
-<b><%= ts(:for, :what => MediaPublisher.human_name.titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}") %></b>
+<b><%= ts(:for, :what => MediaPublisher.model_name.human.titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}") %></b>
 <%= form_for(:publisher, :url => publishers_path(@publishers)) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>
 <%  end %>

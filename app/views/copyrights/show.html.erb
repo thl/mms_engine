@@ -1,9 +1,9 @@
-<b><%= ts :for, :what => Copyright.human_name.titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></b>
+<b><%= ts :for, :what => Copyright.model_name.human.titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></b>
 <p>
 <%= thumbnail_image_link(@medium) %>
 </p>
-<%= display_if_not_blank CopyrightHolder.human_name.titleize.s, h(@copyright.copyright_holder.title).s %>
-<%= display_if_not_blank ReproductionType.human_name.titleize.s, h(@copyright.reproduction_type.title).s %>
+<%= display_if_not_blank CopyrightHolder.model_name.human.titleize.s, h(@copyright.copyright_holder.title).s %>
+<%= display_if_not_blank ReproductionType.model_name.human.titleize.s, h(@copyright.reproduction_type.title).s %>
 <%= display_if_not_blank Copyright.human_attribute_name('notes').s, h(@copyright.notes) %>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_edit_copyright_path %>

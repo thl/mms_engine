@@ -18,6 +18,7 @@ class TopicsController < AclController
     @topic = Topic.find(params[:id])
     @root = @topic.root
     medium_id = params[:medium_id]
+    @margin_depth = params[:margin_depth].to_i
     @medium = nil
     if !medium_id.blank?
       begin
@@ -26,11 +27,11 @@ class TopicsController < AclController
         @medium = nil
       end
     end
-    @pictures = @topic.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Picture')
-    @videos = @topic.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Video')
-    @documents = @topic.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Document')
+    @pictures = @topic.media(:type => 'Picture').limit(Medium::COLS * Medium::PREVIEW_ROWS)
+    @videos = @topic.media(:type => 'Video').limit(Medium::COLS * Medium::PREVIEW_ROWS)
+    @documents = @topic.media(:type => 'Document').limit(Medium::COLS * Medium::PREVIEW_ROWS)
     title = @topic.title
-    @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
+    @titles = { :picture => ts(:in, :what => Picture.model_name.human(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.model_name.human(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.model_name.human(:count => :many).titleize, :where => title) }
     @more = { :category_id => @topic.id, :type => '' }
     render_media
   end
@@ -45,21 +46,21 @@ class TopicsController < AclController
   # GET /topics/1/pictures
   def pictures
     get_media_by_type('Picture')
-    @title = ts :in, :what => Picture.human_name(:count => :many).titleize, :where => @topic.title
+    @title = ts :in, :what => Picture.model_name.human(:count => :many).titleize, :where => @topic.title
     render_media
   end
   
   # GET /topics/1/videos
   def videos
     get_media_by_type('Video')
-    @title = ts :in, :what => Video.human_name(:count => :many).titleize, :where => @topic.title
+    @title = ts :in, :what => Video.model_name.human(:count => :many).titleize, :where => @topic.title
     render_media
   end
   
   # GET /topics/1/documents
   def documents
     get_media_by_type('Document')
-    @title = ts :in, :what => Document.human_name(:count => :many).titleize, :where => @topic.title
+    @title = ts :in, :what => Document.model_name.human(:count => :many).titleize, :where => @topic.title
     render_media
   end
   
@@ -79,34 +80,23 @@ class TopicsController < AclController
   
   def get_media_by_type(type)
     @topic = Topic.find(params[:id])
-    @medium_pages = Paginator.new self, @topic.media_count(type), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
-    @media = @topic.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset, type)
+    @media = @topic.media(:type => type).paginate(:page => params[:page], :per_page => Medium::FULL_COLS * Medium::FULL_ROWS, :total_entries => @topic.media_count(type))
     @pagination_params = { :category_id => @topic.id, :type => type }
   end
   
   def render_media
     get_tab_options
-    if request.xhr?
-      render :update do |page|
+    respond_to do |format|
+      format.html do
         if !@medium.nil?
-          page.replace_html 'primary', :partial => 'media/show'
-        end
-        page.replace_html 'secondary', :partial => 'media_index'
-        page.call 'ActivateThlPopups', '#secondary'
-        page.call 'tb_init', 'a.thickbox, area.thickbox, input.thickbox'
+          render :action => 'show_for_medium'
+        elsif !@topic.nil?
+          render(:action => @media.nil? ? 'index' : 'show')
+        elsif
+          render :action => 'index'
+        end          
       end
-    else
-      respond_to do |format|
-        format.html do
-          if !@medium.nil?
-            render :action => 'show_for_medium'
-          elsif !@topic.nil?
-            render(:action => @media.nil? ? 'index' : 'show')
-          elsif
-            render :action => 'index'
-          end          
-        end
-      end
+      format.js # for now there is just show.erb.js
     end
   end
   

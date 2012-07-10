@@ -9,8 +9,8 @@
 <%= f.text_field :abbreviation %>
 </p>
 <p>
-    <b><%= Organization.human_name.titleize.s %></b><br />
-<%= f.collection_select(:organization_id, @organizations, :id, :title, :include_blank => true) %> (<%= link_to ts('new.record', :what => Organization.human_name), new_organization_path, { :target => '_blank' } %>)
+    <b><%= Organization.model_name.human.titleize.s %></b><br />
+<%= f.collection_select(:organization_id, @organizations, :id, :title, :include_blank => true) %> (<%= link_to ts('new.record', :what => Organization.model_name.human), new_organization_path, { :target => '_blank' } %>)
 </p>  
 <p>
     <b><%= Glossary.human_attribute_name('description').s %></b><br />

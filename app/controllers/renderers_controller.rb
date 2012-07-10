@@ -35,7 +35,7 @@ class RenderersController < AclController
     @renderer = Renderer.new(params[:renderer])
     respond_to do |format|
       if @renderer.save
-        flash[:notice] = ts('new.successful', :what => Renderer.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => Renderer.model_name.human.capitalize)
         format.html { redirect_to renderer_url(@renderer) }
         format.xml  { head :created, :location => renderer_url(@renderer) }
       else
@@ -51,7 +51,7 @@ class RenderersController < AclController
     @renderer = Renderer.find(params[:id])
     respond_to do |format|
       if @renderer.update_attributes(params[:renderer])
-        flash[:notice] = ts('edit.successful', :what => Renderer.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => Renderer.model_name.human.capitalize)
         format.html { redirect_to renderer_url(@renderer) }
         format.xml  { head :ok }
       else

@@ -4,6 +4,19 @@ class MediaCategoryAssociation < ActiveRecord::Base
   belongs_to :medium
   # belongs_to :root, :class_name => 'Topic'
   
+  before_destroy { |record| Rails.cache.delete('topics/roots_with_media') if Rails.cache.exist?('topics/roots_with_media') && Topic.roots_with_media.collect(&:id).include?(record.root_id) }
+  after_destroy  { |record| MediaCategoryAssociation.delete_cumulative_information(record.category, record.medium_id, record.medium.class.name) }
+  before_save    { |record| MediaCategoryAssociation.delete_cumulative_information(Category.find(record.category_id_was), record.medium_id_was, record.medium.class.name) if record.changed? && !record.category_id_was.nil? }
+  after_save    do |record|
+    current = record.category
+    while !current.nil? && CumulativeMediaCategoryAssociation.where(:category_id => current.id, :medium_id => medium_id).first.nil?
+      CumulativeMediaCategoryAssociation.create(:category_id => current.id, :medium_id => self.medium_id)
+      current = current.parent
+    end
+    Rails.cache.delete('media_category_associations/max_updated_at')
+    Rails.cache.delete('topics/roots_with_media') if Rails.cache.exist?('topics/roots_with_media') && !Topic.roots_with_media.collect(&:id).include?(record.root_id)
+  end
+    
   def category
     Topic.find(self.category_id)
   end
@@ -11,29 +24,7 @@ class MediaCategoryAssociation < ActiveRecord::Base
   def root
     Topic.find(self.root_id)
   end
-  
-  def before_destroy
-    Rails.cache.delete('topics/roots_with_media') if Rails.cache.exist?('topics/roots_with_media') && Topic.roots_with_media.collect(&:id).include?(self.root_id)
-  end
-  
-  def after_destroy
-    MediaCategoryAssociation.delete_cumulative_information(self.category, self.medium_id, self.medium.class.name)
-  end
-  
-  def before_save
-    MediaCategoryAssociation.delete_cumulative_information(Category.find(self.category_id_was), self.medium_id_was, self.medium.class.name) if self.changed? && !self.category_id_was.nil?
-  end
-  
-  def after_save
-    current = self.category
-    while !current.nil? && CumulativeMediaCategoryAssociation.where(:category_id => current.id, :medium_id => medium_id).first.nil?
-      CumulativeMediaCategoryAssociation.create(:category_id => current.id, :medium_id => self.medium_id)
-      current = current.parent
-    end
-    Rails.cache.delete('media_category_associations/max_updated_at')
-    Rails.cache.delete('topics/roots_with_media') if Rails.cache.exist?('topics/roots_with_media') && !Topic.roots_with_media.collect(&:id).include?(self.root_id)
-  end
-  
+    
   def title_with_value
     s = self.category.title
     if self.string_value.blank?

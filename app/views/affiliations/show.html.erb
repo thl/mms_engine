@@ -1,15 +1,15 @@
-<b><%= ts(:for, :what => Affiliation.human_name.titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}") %></b>
+<b><%= ts(:for, :what => Affiliation.model_name.human.titleize, :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}") %></b>
 <p>
 <%= thumbnail_image_link(@medium) %>
 </p>
 <% sponsor = @affiliation.sponsor 
    if !sponsor.nil? %>
-<%=  display_if_not_blank Sponsor.human_name.titleize.s, h(sponsor.title).s %>
+<%=  display_if_not_blank Sponsor.model_name.human.titleize.s, h(sponsor.title).s %>
 <% end %>
-<%= display_if_not_blank Organization.human_name.titleize.s, h(@affiliation.organization.title).s %>
+<%= display_if_not_blank Organization.model_name.human.titleize.s, h(@affiliation.organization.title).s %>
 <% project = @affiliation.project 
    if !project.nil? %>
-<%=  display_if_not_blank Project.human_name.titleize.s, h(project.title).s %>
+<%=  display_if_not_blank Project.model_name.human.titleize.s, h(project.title).s %>
 <% end %>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_edit_medium_affiliation_path %>

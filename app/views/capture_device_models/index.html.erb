@@ -1,7 +1,7 @@
-<h1><%= ts :for, :what => t('list.ing', :what => CaptureDeviceModel.human_name(:count => :many).titleize), :whom => h(@capture_device_maker.title) %></h1>
+<h1><%= ts :for, :what => t('list.ing', :what => CaptureDeviceModel.model_name.human(:count => :many).titleize), :whom => h(@capture_device_maker.title) %></h1>
 <table border="1" class="normal">
   <tr>
-    <th><%= CaptureDeviceModel.human_name.titleize.s %></th>
+    <th><%= CaptureDeviceModel.model_name.human.titleize.s %></th>
     <th><%= CaptureDeviceModel.human_attribute_name('exif_tag').s %></th>
   </tr>
 <% can_edit = authorized? hash_for_edit_capture_device_maker_model_path
@@ -14,8 +14,8 @@
 </table>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_new_capture_device_maker_model_path %>
-<%=  link_to ts(:for, :what => t('new.record', :what => CaptureDeviceModel.human_name), :whom => @capture_device_maker.title), new_capture_device_maker_model_path(@capture_device_maker) %> |
+<%=  link_to ts(:for, :what => t('new.record', :what => CaptureDeviceModel.model_name.human), :whom => @capture_device_maker.title), new_capture_device_maker_model_path(@capture_device_maker) %> |
 <% end %>
-<%= link_to ts('back.to', :what => t('all.records', :what => CaptureDeviceMaker.human_name(:count => :many))), capture_device_makers_path %> |
+<%= link_to ts('back.to', :what => t('all.records', :what => CaptureDeviceMaker.model_name.human(:count => :many))), capture_device_makers_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

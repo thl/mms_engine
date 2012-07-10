@@ -19,7 +19,7 @@
          | <%= link_to ts('edit.this'), edit_medium_title_path(@medium, title) %>
 <%     end 
        if authorized? hash_for_new_medium_title_translated_title_path %>
-         | <%= link_to ts('new.record', :what => TranslatedTitle.human_name), new_medium_title_translated_title_path(@medium, title) %>
+         | <%= link_to ts('new.record', :what => TranslatedTitle.model_name.human), new_medium_title_translated_title_path(@medium, title) %>
 <%     end %>
        </p>
      </li>

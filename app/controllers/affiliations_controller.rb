@@ -54,7 +54,7 @@ class AffiliationsController < AclController
     success = @affiliation.save
     respond_to do |format|
       if success
-        flash[:notice] = ts('new.successful', :what => Affiliation.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => Affiliation.model_name.human.capitalize)
         format.html { redirect_to edit_medium_url(@affiliation.medium) }
         format.xml  { head :created, :location => medium_affiliation_url(@medium, @affiliation) }
       else
@@ -75,7 +75,7 @@ class AffiliationsController < AclController
     @medium = @affiliation.medium if @medium.nil?
     respond_to do |format|
       if @affiliation.update_attributes(params[:affiliation])
-        flash[:notice] = ts('edit.successful', :what => Affiliation.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => Affiliation.model_name.human.capitalize)
         format.html { redirect_to edit_medium_url(@medium, :anchor => 'affiliations') }
         format.xml  { head :ok }
       else

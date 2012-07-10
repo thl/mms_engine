@@ -35,7 +35,7 @@ class QualityTypesController < AclController
     @quality_type = QualityType.new(params[:quality_type])
     respond_to do |format|
       if @quality_type.save
-        flash[:notice] = ts('new.successful', :what => QualityType.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => QualityType.model_name.human.capitalize)
         format.html { redirect_to quality_type_url(@quality_type) }
         format.xml  { head :created, :location => quality_type_url(@quality_type) }
       else
@@ -52,7 +52,7 @@ class QualityTypesController < AclController
 
     respond_to do |format|
       if @quality_type.update_attributes(params[:quality_type])
-        flash[:notice] = ts('edit.successful', :what => QualityType.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => QualityType.model_name.human.capitalize)
         format.html { redirect_to quality_type_url(@quality_type) }
         format.xml  { head :ok }
       else

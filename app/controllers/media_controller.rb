@@ -3,7 +3,7 @@ class MediaController < AclController
   cache_sweeper :medium_sweeper, :only => [:update, :destroy]
   
   # Adding redundant candidates (e.g. category_id and :topic_id) for now to prevent errors, but these should be consolidated
-  ELEMENT_CANDIDATES = {:category_id => {:class => Topic, :association => 'topics', :name => Topic.human_name}, :topic_id => {:class => Topic, :association => 'topics', :name => Topic.human_name}, :feature_id => {:class => Place, :association => 'locations', :name => 'location'}, :place_id => {:class => Place, :association => 'locations', :name => 'location'}}
+  ELEMENT_CANDIDATES = {:category_id => {:class => Topic, :association => 'topics', :name => Topic.model_name.human}, :topic_id => {:class => Topic, :association => 'topics', :name => Topic.model_name.human}, :feature_id => {:class => Place, :association => 'locations', :name => 'location'}, :place_id => {:class => Place, :association => 'locations', :name => 'location'}}
   MEDIA_TYPES = {:picture => Picture, :video => Video, :document => Document}
 
   def initialize
@@ -25,7 +25,6 @@ class MediaController < AclController
     begin
       keyword_id = params[:keyword_id]
       @type = params[:type]
-      @pagination_params = Hash.new
       element_id = nil
       element_name = nil
       ELEMENT_CANDIDATES.each_key do |element_name|
@@ -40,12 +39,12 @@ class MediaController < AclController
         @controller_name = ELEMENT_CANDIDATES[element_name][:association]
         @element_name = element_name.to_s
         if @type.blank?
-          @pictures = @element.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Picture')
-          @videos = @element.paged_media(Medium::COLS, nil, 'Video')
-          @documents = @element.paged_media(Medium::COLS, nil, 'Document')
+          @pictures = @element.media(:type => 'Picture').limit(Medium::COLS * Medium::PREVIEW_ROWS)
+          @videos = @element.media(:type => 'Video').limit(Medium::COLS)
+          @documents = @element.media(:type => 'Document').limit(Medium::COLS)
           title = @element.title
           @titles = Hash.new
-          MEDIA_TYPES.each{ |key, value| @titles[key] = "#{value.human_name(:count => :many).titleize} Associated with #{title}".s }
+          MEDIA_TYPES.each{ |key, value| @titles[key] = "#{value.model_name.human(:count => :many).titleize} Associated with #{title}".s }
           @more = { element_name => element_id, :type => '' }
           if @controller_name == 'locations'
             @place = @element
@@ -62,10 +61,8 @@ class MediaController < AclController
           @tab_options[:urls][:browse] = polymorphic_url(@element)
           # Need to use .fid if the element is a Place
           @tab_options[:urls][:browse] = place_url(@element.fid) if @element.instance_of? Place
-          @medium_pages = Paginator.new self, @element.media_count(@type), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
-          @media = @element.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset, @type)
-          @pagination_params[element_name] = element_id
-          @title = "#{MEDIA_TYPES[@type.downcase.to_sym].human_name(:count => :many).titleize} Associated with #{@element.title}".s
+          @media = @element.media(:type => @type).paginate(:per_page => Medium::FULL_COLS * Medium::FULL_ROWS, :page => params[:page], :total_entries => @element.media_count(@type))
+          @title = "#{MEDIA_TYPES[@type.downcase.to_sym].model_name.human(:count => :many).titleize} Associated with #{@element.title}".s
         end
         if !['locations', 'topics'].include? @controller_name
           @current = @element.ancestors.collect{|c| c.id.to_i}
@@ -74,52 +71,45 @@ class MediaController < AclController
         end
       elsif !keyword_id.blank?
         @keyword = Keyword.find(keyword_id)
-        @medium_pages = Paginator.new self, @keyword.media.size, Medium::COLS * Medium::ROWS, params[:page]
-        @media = @keyword.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset)
-        @pagination_params[:keyword_id] = @keyword.id
-        @title = "#{Medium.human_name(:count => :many).titleize} Associated with Keyword \"#{@keyword.title}\"".s
+        @media = @keyword.media.paginate(:per_page => Medium::COLS * Medium::ROWS, :page => params[:page]) # :total_entries => @keyword.media.size
+        @title = "#{Medium.model_name.human(:count => :many).titleize} Associated with Keyword \"#{@keyword.title}\"".s
       else
         if !@type.blank?
-          @medium_pages = Paginator.new self, Medium.count(:conditions => { :type => @type }), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
-          @media = Medium.find(:all, :conditions => {:type => @type}, :limit => @medium_pages.items_per_page, :offset => @medium_pages.current.offset, :order => 'created_on DESC')
-          @title = @type.constantize.human_name.titleize.pluralize
+          @media = Medium.where(:type => @type).order('created_on DESC').paginate(:per_page => Medium::FULL_COLS * Medium::FULL_ROWS, :page => params[:page]) # :total_entries => Medium.where(:type => @type).count
+          @title = @type.constantize.model_name.human.titleize.pluralize
         else
           #@pictures = Picture.find(:all, :order => 'RAND()', :limit => Medium::COLS * Medium::PREVIEW_ROWS)
           # TODO: railsify the sql query below
           @pictures = Picture.find_by_sql ["SELECT * FROM media m JOIN (SELECT MAX(ID) AS ID FROM media) AS m2 ON m.ID >= FLOOR(m2.ID*RAND()) where m.type = 'Picture' LIMIT ?", Medium::COLS * Medium::PREVIEW_ROWS]
-          @videos = Video.find(:all, :order => 'RAND()', :limit => Medium::COLS)
-          @documents = Document.find(:all, :order => 'RAND()', :limit => Medium::COLS)
-          @titles = { :picture => ts(:daily, :what => Picture.human_name(:count => :many).titleize), :video => ts(:daily, :what => Video.human_name(:count => :many).titleize), :document => ts(:daily, :what => Document.human_name(:count => :many).titleize) }
+          @videos = Video.order('RAND()').limit(Medium::COLS)
+          @documents = Document.order('RAND()').limit(Medium::COLS)
+          @titles = { :picture => ts(:daily, :what => Picture.model_name.human(:count => :many).titleize), :video => ts(:daily, :what => Video.model_name.human(:count => :many).titleize), :document => ts(:daily, :what => Document.model_name.human(:count => :many).titleize) }
           @more = { :type => '' }
         end
       end
-      @pagination_params[:type] = @type if !@medium_pages.nil? && !@type.blank?
     rescue ActiveRecord::RecordNotFound
       redirect_to media_path
     else
       respond_to do |format|
         format.html do
-          @keywords = Keyword.all_tabulated_by_media
-          count = @keywords.collect{ |k| k.counted_media.to_i}
-          min = count.min
-          min = 0 if min.nil?
-          max = count.max
-          max = 0 if max.nil?
-          @keyword_font_size = Hash.new
-          font_diff = Util::MAX_FONT_SIZE - Util::MIN_FONT_SIZE
-          count_diff = max - min
-          count_diff = font_diff if count_diff == 0
-          @keywords.each { |k| @keyword_font_size[k.id] = (k.counted_media.to_i - min)*font_diff/count_diff + Util::MIN_FONT_SIZE }
           @media_search = MediaSearch.new({:title => '', :type => 'simple'})
           @current_tab_id = :home
           @current_tab_id = @type.underscore.to_sym unless @type.blank?
-          if !@medium_pages.nil?
+          if defined? @media.offset
             if @type == 'Document'
-              render :template => @type.blank? ? 'documents/paged_index' : 'documents/paged_index_full'
+              render 'documents/paged_index_full'
             else
-              render :action => @type.blank? ? 'paged_index' : 'paged_index_full'
+              if @type.blank?
+                calculate_keyword_font_sizes
+                render 'paged_index'
+              else
+                render 'paged_index_full'
+              end
             end
-          end # else render index.rhtml
+          else
+            calculate_keyword_font_sizes
+            # render index.rhtml
+          end
         end
         format.js # index.js.erb
         format.xml  { render :xml => @media.to_xml }
@@ -139,7 +129,7 @@ class MediaController < AclController
       @pictures = Picture.find(:all, :order => 'RAND()', :limit => Medium::COLS * Medium::PREVIEW_ROWS)
       @videos = Video.find(:all, :order => 'RAND()', :limit => 1)
       @documents = Document.find(:all, :order => 'RAND()', :limit => 1)
-      @titles = { :picture => ts(:daily, :what => Picture.human_name(:count => :many).titleize), :video => ts(:daily, :what => Video.human_name(:count => :many).titleize), :document => ts(:daily, :what => Document.human_name(:count => :many).titleize) }
+      @titles = { :picture => ts(:daily, :what => Picture.model_name.human(:count => :many).titleize), :video => ts(:daily, :what => Video.model_name.human(:count => :many).titleize), :document => ts(:daily, :what => Document.model_name.human(:count => :many).titleize) }
       @more = { :type => '' }
       respond_to do |format|
         format.html # show.rhtml
@@ -198,7 +188,7 @@ class MediaController < AclController
       redo_thumbs = @medium.rotation_changed? if is_picture
       if @medium.save # @medium.update_attributes(params[:medium])
         @medium.update_thumbnails if is_picture && redo_thumbs
-        flash[:notice] = ts('edit.successful', :what => Medium.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => Medium.model_name.human.capitalize)
         format.html { redirect_to medium_url(@medium) }
         format.xml  { head :ok }
       else
@@ -233,5 +223,19 @@ class MediaController < AclController
   
   def api_response?
     request.format.xml?
-  end  
+  end
+  
+  def calculate_keyword_font_sizes
+    @keywords = Keyword.all_tabulated_by_media
+    count = @keywords.collect{ |k| k.counted_media.to_i}
+    min = count.min
+    min = 0 if min.nil?
+    max = count.max
+    max = 0 if max.nil?
+    @keyword_font_size = Hash.new
+    font_diff = Util::MAX_FONT_SIZE - Util::MIN_FONT_SIZE
+    count_diff = max - min
+    count_diff = font_diff if count_diff == 0
+    @keywords.each { |k| @keyword_font_size[k.id] = (k.counted_media.to_i - min)*font_diff/count_diff + Util::MIN_FONT_SIZE }
+  end
 end

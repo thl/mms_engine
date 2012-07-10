@@ -1,9 +1,9 @@
-<h1><%= ts 'list.ing', :what => Video.human_name(:count => :many).titleize %></h1>
+<h1><%= ts 'list.ing', :what => Video.model_name.human(:count => :many).titleize %></h1>
 <table border="1" class="normal">
   <tr>
-    <th><%= ts 'id.record', :what => Video.human_name.titleize %></th>
+    <th><%= ts 'id.record', :what => Video.model_name.human.titleize %></th>
     <th><%= Video.human_attribute_name('photographer').s %></th>
-    <th><%= QualityType.human_name.titleize.s %></th>
+    <th><%= QualityType.model_name.human.titleize.s %></th>
   </tr>
 <% for video in @videos %>
   <tr>
@@ -14,5 +14,5 @@
 <% end %>
 </table>
 <p>
-<%= link_to ts('new.record', :what => Video.human_name), new_video_path %>
+<%= link_to ts('new.record', :what => Video.model_name.human), new_video_path %>
 </p>

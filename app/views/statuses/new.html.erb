@@ -1,4 +1,4 @@
-<h1><%= ts 'new.record', :what => Status.human_name.titleize %></h1>
+<h1><%= ts 'new.record', :what => Status.model_name.human.titleize %></h1>
 <%= form_for(@status) do |f| %>
 <%=   f.error_messages %>
       <p>

@@ -1,3 +1,3 @@
 <%= link_to ts('delete.this'), medium_location_path(@medium, @location), :confirm => te('delete.confirmation'), :method => :delete %> |
-<%= link_to ts('back.to', :what => t('all.records', :what => Medium.human_name(:count => :many))), medium_place_path(@medium, @location.feature_id) %> |
+<%= link_to ts('back.to', :what => t('all.records', :what => Medium.model_name.human(:count => :many))), medium_place_path(@medium, @location.feature_id) %> |
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'locations'} %>

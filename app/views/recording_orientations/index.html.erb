@@ -1,7 +1,7 @@
-<h1><%= ts 'list.ing.records', :what => RecordingOrientation.human_name(:count => :many).titleize %></h1>
+<h1><%= ts 'list.ing.records', :what => RecordingOrientation.model_name.human(:count => :many).titleize %></h1>
 <table border="1" class="normal">
   <tr>
-    <th><%= RecordingOrientation.human_name.titleize %></th>
+    <th><%= RecordingOrientation.model_name.human.titleize %></th>
   </tr>
 <% can_edit = authorized? hash_for_edit_recording_orientation_path
    for recording_orientation in @recording_orientations %>
@@ -12,7 +12,7 @@
 </table>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_new_recording_orientation_path %>
-<%= link_to ts('new.record', :what => RecordingOrientation.human_name), new_recording_orientation_path %> |
+<%= link_to ts('new.record', :what => RecordingOrientation.model_name.human), new_recording_orientation_path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

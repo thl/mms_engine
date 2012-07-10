@@ -1,7 +1,7 @@
-<h1><%= ts 'list.ing.records', :what => Publisher.human_name(:count => :many).titleize %></h1>
+<h1><%= ts 'list.ing.records', :what => Publisher.model_name.human(:count => :many).titleize %></h1>
 <table border="1" class="normal">
   <tr>
-    <th><%= Publisher.human_name.titleize.s %></th>
+    <th><%= Publisher.model_name.human.titleize.s %></th>
     <th><%= Publisher.human_attribute_name('country_id').s %></th>
   </tr>
 <% can_edit = authorized? hash_for_edit_publisher_path
@@ -16,7 +16,7 @@
 </table>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_new_publisher_path %>
-<%=  link_to ts('new.record', :what => Publisher.human_name), new_publisher_path %> |
+<%=  link_to ts('new.record', :what => Publisher.model_name.human), new_publisher_path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

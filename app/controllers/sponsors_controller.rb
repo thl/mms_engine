@@ -35,7 +35,7 @@ class SponsorsController < AclController
     @sponsor = Sponsor.new(params[:sponsor])
     respond_to do |format|
       if @sponsor.save
-        flash[:notice] = ts('new.successful', :what => Sponsor.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => Sponsor.model_name.human.capitalize)
         format.html { redirect_to sponsor_url(@sponsor) }
         format.xml  { head :created, :location => sponsor_url(@sponsor) }
       else
@@ -51,7 +51,7 @@ class SponsorsController < AclController
     @sponsor = Sponsor.find(params[:id])
     respond_to do |format|
       if @sponsor.update_attributes(params[:sponsor])
-        flash[:notice] = ts('edit.successful', :what => Sponsor.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => Sponsor.model_name.human.capitalize)
         format.html { redirect_to sponsor_url(@sponsor) }
         format.xml  { head :ok }
       else

@@ -2,11 +2,11 @@
 <%= error_messages_for :medium %>
 <%= error_messages_for :video %>
 <%= form_for(:medium, :url => videos_path, :html => {:multipart => true}) do |f| %>
-      <p><b><%= Movie.human_name.titleize.s %></b><br />
+      <p><b><%= Movie.model_name.human.titleize.s %></b><br />
 <%=   file_field :movie, :uploaded_data %></p>
       <p><b><%= ts(:transcript) %></b><br />
 <%=   file_field :transcript, :uploaded_data %></p>
-<%=   f.collection_select(:recording_orientation_id, @recording_orientations, :id, :title, { :include_blank => true }, language_options) %> (<%= link_to ts('new.record', :what => RecordingOrientation.human_name), new_recording_orientation_path, { :target => '_blank' } %>)</p>
+<%=   f.collection_select(:recording_orientation_id, @recording_orientations, :id, :title, { :include_blank => true }, language_options) %> (<%= link_to ts('new.record', :what => RecordingOrientation.model_name.human), new_recording_orientation_path, { :target => '_blank' } %>)</p>
       <p><b><%= Medium.human_attribute_name('recording_note').s %></b><br />
 <%=   f.text_area :recording_note, :rows => 5, :class => 'mceEditor' %></p>
 <%=   render :partial => 'media/form', :locals => {:f => f} %>

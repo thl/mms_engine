@@ -1,4 +1,4 @@
-<h1><%= ts('new.record', :what => Glossary.human_name) %></h1>
+<h1><%= ts('new.record', :what => Glossary.model_name.human) %></h1>
 <%= error_messages_for :glossary %>
 <%= form_for(:glossary, :url => glossaries_path) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>

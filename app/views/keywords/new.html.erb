@@ -1,4 +1,4 @@
-<h1><%= ts('new.record', :what => Keyword.human_name.titleize) %></h1>
+<h1><%= ts('new.record', :what => Keyword.model_name.human.titleize) %></h1>
 <%= error_messages_for :keyword %>
 <%= form_for(:keyword, :url => keywords_path(:medium_id => @medium)) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>

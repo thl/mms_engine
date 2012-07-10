@@ -44,7 +44,7 @@ class CaptureDeviceMakersController < AclController
 
     respond_to do |format|
       if @capture_device_maker.save
-        flash[:notice] = ts('new.successful', :what => CaptureDeviceMaker.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => CaptureDeviceMaker.model_name.human.capitalize)
         format.html { redirect_to capture_device_makers_url }
         format.xml  { render :xml => @capture_device_maker, :status => :created, :location => @capture_device_maker }
       else
@@ -61,7 +61,7 @@ class CaptureDeviceMakersController < AclController
 
     respond_to do |format|
       if @capture_device_maker.update_attributes(params[:capture_device_maker])
-        flash[:notice] = ts('edit.successful', :what => CaptureDeviceMaker.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => CaptureDeviceMaker.model_name.human.capitalize)
         format.html { redirect_to capture_device_makers_url }
         format.xml  { head :ok }
       else

@@ -38,7 +38,7 @@ class OrganizationsController < AclController
 
     respond_to do |format|
       if @organization.save
-        flash[:notice] = ts('new.successful', :what => Organization.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => Organization.model_name.human.capitalize)
         format.html { redirect_to organization_url(@organization) }
         format.xml  { head :created, :location => organization_url(@organization) }
       else
@@ -55,7 +55,7 @@ class OrganizationsController < AclController
 
     respond_to do |format|
       if @organization.update_attributes(params[:organization])
-        flash[:notice] = ts('edit.successful', :what => Organization.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => Organization.model_name.human.capitalize)
         format.html { redirect_to organization_url(@organization) }
         format.xml  { head :ok }
       else

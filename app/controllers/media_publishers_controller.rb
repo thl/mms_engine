@@ -63,7 +63,7 @@ class MediaPublishersController < AclController
       @media_publisher = @medium.build_media_publisher(params[:media_publisher])
       respond_to do |format|
         if @media_publisher.save
-          flash[:notice] = ts('new.successful', :what => MediaPublisher.human_name.capitalize)
+          flash[:notice] = ts('new.successful', :what => MediaPublisher.model_name.human.capitalize)
           format.html { redirect_to edit_medium_url(@medium, :anchor => 'media_publisher') }
           format.xml  { render :xml => @media_publisher, :status => :created, :location => medium_media_publisher_url(@medium, @media_publisher) }
         else
@@ -81,7 +81,7 @@ class MediaPublishersController < AclController
       @media_publisher = @medium.media_publisher
       respond_to do |format|
         if @media_publisher.update_attributes(params[:media_publisher])
-          flash[:notice] = ts('edit.successful', :what => MediaPublisher.human_name.capitalize)
+          flash[:notice] = ts('edit.successful', :what => MediaPublisher.model_name.human.capitalize)
           format.html { redirect_to edit_medium_path(@medium, :anchor => 'media_publisher') }
           format.xml  { head :ok }
         else

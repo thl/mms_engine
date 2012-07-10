@@ -46,7 +46,7 @@ class PublishersController < AclController
 
     respond_to do |format|
       if @publisher.save
-        flash[:notice] = ts('new.successful', :what => Publisher.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => Publisher.model_name.human.capitalize)
         format.html { redirect_to publishers_url }
 	format.xml  { head :created, :location => glossary_url(@publisher) }
       else
@@ -66,7 +66,7 @@ class PublishersController < AclController
 
     respond_to do |format|
       if @publisher.update_attributes(params[:publisher])
-        flash[:notice] = ts('edit.successful', :what => Publisher.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => Publisher.model_name.human.capitalize)
         format.html { redirect_to publishers_url }
         format.xml  { head :ok }
       else

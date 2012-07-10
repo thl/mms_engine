@@ -1,4 +1,4 @@
-<h1><%= ts 'edit.ing.record', :what => Status.human_name.titleize %></h1>
+<h1><%= ts 'edit.ing.record', :what => Status.model_name.human.titleize %></h1>
 <%= form_for(@status) do |f| %>
 <%=   f.error_messages %>
       <p>
@@ -20,5 +20,5 @@
 <% if authorized?(hash_for_statuses_path(:action => 'destroy')) %>
      <td><%= link_to 'Delete', @status, :confirm => 'Are you sure?', :method => :delete %></td> |
 <% end %>
-<%= link_to ts('back.to', :what => t('all.records', :what => Status.human_name(:count => :many))), statuses_path %> |
+<%= link_to ts('back.to', :what => t('all.records', :what => Status.model_name.human(:count => :many))), statuses_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>

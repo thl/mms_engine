@@ -42,7 +42,7 @@ class ReproductionTypesController < AclController
 
     respond_to do |format|
       if @reproduction_type.save
-        flash[:notice] = ts('new.successful', :what => ReproductionType.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => ReproductionType.model_name.human.capitalize)
         format.html { redirect_to reproduction_type_url(@reproduction_type) }
         format.xml  { head :created, :location => reproduction_type_url(@reproduction_type) }
       else
@@ -58,7 +58,7 @@ class ReproductionTypesController < AclController
     @reproduction_type = ReproductionType.find(params[:id])
     respond_to do |format|
       if @reproduction_type.update_attributes(params[:reproduction_type])
-        flash[:notice] = ts('edit.successful', :what => ReproductionType.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => ReproductionType.model_name.human.capitalize)
         format.html { redirect_to reproduction_type_url(@reproduction_type) }
         format.xml  { head :ok }
       else

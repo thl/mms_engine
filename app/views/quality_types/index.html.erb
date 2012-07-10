@@ -1,7 +1,7 @@
-<h1><%= ts 'list.ing.records', :what => QualityType.human_name(:count => :many).titleize %></h1>
+<h1><%= ts 'list.ing.records', :what => QualityType.model_name.human(:count => :many).titleize %></h1>
 <table border="1" class="normal">
   <tr>
-    <th><%= QualityType.human_name.titleize.s %></th>
+    <th><%= QualityType.model_name.human.titleize.s %></th>
   </tr>  
 <% for quality_type in @quality_types %>
   <tr>
@@ -10,6 +10,6 @@
 <% end %>
 </table>
 <p>
-<%= link_to ts('new.record', :what => QualityType.human_name), new_quality_type_path %> |
+<%= link_to ts('new.record', :what => QualityType.model_name.human), new_quality_type_path %> |
 <%= link_to ts('back.this'), admin_path %>
 </p>

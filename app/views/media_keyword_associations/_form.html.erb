@@ -1,9 +1,9 @@
 <p>
-    <b><%= Medium.human_name.titleize.s %></b><br />
+    <b><%= Medium.model_name.human.titleize.s %></b><br />
 <%= thumbnail_image_link(@medium) %></td>
 <%= f.hidden_field :medium_id %>
 </p>
 <p>
-    <b><%= Keyword.human_name.titleize.s %></b><br />
-<%= f.collection_select(:keyword_id, @keywords, :id, :title) %> (<%= link_to ts('new.record', :what => Keyword.human_name), new_keyword_path, { :target => '_blank' } %>)
+    <b><%= Keyword.model_name.human.titleize.s %></b><br />
+<%= f.collection_select(:keyword_id, @keywords, :id, :title) %> (<%= link_to ts('new.record', :what => Keyword.model_name.human), new_keyword_path, { :target => '_blank' } %>)
 </p>

@@ -47,7 +47,7 @@ class MediaSourceAssociationsController < AclController
     @media_source_association = MediaSourceAssociation.new(params[:media_source_association])
     respond_to do |format|
       if @media_source_association.save
-        flash[:notice] = ts('new.successful', :what => MediaSourceAssociation.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => MediaSourceAssociation.model_name.human.capitalize)
         format.html { redirect_to edit_medium_path(@medium) }
         format.xml  { render :xml => @media_source_association, :status => :created, :location => @media_source_association }
       else
@@ -67,7 +67,7 @@ class MediaSourceAssociationsController < AclController
 
     respond_to do |format|
       if @media_source_association.update_attributes(params[:media_source_association])
-        flash[:notice] = ts('edit.successful', :what => MediaSourceAssociation.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => MediaSourceAssociation.model_name.human.capitalize)
         format.html { redirect_to edit_medium_path(@medium) }
         format.xml  { head :ok }
       else

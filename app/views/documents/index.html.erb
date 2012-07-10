@@ -1,4 +1,4 @@
-<h1><%= ts 'list.ing.records', :what => Document.human_name(:count => :many).titleize %></h1>
+<h1><%= ts 'list.ing.records', :what => Document.model_name.human(:count => :many).titleize %></h1>
 <table border="1" class="normal">
   <tr>
   </tr>
@@ -11,4 +11,4 @@
 <% end %>
 </table>
 <br />
-<%= link_to ts('new.record', :what => Document.human_name), new_document_path %>
+<%= link_to ts('new.record', :what => Document.model_name.human), new_document_path %>

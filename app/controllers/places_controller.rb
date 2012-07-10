@@ -14,30 +14,30 @@ class PlacesController < ApplicationController
       end
     end
     @place = Place.find(params[:id])    
-    @pictures = @place.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Picture')
-    @videos = @place.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Video')
-    @documents = @place.paged_media(Medium::COLS * Medium::PREVIEW_ROWS, nil, 'Document')
+    @pictures = @place.media(:type => 'Picture').limit(Medium::COLS * Medium::PREVIEW_ROWS)
+    @videos = @place.media(:type => 'Video').limit(Medium::COLS * Medium::PREVIEW_ROWS)
+    @documents = @place.media(:type => 'Document').limit(Medium::COLS * Medium::PREVIEW_ROWS)
     title = @place.header
-    @titles = { :picture => ts(:in, :what => Picture.human_name(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.human_name(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.human_name(:count => :many).titleize, :where => title) }
+    @titles = { :picture => ts(:in, :what => Picture.model_name.human(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.model_name.human(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.model_name.human(:count => :many).titleize, :where => title) }
     @more = { :feature_id => @place.fid, :type => '' }
     render_media
   end
   
   def pictures
     get_media_by_type('Picture')
-    @title = ts :in, :what => Picture.human_name(:count => :many).titleize, :where => @place.header
+    @title = ts :in, :what => Picture.model_name.human(:count => :many).titleize, :where => @place.header
     render_media
   end
   
   def videos
     get_media_by_type('Video')
-    @title = ts :in, :what => Video.human_name(:count => :many).titleize, :where => @place.header
+    @title = ts :in, :what => Video.model_name.human(:count => :many).titleize, :where => @place.header
     render_media
   end
   
   def documents
     get_media_by_type('Document')
-    @title = ts :in, :what => Document.human_name(:count => :many).titleize, :where => @place.header
+    @title = ts :in, :what => Document.model_name.human(:count => :many).titleize, :where => @place.header
     render_media
   end
   
@@ -45,8 +45,7 @@ class PlacesController < ApplicationController
   
   def get_media_by_type(type)
     @place = Place.find(params[:id])
-    @medium_pages = Paginator.new self, @place.media_count(type), Medium::FULL_COLS * Medium::FULL_ROWS, params[:page]
-    @media = @place.paged_media(@medium_pages.items_per_page, @medium_pages.current.offset, type)
+    @media = @place.media(:type => type).paginate(:page => params[:page], :per_page => Medium::FULL_COLS * Medium::FULL_ROWS, :total_entries => @place.media_count(type))
     @pagination_params = { :feature_id => @place.fid, :type => type }
   end
   

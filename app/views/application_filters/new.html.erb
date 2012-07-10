@@ -1,8 +1,8 @@
-<h1><%= ts 'new.record', :what => ApplicationFilter.human_name.titleize %></h1>
+<h1><%= ts 'new.record', :what => ApplicationFilter.model_name.human.titleize %></h1>
 <%= form_for(:filter, :url => application_filters_path) do |f| %>
 <%=   f.error_messages %>
   <p>
-    <%= ApplicationFilter.human_name.titleize.s %><br />
+    <%= ApplicationFilter.model_name.human.titleize.s %><br />
     <%= f.text_field :title %>
   </p>
   <p>

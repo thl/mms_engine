@@ -1,4 +1,4 @@
-<h1><%= ts('edit.ing.record', :what => Keyword.human_name.titleize) %></h1>
+<h1><%= ts('edit.ing.record', :what => Keyword.model_name.human.titleize) %></h1>
 <%= error_messages_for :keyword %>
 <% if base_language? %>
 <%=  form_for(:keyword, :url => keyword_path(@keyword), :method => :put) do |f| %>

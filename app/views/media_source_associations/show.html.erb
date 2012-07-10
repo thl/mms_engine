@@ -1,8 +1,8 @@
 <p>
-    <b><%= Medium.human_name.titleize.s %></b><br />    
+    <b><%= Medium.model_name.human.titleize.s %></b><br />    
 <%= thumbnail_image_link(@medium) %></td>
 </p>
-<%= display_if_not_blank Source.human_name.titleize.s, h(@media_source_association.source.title).s %>
+<%= display_if_not_blank Source.model_name.human.titleize.s, h(@media_source_association.source.title).s %>
 <%= display_if_not_blank MediaSourceAssociation.human_attribute_name('shot_number').s, @media_source_association.shot_number %>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_edit_medium_source_association_path %>

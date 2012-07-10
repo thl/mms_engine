@@ -1,5 +1,5 @@
 <%  if authorized?(hash_for_application_setting_path(:action => 'destroy')) %>
 <%=   link_to ts('delete.this'), application_setting_path(@application_setting), :confirm => te('delete.confirmation'), :method => :delete %> |
 <%  end %>
-<%= link_to ts('back.to', :what => ApplicationSetting.human_name(:count => :many).titleize), application_settings_path %> |
+<%= link_to ts('back.to', :what => ApplicationSetting.model_name.human(:count => :many).titleize), application_settings_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>

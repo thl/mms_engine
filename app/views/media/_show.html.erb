@@ -44,18 +44,18 @@
 <% end
    keywords = @medium.keywords
    if !keywords.empty? %>
-<%=  display_if_not_blank Keyword.human_name(:count => :many).titleize.s, keywords.collect {|k| link_to h(k.title).s, media_path(:keyword_id => k)}.join(", ") %>
+<%=  display_if_not_blank Keyword.model_name.human(:count => :many).titleize.s, keywords.collect {|k| link_to h(k.title).s, media_path(:keyword_id => k)}.join(", ") %>
 <% end
    descriptions = @medium.descriptions
    if !descriptions.empty? %>
-     <p><b><%= Description.human_name(:count => descriptions.size).titleize.s %>:</b></p>
+     <p><b><%= Description.model_name.human(:count => descriptions.size).titleize.s %>:</b></p>
 <%   for description in descriptions %>
        <p><%= description.title.s %></p>
 <%   end
    end
    associated_resources = [
     ["Places", @medium.feature_count, @medium.places_url],
-    [Topic.human_name(:count => :many).titleize.s, @medium.category_count, @medium.kmaps_url]
+    [Topic.model_name.human(:count => :many).titleize.s, @medium.category_count, @medium.kmaps_url]
    ]
    if associated_resources.collect{|ar| ar[1]}.sum > 0 %>
      <h3>Associated Resources</h3>
@@ -85,7 +85,7 @@
          end
          "#{title}#{parenthesis}".html_safe
 	   end %>
-<%=    ts 'copyright.message.provider', :what => Medium.human_name, :whom => affiliations_list.join(', ') %>
+<%=    ts 'copyright.message.provider', :what => Medium.model_name.human, :whom => affiliations_list.join(', ') %>
 <%   end
      if !copyrights.empty? %>
 <%=    ts 'copyright.message.holder', :count => copyrights.size, :whom => copyrights.collect{|c| "#{c.copyright_holder.website.blank? ? h(c.copyright_holder.title): link_to(h(c.copyright_holder.title), c.copyright_holder.website)} (#{c.reproduction_type.website.blank? ? h(c.reproduction_type.title).downcase : link_to(h(c.reproduction_type.title).downcase, c.reproduction_type.website)})".html_safe}.join(', ') %>
@@ -99,11 +99,11 @@
 <% end
    quality_type = @medium.quality_type 
    if !quality_type.nil? %>
-<%=  display_if_not_blank QualityType.human_name.titleize.s, h(quality_type.title).s %>
+<%=  display_if_not_blank QualityType.model_name.human.titleize.s, h(quality_type.title).s %>
 <% end 
    orientation = @medium.recording_orientation
    if !orientation.nil? %>
-<%=  display_if_not_blank RecordingOrientation.human_name.titleize.s, h(orientation.title).s %>
+<%=  display_if_not_blank RecordingOrientation.model_name.human.titleize.s, h(orientation.title).s %>
 <% end 
    if !@medium.recording_note.blank? %>
      <p><b><%= Medium.human_attribute_name('recording_note').s %>:</b></p>
@@ -116,11 +116,11 @@
 <p>
 <% if @medium.partial_taken_on.nil? 
 	 if !@medium.taken_on.nil? %>
-       <b><%= Medium.human_attribute_name('taken_on', :what => @medium.class.human_name.titleize).s %>:</b>
+       <b><%= Medium.human_attribute_name('taken_on', :what => @medium.class.model_name.human.titleize).s %>:</b>
 <%=    h(@medium.taken_on.strftime('%d/%b/%Y')) %>
 <%   end
    else %>
-     <b><%= Medium.human_attribute_name('taken_on', :what => @medium.class.human_name.titleize).s %>:</b>
+     <b><%= Medium.human_attribute_name('taken_on', :what => @medium.class.model_name.human.titleize).s %>:</b>
 <%=  h(@medium.partial_taken_on) %>
 <% end
    if logged_in? %>
@@ -133,11 +133,11 @@
 <% if logged_in?
      capture_device_model = @medium.capture_device_model
      if !capture_device_model.nil? %>
-<%=    display_if_not_blank CaptureDeviceModel.human_name.titleize.s, "#{h(capture_device_model.capture_device_maker.title)} - #{h(capture_device_model.title)}".html_safe %>
+<%=    display_if_not_blank CaptureDeviceModel.model_name.human.titleize.s, "#{h(capture_device_model.capture_device_maker.title)} - #{h(capture_device_model.title)}".html_safe %>
 <%   end
      media_source_associations = @medium.media_source_associations
      if !media_source_associations.empty? %>
-<%=    display_if_not_blank Source.human_name(:count => media_source_associations.size).titleize.s, media_source_associations.collect {|s| "#{s.source.title} #{"(#{s.shot_number})" if !s.shot_number.nil?}".html_safe}.join(', ') %>
+<%=    display_if_not_blank Source.model_name.human(:count => media_source_associations.size).titleize.s, media_source_associations.collect {|s| "#{s.source.title} #{"(#{s.shot_number})" if !s.shot_number.nil?}".html_safe}.join(', ') %>
 <%   end
    end
    if authorized? hash_for_medium_workflow_path
@@ -164,6 +164,6 @@
 	 if has_previous %>
 	   |
 <%   end %>
-<%=  link_to ts('back.to', :what => Medium.human_name), medium_path(@medium) %>
+<%=  link_to ts('back.to', :what => Medium.model_name.human), medium_path(@medium) %>
 <% end %>
 </p>

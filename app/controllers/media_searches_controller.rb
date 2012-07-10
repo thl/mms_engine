@@ -40,9 +40,9 @@ class MediaSearchesController < AclController
       @documents = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, 'Document')
 
       @titles = Hash.new
-      @@media_types.each{ |key, value| @titles[key] = "#{value.human_name(:count => :many).titleize} about \"#{@media_search.title}\"" }
+      @@media_types.each{ |key, value| @titles[key] = "#{value.model_name.human(:count => :many).titleize} about \"#{@media_search.title}\"" }
 
-      media_type_display = @media_type.blank? ? 'Media' : @@media_types[@media_type.underscore.to_sym].human_name(:count => :many).titleize
+      media_type_display = @media_type.blank? ? 'Media' : @@media_types[@media_type.underscore.to_sym].model_name.human(:count => :many).titleize
       @title = "#{media_type_display} about \"#{@media_search.title}\""
       @tab_options ||= {}
       @tab_options[:counts] = tab_counts_for_search(@media_search)

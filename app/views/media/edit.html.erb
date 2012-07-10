@@ -2,7 +2,7 @@
 <%= error_messages_for :medium %>
 <%= form_for(:medium, :url => medium_path(@medium), :method => :put) do |f| %>
 <%=   f.hidden_field :attachment_id %>
-      <p><b><%= Medium.human_name.titleize.s %></b><br />
+      <p><b><%= Medium.model_name.human.titleize.s %></b><br />
 <%=   thumbnail_image_link(@medium) %></p>
 <%=   render(:partial => 'pictures/form', :locals => {:f => f}) if @medium.instance_of? Picture %>
 <%=   render :partial => 'media/form', :locals => {:f => f} %>
@@ -12,33 +12,33 @@
 <% titles = @medium.titles
    if !titles.empty? %>
      <p><%= bookmark 'titles' %>
-	 <b><%= Title.human_name(:count => titles.size).titleize.s %></b>
+	 <b><%= Title.model_name.human(:count => titles.size).titleize.s %></b>
 <%   if authorized? hash_for_new_medium_title_path %>
-       (<%= link_to ts('new.record', :what => Title.human_name), new_medium_title_path(@medium) %>)</p>
+       (<%= link_to ts('new.record', :what => Title.model_name.human), new_medium_title_path(@medium) %>)</p>
 <%   end %>
 <%=  render :partial => 'titles/index', :locals => {:titles => titles } %>
 <% end
    captions = @medium.captions
    if !captions.empty? %>
      <p><%= bookmark 'captions' %>
-	 <b><%= Caption.human_name(:count => captions.size).titleize.s %></b>
-     (<%= link_to ts('new.record', :what => Caption.human_name), new_medium_caption_path(@medium) %>)</p>
+	 <b><%= Caption.model_name.human(:count => captions.size).titleize.s %></b>
+     (<%= link_to ts('new.record', :what => Caption.model_name.human), new_medium_caption_path(@medium) %>)</p>
 <%=  captions.collect{|caption| "<p>#{caption.title.s} (#{link_to caption.description_type.nil? ? ts('edit.this') : caption.description_type.title, edit_medium_caption_path(@medium, caption)})</p>"}.join("\n") %>
      <hr/>
 <% end
    descriptions = @medium.descriptions
    if !descriptions.empty? %>
      <p><%= bookmark 'descriptions' %>
-	 <b><%= Description.human_name(:count => descriptions.size).titleize.s %></b>
-	 (<%=  link_to ts('new.record', :what => Description.human_name), new_medium_description_path(@medium) %>)</p>
+	 <b><%= Description.model_name.human(:count => descriptions.size).titleize.s %></b>
+	 (<%=  link_to ts('new.record', :what => Description.model_name.human), new_medium_description_path(@medium) %>)</p>
 <%=  descriptions.collect{|description| "#{description.title.s}<p>#{link_to description.description_type.nil? ? ts('edit.this') : description.description_type.title, edit_medium_description_path(@medium, description)}</p><hr/>" }.join("\n") %>
 <% end %>
 <% locations = @medium.locations 
    if !locations.empty? %>
      <p><%= bookmark 'locations' %>
-	 <b><%= Location.human_name(:count => locations.size).titleize.s %></b>
+	 <b><%= Location.model_name.human(:count => locations.size).titleize.s %></b>
 <%=  locations.collect {|l| link_to l.feature.header, edit_medium_location_path(@medium, l)}.join(', ') %>
-(<%= link_to ts('add.record', :what => Location.human_name), new_medium_location_path(@medium) %>)</p>
+(<%= link_to ts('add.record', :what => Location.model_name.human), new_medium_location_path(@medium) %>)</p>
 <% end  %>
 <%= bookmark 'topics' %>
 <% topic_associations = Hash.new
@@ -57,16 +57,16 @@
    media_keyword_associations = @medium.media_keyword_associations
    if !media_keyword_associations.empty? %>
      <p><%= bookmark 'keywords' %>
-	 <b><%= Keyword.human_name(:count => :many).titleize.s %>:</b>
+	 <b><%= Keyword.model_name.human(:count => :many).titleize.s %>:</b>
 <%=  media_keyword_associations.collect {|k| link_to h(k.keyword.title).s, edit_media_keyword_association_path(k)}.join(', ') %>
-(<%= link_to ts('add.record', :what => Keyword.human_name), new_media_keyword_association_path(:medium_id => @medium) %>)</p>
+(<%= link_to ts('add.record', :what => Keyword.model_name.human), new_media_keyword_association_path(:medium_id => @medium) %>)</p>
 <% end
    copyrights = @medium.copyrights
    if !@medium.copyrights.empty? %>
      <p><%= bookmark 'copyrights' %>
-	 <b><%= Copyright.human_name(:count => :many).titleize.s %>:</b>
+	 <b><%= Copyright.model_name.human(:count => :many).titleize.s %>:</b>
 <%=    @medium.copyrights.collect {|c| "#{link_to h(c.copyright_holder.title).s, edit_copyright_path(c)} (#{h(c.reproduction_type.title).downcase})"}.join(', ') %>
-(<%=  link_to ts('add.record', :what => Copyright.human_name), new_copyright_path(:medium_id => @medium) %>)</p>
+(<%=  link_to ts('add.record', :what => Copyright.model_name.human), new_copyright_path(:medium_id => @medium) %>)</p>
 <% end
    affiliations = @medium.affiliations
    if !affiliations.empty? 
@@ -88,21 +88,21 @@
        "#{title}#{parenthesis}"
 	 end %>
      <p><%= bookmark 'affiliations' %>
-	 <b><%= Affiliation.human_name(:count => :many).s %>:</b>
+	 <b><%= Affiliation.model_name.human(:count => :many).s %>:</b>
 <%=  affiliations_list.join(', ') %>
-(<%= link_to ts('add.record', :what => Affiliation.human_name(:count => :many)), new_medium_affiliation_path(@medium) %>)</p>
+(<%= link_to ts('add.record', :what => Affiliation.model_name.human(:count => :many)), new_medium_affiliation_path(@medium) %>)</p>
 <% end
    media_source_associations = @medium.media_source_associations
    if !media_source_associations.empty? %>
      <p><%= bookmark 'sources' %>
-	   <b><%= Source.human_name(:count => media_source_associations.size).titleize.s %>:</b>
+	   <b><%= Source.model_name.human(:count => media_source_associations.size).titleize.s %>:</b>
 <%=    media_source_associations.collect {|s| "#{link_to h(s.source.title).s, edit_medium_source_association_path(@medium, s)} #{"(#{s.shot_number})" if !s.shot_number.nil?}"}.join(', ') %>
-     (<%= link_to ts('add.record', :what => Source.human_name), new_medium_source_association_path(@medium) %>)</p>
+     (<%= link_to ts('add.record', :what => Source.model_name.human), new_medium_source_association_path(@medium) %>)</p>
 <% end 
    media_publisher = @medium.media_publisher 
    if !media_publisher.nil? %>
      <p><%= bookmark 'media_publisher' %>
-     <b><%= Publisher.human_name.titleize.s %>:</b>
+     <b><%= Publisher.model_name.human.titleize.s %>:</b>
 <%=     link_to h(media_publisher.publisher.title).s, edit_medium_media_publisher_path(@medium) %>
 </p>
 <% end %>
@@ -110,24 +110,24 @@
 <p>
 <% if titles.empty? %>
 <%=  bookmark 'titles' %>
-<%=  link_to ts('add.record', :what => Title.human_name), new_medium_title_path(@medium)%> |
+<%=  link_to ts('add.record', :what => Title.model_name.human), new_medium_title_path(@medium)%> |
 <% end
    if captions.empty? %>
 <%=  bookmark 'captions' %>
-<%=  link_to ts('add.record', :what => Caption.human_name), new_medium_caption_path(@medium)%> |
+<%=  link_to ts('add.record', :what => Caption.model_name.human), new_medium_caption_path(@medium)%> |
 <% end
    if descriptions.empty? %>
 <%=  bookmark 'descriptions' %>
-<%=  link_to ts('add.record', :what => Description.human_name), new_medium_description_path(@medium) %> |
+<%=  link_to ts('add.record', :what => Description.model_name.human), new_medium_description_path(@medium) %> |
 <% end
    if media_keyword_associations.empty? %>
 <%=  bookmark 'keywords' %>
-<%=  link_to ts('associate.to', :what => Keyword.human_name), new_media_keyword_association_path(:medium_id => @medium) %>
+<%=  link_to ts('associate.to', :what => Keyword.model_name.human), new_media_keyword_association_path(:medium_id => @medium) %>
 <% end %>
 <br/>
 <% if locations.empty? %>
 <%=  bookmark 'locations' %>
-<%=  link_to ts('associate.to', :what => Location.human_name), new_medium_location_path(@medium) %> |
+<%=  link_to ts('associate.to', :what => Location.model_name.human), new_medium_location_path(@medium) %> |
 <% end
    for root_topic in root_topics_with_media
      if topic_associations[root_topic.id].empty? %>
@@ -135,35 +135,35 @@
 <%=    link_to ts('associate.to', :what => root_topic.title.downcase), new_association_path(@medium, root_topic) %> |
 <%   end
    end %>
-<%= link_to ts('associate.to', :what => Topic.human_name), new_medium_topic_association_path(@medium) %> |
+<%= link_to ts('associate.to', :what => Topic.model_name.human), new_medium_topic_association_path(@medium) %> |
 <%= ts 'associate.to_from', :what => Topic.human_attribute_name(:child).downcase, :whom => Topic.human_attribute_name(:root).downcase %>:
 <%= select_tag :root_topics, options_for_select([''] + @root_topics.collect{|topic| [topic.title, new_association_path(@medium, topic)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %><br/>
 <% if media_source_associations.empty? %>
 <%=   bookmark 'sources' %>
-<%=   link_to ts('associate.to', :what => Source.human_name), new_medium_source_association_path(@medium) %>
+<%=   link_to ts('associate.to', :what => Source.model_name.human), new_medium_source_association_path(@medium) %>
 <% end %>
 <br/>
 <% if copyrights.empty? %>
 <%=  bookmark 'copyrights' %>
-<%=  link_to ts('add.record', :what => Copyright.human_name), new_copyright_path(:medium_id => @medium) %> |
+<%=  link_to ts('add.record', :what => Copyright.model_name.human), new_copyright_path(:medium_id => @medium) %> |
 <% end
    if affiliations.empty? %>
 <%=  bookmark 'affiliations' %>
-<%=  link_to ts('add.record', :what => Affiliation.human_name), new_medium_affiliation_path(@medium) %> |
+<%=  link_to ts('add.record', :what => Affiliation.model_name.human), new_medium_affiliation_path(@medium) %> |
 <% end %>
 <% if media_publisher.nil? %>
 <%=  bookmark 'media_publisher' %>
-<%=  link_to ts('add.record', :what => Publisher.human_name), new_medium_media_publisher_path(@medium) %>
+<%=  link_to ts('add.record', :what => Publisher.model_name.human), new_medium_media_publisher_path(@medium) %>
 <% end %></p>
 <% workflow = @medium.workflow
    if !workflow.nil? %>
 <%=  bookmark 'workflow' %>
-     <h3><%= Workflow.human_name.titleize.s %></h3>
+     <h3><%= Workflow.model_name.human.titleize.s %></h3>
 <%=  render :partial => 'workflows/show', :locals => {:workflow => workflow} %>
-     <p><%= link_to ts('edit.record', :what => Workflow.human_name), medium_workflow_path(@medium, @workflow) %></p>
+     <p><%= link_to ts('edit.record', :what => Workflow.model_name.human), medium_workflow_path(@medium, @workflow) %></p>
 <% else %>
-     <p><%= link_to ts('edit.record', :what => Workflow.human_name), edit_medium_workflow_path(@medium) %></p>
+     <p><%= link_to ts('edit.record', :what => Workflow.model_name.human), edit_medium_workflow_path(@medium) %></p>
 <% end %>
 <hr/>
 <p>&nbsp;<br/>
-<%= link_to ts('back.to', :what => Medium.human_name), medium_path(@medium) %></p>
+<%= link_to ts('back.to', :what => Medium.model_name.human), medium_path(@medium) %></p>

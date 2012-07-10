@@ -3,5 +3,5 @@
     url = (!typescript.nil? && typescript.content_type == 'application/pdf') ? typescript.public_filename : nil
     if !url.nil? %>
       <br/>
-      <p><%= link_to(ts(:get, :what => Document.human_name), url) %></p>
+      <p><%= link_to(ts(:get, :what => Document.model_name.human), url) %></p>
 <%  end %>

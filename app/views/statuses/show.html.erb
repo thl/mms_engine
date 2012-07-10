@@ -15,4 +15,4 @@
 
 
 <%= link_to 'Edit', edit_status_path(@status) %> |
-<%= link_to ts('back.to', :what => t('all.records', :what => Status.human_name(:count => :many))), statuses_path %>
+<%= link_to ts('back.to', :what => t('all.records', :what => Status.model_name.human(:count => :many))), statuses_path %>

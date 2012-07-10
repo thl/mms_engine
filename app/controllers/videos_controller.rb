@@ -72,7 +72,7 @@ class VideosController < AclController
     @medium.process if success
     respond_to do |format|
       if success
-        flash[:notice] = ts('new.successful', :what => Video.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => Video.model_name.human.capitalize)
         format.html { redirect_to medium_url(@medium) }
         format.xml  { head :created, :location => medium_url(@medium) }
       else
@@ -95,7 +95,7 @@ class VideosController < AclController
     @video = Video.find(params[:id])
     respond_to do |format|
       if @video.update_attributes(params[:video])
-        flash[:notice] = ts('edit.successful', :what => Video.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => Video.model_name.human.capitalize)
         format.html { redirect_to medium_url(@video) }
         format.xml  { head :ok }
       else

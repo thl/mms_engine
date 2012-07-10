@@ -40,7 +40,7 @@ class RecordingOrientationsController < AclController
     @recording_orientation = RecordingOrientation.new(params[:recording_orientation])
     respond_to do |format|
       if @recording_orientation.save
-        flash[:notice] = ts('new.successful', :what => RecordingOrientation.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => RecordingOrientation.model_name.human.capitalize)
         format.html { redirect_to recording_orientations_url }
         format.xml  { render :xml => @recording_orientation, :status => :created, :location => @recording_orientation }
       else
@@ -56,7 +56,7 @@ class RecordingOrientationsController < AclController
     @recording_orientation = RecordingOrientation.find(params[:id])
     respond_to do |format|
       if @recording_orientation.update_attributes(params[:recording_orientation])
-        flash[:notice] = ts('edit.successful', :what => RecordingOrientation.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => RecordingOrientation.model_name.human.capitalize)
         format.html { redirect_to recording_orientations_url }
         format.xml  { head :ok }
       else

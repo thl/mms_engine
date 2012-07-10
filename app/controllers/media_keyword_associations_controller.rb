@@ -59,7 +59,7 @@ class MediaKeywordAssociationsController < AclController
 
     respond_to do |format|
       if @media_keyword_association.save
-        flash[:notice] = ts('new.successful', :what => MediaKeywordAssociation.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => MediaKeywordAssociation.model_name.human.capitalize)
         format.html { redirect_to edit_medium_url(@medium) }
         format.xml  { head :created, :location => media_keyword_association_url(@media_keyword_association) }
       else
@@ -76,7 +76,7 @@ class MediaKeywordAssociationsController < AclController
     @medium = @media_keyword_association.medium
     respond_to do |format|
       if @media_keyword_association.update_attributes(params[:media_keyword_association])
-        flash[:notice] = ts('edit.successful', :what => MediaKeywordAssociation.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => MediaKeywordAssociation.model_name.human.capitalize)
         format.html { redirect_to edit_medium_url(@medium) }
         format.xml  { head :ok }
       else

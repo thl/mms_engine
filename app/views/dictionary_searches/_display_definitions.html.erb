@@ -13,10 +13,10 @@
      grammatical_class = definition.grammatical_class %>
    <p align="left">
 <%   if !dialect.nil? %>
-       <i><%= Dialect.human_name.titleize.s %></i>: <%=h dialect.title %>,
+       <i><%= Dialect.model_name.human.titleize.s %></i>: <%=h dialect.title %>,
 <%   end
      if !loan_type.nil? %>
-       <i><%= LoanType.human_name.titleize.s %></i>: <%=h loan_type.title %>,
+       <i><%= LoanType.model_name.human.titleize.s %></i>: <%=h loan_type.title %>,
 <%   end
      if !grammatical_class.nil? %>
 <%=h   definition.grammatical_class.title.s %>,
@@ -25,8 +25,8 @@
 <%	 keywords = definition.keywords
 	 if !keywords.empty? %>
 	   <br/>
-       <i><%= Keyword.human_name(:count => :many).titleize.s %></i>: <%= keywords.collect{|k| k.title}.join(', ') %>
+       <i><%= Keyword.model_name.human(:count => :many).titleize.s %></i>: <%= keywords.collect{|k| k.title}.join(', ') %>
 <%	 end %>
-<%=  "(#{language.title}, #{link_to glossary.abbreviation, glossary_path(glossary)})" %>
-     </p>
+     (<%= language.title %>, <%= link_to glossary.abbreviation, glossary_path(glossary) %>)
+   </p>
 <% end %>

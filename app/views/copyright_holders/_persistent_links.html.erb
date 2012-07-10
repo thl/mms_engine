@@ -1,5 +1,5 @@
 <%  if authorized?(hash_for_copyright_holder_path(:action => 'destroy')) %>
 <%=   link_to ts('delete.this'), copyright_holder_path(@copyright_holder), :confirm => te('delete.confirmation'), :method => :delete %> |
 <%  end %>
-<%= link_to ts('back.to', :what => t('all.records', :what => CopyrightHolder.human_name(:count => :many))), copyright_holders_path %> |
+<%= link_to ts('back.to', :what => t('all.records', :what => CopyrightHolder.model_name.human(:count => :many))), copyright_holders_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>

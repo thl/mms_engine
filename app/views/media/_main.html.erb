@@ -20,7 +20,7 @@
              <p>
 <%             for keyword in @keywords %>
 <%               font_size = (@keyword_font_size[keyword.id]) %>
-                 <FONT SIZE= "<%= font_size %>"><%= link_to h(keyword.title).s, media_path(:keyword_id => keyword) %></FONT>
+                 <FONT SIZE= "<%= font_size %>"><%= link_to h(keyword.title).s, media_path(:keyword_id => keyword), :remote => true %></FONT>
 <%             end %>
              </p>
              </li>

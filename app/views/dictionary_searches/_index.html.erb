@@ -54,16 +54,8 @@
   </tr>
 <%   end %>
 </table> 
-<% end 
-    if @word_pages.current.previous %>
-<%=   link_to(ts('results.previous'), { :page => @word_pages.current.previous, :language_id => @language }, :remote => true, :id => 'previous_link') %>
-<%=   javascript_tag("$('#previous_link').bind('ajax:loading', function(){ #{javascript_searching('results')} })") %>
+<% end %>
+<%= javascript_on_load do %>
+      $('.pagination').find('a').attr('data-remote', true);
 <%  end %>
-<%= pagination_links_each(@word_pages, {}) do |n| 
-	  link_to(n.to_s, {:page => n, :language_id => @language}, :remote => true, :id => "page_#{n}_link") +
-	  javascript_tag("$('#page_#{n}_link').bind('ajax:loading', function(){ #{javascript_searching('results')} })")
-	end %>
-<%  if @word_pages.current.next %>	
-<%=   link_to(ts('results.next'), { :page => @word_pages.current.next, :language_id => @language }, :remote => true, :id => 'next_link') %>
-<%=   javascript_tag("$('#next_link').bind('ajax:loading', function(){ #{javascript_searching('results')} })") %>
-<%  end %>
+<%= will_paginate @words, :class => 'normal pagination' %>

@@ -1,4 +1,4 @@
-<h1>Processing Rotation of <%= Picture.human_name.titleize.s %> #<%= @medium.id %> by <%= @user.screen_name %></h1>
+<h1>Processing Rotation of <%= Picture.model_name.human.titleize.s %> #<%= @medium.id %> by <%= @user.screen_name %></h1>
 <%= periodically_call_remote(:url => status_medium_rotations_path(@medium, :user_id => @user.id), :method => :get) %>
 <p><%= render :partial => 'status' %></p>
 <p>&nbsp;<br/>

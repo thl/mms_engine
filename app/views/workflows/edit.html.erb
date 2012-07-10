@@ -1,9 +1,9 @@
 <% @medium = @workflow.medium %>
-<h1><%= ts :for, :what => t('edit.ing.record', :what => Workflow.human_name.titleize), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
+<h1><%= ts :for, :what => t('edit.ing.record', :what => Workflow.model_name.human.titleize), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <%= error_messages_for :workflow %>
 <%= form_for(:workflow, :url => medium_workflow_path(@medium), :html => {:method => :put}) do |f| %>
 	<p>
-	  <b><%= Medium.human_name.titleize.s %></b><br />    
+	  <b><%= Medium.model_name.human.titleize.s %></b><br />    
 <%=   f.hidden_field :medium_id %>
 <%=   thumbnail_image_link(@medium) %></td>
 	</p>

@@ -1,9 +1,9 @@
-<h1><%= ts 'list.ing.records', :what => CaptureDeviceMaker.human_name(:count => :many).titleize %></h1>
+<h1><%= ts 'list.ing.records', :what => CaptureDeviceMaker.model_name.human(:count => :many).titleize %></h1>
 <table border="1" class="normal">
   <tr>
-    <th><%= CaptureDeviceMaker.human_name.titleize.s %></th>
+    <th><%= CaptureDeviceMaker.model_name.human.titleize.s %></th>
     <th><%= CaptureDeviceMaker.human_attribute_name('exif_tag').s %></th>
-    <th><%= CaptureDeviceModel.human_name(:count => :many).titleize.s %></th>
+    <th><%= CaptureDeviceModel.model_name.human(:count => :many).titleize.s %></th>
   </tr>
 <% can_edit_maker = authorized? hash_for_edit_capture_device_maker_path
    can_edit_model = authorized? hash_for_edit_capture_device_maker_model_path
@@ -14,14 +14,14 @@
     <td>
 <%= capture_device_maker.capture_device_models.collect{ |model| can_edit_model ? link_to(h(model.title), edit_capture_device_maker_model_path(capture_device_maker, model)) : link_to(h(model.title), capture_device_maker_model_path(capture_device_maker, model))}.join(', ') %></td>
 <%  if authorized? hash_for_new_capture_device_maker_model_path %>
-	  <td><%= link_to ts('new.record', :what => CaptureDeviceModel.human_name), new_capture_device_maker_model_path(capture_device_maker) %></td>
+	  <td><%= link_to ts('new.record', :what => CaptureDeviceModel.model_name.human), new_capture_device_maker_model_path(capture_device_maker) %></td>
 <% end %>
   </tr>
 <% end %>
 </table>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_new_capture_device_maker_path %>
-<%=  link_to ts('new.record', :what => CaptureDeviceMaker.human_name), new_capture_device_maker_path %> |
+<%=  link_to ts('new.record', :what => CaptureDeviceMaker.model_name.human), new_capture_device_maker_path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

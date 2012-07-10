@@ -35,7 +35,7 @@ class TransformationsController < AclController
     @transformation = Transformation.new(params[:transformation])
     respond_to do |format|
       if @transformation.save
-        flash[:notice] = ts('new.successful', :what => Transformation.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => Transformation.model_name.human.capitalize)
         format.html { redirect_to transformation_url(@transformation) }
         format.xml  { head :created, :location => transformation_url(@transformation) }
       else
@@ -51,7 +51,7 @@ class TransformationsController < AclController
     @transformation = Transformation.find(params[:id])
     respond_to do |format|
       if @transformation.update_attributes(params[:transformation])
-        flash[:notice] = ts('edit.successful', :what => Transformation.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => Transformation.model_name.human.capitalize)
         format.html { redirect_to transformation_url(@transformation) }
         format.xml  { head :ok }
       else

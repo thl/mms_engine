@@ -1,8 +1,8 @@
-<h1><%= ts 'list.ing.records', :what => ApplicationFilter.human_name.titleize %></h1>
+<h1><%= ts 'list.ing.records', :what => ApplicationFilter.model_name.human.titleize %></h1>
 
 <table table border="1" class="normal">
   <tr>
-    <th><%= ApplicationFilter.human_name.titleize.s %></th>
+    <th><%= ApplicationFilter.model_name.human.titleize.s %></th>
   </tr>
 <% can_edit = authorized? hash_for_edit_application_filter_path
    for filter in @filters %>
@@ -13,7 +13,7 @@
 </table>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_new_application_filter_path %>
-<%=  link_to ts('new.record', :what => ApplicationFilter.human_name), new_application_filter_path %> |
+<%=  link_to ts('new.record', :what => ApplicationFilter.model_name.human), new_application_filter_path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

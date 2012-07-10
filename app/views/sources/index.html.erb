@@ -1,7 +1,7 @@
-<h1><%= ts 'list.ing.records', :what => Source.human_name(:count => :many).titleize %></h1>
+<h1><%= ts 'list.ing.records', :what => Source.model_name.human(:count => :many).titleize %></h1>
 <table border="1" class="normal">
   <tr>
-    <th><%= Source.human_name.titleize %></th>
+    <th><%= Source.model_name.human.titleize %></th>
   </tr>
 <% can_edit = authorized? hash_for_edit_source_path
    for source in @sources %>
@@ -12,7 +12,7 @@
 </table>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_new_source_path %>
-<%=  link_to ts('new.record', :what => Source.human_name), new_source_path %> |
+<%=  link_to ts('new.record', :what => Source.model_name.human), new_source_path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

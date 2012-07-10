@@ -8,15 +8,8 @@ class Document < Medium
     typescript
   end
   
-  def before_create
-    super
-    self.resource_type_id = 2639 if self.resource_type_id.nil?
-  end
-  
-  def before_destroy
-    super
-    typescript.destroy if !typescript.nil?
-  end
+  before_create  { |record| record.resource_type_id = 2639 if record.resource_type_id.nil? }
+  before_destroy { |record| record.typescript.destroy if !record.typescript.nil? }
   
   def self.public_folder
     'typescripts'

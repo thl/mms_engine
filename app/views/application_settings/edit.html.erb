@@ -1,4 +1,4 @@
-<h1><%= ts 'edit.ing.record', :what => ApplicationSetting.human_name.titleize %></h1>
+<h1><%= ts 'edit.ing.record', :what => ApplicationSetting.model_name.human.titleize %></h1>
 <%= error_messages_for :application_setting %>
 <%= form_for(:application_setting, :url => application_setting_path(@application_setting), :method => :put) do |f| %>
 <%=  render :partial => 'form', :locals => {:f => f} %>

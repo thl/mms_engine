@@ -1,8 +1,8 @@
-<h1><%= ts 'list.ing.records', :what => Transformation.human_name(:count => :many).titleize %></h1>
+<h1><%= ts 'list.ing.records', :what => Transformation.model_name.human(:count => :many).titleize %></h1>
 <table border="1" class="normal">
   <tr>
-    <th><%= Transformation.human_name.titleize.s %></th>
-    <th><%= Renderer.human_name.titleize.s %></th>
+    <th><%= Transformation.model_name.human.titleize.s %></th>
+    <th><%= Renderer.model_name.human.titleize.s %></th>
     <th><%= Transformation.human_attribute_name('path').s %></th>
   </tr>
 <% can_edit = authorized? hash_for_edit_transformation_path
@@ -22,7 +22,7 @@
 </table>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_transformation_path %>
-<%=  link_to ts('new.record', :what => Transformation.human_name), new_transformation_path %> |
+<%=  link_to ts('new.record', :what => Transformation.model_name.human), new_transformation_path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

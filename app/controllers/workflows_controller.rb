@@ -58,7 +58,7 @@ class WorkflowsController < AclController
       @workflow = @medium.workflow
       respond_to do |format|
         if @workflow.update_attributes(params[:workflow])
-          flash[:notice] = ts('edit.successful', :what => Workflow.human_name.capitalize)
+          flash[:notice] = ts('edit.successful', :what => Workflow.model_name.human.capitalize)
           format.html { redirect_to edit_medium_path(@medium, :anchor => 'workflow') }
           format.xml  { head :ok }
         else

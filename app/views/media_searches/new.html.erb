@@ -1,5 +1,5 @@
 <div id="primary">
-<h4><%= ts 'new.record', :what => t('search.record', :what => Medium.human_name(:count => :many).titleize) %></h4>
+<h4><%= ts 'new.record', :what => t('search.record', :what => Medium.model_name.human(:count => :many).titleize) %></h4>
 <p>
 <%= render :partial => 'advanced' %>
 </p>

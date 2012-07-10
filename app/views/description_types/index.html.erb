@@ -1,7 +1,7 @@
-<h1><%= ts 'list.ing.records', :what => DescriptionType.human_name(:what => "#{Caption.human_name.titleize}/#{Description.human_name.titleize}") %></h1>
+<h1><%= ts 'list.ing.records', :what => DescriptionType.model_name.human(:what => "#{Caption.model_name.human.titleize}/#{Description.model_name.human.titleize}") %></h1>
 <table border="1" class="normal">
   <tr>
-    <th><%= DescriptionType.human_name.titleize.s %></th>
+    <th><%= DescriptionType.model_name.human.titleize.s %></th>
   </tr>
 <% for description_type in @description_types %>
   <tr>
@@ -10,5 +10,5 @@
 <% end %>
 </table>
 <br />
-<%= link_to ts('new.record', :what => "#{Caption.human_name}/#{Description.human_name}"), new_description_type_path %> |
+<%= link_to ts('new.record', :what => "#{Caption.model_name.human}/#{Description.model_name.human}"), new_description_type_path %> |
 <%= link_to ts('back.this'), media_path %>

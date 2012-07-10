@@ -38,7 +38,7 @@ class ProjectsController < AclController
 
     respond_to do |format|
       if @project.save
-        flash[:notice] = ts('new.successful', :what => Project.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => Project.model_name.human.capitalize)
         format.html { redirect_to project_url(@project) }
         format.xml  { head :created, :location => project_url(@project) }
       else
@@ -54,7 +54,7 @@ class ProjectsController < AclController
     @project = Project.find(params[:id])
     respond_to do |format|
       if @project.update_attributes(params[:project])
-        flash[:notice] = ts('edit.successful', :what => Project.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => Project.model_name.human.capitalize)
         format.html { redirect_to project_url(@project) }
         format.xml  { head :ok }
       else

@@ -7,15 +7,9 @@ class Picture < Medium
     image
   end
   
-  def before_create
-    super
-    self.resource_type_id = 2660 if self.resource_type_id.nil?
-  end
-  
-  def before_destroy
-    super
-    image.destroy
-  end
+  before_create  { |record| record.resource_type_id = 2660 if record.resource_type_id.nil? }
+  before_destroy { |record| record.image.destroy }
+  after_create   { |record| record.update_from_image_properties }
     
   def huge_image
     att = attachment
@@ -25,11 +19,6 @@ class Picture < Medium
   
   def self.public_folder
     'images'
-  end
-  
-  def after_create
-    super
-    update_from_image_properties
   end
 end
 

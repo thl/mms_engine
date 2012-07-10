@@ -1,4 +1,4 @@
-<h1><%= ts 'edit.ing.record', :what => Source.human_name.titleize %></h1>
+<h1><%= ts 'edit.ing.record', :what => Source.model_name.human.titleize %></h1>
 <%= error_messages_for :source %>
 <%= form_for(@source) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>

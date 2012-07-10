@@ -61,7 +61,7 @@ class PicturesController < AclController
     end
     respond_to do |format|
       if success
-        flash[:notice] = ts('new.successful', :what => Picture.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => Picture.model_name.human.capitalize)
         format.html { redirect_to picture_url(@medium) }
         format.xml  { head :created, :location => picture_url(@medium) }
       else
@@ -84,7 +84,7 @@ class PicturesController < AclController
     @medium = Picture.find(params[:id])
     respond_to do |format|
       if @medium.update_attributes(params[:picture])
-        flash[:notice] = ts('edit.successful', :what => Picture.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => Picture.model_name.human.capitalize)
         format.html { redirect_to picture_url(@medium) }
         format.xml  { head :ok }
       else

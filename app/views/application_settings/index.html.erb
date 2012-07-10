@@ -1,8 +1,8 @@
-<h1><%= ts 'list.ing.records', :what => ApplicationSetting.human_name(:count => :many).titleize %></h1>
+<h1><%= ts 'list.ing.records', :what => ApplicationSetting.model_name.human(:count => :many).titleize %></h1>
 
 <table border="1" class="normal">
   <tr>
-    <th><%= ApplicationSetting.human_name.titleize.s %></th>
+    <th><%= ApplicationSetting.model_name.human.titleize.s %></th>
     <th><%= ApplicationSetting.human_attribute_name('description').s %></th>
     <th><%= ApplicationSetting.human_attribute_name('value').s %></th>
     <th><%= ApplicationSetting.human_attribute_name('string_value').s %></th>
@@ -31,7 +31,7 @@
 </table>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_new_application_setting_path %>
-<%=  link_to ts('new.record', :what => ApplicationSetting.human_name), new_application_setting_path %> |
+<%=  link_to ts('new.record', :what => ApplicationSetting.model_name.human), new_application_setting_path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

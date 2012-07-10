@@ -1,4 +1,4 @@
-<h1><%= ts 'edit.ing.record', :what => CaptureDeviceMaker.human_name.titleize %></h1>
+<h1><%= ts 'edit.ing.record', :what => CaptureDeviceMaker.model_name.human.titleize %></h1>
 <%= error_messages_for :capture_device_maker %>
 <%= form_for(@capture_device_maker) do |f| %>
 <%= render :partial => 'form', :locals => {:f => f} %>

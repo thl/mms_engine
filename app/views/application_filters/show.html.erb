@@ -1,8 +1,8 @@
 <p>
-  <b><%= ApplicationFilter.human_name.titleize.s %>:</b>
+  <b><%= ApplicationFilter.model_name.human.titleize.s %>:</b>
   <%=h @filter.title %>
 </p>
 
 
 <%= link_to 'Edit', edit_application_filter_path(@filter) %> |
-<%= link_to ts('back.to', :what => t('all.records', :what => ApplicationFilter.human_name(:count => :many))), application_filters_path %>
+<%= link_to ts('back.to', :what => t('all.records', :what => ApplicationFilter.model_name.human(:count => :many))), application_filters_path %>

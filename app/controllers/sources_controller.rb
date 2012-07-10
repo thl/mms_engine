@@ -40,7 +40,7 @@ class SourcesController < AclController
     @source = Source.new(params[:source])
     respond_to do |format|
       if @source.save
-        flash[:notice] = ts('new.successful', :what => Source.human_name.capitalize)
+        flash[:notice] = ts('new.successful', :what => Source.model_name.human.capitalize)
         format.html { redirect_to sources_url }
         format.xml  { render :xml => @source, :status => :created, :location => @source }
       else
@@ -56,7 +56,7 @@ class SourcesController < AclController
     @source = Source.find(params[:id])
     respond_to do |format|
       if @source.update_attributes(params[:source])
-        flash[:notice] = ts('edit.successful', :what => Source.human_name.capitalize)
+        flash[:notice] = ts('edit.successful', :what => Source.model_name.human.capitalize)
         format.html { redirect_to sources_url }
         format.xml  { head :ok }
       else

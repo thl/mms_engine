@@ -57,7 +57,7 @@ class TitlesController < AclController
       @title = @medium.titles.new(params[:title])
       respond_to do |format|
         if @title.save
-          flash[:notice] = ts('new.successful', :what => Title.human_name.capitalize)
+          flash[:notice] = ts('new.successful', :what => Title.model_name.human.capitalize)
           format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
           format.xml  { render :xml => @title, :status => :created, :location => medium_title_url(@medium, @title) }
         else
@@ -76,7 +76,7 @@ class TitlesController < AclController
       @title = Title.find(params[:id])
       respond_to do |format|
         if @title.update_attributes(params[:title])
-          flash[:notice] = ts('edit.successful', :what => Title.human_name.capitalize)
+          flash[:notice] = ts('edit.successful', :what => Title.model_name.human.capitalize)
           format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
           format.xml  { head :ok }
         else

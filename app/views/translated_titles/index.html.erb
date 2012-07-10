@@ -1,9 +1,9 @@
-<h1><%= ts :for, :what => t('list.ing.records', :what => TranslatedTitle.human_name(:count => :many).titleize), :whom => @title.title.titleize %></h1>
+<h1><%= ts :for, :what => t('list.ing.records', :what => TranslatedTitle.model_name.human(:count => :many).titleize), :whom => @title.title.titleize %></h1>
 
 <table border="1" class="normal">
   <tr>
-    <th><%= TranslatedTitle.human_name.titleize.s %></th>
-    <th><%= ComplexScripts::Language.human_name.capitalize.s %></th>
+    <th><%= TranslatedTitle.model_name.human.titleize.s %></th>
+    <th><%= ComplexScripts::Language.model_name.human.capitalize.s %></th>
     <th><%= ts :options %></th>
   </tr>
 
@@ -17,7 +17,7 @@
 </table>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_new_medium_title_path %>
-<%=  link_to ts(:for, :what => t('new.record', :what => TranslatedTitle.human_name), :whom => @title.class.human_name), new_medium_title_translated_title_path(@medium, @title) %> |
+<%=  link_to ts(:for, :what => t('new.record', :what => TranslatedTitle.model_name.human), :whom => @title.class.model_name.human), new_medium_title_translated_title_path(@medium, @title) %> |
 <% end %>
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'translated_titles'} %>
 </p>
