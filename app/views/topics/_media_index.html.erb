@@ -2,7 +2,26 @@
      if !@topic.nil? %>
 	   <h2><%= Medium.model_name.human(:count => :many).titleize.s %> Associated with <%= @topic.title %></h2>
 <%   end %>
-<%=  render :partial => 'media/index' %>
+<%   no_media = true
+     title = @topic.title
+     if !@pictures.empty? %>
+       <h3><%= ts(:in, :what => Picture.model_name.human(:count => :many).titleize, :where => title) %></h3>
+<%     no_media = false %>
+<%=    render :partial => 'media/media_table', :locals => { :media => @pictures, :more => pictures_topic_path(@topic) } %>
+<%   end
+     if !@videos.empty? %>
+       <h3><%= ts(:in, :what => Video.model_name.human(:count => :many).titleize, :where => title) %></h3>
+<%     no_media = false %>
+<%=    render :partial => 'media/media_table', :locals => { :media => @videos, :more => videos_topic_path(@topic) } %>
+<%   end
+     if !@documents.empty? %>
+       <h3><%= ts(:in, :what => Document.model_name.human(:count => :many).titleize, :where => title) %></h3>
+<%     no_media = false %>
+<%=    render :partial => 'documents/media_table', :locals => { :media => @documents, :more => documents_topic_path(@topic) } %>
+<%   end
+     if no_media %>
+       <p><%= ts 'media.none' %></p>
+<%   end %>
 <% elsif !@media.nil? %>
 <%=  render :partial => 'media/paged_index_full' %>
 <% end %>

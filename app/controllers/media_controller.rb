@@ -3,7 +3,6 @@ class MediaController < AclController
   cache_sweeper :medium_sweeper, :only => [:update, :destroy]
   
   # Adding redundant candidates (e.g. category_id and :topic_id) for now to prevent errors, but these should be consolidated
-  ELEMENT_CANDIDATES = {:category_id => {:class => Topic, :association => 'topics', :name => Topic.model_name.human}, :topic_id => {:class => Topic, :association => 'topics', :name => Topic.model_name.human}, :feature_id => {:class => Place, :association => 'locations', :name => 'location'}, :place_id => {:class => Place, :association => 'locations', :name => 'location'}}
   MEDIA_TYPES = {:picture => Picture, :video => Video, :document => Document}
 
   def initialize
@@ -11,65 +10,13 @@ class MediaController < AclController
     @guest_perms += ['media/goto', 'media/large', 'media/full_size']
   end
   
-  # GET /media[?administrative_unit_id=1][&type=Type]
-  # GET /media.xml[?administrative_unit_id=1]
-  # GET /media[?collection_id=1]
-  # GET /media.xml[?collection_id=1]
-  # GET /media[?ethnicity_id=1]
-  # GET /media.xml[?ethnicity_id=1]
-  # GET /media[?subject_id=1]
-  # GET /media.xml[?subject_id=1]
   # GET /media[?keyword_id=1]
   # GET /media.xml[?keyword_id=1]
   def index
     begin
       keyword_id = params[:keyword_id]
       @type = params[:type]
-      element_id = nil
-      element_name = nil
-      ELEMENT_CANDIDATES.each_key do |element_name|
-        element_id = params[element_name]
-        next if element_id.blank?
-        break
-      end
-      if !element_id.blank?
-        element_class = ELEMENT_CANDIDATES[element_name][:class]
-        @element = element_class.find(element_id)
-        @human_name = ELEMENT_CANDIDATES[element_name][:name]
-        @controller_name = ELEMENT_CANDIDATES[element_name][:association]
-        @element_name = element_name.to_s
-        if @type.blank?
-          @pictures = @element.media(:type => 'Picture').limit(Medium::COLS * Medium::PREVIEW_ROWS)
-          @videos = @element.media(:type => 'Video').limit(Medium::COLS)
-          @documents = @element.media(:type => 'Document').limit(Medium::COLS)
-          title = @element.title
-          @titles = Hash.new
-          MEDIA_TYPES.each{ |key, value| @titles[key] = "#{value.model_name.human(:count => :many).titleize} Associated with #{title}".s }
-          @more = { element_name => element_id, :type => '' }
-          if @controller_name == 'locations'
-            @place = @element
-            @partial = 'places/show'
-          elsif @controller_name == 'topics'
-            @partial = 'topics/show'
-          else
-            @partial = 'main/hierarchy/associations/general_index'
-          end            
-        else
-          @tab_options ||= {}
-          @tab_options[:counts] = tab_counts_for_element(@element)
-          @tab_options[:urls] = tab_urls_for_element(@element)
-          @tab_options[:urls][:browse] = polymorphic_url(@element)
-          # Need to use .fid if the element is a Place
-          @tab_options[:urls][:browse] = place_url(@element.fid) if @element.instance_of? Place
-          @media = @element.media(:type => @type).paginate(:per_page => Medium::FULL_COLS * Medium::FULL_ROWS, :page => params[:page], :total_entries => @element.media_count(@type))
-          @title = "#{MEDIA_TYPES[@type.downcase.to_sym].model_name.human(:count => :many).titleize} Associated with #{@element.title}".s
-        end
-        if !['locations', 'topics'].include? @controller_name
-          @current = @element.ancestors.collect{|c| c.id.to_i}
-          @current << @element.id.to_i
-          @elements = element_class.root.children
-        end
-      elsif !keyword_id.blank?
+      if !keyword_id.blank?
         @keyword = Keyword.find(keyword_id)
         @media = @keyword.media.paginate(:per_page => Medium::COLS * Medium::ROWS, :page => params[:page]) # :total_entries => @keyword.media.size
         @title = "#{Medium.model_name.human(:count => :many).titleize} Associated with Keyword \"#{@keyword.title}\"".s

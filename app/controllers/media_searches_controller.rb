@@ -33,15 +33,13 @@ class MediaSearchesController < AclController
       redirect_to new_media_search_url
     else
       per_page = @media_type.blank? ? 20 : Medium::FULL_COLS * Medium::FULL_ROWS
-      @medium_pages = Paginator.new self, Medium.media_count_search(@media_search, @media_type), per_page, params[:page]
-      @media = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, @media_type)
-      @pictures = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, 'Picture')
-      @videos = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, 'Video')
-      @documents = Medium.paged_media_search(@media_search, @medium_pages.items_per_page, @medium_pages.current.offset, 'Document')
-
+      @media = Medium.media_search(@media_search, @media_type).paginate(:per_page => per_page, :page => params[:page]) # :total_entries => Medium.media_count_search(@media_search, @media_type)
+      @pictures = Medium.media_search(@media_search, 'Picture').paginate(:per_page => per_page, :page => params[:page])
+      @videos = Medium.media_search(@media_search, 'Video').paginate(:per_page => per_page, :page => params[:page])
+      @documents = Medium.media_search(@media_search, 'Document').paginate(:per_page => per_page, :page => params[:page])
+      @keywords = Keyword.where([Util.search_condition_string(@media_search.type, 'title', true), @media_search.title])
       @titles = Hash.new
       @@media_types.each{ |key, value| @titles[key] = "#{value.model_name.human(:count => :many).titleize} about \"#{@media_search.title}\"" }
-
       media_type_display = @media_type.blank? ? 'Media' : @@media_types[@media_type.underscore.to_sym].model_name.human(:count => :many).titleize
       @title = "#{media_type_display} about \"#{@media_search.title}\""
       @tab_options ||= {}
@@ -51,7 +49,6 @@ class MediaSearchesController < AclController
       @current_tab_id = @media_type.underscore.to_sym unless @media_type.blank?
       respond_to do |format|
         format.html do
-          calculate_sorrounding_search
           if @media_type.blank?
             render :action => @media_type=='Document' ? 'paged_documents' : 'paged_media'
           else
@@ -82,12 +79,5 @@ class MediaSearchesController < AclController
     media_search_param = params[:media_search]
     @media_search = media_search_param.blank? ? MediaSearch.new(:title => params[:media_search_title], :type => params[:media_search_type]) : MediaSearch.new(media_search_param)
     @pagination_params = { :media_search_title => @media_search.title, :media_search_type => @media_search.type, :media_type => params[:media_type] }
-  end
-  
-  def calculate_sorrounding_search
-    @picture_count = Medium.media_count_search(@media_search, 'Picture')
-    @video_count = Medium.media_count_search(@media_search, 'Video')
-    @document_count = Medium.media_count_search(@media_search, 'Document')
-    @keywords = Keyword.find(:all, :conditions => [Util.search_condition_string(@media_search.type, 'title', true), @media_search.title])
   end
 end

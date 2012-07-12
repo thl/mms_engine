@@ -1,4 +1,4 @@
-<%= form_for(:media_search, :url => media_searches_path, :method => :get) do |f| %>
+<%= form_for(:media_search, :url => media_searches_path, :html => {:method => :get}) do |f| %>
     <p>
 <%=   f.text_field :title, fixed_language_options(:size => 20) %>
 <%=   submit_tag te('search.this'), language_options %><br/>

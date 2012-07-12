@@ -17,9 +17,6 @@ class PlacesController < ApplicationController
     @pictures = @place.media(:type => 'Picture').limit(Medium::COLS * Medium::PREVIEW_ROWS)
     @videos = @place.media(:type => 'Video').limit(Medium::COLS * Medium::PREVIEW_ROWS)
     @documents = @place.media(:type => 'Document').limit(Medium::COLS * Medium::PREVIEW_ROWS)
-    title = @place.header
-    @titles = { :picture => ts(:in, :what => Picture.model_name.human(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.model_name.human(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.model_name.human(:count => :many).titleize, :where => title) }
-    @more = { :feature_id => @place.fid, :type => '' }
     render_media
   end
   
@@ -51,17 +48,9 @@ class PlacesController < ApplicationController
   
   def render_media
     get_tab_options
-    if request.xhr?
-      render :update do |page|
-        if !@medium.nil?
-          page.replace_html 'primary', :partial => 'media/show'
-        end
-        page.replace_html 'secondary', :partial => 'media_index'
-        page.call 'ActivateThlPopups', '#secondary'
-        page.call 'tb_init', 'a.thickbox, area.thickbox, input.thickbox'
-      end
-    else
-      respond_to { |format| format.html { render(:action => @medium.nil? ? 'show' : 'show_for_medium') } }
+    respond_to do |format|
+      format.html { render(:action => @medium.nil? ? 'show' : 'show_for_medium') }
+      format.js   { render 'show' }
     end
   end
   

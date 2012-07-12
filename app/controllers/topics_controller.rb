@@ -30,9 +30,6 @@ class TopicsController < AclController
     @pictures = @topic.media(:type => 'Picture').limit(Medium::COLS * Medium::PREVIEW_ROWS)
     @videos = @topic.media(:type => 'Video').limit(Medium::COLS * Medium::PREVIEW_ROWS)
     @documents = @topic.media(:type => 'Document').limit(Medium::COLS * Medium::PREVIEW_ROWS)
-    title = @topic.title
-    @titles = { :picture => ts(:in, :what => Picture.model_name.human(:count => :many).titleize, :where => title), :video => ts(:in, :what => Video.model_name.human(:count => :many).titleize, :where => title), :document => ts(:in, :what => Document.model_name.human(:count => :many).titleize, :where => title) }
-    @more = { :category_id => @topic.id, :type => '' }
     render_media
   end
   
@@ -96,7 +93,7 @@ class TopicsController < AclController
           render :action => 'index'
         end          
       end
-      format.js # for now there is just show.erb.js
+      format.js { render 'show' }
     end
   end
   

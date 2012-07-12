@@ -1,5 +1,4 @@
-<p>
-<%= link_to(ts('results.previous'), media_searches_path(pagination_params.merge({ :page => medium_pages.current.previous })), :remote => true) if medium_pages.current.previous %>
-<%= pagination_links_each(medium_pages, {}) { |n| link_to(n.to_s, media_searches_path(pagination_params.merge({ :page => n })), :remote => true) } %>
-<%= link_to(ts('results.next'), media_searches_path(pagination_params.merge({ :page => medium_pages.current.next })), :remote => true) if medium_pages.current.next %>
-</p>
+<%= javascript_on_load do %>
+      $('.pagination').find('a').attr('data-remote', true);
+<%  end %>
+<%= will_paginate media, :class => 'normal pagination' %>

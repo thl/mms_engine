@@ -169,97 +169,30 @@ class Medium < ActiveRecord::Base
       conditions_array << type
     end
     [conditions_string] + descendant_ids + conditions_array
-  end    
-      
-  def self.paged_media_search(media_search, limit, offset, type)
-    conditions_string = '(SELECT DISTINCT media.* FROM media WHERE id = ?'
+  end
+  
+  def self.media_search(media_search, type)
+    conditions_string = 'media.id = ?'
     conditions_array = [media_search.title]
-    if !type.nil?
-      conditions_string << ' AND media.type = ?'
-      conditions_array << type
-    end
+    ids = []
     if media_search.title.size > 3
-      conditions_string << ') UNION (SELECT DISTINCT media.* FROM media, workflows WHERE workflows.medium_id = media.id AND (' + Util.search_condition_string(media_search.type, 'original_medium_id', true)
-      conditions_array << media_search.title
+      ids += Workflow.where([Util.search_condition_string(media_search.type, 'original_medium_id', true), media_search.title]).select('DISTINCT(medium_id)').collect(&:medium_id)
     else
-      conditions_string << ') UNION (SELECT DISTINCT media.* FROM media, workflows WHERE workflows.medium_id = media.id AND (' + Util.search_condition_string(media_search.type, 'original_medium_id', false)
-      conditions_array << "%#{media_search.title}%"
+      ids += Workflow.where([Util.search_condition_string(media_search.type, 'original_medium_id', false), "%#{media_search.title}%"]).select('DISTINCT(medium_id)').collect(&:medium_id)
     end
-    conditions_string << ' OR workflows.original_filename LIKE ?)'
-    conditions_array << "%#{media_search.title}%"
-    if !type.nil?
-      conditions_string << ' AND media.type = ?'
-      conditions_array << type
-    end
+    ids += Workflow.where(['workflows.original_filename LIKE ?', "%#{media_search.title}%"]).select('DISTINCT(medium_id)').collect(&:medium_id)
     # for now asumming that its English; change later TODO
-    conditions_string << ') UNION (SELECT DISTINCT media.* FROM media, captions, captions_media WHERE captions_media.medium_id = media.id AND captions_media.caption_id = captions.id AND ' + Util.search_condition_string(media_search.type, 'captions.title', true)
-    conditions_array << media_search.title
-    if !type.nil?
-      conditions_string << ' AND media.type = ?'
-      conditions_array << type
-    end
-    conditions_string << ') UNION (SELECT media.* FROM media, descriptions, descriptions_media WHERE descriptions_media.medium_id = media.id AND descriptions_media.description_id = descriptions.id AND ' + Util.search_condition_string(media_search.type, 'descriptions.title', true)
-    conditions_array << media_search.title
-    if !type.nil?
-      conditions_string << ' AND media.type = ?'
-      conditions_array << type
-    end
-    conditions_string << ') UNION (SELECT media.* FROM media, titles WHERE titles.medium_id = media.id AND ' + Util.search_condition_string(media_search.type, 'title', true)
-    conditions_array << media_search.title
-    if !type.nil?
-      conditions_string << ' AND media.type = ?'
-      conditions_array << type
-    end
-    conditions_string << ') UNION (SELECT media.* FROM media, titles, translated_titles WHERE titles.medium_id = media.id AND translated_titles.title_id = titles.id AND ' + Util.search_condition_string(media_search.type, 'translated_titles.title', true)
-    conditions_array << media_search.title
-    if !type.nil?
-      conditions_string << ' AND media.type = ?'
-      conditions_array << type
-    end
-    conditions_string << ') LIMIT ?, ?'
-    Medium.find_by_sql([conditions_string] + conditions_array + [offset, limit])
+    ids += Medium.joins(:captions).where(Util.search_condition_string(media_search.type, 'captions.title', true), media_search.title).select('DISTINCT(media.id)').collect(&:id)
+    ids += Medium.joins(:descriptions).where(Util.search_condition_string(media_search.type, 'descriptions.title', true), media_search.title).select('DISTINCT(media.id)').collect(&:id)
+    ids += Medium.joins(:titles).where(Util.search_condition_string(media_search.type, 'titles.title', true), media_search.title).select('DISTINCT(media.id)').collect(&:id)
+    ids += Medium.joins(:titles => :translated_titles).where(Util.search_condition_string(media_search.type, 'translated_titles.title', true), media_search.title).select('DISTINCT(media.id)').collect(&:id)
+    media = Medium.where(:id => ids.uniq)
+    media = media.where(:type => type) if !type.nil?
+    media
   end
   
   def self.media_count_for_type(type)
     Medium.where(:type => type).count
-  end
-  
-  def self.media_count_search(media_search, type = nil)
-    if type.nil?
-      ids = Medium.where(:id => media_search.title).first.nil? ? 0 : 1
-    else
-      ids = Medium.where(:id => media_search.title, :type => type).first.nil? ? 0 : 1
-    end
-    # for now asumming that its English; change later TODO
-    conditions_string = "SELECT COUNT(media.id) FROM media, workflows WHERE workflows.medium_id = media.id AND (workflows.original_filename LIKE ? OR "
-    if media_search.title.size > 3
-      conditions_array = [media_search.title]
-      conditions_string << Util.search_condition_string(media_search.type, 'original_medium_id', true)
-    else
-      conditions_array = ["%#{media_search.title}%"]
-      conditions_string << Util.search_condition_string(media_search.type, 'original_medium_id', false)
-    end
-    conditions_string << ')'
-    if !type.nil?
-      conditions_string << ' AND media.type = ?'
-      conditions_array << type
-    end
-    original_ids = Medium.count_by_sql([conditions_string, "%#{media_search.title}%"] + conditions_array)
-    conditions_array[0] = media_search.title
-    conditions_string = "SELECT COUNT(media.id) FROM media, captions, captions_media WHERE captions_media.medium_id = media.id AND captions_media.caption_id = captions.id AND " + Util.search_condition_string(media_search.type, 'title', true)
-    conditions_string << ' AND media.type = ?' if !type.nil?
-    captions = Medium.count_by_sql([conditions_string] + conditions_array)
-    conditions_string = "SELECT COUNT(media.id) FROM media, descriptions, descriptions_media WHERE descriptions_media.medium_id = media.id AND descriptions_media.description_id = descriptions.id AND " + Util.search_condition_string(media_search.type, 'title', true)
-    conditions_string << ' AND media.type = ?' if !type.nil?
-    descriptions = Medium.count_by_sql([conditions_string] + conditions_array) 
-    conditions_string << ' AND media.type = ?' if !type.nil?
-    conditions_string = "SELECT COUNT(media.id) FROM media, titles WHERE titles.medium_id = media.id AND " + Util.search_condition_string(media_search.type, 'title', true)
-    conditions_string << ' AND media.type = ?' if !type.nil?
-    titles = Medium.count_by_sql([conditions_string] + conditions_array) 
-    conditions_string = "SELECT COUNT(media.id) FROM media, titles, translated_titles WHERE titles.medium_id = media.id AND translated_titles.title_id = titles.id AND " + Util.search_condition_string(media_search.type, 'translated_titles.title', true)
-    conditions_string << ' AND media.type = ?' if !type.nil?
-    translated_titles = Medium.count_by_sql([conditions_string] + conditions_array) 
-    ids + original_ids + captions + descriptions + titles + translated_titles
   end
   
   def self.range(id_start, id_end)
