@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
   def tab_counts_for_search(search)
     counts = {}
     Medium::TYPES.each do |type, display_names|
-      counts[type] = Medium.media_count_search(search, type.to_s.classify)
+      counts[type] = Medium.media_search(search, type.to_s.classify).count
     end
     counts
   end
