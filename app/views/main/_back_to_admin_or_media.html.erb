@@ -1,1 +1,1 @@
-<%= authorized?(hash_for_admin_path) ? link_to(ts('back.to', :what => t(:admin)), admin_path) : link_to(ts('back.to', :what => t('all.records', :what => Medium.model_name.human(:count => :many))), media_path) %>
+<%= authorized?(hash_for_admin_path) ? link_to(ts('back.to', :what => t('admin.page')), admin_path) : link_to(ts('back.to', :what => t('all.records', :what => Medium.model_name.human(:count => :many))), media_path) %>

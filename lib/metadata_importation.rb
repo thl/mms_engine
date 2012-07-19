@@ -63,7 +63,7 @@ class MetadataImportation < CsvImportation
     end
     photographer_str = self.fields.delete('media.photographer')
     if !photographer_str.blank? && self.medium.photographer.nil?
-      photographer = Person.find_by_fullname(photographer_str)
+      photographer = AuthenticatedSystem::Person.find_by_fullname(photographer_str)
       if photographer.nil?
         puts "Photographer named #{photographer_str} not found!"
       else
@@ -169,7 +169,7 @@ class MetadataImportation < CsvImportation
       description_creator_str = self.fields.delete('descriptions.creator')
       description_creator = nil
       if !description_creator_str.nil?
-        description_creator = Person.find_by_fullname(description_creator_str)
+        description_creator = AuthenticatedSystem::Person.find_by_fullname(description_creator_str)
         if description_creator.nil?
           puts "Description creator named #{description_creator_str} not found!"
         end

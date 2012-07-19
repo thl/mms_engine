@@ -83,7 +83,6 @@ Mms::Application.routes.draw do
     end
     resources :associations, :controller => 'media_category_associations'
   end
-  
   match ':controller(/:action(/:id(.:format)))'
   #map.comatose_admin
   #map.comatose_root 'ndlb/pages'  

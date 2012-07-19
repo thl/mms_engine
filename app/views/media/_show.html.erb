@@ -95,7 +95,7 @@
 <%= display_if_not_blank Medium.human_attribute_name('resource_type').s, @medium.resource_type.title %>
 <% photographer = @medium.photographer
    if !photographer.nil? %>
-<%=  display_if_not_blank @medium.class.human_attribute_name('photographer').s, link_to(h(photographer.fullname).s, person_path(photographer)) %>
+<%=  display_if_not_blank @medium.class.human_attribute_name('photographer').s, link_to(h(photographer.fullname).s, authenticated_system_person_path(photographer)) %>
 <% end
    quality_type = @medium.quality_type 
    if !quality_type.nil? %>

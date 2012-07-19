@@ -95,7 +95,7 @@ class RotationsController < AclController
       redirect_to media_path
     else
       user_id = params[:user_id]
-      @user = user_id.blank? ? current_user : User.find(user_id)
+      @user = user_id.blank? ? current_user : AuthenticatedSystem::User.find(user_id)
     end
   end
   

@@ -10,7 +10,7 @@
     <ul>
       <li><h3><%= link_to Keyword.model_name.human(:count => :many).titleize.s, keywords_path %></h3></li>
 	  <li><h3><%= link_to Glossary.model_name.human(:count => :many).titleize.s, glossaries_path %></h3></li>
-      <li><h3><%= link_to ComplexScripts::Language.model_name.human(:count => :many).titleize.s, languages_path %></h3></li>
+      <li><h3><%= link_to ComplexScripts::Language.model_name.human(:count => :many).titleize.s, complex_scripts_languages_path %></h3></li>
     </ul>
   </td>
   <td width="20%" valign="top">
@@ -41,8 +41,8 @@
   <td valign="top">
     <h2><%= ts 'admin.accounts' %></h2>
     <ul>
-      <li><h3><%= link_to Person.model_name.human(:count => :many).titleize.s, people_path %></h3></li>
-      <li><h3><%= link_to Role.model_name.human(:count => :many).titleize.s, roles_path %></h3></li>
+      <li><h3><%= link_to AuthenticatedSystem::Person.model_name.human(:count => :many).titleize.s, authenticated_system_people_path %></h3></li>
+      <li><h3><%= link_to AuthenticatedSystem::Role.model_name.human(:count => :many).titleize.s, authenticated_system_roles_path %></h3></li>
     </ul>	
   </td>
   <td valign="top">

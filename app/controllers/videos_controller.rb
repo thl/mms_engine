@@ -33,7 +33,7 @@ class VideosController < AclController
   def new
     @capture_device_models = CaptureDeviceMaker.order('title').collect{|maker| maker.capture_device_models}.flatten
     @medium = Video.new(:resource_type_id => 2687)
-    @photographers = Person.order('fullname')
+    @photographers = AuthenticatedSystem::Person.order('fullname')
     @quality_types = QualityType.order('id')
     @recording_orientations = RecordingOrientation.order('title')
     @resource_types = Topic.find(2636).children
@@ -43,7 +43,7 @@ class VideosController < AclController
   def edit
     @capture_device_models = CaptureDeviceMaker.order('title').collect{|maker| maker.capture_device_models}.flatten
     @medium = Video.find(params[:id])
-    @photographers = Person.order('fullname')
+    @photographers = AuthenticatedSystem::Person.order('fullname')
     @quality_types = QualityType.order('id')
     @recording_orientations = RecordingOrientation.order('title')          
     @resource_types = Topic.find(2636).children
@@ -78,7 +78,7 @@ class VideosController < AclController
       else
         format.html do
           @capture_device_models = CaptureDeviceMaker.order('title').collect{|maker| maker.capture_device_models}.flatten
-          @photographers = Person.order('fullname')
+          @photographers = AuthenticatedSystem::Person.order('fullname')
           @quality_types = QualityType.order('id')
           @recording_orientations = RecordingOrientation.order('title')
           @resource_types = Topic.find(2636).children
@@ -101,7 +101,7 @@ class VideosController < AclController
       else
         format.html do
           @capture_device_models = CaptureDeviceMaker.order('title').collect{|maker| maker.capture_device_models}.flatten
-          @photographers = Person.order('fullname')
+          @photographers = AuthenticatedSystem::Person.order('fullname')
           @quality_types = QualityType.order('id')
           @recording_orientations = RecordingOrientation.order('title')          
           @resource_types = Topic.find(2687).children          

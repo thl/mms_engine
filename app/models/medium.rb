@@ -21,7 +21,7 @@ class Medium < ActiveRecord::Base
   include Util, FileUtils, MediaProcessor::MediumExtension, FilenameUtils
   belongs_to :capture_device_model  
   belongs_to :application_filter
-  belongs_to :photographer, :class_name => 'Person', :foreign_key => 'photographer_id'
+  belongs_to :photographer, :class_name => 'AuthenticatedSystem::Person', :foreign_key => 'photographer_id'
   belongs_to :quality_type
   belongs_to :recording_orientation
   belongs_to :resource_type, :class_name => 'Topic'

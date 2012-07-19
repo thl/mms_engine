@@ -2,7 +2,7 @@ class CaptureDeviceMakersController < AclController
   # GET /capture_device_makers
   # GET /capture_device_makers.xml
   def index
-    @capture_device_makers = CaptureDeviceMaker.order(title)
+    @capture_device_makers = CaptureDeviceMaker.order('title')
 
     respond_to do |format|
       format.html # index.html.erb

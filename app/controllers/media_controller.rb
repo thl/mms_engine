@@ -118,7 +118,7 @@ class MediaController < AclController
     @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
     @media_publisher = MediaPublisher.find(:all)
     @medium = Medium.find(params[:id])
-    @photographers = Person.find(:all, :order => 'fullname')
+    @photographers = AuthenticatedSystem::Person.find(:all, :order => 'fullname')
     @quality_types = QualityType.find(:all, :order => 'id')
     @recording_orientations = RecordingOrientation.find(:all, :order => 'title')
     @resource_types = Topic.find(2636).children
@@ -142,7 +142,7 @@ class MediaController < AclController
         format.html do
           @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
           @media_publisher = MediaPublisher.find(:all)
-          @photographers = Person.find(:all, :order => 'fullname')
+          @photographers = AuthenticatedSystem::Person.find(:all, :order => 'fullname')
           @quality_types = QualityType.find(:all, :order => 'id')
           @recording_orientations = RecordingOrientation.find(:all, :order => 'title')
           @resource_types = Topic.find(2636).children

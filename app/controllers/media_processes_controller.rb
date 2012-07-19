@@ -21,7 +21,7 @@ class MediaProcessesController < AclController
       @user = current_user
       user_id = @user.id
     else
-      @user = User.find(user_id)
+      @user = AuthenticatedSystem::User.find(user_id)
     end
     done = fork_done?(user_id)
     @log = get_log_messages(user_id)
@@ -48,7 +48,7 @@ class MediaProcessesController < AclController
     user_id = params[:id]
     done = fork_done?(user_id)
     @log = get_log_messages(user_id)
-    @user = User.find(user_id)
+    @user = AuthenticatedSystem::User.find(user_id)
     if done
       render :action => 'done_status'
     else

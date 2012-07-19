@@ -25,9 +25,9 @@ class PermissionsControllerTest < Test::Unit::TestCase
   end
   
   def test_should_create_permission
-    old_count = Permission.count
+    old_count = AuthenticatedSystem::Permission.count
     post :create, :permission => { }
-    assert_equal old_count+1, Permission.count
+    assert_equal old_count+1, AuthenticatedSystem::Permission.count
     
     assert_redirected_to permission_path(assigns(:permission))
   end
@@ -48,9 +48,9 @@ class PermissionsControllerTest < Test::Unit::TestCase
   end
   
   def test_should_destroy_permission
-    old_count = Permission.count
+    old_count = AuthenticatedSystem::Permission.count
     delete :destroy, :id => 1
-    assert_equal old_count-1, Permission.count
+    assert_equal old_count-1, AuthenticatedSystem::Permission.count
     
     assert_redirected_to permissions_path
   end

@@ -1,7 +1,7 @@
 class Description < ActiveRecord::Base
   validates_presence_of :title
   belongs_to :description_type
-  belongs_to :creator, :class_name => 'Person', :foreign_key => 'creator_id'
+  belongs_to :creator, :class_name => 'AuthenticatedSystem::Person', :foreign_key => 'creator_id'
   belongs_to :language, :class_name => 'ComplexScripts::Language'
   has_and_belongs_to_many :media
   

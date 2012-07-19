@@ -25,9 +25,9 @@ class PeopleControllerTest < Test::Unit::TestCase
   end
   
   def test_should_create_person
-    old_count = Person.count
+    old_count = AuthenticatedSystem::Person.count
     post :create, :person => { }
-    assert_equal old_count+1, Person.count
+    assert_equal old_count+1, AuthenticatedSystem::Person.count
     
     assert_redirected_to person_path(assigns(:person))
   end
@@ -48,9 +48,9 @@ class PeopleControllerTest < Test::Unit::TestCase
   end
   
   def test_should_destroy_person
-    old_count = Person.count
+    old_count = AuthenticatedSystem::Person.count
     delete :destroy, :id => 1
-    assert_equal old_count-1, Person.count
+    assert_equal old_count-1, AuthenticatedSystem::Person.count
     
     assert_redirected_to people_path
   end

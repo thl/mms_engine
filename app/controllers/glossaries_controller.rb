@@ -1,12 +1,11 @@
 class GlossariesController < AclController
-
-  # GET /glossaries
-  # GET /glossaries.xml
-
   def initialize
+    super
     @guest_perms = [ 'glossaries/show' ]
   end
   
+  # GET /glossaries
+  # GET /glossaries.xml
   def index
     @glossaries = Glossary.order('title')
 
@@ -29,7 +28,7 @@ class GlossariesController < AclController
 
   # GET /glossaries/new
   def new
-    @glossary = Glossary.order('title')
+    @glossary = Glossary.new
     @organizations = Organization.order('title')
   end
 

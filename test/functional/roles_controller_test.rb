@@ -25,9 +25,9 @@ class RolesControllerTest < Test::Unit::TestCase
   end
   
   def test_should_create_role
-    old_count = Role.count
+    old_count = AuthenticatedSystem::Role.count
     post :create, :role => { }
-    assert_equal old_count+1, Role.count
+    assert_equal old_count+1, AuthenticatedSystem::Role.count
     
     assert_redirected_to role_path(assigns(:role))
   end
@@ -48,9 +48,9 @@ class RolesControllerTest < Test::Unit::TestCase
   end
   
   def test_should_destroy_role
-    old_count = Role.count
+    old_count = AuthenticatedSystem::Role.count
     delete :destroy, :id => 1
-    assert_equal old_count-1, Role.count
+    assert_equal old_count-1, AuthenticatedSystem::Role.count
     
     assert_redirected_to roles_path
   end
