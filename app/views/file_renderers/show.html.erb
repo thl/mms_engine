@@ -1,0 +1,8 @@
+<%= display_if_not_blank FileRenderer.human_attribute_name('title').s, h(@file_renderer.title).s %>
+<%= display_if_not_blank FileRenderer.human_attribute_name('path').s, h(@file_renderer.path) %>
+<p>&nbsp;<br/>
+<% if authorized? hash_for_edit_renderer_path %>
+<%=  link_to ts('edit.this'), edit_renderer_path(@file_renderer) %> |
+<% end %>
+<%= render :partial => 'persistent_links' %>
+</p>

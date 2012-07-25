@@ -1,5 +1,5 @@
 class Transformation < ActiveRecord::Base
-  belongs_to :renderer
+  belongs_to :renderer, :class_name => 'FileRenderer'
   has_many :typescripts
   
   def full_path

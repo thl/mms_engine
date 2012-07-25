@@ -96,7 +96,7 @@ zh:
             recording_orientation:
                 one: '录音录影指南'
                 other: '录音录影指南'
-            renderer:
+            file_renderer:
                 one: '渲染'
                 other: '渲染'
             reproduction_type:
@@ -220,7 +220,7 @@ zh:
                 title: '相质类型名称'
             recording_orientation:
                 title: '录音录影指南名称'
-            renderer:
+            file_renderer:
                 title: '渲染名称'
                 path: '路径'
             reproduction_type:

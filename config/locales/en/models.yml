@@ -96,7 +96,7 @@ en:
             recording_orientation:
                 one: 'recording orientation'
                 other: 'recording orientations'
-            renderer:
+            file_renderer:
                 one: 'renderer'
                 other: 'renderers'
             reproduction_type:
@@ -220,7 +220,7 @@ en:
                 title: 'Quality Type Name'
             recording_orientation:
                 title: 'Recording Orientation Name'
-            renderer:
+            file_renderer:
                 title: 'Renderer Name'
                 path: 'Path'
             reproduction_type:

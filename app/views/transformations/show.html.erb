@@ -1,5 +1,5 @@
 <%= display_if_not_blank Transformation.human_attribute_name('title').s, h(@transformation.title).s %>
-<%= display_if_not_blank Renderer.model_name.human.titleize.s, link_to(h(@transformation.renderer.title), renderer_path(@transformation.renderer)) %>
+<%= display_if_not_blank FileRenderer.model_name.human.titleize.s, link_to(h(@transformation.renderer.title), renderer_path(@transformation.renderer)) %>
 <%= display_if_not_blank Transformation.human_attribute_name('path').s, h(@transformation.path) %>
 <p>&nbsp;<br/>
 <% if authorized? hash_for_edit_transformation_path %>

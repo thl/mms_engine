@@ -10,8 +10,10 @@
       <%= globalized_submit_tag 'update.this' %>
   </p>
 <% end %>
+<p>
 <%  if authorized?(hash_for_application_filters_path(:action => 'destroy')) %>
 <%=   link_to ts('delete.this'), application_filters_path(@filters), :confirm => te('delete.confirmation'), :method => :delete %> |
 <%  end %>
 <%= link_to ts('back.to', :what => t('all.records', :what => ApplicationFilter.model_name.human(:count => :many))), application_filters_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

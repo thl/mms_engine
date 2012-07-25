@@ -25,7 +25,7 @@ class PublishersController < AclController
   # GET /publishers/new.xml
   def new
     @publisher = Publisher.new
-    @countries = Country.find(:all)
+    # @countries = Country.find(:all)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,7 +36,7 @@ class PublishersController < AclController
   # GET /publishers/1/edit
   def edit
     @publisher = Publisher.find(params[:id])
-    @countries = Country.find(:all)
+    # @countries = Country.find(:all)
   end
 
   # POST /publishers
@@ -48,10 +48,10 @@ class PublishersController < AclController
       if @publisher.save
         flash[:notice] = ts('new.successful', :what => Publisher.model_name.human.capitalize)
         format.html { redirect_to publishers_url }
-	format.xml  { head :created, :location => glossary_url(@publisher) }
+        format.xml  { head :created, :location => glossary_url(@publisher) }
       else
-	format.html do
-          @countries = Country.find(:all)
+        format.html do
+          # @countries = Country.find(:all)
           render :action => 'new'
         end
         format.xml  { render :xml => @publisher.errors.to_xml }

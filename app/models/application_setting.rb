@@ -1,5 +1,5 @@
 class ApplicationSetting < ActiveRecord::Base
-  belongs_to :permission
+  belongs_to :permission, :class_name => 'AuthenticatedSystem::Permission'
   
   def configuration_path
     p = permission

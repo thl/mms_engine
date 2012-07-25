@@ -3,6 +3,6 @@
 <%=   f.text_field :title, fixed_language_options(:size => 20) %>
 <%=   submit_tag te('search.this'), language_options %><br/>
 <%=   f.radio_button :type, :simple %> <%= ts('search.full_text') %>
-<%=   f.radio_button :type, :boolean %> <%= ts(:advanced) %> (<%= link_to ts('search.tips'), :controller => 'help', :action => 'advanced_search' %>)
+<%=   f.radio_button :type, :boolean %> <%= ts(:advanced) %> (<%= link_to ts('search.tips'), help_advanced_search_path, :remote => true %>)
     </p>
 <%  end %>

@@ -96,7 +96,7 @@ bo:
             recording_orientation:
                 one: 'སྒྲ་ལེན་བརྙན་ལེན་ཕྱོགས་སྟོན'
                 other: 'སྒྲ་ལེན་བརྙན་ལེན་ཕྱོགས་སྟོན་དག'
-            renderer:
+            file_renderer:
                 one: 'སྒྲོ་འདོགས'
                 other: 'སྒྲོ་འདོགས་དག'
             reproduction_type:
@@ -220,7 +220,7 @@ bo:
                 title: 'ངོ་བོ་འདྲ་བའི་རིགས་ཀྱི་མིང་།'
             recording_orientation:
                 title: 'སྒྲ་ལེན་བརྙན་ལེན་ཕྱོགས་སྟོན་མིང'
-            renderer:
+            file_renderer:
                 title: 'སྒྲོ་འདོགས་མིང'
                 path: 'ལམ་ཕྲེང'
             reproduction_type:

@@ -2,7 +2,7 @@
 <table border="1" class="normal">
   <tr>
     <th><%= Transformation.model_name.human.titleize.s %></th>
-    <th><%= Renderer.model_name.human.titleize.s %></th>
+    <th><%= FileRenderer.model_name.human.titleize.s %></th>
     <th><%= Transformation.human_attribute_name('path').s %></th>
   </tr>
 <% can_edit = authorized? hash_for_edit_transformation_path

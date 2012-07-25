@@ -18,9 +18,9 @@
      </script>
 <%   if !transcript_path.nil? %>
 	 <p>
-<%=    link_to ts('tibetan.script'), video_subtitles_path(@medium, :language => 'bo'), :remote => true %> |
-<%=    link_to ts('tibetan.transliteration'), video_subtitles_path(@medium, :language => 'bo', :form => 'transliteration'), :remote => true %> |
-<%=    link_to ts(:english), video_subtitles_path(@medium, :language => 'en'), :remote => true %>
+<%=    link_to ts('tibetan.script'), subtitles_video_path(@medium, :language => 'bo'), :remote => true %> |
+<%=    link_to ts('tibetan.transliteration'), subtitles_video_path(@medium, :language => 'bo', :form => 'transliteration'), :remote => true %> |
+<%=    link_to ts(:english), subtitles_video_path(@medium, :language => 'en'), :remote => true %>
 	 </p>
 <%   end
    else %>

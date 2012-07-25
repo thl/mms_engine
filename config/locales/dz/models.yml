@@ -96,7 +96,7 @@ dz:
             recording_orientation:
                 one: 'སྒྲ་བཟུང་ཁ་ཕྱོགས།'
                 other: 'སྒྲ་བཟུང་ཁ་ཕྱོགས་ཚུ།'
-            renderer:
+            file_renderer:
                 one: 'བྱིན་མིའི་མིང་།'
                 other: 'བྱིན་མིའི་མིང་ཚུ།'
             reproduction_type:
@@ -220,7 +220,7 @@ dz:
                 title: 'སྤུས་ཚད་དབྱེ་བའི་མིང་།'
             recording_orientation:
                 title: 'སྒྲ་བཟུང་བསྒྱུར་བཅོས་མིང་།'
-            renderer:
+            file_renderer:
                 title: 'བྱིན་མིའི་མིང་།'
                 path: 'འགྲུལ་ལམ།'
             reproduction_type:

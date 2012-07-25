@@ -103,6 +103,7 @@ class MediaController < AclController
     end
   end
   
+  # POST /media/goto
   def goto
     goto = params[:goto]
     media_id = goto[:media_id]
