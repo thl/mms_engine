@@ -1,9 +1,0 @@
-<h1><%= ts('edit.ing.record', :what => Renderer.model_name.human.titleize) %></h1>
-<%= error_messages_for :renderer %>
-<%= form_for(:renderer, :url => renderer_path(@renderer), :html => {:method => :put}) do |f| %>
-<%=   render :partial => 'form', :locals => {:f => f} %>
-      <p><%= globalized_submit_tag 'update.this' %></p>
-<%  end %>
-<p>&nbsp;<br/>
-<%= render :partial => 'persistent_links' %>
-</p>
