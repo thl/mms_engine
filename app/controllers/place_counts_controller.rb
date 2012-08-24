@@ -5,7 +5,7 @@ class PlaceCountsController < ApplicationController
   def index
     Dir.foreach(File.join(File.dirname(__FILE__), '..', 'models')) { |file_name| require_dependency(file_name) if /.rb$/ =~ file_name }
     feature_id = params[:place_id].to_i
-    place_counts = ([nil] + subclasses_of(Medium).collect(&:name)).collect do |medium_type|
+    place_counts = ([nil] + Medium.descendants.collect(&:name)).collect do |medium_type|
       if medium_type.nil?
         {:medium_type => nil, :count => Location.where(:feature_id => feature_id).count}
       else
