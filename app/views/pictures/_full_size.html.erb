@@ -1,6 +1,6 @@
 <% div_id = "media_full_size_#{@medium.id}" %>
 <p id="<%= div_id %>">
-<%= link_to "&#8592; Back to main view", medium_path(@medium), {:class => 'media-thumb thl-pop no-view-alone no-main-site-ajax padding-10'} %>
+<%= link_to "&#8592; Back to main view", medium_path(@medium), :class => 'media-thumb', :remote => true %>
 </p>
 <div style="width: 100%; text-align: center;">
 <%= image_tag(@medium.large_image.public_filename, :style => "max-width: 900px; max-height: 500px; margin:0 auto;") %>

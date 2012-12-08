@@ -5,124 +5,124 @@ bo:
         models:
             administrative_level:
                 one: 'དོ་དམ་རིམ་པ'
-                other: 'དོ་དམ་རིམ་པ་དག'
+                other: 'དོ་དམ་རིམ་པ་དག་'
             administrative_unit:
                 one: 'དོ་དམ་རྒྱུ'
-                other: 'དོ་དམ་རྒྱུ་དག'
+                other: 'དོ་དམ་རྒྱུ་དག་'
             affiliation:
                 one: 'ཁོངས་གཏོགས'
                 other: 'ཁོངས་གཏོགས་རྣམས།'
             application_setting:
                 one: 'ཉེར་སྤྱོད་བྱ་རིམ་སྒྲིག་བཀོད'
-                other: 'ཉེར་སྤྱོད་བྱ་རིམ་སྒྲིག་བཀོད་དག'
+                other: 'ཉེར་སྤྱོད་བྱ་རིམ་སྒྲིག་བཀོད་དག་'
             application_filter:
                 one: 'ཉེར་སྤྱོད་བྱ་རིམ་འཚག་ཆས'
-                other: 'ཉེར་སྤྱོད་བྱ་རིམ་འཚག་ཆས་དག'
+                other: 'ཉེར་སྤྱོད་བྱ་རིམ་འཚག་ཆས་དག་'
             caption:
                 one: 'གསལ་བཤད་ཡི་གེ'
-                other: 'གསལ་བཤད་ཡི་གེ་དག'
+                other: 'གསལ་བཤད་ཡི་གེ་དག་'
             capture_device_maker:
                 one: 'སྒྲིག་ཆས་བཟོ་སྐྲུན་ཚོང་པ་བདམས་པ།'
-                other: 'སྒྲིག་ཆས་བཟོ་སྐྲུན་ཚོང་པ་བདམས་པ་དག'
+                other: 'སྒྲིག་ཆས་བཟོ་སྐྲུན་ཚོང་པ་བདམས་པ་དག་'
             capture_device_model:
                 one: 'པར་ཆས་དབྱིབས་རྟགས'
-                other: 'པར་ཆས་དབྱིབས་རྟགས་དག'
+                other: 'པར་ཆས་དབྱིབས་རྟགས་དག་'
             citation:
                 one: 'མཆན་འགྲེལ'
-                other: 'མཆན་འགྲེལ་དག'
+                other: 'མཆན་འགྲེལ་དག་'
             copyright:
                 one: 'པར་དབང'
-                other: 'པར་དབང་དག'
+                other: 'པར་དབང་དག་'
             copyright_holder:
                 one: 'པར་དབང་འཛིན་མཁན'
-                other: 'པར་དབང་འཛིན་མཁན་དག'
+                other: 'པར་དབང་འཛིན་མཁན་དག་'
             country:
                 one: 'རྒྱལ་ཁབ'
-                other: 'རྒྱལ་ཁབ་ཁག'
+                other: 'རྒྱལ་ཁབ་ཁག་'
             description:
                 one: 'ཞིབ་བརྗོད'
-                other: 'ཞིབ་བརྗོད་དག'
+                other: 'ཞིབ་བརྗོད་དག་'
             description_type:
                 one: '%{what}ཀྱི་རིགས'
-                other: '%{what}ཀྱི་རིགས་དག'
+                other: '%{what}ཀྱི་རིགས་དག་'
             dialect:
                 one: 'ཡུལ་སྐད'
-                other: 'ཡུལ་སྐད་དག'
+                other: 'ཡུལ་སྐད་དག་'
             document:
-                one: 'རྩོམ་ཡིག'
-                other: 'ཡི་གེ་ཁག'
+                one: 'རྩོམ་ཡིག་'
+                other: 'ཡི་གེ་ཁག་'
             glossary:
-                one: 'ཚིག་མཛོད་རེའུ་མིག'
-                other: 'ཚིག་མཛོད་རེའུ་མིག་དག'
+                one: 'ཚིག་མཛོད་རེའུ་མིག་'
+                other: 'ཚིག་མཛོད་རེའུ་མིག་དག་'
             keyword:
-                one: 'གནད་ཚིག'
-                other: 'གནད་ཚིག་དག'
+                one: 'གནད་ཚིག་'
+                other: 'གནད་ཚིག་དག་'
             loan_type:
                 one: 'གཡར་བུན་རིགས'
-                other: 'གཡར་བུན་རིགས་དག'
+                other: 'གཡར་བུན་རིགས་དག་'
             location:
                 one: 'ས་གནས'
-                other: 'ས་གནས་ཁག'
+                other: 'ས་གནས་ཁག་'
             media_keyword_association:
                 one: 'སྨྱན་གཟུགས་གཙོ་གནད་ཡི་གེ་མཐུན་ཚོགས'
-                other: 'སྨྱན་གཟུགས་གཙོ་གནད་་ཡི་གེ་མཐུན་ཚོགས་དག'
+                other: 'སྨྱན་གཟུགས་གཙོ་གནད་་ཡི་གེ་མཐུན་ཚོགས་དག་'
             media_publisher:
                 one: 'སྨྱན་གཟུགས་ཁྱབ་བསྒྲགས་མཁན'
-                other: 'སྨྱན་གཟུགས་ཁྱབ་བསྒྲགས་མཁན་དག'
+                other: 'སྨྱན་གཟུགས་ཁྱབ་བསྒྲགས་མཁན་དག་'
             media_source_association:
                 one: 'སྨྱན་གཟུགས་ཐོན་ཁུང་མཐུན་ཚོགས'
-                other: 'སྨྱན་གཟུགས་ཐོན་ཁུང་མཐུན་ཚོགས་ཁག'
+                other: 'སྨྱན་གཟུགས་ཐོན་ཁུང་མཐུན་ཚོགས་ཁག་'
             medium:
                 one: 'སྨྱན་གཟུགས་བྱ་ཡུལ'
-                other: 'སྨྱན་གཟུགས་བྱ་ཡུལ་དག'
+                other: 'སྨྱན་གཟུགས་བྱ་ཡུལ་དག་'
             movie:
                 one: 'གློག་བརྙན'
-                other: 'གློག་བརྙན་དག'
+                other: 'གློག་བརྙན་དག་'
             organization:
                 one: 'རྩ་འཛུགས་'
-                other: 'རྩ་འཛུགས་དག'
+                other: 'རྩ་འཛུགས་དག་'
             picture:
                 one: 'པར'
-                other: 'པར་དག'
+                other: 'པར་དག་'
             publisher:
                 one: 'ཁྱབ་བསྒྲགས་མཁན'
-                other: 'ཁྱབ་བསྒྲགས་མཁན་དག'
+                other: 'ཁྱབ་བསྒྲགས་མཁན་དག་'
             project:
                 one: 'ཚན་པ'
-                other: 'ཚན་པ་ཁག'
+                other: 'ཚན་པ་ཁག་'
             quality_type:
                 one: 'སྤུས་ཚད་རིགས'
-                other: 'སྤུས་ཚད་རིགས་དག'
+                other: 'སྤུས་ཚད་རིགས་དག་'
             recording_orientation:
                 one: 'སྒྲ་ལེན་བརྙན་ལེན་ཕྱོགས་སྟོན'
-                other: 'སྒྲ་ལེན་བརྙན་ལེན་ཕྱོགས་སྟོན་དག'
+                other: 'སྒྲ་ལེན་བརྙན་ལེན་ཕྱོགས་སྟོན་དག་'
             file_renderer:
                 one: 'སྒྲོ་འདོགས'
-                other: 'སྒྲོ་འདོགས་དག'
+                other: 'སྒྲོ་འདོགས་དག་'
             reproduction_type:
                 one: 'ཆོག་མཆན་དཔང་ཡིག་གི་རིགས'
-                other: 'ཆོག་མཆན་དཔང་ཡིག་གི་རིགས་དག'
+                other: 'ཆོག་མཆན་དཔང་ཡིག་གི་རིགས་དག་'
             setting:
                 one: 'སྒྲིག་བཀོད'
-                other: 'སྒྲིག་བཀོད་དག'
+                other: 'སྒྲིག་བཀོད་དག་'
             source:
                 one: 'ཆ་འཕྲིན་འབྱུང་ཁུང་'
-                other: 'ཆ་འཕྲིན་འབྱུང་ཁུང་དག'
+                other: 'ཆ་འཕྲིན་འབྱུང་ཁུང་དག་'
             sponsor:
                 one: 'ངོ་སྤྲོད་མཁན'
-                other: 'ངོ་སྤྲོད་མཁན་དག'
+                other: 'ངོ་སྤྲོད་མཁན་དག་'
             title:
                 one: 'ཁ་བྱང'
-                other: 'ཁ་བྱང་དག'
+                other: 'ཁ་བྱང་དག་'
             transformation:
                 one: 'བརྗེ་སྒྱུར'
-                other: 'བརྗེ་སྒྱུར་དག'
+                other: 'བརྗེ་སྒྱུར་དག་'
             translated_title:
                 one: 'སྒྱུར་ཡིག་ཁ་བྱང'
-                other: 'སྒྱུར་ཡིག་ཁ་བྱང་དག'
+                other: 'སྒྱུར་ཡིག་ཁ་བྱང་དག་'
             video:
                 one: 'གློག་བརྙན'
-                other: 'གློག་བརྙན་དག'
+                other: 'གློག་བརྙན་དག་'
             workflow:
                 one: 'ལས་ཀའི་བཟོ་རིམ་ཆ་འཕྲིན'
         # Attribute names will be titleized.
@@ -159,7 +159,7 @@ bo:
                 page_number: 'ཤོག་ངོས་ཨང་ཀི'
                 page_side: 'ཤོག་ངོས་ཀྱི་མཐའ'
             copyright:
-                notes: 'མཆན་འགྲེལ་ཁག'
+                notes: 'མཆན་འགྲེལ་ཁག་'
             copyright_holder:
                 title: 'པར་དབང་འཛིན་མཁན་གྱི་མིང'
                 website: 'དྲ་ཚིགས'
@@ -174,27 +174,27 @@ bo:
                 capture_device_model: 'རྩད་བཤེར་དཔྱད་ཆས་རིགས'
                 caption:
                     one: 'ཁ་བྱང'
-                    other: 'ཁ་བྱང་དག'
+                    other: 'ཁ་བྱང་དག་'
                 photographer: 'རྩོམ་པ་པོ'
             glossary:
                 abbreviation: 'བསྡུས་འབྲི'
                 description: 'ཞིབ་བརྗོད'
                 is_public: 'སྤྱི་མཐུན་ལ་འཛད་སྤྱོད་བྱས'
-                title: 'ཚིག་མཛོད་རེའུ་མིག'
+                title: 'ཚིག་མཛོད་རེའུ་མིག་'
             image:
                 uploaded_data: 'རི་མོ'
             keyword:
                 title: 'གནད་ཚིག་གི་མིང'
             location:
                 feature_id: 'ཁྱད་རྟགས་སྒྲིག་ཨང'
-                notes: 'མཆན་འགྲེལ་ཁག'
+                notes: 'མཆན་འགྲེལ་ཁག་'
                 spot_feature: 'ལས་ཡུལ་ཁྱད་བྲིས'
             media_source_association:
                 shot_number: 'བརྙན་བཟོ་སྒྲིག་རྟགས'
             medium:
                 caption:
                     one: 'གསལ་བཤད་ཡི་གེ'
-                    other: 'གསལ་བཤད་ཡི་གེ་དག'
+                    other: 'གསལ་བཤད་ཡི་གེ་དག་'
                 capture_device_model: 'པར་ཆས་དབྱིབས་རྟགས'
                 created_on: 'གསར་འཛུགས་བྱེད་དུས་ནི།'
                 id: 'ཐོན་ཁུངས།'
@@ -209,7 +209,7 @@ bo:
             picture:
                 caption:
                     one: 'གསལ་བཤད་ཡི་གེ'
-                    other: 'གསལ་བཤད་ཡི་གེ་དག'
+                    other: 'གསལ་བཤད་ཡི་གེ་དག་'
                 photographer: 'པར་རྒྱག་མཁན།'
                 rotation: 'འཁྱིར་བ།'
             publisher:
@@ -247,7 +247,7 @@ bo:
                     other: 'ཁ་བྱང'
                 photographer: 'པར་རྒྱག་མཁན།'
             workflow:
-                notes: 'མཆན་འགྲེལ་ཁག'
+                notes: 'མཆན་འགྲེལ་ཁག་'
                 other_id: 'ཨང་རྟགས་གཞན་པ'
                 original_filename: 'ཐོག་མའི་ཡིག་ཆའི་མིང'
                 original_medium_id: 'ཐོག་མའི་སྨྱན་གཟུགས་བྱ་ཡུལ་ཨང་རྟགས'

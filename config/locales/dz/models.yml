@@ -135,7 +135,7 @@ dz:
                 creator: 'གསར་བསྐྲུན་པ།'
                 description: 'འགྲེལ་བཤད།'
                 is_problematic: 'ལཱ་ཁག་འདུག་ཡ?'
-                parent: 'རྩ་ལག'
+                parent: 'རྩ་ལག་'
                 title: 'བདག་སྐྱོང་ལས་ཚན།'
             application_filter:
                 title: 'མགོ་མིང་།'
@@ -177,7 +177,7 @@ dz:
                     other: 'མགོ་མིང་།'
                 photographer: 'རྩོམ་པ་པོ།'
             glossary:
-                abbreviation: 'བསྡུས་ཚིག'
+                abbreviation: 'བསྡུས་ཚིག་'
                 description: 'འགྲེལ་བཤད།'
                 is_public: 'མི་སྡེ་གིས་སྤྱོད་ནི་ཨིན་ན?'
                 title: 'ཚིག་ཐོ་མིང་།'

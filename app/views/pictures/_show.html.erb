@@ -6,7 +6,7 @@
 	  image_tag = image_tag(screen_size_image.public_filename, :style => "max-width: 550px; max-height: 350px;")
 	  div_id = "media_large_#{@medium.id}" %>
 	  <div id="<%= div_id %>">
-<%      #screen_size_image.nil? ? image_tag : link_to(image_tag, full_size_medium_path(@medium), {:class => 'media-thumb overflow-x-auto thl-pop no-view-alone no-main-site-ajax padding-10 width-1000'}) %>
+<%      #screen_size_image.nil? ? image_tag : link_to(image_tag, full_size_medium_path(@medium), :class => 'media-thumb', :remote => true) %>
 <%=     large_image.nil? ? image_tag : link_to_function(image_tag, "$(\"#TB_window\").remove(); $(\".thl-popup\").remove(); $(\"body\").append(\"<div id='TB_window'></div>\");	tb_show(null, \"#{large_image.public_filename}\", false);") %>
 	  </div>
 <%  end %>

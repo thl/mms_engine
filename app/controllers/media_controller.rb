@@ -70,18 +70,16 @@ class MediaController < AclController
     @medium = Medium.find(params[:id]) 
     @tab_options ||= {}
     @tab_options[:entity] = @medium
-    if request.xhr?
-      render :partial => 'show'
-    else      
-      @pictures = Picture.find(:all, :order => 'RAND()', :limit => Medium::COLS * Medium::PREVIEW_ROWS)
-      @videos = Video.find(:all, :order => 'RAND()', :limit => 1)
-      @documents = Document.find(:all, :order => 'RAND()', :limit => 1)
-      @titles = { :picture => ts(:daily, :what => Picture.model_name.human(:count => :many).titleize), :video => ts(:daily, :what => Video.model_name.human(:count => :many).titleize), :document => ts(:daily, :what => Document.model_name.human(:count => :many).titleize) }
-      @more = { :type => '' }
-      respond_to do |format|
-        format.html # show.rhtml
-        format.xml  #{ render :xml => @medium.to_xml }
+    respond_to do |format|
+      format.html do # show.rhtml
+        @pictures = Picture.find(:all, :order => 'RAND()', :limit => Medium::COLS * Medium::PREVIEW_ROWS)
+        @videos = Video.find(:all, :order => 'RAND()', :limit => 1)
+        @documents = Document.find(:all, :order => 'RAND()', :limit => 1)
+        @titles = { :picture => ts(:daily, :what => Picture.model_name.human(:count => :many).titleize), :video => ts(:daily, :what => Video.model_name.human(:count => :many).titleize), :document => ts(:daily, :what => Document.model_name.human(:count => :many).titleize) }
+        @more = { :type => '' }
       end
+      format.js
+      format.xml  #{ render :xml => @medium.to_xml }
     end
   end
   

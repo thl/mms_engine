@@ -19,12 +19,4 @@ module MediaHelper
     thumbnail_image = medium.thumbnail_image
     thumbnail_image.nil? ? nil : link_to(image_tag(thumbnail_image.public_filename), medium_path(medium))
   end
-  
-  def javascript_files
-    super + ['swfobject', 'thickbox-compressed']
-  end
-  
-  def stylesheet_files
-    super + ['thickbox']
-  end
 end

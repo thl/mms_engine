@@ -1,0 +1,80 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require mms_engine/jquery-ui-1.8.24.custom
+ */
+
+h4, h5, h6 {
+font-weight:normal;
+}
+
+.shell-1 ul
+{
+	list-style-type:disc;
+}
+
+#primary{
+	float: right;
+	width: 40%;
+	border: 1px solid #ddd;
+	margin-top: 10px;
+	padding: 0 5px 10px 10px;
+}
+
+#secondary{
+	width: 55%;
+}
+
+#content-main{
+    width: 60%;
+    float: right;
+}
+
+.media_keywords {
+  font-size: 9px;
+  color :white;
+}
+
+.media_keywords a:hover { color: #C8BBBE; }
+
+.selected_branch {
+  background-color: #FFDDB5;
+}
+
+.clear{ clear:both }
+
+#picframe {
+  border: 1px solid #ccc;
+  -moz-border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+  border-radius: 0.5em;	
+  -webkit-box-shadow:0 0 10px #ccc; 
+  -moz-box-shadow: 0 0 10px #ccc; 
+  box-shadow:0 0 10px #ccc; 
+}
+
+.media-thumb img {
+	border: 1px solid #CCCCCC;
+	padding: 3px;
+}
+
+/* THL-specific */
+
+/* Hide the THL sidebar menu immediately, without waiting from $(document).ready to be triggered */
+#fxSideMenu {
+	display:none;
+}
+#sideMenuLink {
+	background-position:0 0;
+}
+
+#media_main h1, #media_main h2, #media_main h3 {
+	padding-left:0;
+}

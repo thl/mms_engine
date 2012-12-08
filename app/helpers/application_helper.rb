@@ -17,18 +17,6 @@ module ApplicationHelper
     return str
   end
   
-  def stylesheet_files
-    super + ['mms', 'jquery-ui-tabs']
-  end
-  
-  def javascript_files
-    super + ['jquery-ui-tabs']
-  end
-  
-  def javascripts
-    [super, include_tiny_mce_if_needed].join("\n")
-  end
-  
   def secondary_tabs_config
     # The :index values are necessary for this hash's elements to be sorted properly
     {
