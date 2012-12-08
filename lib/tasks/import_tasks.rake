@@ -1,4 +1,6 @@
 # require 'config/environment'
+require 'multimedia_importation'
+
 namespace :mms do
   namespace :import do
     media_import_description = "Batch process to import media.\n" + 

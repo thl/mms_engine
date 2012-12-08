@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'multimedia_importation'
 
 class MediaImportsController < AclController
   include MultimediaImportation
