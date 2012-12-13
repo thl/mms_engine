@@ -2,7 +2,6 @@ class MediaKeywordAssociation < ActiveRecord::Base
   validates_presence_of :medium_id, :keyword_id
   belongs_to  :medium
   belongs_to  :keyword
-  
 end
 
 # == Schema Info

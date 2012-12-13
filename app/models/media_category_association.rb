@@ -1,9 +1,4 @@
 class MediaCategoryAssociation < ActiveRecord::Base
-  validates_presence_of :category_id, :medium_id
-  # belongs_to :category, :class_name => 'Topic'
-  belongs_to :medium
-  # belongs_to :root, :class_name => 'Topic'
-  
   before_destroy { |record| Rails.cache.delete('topics/roots_with_media') if Rails.cache.exist?('topics/roots_with_media') && Topic.roots_with_media.collect(&:id).include?(record.root_id) }
   after_destroy  { |record| MediaCategoryAssociation.delete_cumulative_information(record.category, record.medium_id, record.medium.class.name) }
   before_save    { |record| MediaCategoryAssociation.delete_cumulative_information(Category.find(record.category_id_was), record.medium_id_was, record.medium.class.name) if record.changed? && !record.category_id_was.nil? }
@@ -16,7 +11,12 @@ class MediaCategoryAssociation < ActiveRecord::Base
     Rails.cache.delete('media_category_associations/max_updated_at')
     Rails.cache.delete('topics/roots_with_media') if Rails.cache.exist?('topics/roots_with_media') && !Topic.roots_with_media.collect(&:id).include?(record.root_id)
   end
-    
+  
+  validates_presence_of :category_id, :medium_id
+  # belongs_to :category, :class_name => 'Topic'
+  belongs_to :medium
+  # belongs_to :root, :class_name => 'Topic'
+      
   def category
     Topic.find(self.category_id)
   end

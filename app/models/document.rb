@@ -1,5 +1,9 @@
 class Document < Medium
   include MediaProcessor::DocumentExtension
+  
+  before_create  { |record| record.resource_type_id = 2639 if record.resource_type_id.nil? }
+  before_destroy { |record| record.typescript.destroy if !record.typescript.nil? }
+  
   # The preview is generated in the highest possible resolution.  
   PREVIEW_TYPE = :huge
   belongs_to :typescript, :foreign_key => 'attachment_id'
@@ -7,10 +11,7 @@ class Document < Medium
   def attachment
     typescript
   end
-  
-  before_create  { |record| record.resource_type_id = 2639 if record.resource_type_id.nil? }
-  before_destroy { |record| record.typescript.destroy if !record.typescript.nil? }
-  
+    
   def self.public_folder
     'typescripts'
   end

@@ -1,5 +1,6 @@
 require 'fileutils'
 class Medium < ActiveRecord::Base
+  include Util, FileUtils, MediaProcessor::MediumExtension, FilenameUtils
   ROWS = 5
   COLS = 4
   PREVIEW_ROWS = 2
@@ -16,9 +17,25 @@ class Medium < ActiveRecord::Base
     #:biblio => {:singular => 'Biblio', :plural => 'Biblio'}
   }
   
+  before_create  { |record| record.application_filter = ApplicationFilter.default_filter }
+  after_create   { |record| record.rename } # TODO: handle if it couldn't be saved
+  before_destroy do |record|
+    captions_array = record.captions
+    for caption in captions_array
+      caption.destroy
+    end
+    record.captions.clear
+    descriptions_array = record.descriptions
+    for description in descriptions_array
+      description.destroy
+    end
+    record.descriptions.clear
+    delete_setting = ApplicationSetting.find_by_title('delete_from_cold_storage')
+    delete_from_coldstorage if delete_setting.nil? || delete_setting.value==1
+  end
+  
   default_scope :conditions => {:application_filter_id => ApplicationFilter.application_filter.id} if !ApplicationFilter.application_filter.nil?
   
-  include Util, FileUtils, MediaProcessor::MediumExtension, FilenameUtils
   belongs_to :capture_device_model  
   belongs_to :application_filter
   belongs_to :photographer, :class_name => 'AuthenticatedSystem::Person', :foreign_key => 'photographer_id'
@@ -45,24 +62,7 @@ class Medium < ActiveRecord::Base
   has_many :keywords, :through => :media_keyword_associations, :order => 'title'
   has_many :cumulative_media_category_associations, :dependent => :destroy
   has_many :titles, :dependent => :destroy
-  
-  before_create  { |record| record.application_filter = ApplicationFilter.default_filter }
-  after_create   { |record| record.rename } # TODO: handle if it couldn't be saved
-  before_destroy do |record|
-    captions_array = record.captions
-    for caption in captions_array
-      caption.destroy
-    end
-    record.captions.clear
-    descriptions_array = record.descriptions
-    for description in descriptions_array
-      description.destroy
-    end
-    record.descriptions.clear
-    delete_setting = ApplicationSetting.find_by_title('delete_from_cold_storage')
-    delete_from_coldstorage if delete_setting.nil? || delete_setting.value==1
-  end
-  
+    
   def media_collection_associations
     self.media_category_associations.where(:root_id => Collection.root_id)
   end

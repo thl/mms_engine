@@ -1,4 +1,4 @@
-require 'document'
+#require 'document'
 
 class DocumentSweeper < ActionController::Caching::Sweeper
   observe Document

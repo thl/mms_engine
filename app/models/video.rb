@@ -1,15 +1,15 @@
 require 'fileutils'
 
 class Video < Medium
-  validates_presence_of :attachment_id
-  
   include Util
   include ForkedNotifier
+
+  validates_presence_of :attachment_id
+
+  before_create  { |record| record.resource_type_id = 2687 if record.resource_type_id.nil? }
+  before_destroy { |record| record.movie.destroy }
   
   belongs_to :movie, :foreign_key => 'attachment_id'
-  
-  before_create  { |record| record.resource_type_id = 2687 if record.resource_type_id.nil? }
-  before_destroy { |record| record.movie.destroy }  
   
   def attachment
     movie

@@ -1,13 +1,11 @@
 class Description < ActiveRecord::Base
+  before_destroy { |record| record.media.clear }
+  
   validates_presence_of :title
   belongs_to :description_type
   belongs_to :creator, :class_name => 'AuthenticatedSystem::Person', :foreign_key => 'creator_id'
   belongs_to :language, :class_name => 'ComplexScripts::Language'
   has_and_belongs_to_many :media
-  
-  def before_destroy
-    media.clear
-  end
 end
 
 # == Schema Info

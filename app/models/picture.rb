@@ -1,16 +1,18 @@
 class Picture < Medium
   include MediaProcessor::PictureExtension
+  
   validates_presence_of :attachment_id
+  
+  before_create  { |record| record.resource_type_id = 2660 if record.resource_type_id.nil? }
+  before_destroy { |record| record.image.destroy }
+  after_create   { |record| record.update_from_image_properties }
+  
   belongs_to :image, :foreign_key => 'attachment_id'
   
   def attachment
     image
   end
-  
-  before_create  { |record| record.resource_type_id = 2660 if record.resource_type_id.nil? }
-  before_destroy { |record| record.image.destroy }
-  after_create   { |record| record.update_from_image_properties }
-    
+      
   def huge_image
     att = attachment
     return nil if att.nil?
