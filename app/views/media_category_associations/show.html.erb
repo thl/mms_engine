@@ -7,5 +7,5 @@
 <p><%= display_if_not_blank ts('name.for', :what => topic_name), topic.ancestors.collect(&:title).reverse.join(' > ') %></p>
 <%= display_if_not_blank MediaCategoryAssociation.human_attribute_name(:string_value).s, h(@media_category_association.string_value) %>
 <%= display_if_not_blank MediaCategoryAssociation.human_attribute_name(:numeric_value).s, h(@media_category_association.numeric_value) %>
-<p><%= link_to ts('edit.this'), edit_association_path(@medium, topic, @media_category_association) %> |
+<p><%= link_to ts('edit.this'), edit_medium_topic_association_path(@medium.id, topic.id, @media_category_association) %> |
 <%= render :partial => 'persistent_links' %></p>

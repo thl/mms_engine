@@ -22,7 +22,7 @@ class MediaCategoryAssociationsController < AclController
   def show
     @media_category_association = MediaCategoryAssociation.find(params[:id])
     if @medium != @media_category_association.medium
-      redirect_to association_url(@media_category_association.medium, @media_category_association.root, @media_category_association)
+      redirect_to medium_topic_association_url(@media_category_association.medium.id, @media_category_association.root.id, @media_category_association)
     else
       respond_to do |format|
         format.html # show.html.erb
@@ -46,7 +46,7 @@ class MediaCategoryAssociationsController < AclController
   def edit
     @media_category_association = MediaCategoryAssociation.find(params[:id])
     if @medium != @media_category_association.medium
-      redirect_to edit_association_url(@media_category_association.medium, @media_category_association.root, @media_category_association)
+      redirect_to edit_medium_topic_association_url(@media_category_association.medium.id, @media_category_association.root.id, @media_category_association)
     else
       respond_to do |format|
         format.html # edit.html.erb

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   match 'admin' => 'main#admin', :as => 'admin'
   match 'subtitles/:video_id/:language/:form' => 'subtitles#index', :as => 'subtitles', :defaults => { :form => 'script', :language => 'bo' }
   match 'help' => 'help#advanced_search', :as => 'help_advanced_search'
-    
+  
   resources :capture_device_makers do
     resources :models, :controller => 'capture_device_models'
   end
@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   end
   resources :media_objects, :as => 'media', :controller => :media do
     resources :affiliations, :captions, :descriptions, :locations, :places
-    resources :associations, :controller => 'media_category_associations', :path => 'topics/:topic_id'
+    resources :associations, :controller => 'media_category_associations'
     resource :media_publisher, :workflow
     collection do
       get :rename_all
@@ -42,6 +42,9 @@ Rails.application.routes.draw do
     end
     resources :rotations, :only => [:index, :show, :create] do
       collection { get :status }
+    end
+    resources :topics do
+      resources :associations, :controller => 'media_category_associations'
     end
     resources :source_associations, :controller => 'media_source_associations'
     resources :titles do
@@ -76,7 +79,6 @@ Rails.application.routes.draw do
       get :documents
       get :videos
     end
-    resources :associations, :controller => 'media_category_associations'
   end
   resources(:videos) { member { match 'subtitles/:language/:form' => 'videos#show', :as => 'subtitles', :defaults => { :form => 'script', :language => 'bo' } } }
   #match ':controller(/:action(/:id(.:format)))'

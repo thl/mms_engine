@@ -17,13 +17,13 @@
        <td><%= h(([topic] + topic.ancestors).collect(&:title).reverse.join(' > ')) %></td>
        <td><%= association.string_value %></td>
        <td><%= association.numeric_value %></td>
-       <td><%= link_to ts('manage.this'), edit_association_path(association.medium, topic.root, association) %></td>
+       <td><%= link_to ts('manage.this'), edit_medium_topic_association_path(association.medium.id, topic.root.id, association) %></td>
        <td><%= link_to ts('back.to', :what => Medium.model_name.human(:count => :many)), topic_path(topic) %></td>
      </tr>
 <% end %>
 </table>
 <% if !@medium.nil? %>
 	<p>&nbsp;<br/>
-<%= link_to(ts('associate.to', :what => t(:another, :what => Topic.model_name.human)), @topic.nil? ? new_medium_topic_association_path(@medium) : new_association_path(@medium, @topic)) %> |
+<%= link_to(ts('associate.to', :what => t(:another, :what => Topic.model_name.human)), @topic.nil? ? new_medium_association_path(@medium.id) : new_medium_topic_association_path(@medium.id, @topic.id)) %> |
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'topics'} %></p>
 <% end %>

@@ -1,6 +1,6 @@
 <h1><%= ts :for, :what => t('edit.ing.record', :what => t('associate.ion', :what => @media_category_association.root.nil? ? Topic.model_name.human.titleize : @media_category_association.root.title)), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <%= error_messages_for :media_category_association %>
-<%= form_for(:media_category_association, :url => association_path(@medium, @media_category_association.root, @media_category_association), :html => {:method => :put}) do |f| %>
+<%= form_for(:media_category_association, :url => medium_topic_association_path(@medium.id, @media_category_association.root.id, @media_category_association), :html => {:method => :put}) do |f| %>
 <%=   category_form_table({
         :locals			=> { :f => f, :single_selection => true },
         :form_partial 	=> 'media_category_associations/form',

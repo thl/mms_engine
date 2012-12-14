@@ -37,7 +37,7 @@
    if !locations.empty? %>
      <p><%= bookmark 'locations' %>
 	 <b><%= Location.model_name.human(:count => locations.size).titleize.s %></b>
-<%=  locations.collect {|l| link_to l.feature.header, edit_medium_location_path(@medium, l)}.join(', ') %>
+<%=  locations.collect {|l| link_to l.feature.header, edit_medium_location_path(@medium, l)}.join(', ').html_safe %>
 (<%= link_to ts('add.record', :what => Location.model_name.human), new_medium_location_path(@medium) %>)</p>
 <% end  %>
 <%= bookmark 'topics' %>
@@ -50,22 +50,22 @@
      if !associations.empty? %>
 	   <p><%= bookmark "topics-#{root_topic.id}" %>
 	   <b><%= root_topic.title %>:</b>
-<%=    associations.collect{|a| link_to h(a.title_with_value).s, edit_association_path(@medium, root_topic, a)}.join(', ') %>
-       (<%= link_to ts('add.record', :what => root_topic.title.downcase), new_association_path(@medium, root_topic) %>)</p>
+<%=    associations.collect{|a| link_to h(a.title_with_value).s, edit_medium_topic_association_path(@medium.id, root_topic.id, a)}.join(', ').html_safe %>
+       (<%= link_to ts('add.record', :what => root_topic.title.downcase), new_medium_topic_association_path(@medium.id, root_topic.id) %>)</p>
 <%   end
    end
    media_keyword_associations = @medium.media_keyword_associations
    if !media_keyword_associations.empty? %>
      <p><%= bookmark 'keywords' %>
 	 <b><%= Keyword.model_name.human(:count => :many).titleize.s %>:</b>
-<%=  media_keyword_associations.collect {|k| link_to h(k.keyword.title).s, edit_media_keyword_association_path(k)}.join(', ') %>
+<%=  media_keyword_associations.collect {|k| link_to h(k.keyword.title).s, edit_media_keyword_association_path(k)}.join(', ').html_safe %>
 (<%= link_to ts('add.record', :what => Keyword.model_name.human), new_media_keyword_association_path(:medium_id => @medium) %>)</p>
 <% end
    copyrights = @medium.copyrights
    if !@medium.copyrights.empty? %>
      <p><%= bookmark 'copyrights' %>
 	 <b><%= Copyright.model_name.human(:count => :many).titleize.s %>:</b>
-<%=    @medium.copyrights.collect {|c| "#{link_to h(c.copyright_holder.title).s, edit_copyright_path(c)} (#{h(c.reproduction_type.title).downcase})"}.join(', ') %>
+<%=    @medium.copyrights.collect {|c| "#{link_to h(c.copyright_holder.title).s, edit_copyright_path(c)} (#{h(c.reproduction_type.title).downcase})"}.join(', ').html_safe %>
 (<%=  link_to ts('add.record', :what => Copyright.model_name.human), new_copyright_path(:medium_id => @medium) %>)</p>
 <% end
    affiliations = @medium.affiliations
@@ -89,7 +89,7 @@
 	 end %>
      <p><%= bookmark 'affiliations' %>
 	 <b><%= Affiliation.model_name.human(:count => :many).s %>:</b>
-<%=  affiliations_list.join(', ') %>
+<%=  affiliations_list.join(', ').html_safe %>
 (<%= link_to ts('add.record', :what => Affiliation.model_name.human(:count => :many)), new_medium_affiliation_path(@medium) %>)</p>
 <% end
    media_source_associations = @medium.media_source_associations
@@ -132,12 +132,12 @@
    for root_topic in root_topics_with_media
      if topic_associations[root_topic.id].empty? %>
 <%=    bookmark "topics-#{root_topic.id}" %>
-<%=    link_to ts('associate.to', :what => root_topic.title.downcase), new_association_path(@medium, root_topic) %> |
+<%=    link_to ts('associate.to', :what => root_topic.title.downcase), new_medium_topic_association_path(@medium.id, root_topic.id) %> |
 <%   end
    end %>
-<%= link_to ts('associate.to', :what => Topic.model_name.human), new_medium_topic_association_path(@medium) %> |
+<%= link_to ts('associate.to', :what => Topic.model_name.human), new_medium_association_path(@medium.id) %> |
 <%= ts 'associate.to_from', :what => Topic.human_attribute_name(:child).downcase, :whom => Topic.human_attribute_name(:root).downcase %>:
-<%= select_tag :root_topics, options_for_select([''] + @root_topics.collect{|topic| [topic.title, new_association_path(@medium, topic)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %><br/>
+<%= select_tag :root_topics, options_for_select([''] + @root_topics.collect{|topic| [topic.title, new_medium_topic_association_path(@medium.id, topic.id)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %><br/>
 <% if media_source_associations.empty? %>
 <%=   bookmark 'sources' %>
 <%=   link_to ts('associate.to', :what => Source.model_name.human), new_medium_source_association_path(@medium) %>
