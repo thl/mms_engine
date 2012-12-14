@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mms_engine (2.0.0)
+    mms_engine (2.0.3)
       rails (~> 3.2.9)
       rmagick
 
