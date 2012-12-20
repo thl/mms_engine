@@ -1,5 +1,5 @@
 class MediaCategoryAssociation < ActiveRecord::Base
-  attr_accessible :root_id
+  attr_accessible :root_id, :category_id, :medium_id
   
   before_destroy { |record| Rails.cache.delete('topics/roots_with_media') if Rails.cache.exist?('topics/roots_with_media') && Topic.roots_with_media.collect(&:id).include?(record.root_id) }
   after_destroy  { |record| MediaCategoryAssociation.delete_cumulative_information(record.category, record.medium_id, record.medium.class.name) }

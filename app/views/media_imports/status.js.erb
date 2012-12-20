@@ -1,0 +1,7 @@
+<% if @done %>
+     window.location.replace("<%= media_import_url(@user) %>")
+<% else %>
+     $("#status").html("<%= escape_javascript(render(:partial => 'status')) %>")
+<% end %>
+
+

@@ -1,4 +1,6 @@
 class Picture < Medium
+  attr_accessible :image, :recording_note
+  
   include MediaProcessor::PictureExtension
   
   validates_presence_of :attachment_id

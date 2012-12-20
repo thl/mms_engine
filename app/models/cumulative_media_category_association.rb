@@ -1,4 +1,6 @@
 class CumulativeMediaCategoryAssociation < ActiveRecord::Base
+  attr_accessible :category_id, :medium_id
+  
   belongs_to :medium
   #belongs_to :category
 end

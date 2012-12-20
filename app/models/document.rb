@@ -1,4 +1,6 @@
 class Document < Medium
+  attr_accessible :typescript, :recording_note
+  
   include MediaProcessor::DocumentExtension
   
   before_create  { |record| record.resource_type_id = 2639 if record.resource_type_id.nil? }

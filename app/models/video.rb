@@ -1,6 +1,8 @@
 require 'fileutils'
 
 class Video < Medium
+  attr_accessible :movie, :recording_note
+  
   include Util
   include ForkedNotifier
 

@@ -1,4 +1,5 @@
 class CaptureDeviceMaker < ActiveRecord::Base
+  attr_accessible :title, :exif_tag
   has_many :capture_device_models, :dependent => :destroy, :order => 'title'
 end
 

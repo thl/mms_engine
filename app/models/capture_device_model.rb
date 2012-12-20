@@ -1,4 +1,6 @@
 class CaptureDeviceModel < ActiveRecord::Base
+  attr_accessible :title, :exif_tag
+  
   belongs_to :capture_device_maker
   has_many :media
 end

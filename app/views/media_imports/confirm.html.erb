@@ -1,67 +1,67 @@
 <h1>Confirming media (<%= @import_type[:title] %>)</h1>
-<% form_tag(media_imports_path) do 
-	import_type_id = @import_type[:id] %>
-<%= hidden_field_tag :import_type_id, import_type_id %>
-    <table class="normal" border="0">
-	  <tr>
-	    <th>Type</th>
-	    <th>&nbsp;</th>
-<%      classification_size = @classifications.size
-        for classification in @classifications do %>
-		  <th><%= classification.titleize %></th>
+<%= form_tag(media_imports_path) do %> 
+<%    import_type_id = @import_type[:id] %>
+<%=   hidden_field_tag :import_type_id, import_type_id %>
+      <table class="normal" border="0">
+	    <tr>
+	      <th>Type</th>
 	      <th>&nbsp;</th>
-<%        if import_type_id==1 # add new media to db %>
-<%=         hidden_field_tag 'classifications[]', classification %>
-<%        end
-        end %>
-	    <th>Name</th>
-<%      if import_type_id==2 # media update %>
-          <th>&nbsp;</th>
-          <th>ID</th>
-<%      end %>
-	  </tr>
+<%        classification_size = @classifications.size
+          for classification in @classifications do %>
+		    <th><%= classification.titleize %></th>
+	        <th>&nbsp;</th>
+<%          if import_type_id==1 # add new media to db %>
+<%=           hidden_field_tag 'classifications[]', classification %>
+<%          end
+          end %>
+	      <th>Name</th>
+<%        if import_type_id==2 # media update %>
+            <th>&nbsp;</th>
+            <th>ID</th>
+<%        end %>
+	    </tr>
 <%    previous_type = nil
       previous_classification = Array.new(3)
       for medium in @media %>
-      <tr>	     
-<%	    type = medium[:type]
-	    if previous_type==type %>
-	      <td>&nbsp;</td>
-	      <td>&nbsp;</td>
-<%		else
-		  previous_type = type %>
-	      <td><%= medium[:type].titleize %></td>
-	      <td>&nbsp;-&nbsp;</td>
-<%		end 
-        if import_type_id==1 # add new media to db %>
-<%=       hidden_field_tag 'media[type][]', medium[:type] %>
-<%      end
-        i=0
-        classifications = medium[:classifications]
-        for classification in classifications
-	      c = classification.id
-	      if previous_classification[i]==c %>
-            <td>&nbsp;</td>
-		    <td>&nbsp;</td>
+        <tr>	     
+<%	      type = medium[:type]
+	      if previous_type==type %>
+	        <td>&nbsp;</td>
+	        <td>&nbsp;</td>
 <%		  else
-		    previous_classification[i] = c %>
-	        <td>
-<%          if classification.is_a?(String) %>
-<%=           classification %>
-<%          else %>
-<%=           "#{classification.full_lineage} > #{classification.title}" %>
-<%          end %>
-		    </td>
+		    previous_type = type %>
+	        <td><%= medium[:type].titleize %></td>
 	        <td>&nbsp;-&nbsp;</td>
 <%		  end 
-          value = classification.is_a?(String) ? classification : classification.id
           if import_type_id==1 # add new media to db %>
-<%=         hidden_field_tag "media[classification_#{i}][]", value %>
+<%=         hidden_field_tag 'media[type][]', medium[:type] %>
 <%        end
-          i+=1
-        end
-        diff = classification_size - classifications.size
-        diff.times do %>
+          i=0
+          classifications = medium[:classifications]
+          for classification in classifications
+	        c = classification.id
+	        if previous_classification[i]==c %>
+              <td>&nbsp;</td>
+		      <td>&nbsp;</td>
+<%		    else
+		      previous_classification[i] = c %>
+	          <td>
+<%            if classification.is_a?(String) %>
+<%=             classification %>
+<%            else %>
+<%=             "#{classification.full_lineage} > #{classification.title}" %>
+<%            end %>
+		      </td>
+	          <td>&nbsp;-&nbsp;</td>
+<%		    end 
+            value = classification.is_a?(String) ? classification : classification.id
+            if import_type_id==1 # add new media to db %>
+<%=           hidden_field_tag "media[classification_#{i}][]", value %>
+<%          end
+            i+=1
+          end
+          diff = classification_size - classifications.size
+          diff.times do %>
           <td>&nbsp;</td>
 	      <td>&nbsp;</td>
 <%        if import_type_id==1 # add new media to db %>
@@ -80,7 +80,7 @@
 <%    end %>
    </table>
 <p><%= globalized_submit_tag :import %></p>
-<% end %>
+<%  end %>
 <p>&nbsp;<br/>
 <%= link_to 'Status of last importation', status_media_imports_path %> |
 <%= link_to 'Back to new media importation', new_media_import_path %> |

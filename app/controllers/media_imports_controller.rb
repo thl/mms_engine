@@ -25,22 +25,17 @@ class MediaImportsController < AclController
     else
       @user = AuthenticatedSystem::User.find(user_id)
     end
-    done = fork_done?(user_id)
+    @done = fork_done?(user_id)
     @log = get_log_messages(user_id)
-    if request.xhr?
-      render :update do |page|
-        if done
-          page.redirect_to media_import_url(@user)
+    respond_to do |format|
+      format.html do
+        if @done
+          render :action => 'done_status'
         else
-          page.replace_html 'status', :partial => 'status'
+          render :action => 'processing_status'
         end
       end
-    else
-      if done
-        render :action => 'done_status'
-      else
-        render :action => 'processing_status'
-      end
+      format.js
     end
   end
 

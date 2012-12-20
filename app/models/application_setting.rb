@@ -1,4 +1,6 @@
 class ApplicationSetting < ActiveRecord::Base
+  attr_accessible :permission_id, :title, :value, :description, :string_value
+  
   belongs_to :permission, :class_name => 'AuthenticatedSystem::Permission'
   
   def configuration_path

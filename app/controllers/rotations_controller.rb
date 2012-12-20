@@ -35,7 +35,7 @@ class RotationsController < AclController
       respond_to do |format|
         format.js do
           start_log('Beginning rotation.')
-          spawn(:method => :thread) do
+          spawn_block(:method => :thread) do
             workflow = @medium.workflow
             workflow = @medium.create_workflow if workflow.nil?
             workflow.update_attribute(:processing_status_id, 1)
