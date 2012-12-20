@@ -1,7 +1,7 @@
 class MediaPublishersController < AclController 
   helper :media
   before_filter :find_medium
-  caches_page :show, :if => :api_response?.to_proc
+  caches_page :show, :if => Proc.new { |c| c.request.format.xml? }
   
   def initialize
     super
@@ -119,9 +119,5 @@ class MediaPublishersController < AclController
       flash[:notice] = 'Attempt to access invalid medium.'
       redirect_to media_path
     end
-  end
-  
-  def api_response?
-    request.format.xml?
   end
 end

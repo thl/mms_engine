@@ -1,5 +1,6 @@
 class CachedCategoryCountsController < ApplicationController
-  caches_page :index, :if => :api_response?.to_proc
+  caches_page :index, :if => Proc.new { |c| c.request.format.xml? }
+  
   
   # GET /cached_category_counts.xml
   def index
@@ -9,11 +10,5 @@ class CachedCategoryCountsController < ApplicationController
     respond_to do |format|
       format.xml { render :xml => cached_category_counts.to_xml }
     end
-  end
-  
-  private
-  
-  def api_response?
-    request.format.xml?
   end
 end

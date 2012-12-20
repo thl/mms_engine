@@ -1,6 +1,6 @@
 class DocumentsController < AclController
   helper :media
-  caches_page :show, :if => :api_response?.to_proc
+  caches_page :show, :if => Proc.new { |c| c.request.format.xml? }
   cache_sweeper :document_sweeper, :only => [:update, :destroy]
 
   def initialize
@@ -162,11 +162,5 @@ class DocumentsController < AclController
       format.html { redirect_to documents_url }
       format.xml  { head :ok }
     end
-  end
-  
-  private
-  
-  def api_response?
-    request.format.xml?
   end
 end
