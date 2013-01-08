@@ -1,22 +1,20 @@
 <%= tagged_tinymce_script %>
-
 <p>
-     <b><%= Medium.model_name.human.titleize.s %></b><br />
-<%=  thumbnail_image_link(@medium) %>
+    <b><%= Medium.model_name.human.titleize.s %></b><br />
+<%= thumbnail_image_link(@medium) %>
 </p>
 <p>
-     <b><%= Description.human_attribute_name('title').s %></b><br />
-<%=  f.text_area :title, :rows => 5, :class => 'mceEditor' %>
+    <b><%= Description.human_attribute_name('title').s %></b><br />
+<%= f.text_area :title, :rows => 5, :class => 'mceEditor' %>
 </p>
 <p>
-     <b><%= DescriptionType.model_name.human(:what => Description.model_name.human).titleize.s %></b><br />
-<%=  f.collection_select(:description_type_id, @description_types, :id, :title) %> (<%= link_to ts('new.record', :what => DescriptionType.model_name.human(:what => Description.model_name.human)), new_description_type_path, { :target => '_blank' } %>)
+    <b><%= DescriptionType.model_name.human(:what => Description.model_name.human).titleize.s %></b><br />
+<%= f.collection_select(:description_type_id, @description_types, :id, :title) %> (<%= link_to ts('new.record', :what => DescriptionType.model_name.human(:what => Description.model_name.human)), new_description_type_path, { :target => '_blank' } %>)
 </p>
-<%=  f.hidden_field :creator_id %>
 <% if !@description.creator.nil? %>
 <%=  display_if_not_blank Description.human_attribute_name('creator').s, h(@description.creator.fullname).s %>
 <% end %>
 <p>
-     <b><%= ComplexScripts::Language.model_name.human.titleize.s %></b><br />
-<%=  f.collection_select(:language_id, @languages, :id, :title) %> (<%= link_to ts('new.record', :what => ComplexScripts::Language.model_name.human), new_complex_scripts_language_path, { :target => '_blank' } %>)
+    <b><%= ComplexScripts::Language.model_name.human.titleize.s %></b><br />
+<%= f.collection_select(:language_id, @languages, :id, :title) %> (<%= link_to ts('new.record', :what => ComplexScripts::Language.model_name.human), new_complex_scripts_language_path, { :target => '_blank' } %>)
 </p>

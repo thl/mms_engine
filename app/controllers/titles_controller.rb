@@ -7,83 +7,73 @@ class TitlesController < AclController
   # GET /titles
   # GET /titles.xml
   def index
-    if !@medium.nil?
-      @titles = @medium.titles.all
-      respond_to do |format|
-        format.html # index.html.erb
-        format.xml  { render :xml => @titles }
-      end
-    end  
+    @titles = @medium.titles.all
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @titles }
+    end
   end
 
   # GET /titles/1
   # GET /titles/1.xml
   def show
-    if !@medium.nil?
-      @title = Title.find(params[:id])
-      respond_to do |format|
-        format.html # show.html.erb
-        format.xml  { render :xml => @title }
-      end
+    @title = Title.find(params[:id])
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @title }
     end
   end
 
   # GET /titles/new
   # GET /titles/new.xml
   def new
-    if !@medium.nil?
-      @languages = ComplexScripts::Language.order('title')
-      language = ComplexScripts::Language.find_iso_code(I18n.locale)
-      @title = @medium.titles.new(:language => language, :creator => current_user.person)
-      respond_to do |format|
-        format.html # new.html.erb
-        format.xml  { render :xml => @title }
-      end
-    end    
+    @languages = ComplexScripts::Language.order('title')
+    language = ComplexScripts::Language.find_iso_code(I18n.locale)
+    @title = @medium.titles.new(:language_id => language.id)
+    @title.creator = current_user.person
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @title }
+    end
   end
 
   # GET /titles/1/edit
   def edit
-    if !@medium.nil?
-      @languages = ComplexScripts::Language.order('title')
-      @title = Title.find(params[:id])      
-    end
+    @languages = ComplexScripts::Language.order('title')
+    @title = Title.find(params[:id])      
   end
 
   # POST /titles
   # POST /titles.xml
   def create
-    if !@medium.nil?
-      @title = @medium.titles.new(params[:title])
-      respond_to do |format|
-        if @title.save
-          flash[:notice] = ts('new.successful', :what => Title.model_name.human.capitalize)
-          format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
-          format.xml  { render :xml => @title, :status => :created, :location => medium_title_url(@medium, @title) }
-        else
-          @languages = ComplexScripts::Language.order('title')
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @title.errors, :status => :unprocessable_entity }
-        end
+    @title = @medium.titles.new(params[:title])
+    @title.creator = current_user.person
+    respond_to do |format|
+      if @title.save
+        flash[:notice] = ts('new.successful', :what => Title.model_name.human.capitalize)
+        format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
+        format.xml  { render :xml => @title, :status => :created, :location => medium_title_url(@medium, @title) }
+      else
+        @languages = ComplexScripts::Language.order('title')
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @title.errors, :status => :unprocessable_entity }
       end
-    end    
+    end
   end
 
   # PUT /titles/1
   # PUT /titles/1.xml
   def update
-    if !@medium.nil?
-      @title = Title.find(params[:id])
-      respond_to do |format|
-        if @title.update_attributes(params[:title])
-          flash[:notice] = ts('edit.successful', :what => Title.model_name.human.capitalize)
-          format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
-          format.xml  { head :ok }
-        else
-          @languages = ComplexScripts::Language.find(:all, :order => 'title')
-          format.html { render :action => "edit" }
-          format.xml  { render :xml => @title.errors, :status => :unprocessable_entity }
-        end
+    @title = Title.find(params[:id])
+    respond_to do |format|
+      if @title.update_attributes(params[:title])
+        flash[:notice] = ts('edit.successful', :what => Title.model_name.human.capitalize)
+        format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
+        format.xml  { head :ok }
+      else
+        @languages = ComplexScripts::Language.find(:all, :order => 'title')
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @title.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -91,15 +81,13 @@ class TitlesController < AclController
   # DELETE /titles/1
   # DELETE /titles/1.xml
   def destroy
-    if !@medium.nil?
-      @title = Title.find(params[:id])
-      @title.destroy
+    @title = Title.find(params[:id])
+    @title.destroy
 
-      respond_to do |format|
-        format.html { redirect_to medium_titles_url(@medium) }
-        format.xml  { head :ok }
-      end
-    end          
+    respond_to do |format|
+      format.html { redirect_to medium_titles_url(@medium) }
+      format.xml  { head :ok }
+    end
   end
   
   private

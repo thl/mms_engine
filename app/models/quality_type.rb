@@ -1,4 +1,5 @@
 class QualityType < ActiveRecord::Base
+  attr_accessible :title
   has_many :media
 end
 

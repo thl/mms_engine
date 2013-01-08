@@ -1,4 +1,5 @@
 class Transformation < ActiveRecord::Base
+  attr_accessible :renderer_id, :title, :path
   belongs_to :renderer, :class_name => 'FileRenderer'
   has_many :typescripts
   

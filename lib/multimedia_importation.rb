@@ -5,7 +5,7 @@ module MultimediaImportation
   include ForkedNotifier
   include FilenameUtils
   
-  def assess_media_importation(source, type, check_existence, *classifications)
+  def assess_media_importation(source, type, check_existence, has_mediapro_metadata, *classifications)
     levels = Hash.new
     objects = Hash.new
     media = Array.new
@@ -25,7 +25,6 @@ module MultimediaImportation
         levels[0] = classifications[0]
         Dir.chdir(classification_title_0) do
           Dir.glob('*').sort.each do |classification_title_1|
-            next if invalid_extension(classification_title_1, type)
             if File.directory?(classification_title_1)
               if classifications[1].blank?
                 raise "Second level folder <i>#{classification_title_1}</i> found but no second level classification defined!"
@@ -37,7 +36,6 @@ module MultimediaImportation
               levels[1] = classifications[1]
               Dir.chdir(classification_title_1) do
                 Dir.glob('*').sort.each do |classification_title_2|
-                  next if invalid_extension(classification_title_2, type)
                   if File.directory?(classification_title_2)
                     if classifications[2].blank?
                       raise "Third level folder <i>#{classification_title_2}</i> found but no third level classification defined!"
@@ -51,13 +49,23 @@ module MultimediaImportation
                       Dir.glob('*').sort.each do |classification_title_3|
                         if File.directory?(classification_title_3)
                           raise "Found fourth level folder <i>#{classification_title_3}</i> found but importation does not support fourth level classifications!"
+                        elsif has_mediapro_metadata && FilenameUtils.extension_without_dot(classification_title_3).downcase=='xml'
+                          assess_media_pro_xml_file(classification_title_3)
+                          media << media_pro_xml_hash(classification_title_3, File.join(source, classification_title_0, classification_title_1, classification_title_2, classification_title_3))
+                        elsif invalid_extension(classification_title_3, type)
+                          next
+                        else
+                          classification = classifications.collect { |c| objects[c]  }
+                          media << media_hash(type, classification, classification_title_3, File.join(source, classification_title_0, classification_title_1, classification_title_2, classification_title_3), check_existence)
                         end
-                        next if invalid_extension(classification_title_3, type)
-                        classification = classifications.collect { |c| objects[c]  }
-                        media << media_hash(type, classification, classification_title_3, File.join(source, classification_title_0, classification_title_1, classification_title_2, classification_title_3), check_existence)
                       end
                     end
                     objects[levels[2]] = nil
+                  elsif has_mediapro_metadata && FilenameUtils.extension_without_dot(classification_title_2).downcase=='xml'
+                    assess_media_pro_xml_file(classification_title_2)
+                    media << media_pro_xml_hash(classification_title_2, File.join(source, classification_title_0, classification_title_1, classification_title_2))
+                  elsif invalid_extension(classification_title_2, type)
+                    next
                   else
                     classification = classifications[0..1].collect { |c| objects[c]  }
                     media << media_hash(type, classification, classification_title_2, File.join(source, classification_title_0, classification_title_1, classification_title_2), check_existence)
@@ -65,6 +73,11 @@ module MultimediaImportation
                 end
               end
               objects[levels[1]] = nil
+            elsif has_mediapro_metadata && FilenameUtils.extension_without_dot(classification_title_1).downcase=='xml'
+              assess_media_pro_xml_file(classification_title_1)
+              media << media_pro_xml_hash(classification_title_1, File.join(source, classification_title_0, classification_title_1))
+            elsif invalid_extension(classification_title_1, type)
+              next
             else
               classification = classifications[0..0].collect { |c| objects[c]  }
               media << media_hash(type, classification, classification_title_1, File.join(source, classification_title_0, classification_title_1), check_existence)
@@ -75,6 +88,18 @@ module MultimediaImportation
       end
     end
     return media
+  end
+  
+  def assess_media_pro_xml_file(file)
+    doc = open(file) { |f| Hpricot(f) }
+    ((doc/'author').collect(&:inner_text).uniq + (doc/'writer').collect(&:inner_text).uniq).reject(&:blank?).each{|s| raise "Could not find the person #{s} mentioned in #{file}! Please create it first." if AuthenticatedSystem::Person.find_by_fullname(s).nil? }
+    (doc/'copyright').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the copyright holder #{s} mentioned in #{file}! Please create it first." if CopyrightHolder.find_by_title(s).nil? }
+    (doc/'category').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the feature #{s} mentioned in #{file}! Please create it first." if Place.find(s.sub(/(.*)\{\D?(\d+)\D*\}(.*)/,'\2').to_i).nil? }
+    (doc/'subjectreference').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the subject #{s} mentioned in #{file}! Please create it first." if Topic.find(s.sub(/(.*)\{\D?(\d+)\D*\}(.*)/,'\2').to_i).nil? }
+    (doc/'userfield_1').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the organization #{s} mentioned in #{file}! Please create it first." if Organization.find_by_title(s).nil? }
+    (doc/'userfield_2').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the project #{s} mentioned in #{file}! Please create it first." if Project.find_by_title(s).nil? }
+    (doc/'userfield_3').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the sponsor #{s} mentioned in #{file}! Please create it first." if Sponsor.find_by_title(s).nil? }
+    return true
   end
   
   def invalid_extension(filename, type)
@@ -104,6 +129,12 @@ module MultimediaImportation
     Medium.find(:first, :joins => joins_array, :conditions => [conditions_string] + conditions_array)
   end
   
+  def media_pro_xml_hash(filename, path)
+    medium_hash = { :type => 'metadata', :classifications => [], :file_name => filename, :path => path }
+    medium_hash
+  end
+  
+  
   def media_hash(type, classification, filename, path, check_existence)
     medium_hash = { :type => type, :classifications => classification, :file_name => filename, :path => path }
     if check_existence
@@ -113,7 +144,7 @@ module MultimediaImportation
     medium_hash
   end
   
-  def fork_media_importation(media, classification_types)
+  def fork_media_importation(media, metadata, classification_types)
     #avoids race condition
     register_active_process
     spawn_block do
@@ -124,20 +155,27 @@ module MultimediaImportation
         done = true
         current = 0
         size = media.size
+        imported_media = Hash.new
         while current<size
           interval = 1 # media[current][:type]=='typescripts' ? 1 : 10
           upper_limit = current+interval
           limit = upper_limit<=size ? upper_limit : size
           media_batch = media[current...limit]
+          last_processed = nil
           sid = spawn_block do
             write_to_log("Spawning sub-process #{Process.pid}.")
             register_active_process
-            do_media_importation(media_batch, classification_types)
+            last_processed = do_media_importation(media_batch, classification_types)
+            Rails.cache.write("multimedia_importation/last_processed/#{Process.pid}", last_processed)
             register_active_process(parent)
           end
           wait([sid])
+          last_processed = Rails.cache.read("multimedia_importation/last_processed/#{sid.handle}")
+          Rails.cache.delete("multimedia_importation/last_processed/#{sid.handle}")
+          imported_media.merge!(last_processed)
           current = limit
         end
+        do_metadata_importation(metadata, imported_media)
       rescue Exception => exc
         finish_log("Import was abruptly terminated: #{exc.to_s}")
       else
@@ -232,6 +270,7 @@ module MultimediaImportation
   def do_media_importation(media, classification_types)
     objects = Hash.new
     previous_classification = Array.new(3)
+    imported_media = Hash.new
     for medium_to_import in media
       classification_ids = medium_to_import[:classification]
       0.upto(2) do |i|
@@ -243,6 +282,7 @@ module MultimediaImportation
       end
       begin
         medium = add_medium(medium_to_import[:file_name], medium_to_import[:type], objects['recording_note'])
+        imported_media[File.basename(medium_to_import[:file_name])] = medium.id
         write_to_log("Imported #{medium_to_import[:file_name]} as medium #{medium.id}.")
       rescue Exception => exc
         write_to_log("Import of #{medium_to_import[:file_name]} failed: #{exc}")
@@ -254,7 +294,98 @@ module MultimediaImportation
             Location.create :medium => medium, :administrative_unit_id => object
           elsif model_name != 'recording_note'
             roots[object] ||= Topic.find(object).root.id
-            MediaCategoryAssociation.create :medium => medium, :category_id => object, :root_id => roots[object]
+            MediaCategoryAssociation.create :medium_id => medium.id, :category_id => object, :root_id => roots[object]
+          end
+        end
+      end
+    end
+    return imported_media
+  end
+  
+  def do_metadata_importation(metadata_files, imported_media)
+    rep_type = ReproductionType.find(4)
+    for metadata_file in metadata_files
+      parse_metadata(metadata_file[:file_name]).each do |filename, attrs|
+        medium_id = imported_media[filename]
+        medium = medium_id.blank? ? nil : Medium.find(medium_id)
+        if medium.nil?
+          w = Workflow.find_by_original_filename(filename)
+          medium = w.medium if !w.nil?
+        end
+        next if medium.nil?
+        s = attrs['author']
+        if !s.blank?
+          r = AuthenticatedSystem::Person.find_by_fullname(attrs['author'])
+          medium.photographer = r if !r.nil?
+        end
+        s = attrs['Private Note']
+        medium.private_note = s if !s.blank?
+        medium.save if medium.changed?
+        s = attrs['copyright']
+        if !s.blank?
+          r = CopyrightHolder.find_by_title(s)
+          Copyright.create(:medium_id => medium.id, :copyright_holder_id => r.id, :reproduction_type_id => rep_type.id) if !r.nil?
+        end        
+        s = attrs['category']
+        if !s.blank?
+          fid = s.sub(/(.*)\{\D?(\d+)\D*\}(.*)/,'\2').to_i
+          Location.create(:medium_id => medium.id, :feature_id => fid, :lat => attrs['latitude'], :lng => attrs['longitude'], :spot_feature => attrs['Location Feature'], :notes => attrs['Location Notes'])
+        end
+        s = attrs['caption']
+        if !s.blank?
+          name = attrs['writer']
+          if name.blank?
+            creator_id = nil
+          else
+            creator = AuthenticatedSystem::Person.find_by_fullname(name)
+            creator_id = creator.nil? ? nil : creator.id
+          end
+          r = Description.find_by_title(s)
+          if r.nil?
+            r = Description.create :title => s, :creator_id => creator_id
+            medium.descriptions << r
+          else
+            r.update_attribute(:creator_id, creator_id) if !creator_id.nil?
+            medium.descriptions << r if !medium.description_ids.include? r.id
+          end
+        end
+        s = attrs['subjectreference']
+        if !s.blank?
+          topic_id = s.sub(/(.*)\{\D?(\d+)\D*\}(.*)/,'\2').to_i
+          t = Topic.find(topic_id)
+          if !t.nil?
+            MediaCategoryAssociation.create(:category_id => topic_id, :medium_id => medium.id, :root_id => t.root.id)
+          end
+        end
+        s = attrs['Affiliation Organization']
+        if !s.blank?
+          organization = Organization.find_by_title(s)
+          if !organization.nil?
+            project_title = attrs['Affiliation Project']
+            if project_title.blank?
+              project_id = nil
+            else
+              project =  Project.find_by_title(project_title)
+              project_id = project.nil? ? nil : project.id
+            end
+            sponsor_title = attrs['Affiliation Sponsor']
+            if sponsor_title.blank?
+              sponsor_id = nil
+            else
+              sponsor = Sponsor.find_by_title(sponsor_title)
+              sponsor_id = sponsor.nil? ? nil : sponsor.id
+            end
+            Affiliation.create :medium_id => medium.id, :organization_id => organization.id, :project_id => project_id, :sponsor_id => sponsor_id
+          end          
+        end
+        s = attrs['Caption']
+        if !s.blank?
+          r = Caption.find_by_title(s)
+          if r.nil?
+            r = Caption.create :title => s
+            medium.captions << r
+          else
+            medium.captions << r if !medium.caption_ids.include? r.id
           end
         end
       end
@@ -262,6 +393,21 @@ module MultimediaImportation
   end
   
   private
+  
+  def parse_metadata(file)
+    doc = open(file) { |f| Hpricot(f) }
+    user_field_names = (doc/'catalogtype/userfieldlist/userfielddefinition').collect(&:inner_text)
+    metadata = {}
+    (doc/'catalogtype/mediaitemlist/mediaitem').each do |m|
+      asset_props = (m/'assetproperties').first
+      filename = (asset_props/'filename').first.inner_text
+      attrs = {'uniqueid' => (asset_props/'uniqueid').first.inner_text.to_i}
+      (m/'annotationfields').first.children.select(&:elem?).each{|e| attrs[e.name] = e.inner_text}
+      (m/'userfields').first.children.select(&:elem?).each{|e| attrs[user_field_names[e.name.gsub(/[^\d]/,'').to_i-1]] = e.inner_text}
+      metadata[filename] = attrs
+    end
+    return metadata
+  end
   
   def add_image(image_filename, recording_note = nil)
     ext = extension_without_dot(image_filename).downcase

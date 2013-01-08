@@ -1,4 +1,5 @@
 class RecordingOrientation < ActiveRecord::Base
+  attr_accessible :title
   has_many :media, :dependent => :nullify
 end
 

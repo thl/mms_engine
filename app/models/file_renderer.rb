@@ -1,4 +1,5 @@
 class FileRenderer < ActiveRecord::Base
+  attr_accessible :title, :path
   set_table_name 'renderers'
   has_many :transformations
 end

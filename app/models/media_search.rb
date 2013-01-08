@@ -1,6 +1,5 @@
 class MediaSearch
-  attr_accessor :title
-  attr_accessor :type
+  attr_accessor :title, :type
   
   def initialize(params)
     params.each{|key, value| send("#{key}=",value) }

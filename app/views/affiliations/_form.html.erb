@@ -1,16 +1,13 @@
+<p><%= thumbnail_image_link(@medium) %></p>
 <p>
-<%= thumbnail_image_link(@medium) %>
-</p>
-<%= f.hidden_field :medium_id %>
-<p>
-  <b><%= Organization.model_name.human.titleize.s %></b><br />
-  <%= f.collection_select(:organization_id, @organizations, :id, :title) %> (<%= link_to ts('new.record', :what => Organization.model_name.human), new_organization_path, { :target => '_blank' } %>)
+    <b><%= Organization.model_name.human.titleize.s %></b><br />
+<%= f.collection_select(:organization_id, @organizations, :id, :title) %> (<%= link_to ts('new.record', :what => Organization.model_name.human), new_organization_path, { :target => '_blank' } %>)
 </p>
 <p>
-  <b><%= Project.model_name.human.titleize.s %></b><br />
-  <%= f.collection_select(:project_id, @projects, :id, :title, :include_blank => true) %> (<%= link_to ts('new.record', :what => Project.model_name.human), new_project_path, { :target => '_blank' } %>)
+    <b><%= Project.model_name.human.titleize.s %></b><br />
+<%= f.collection_select(:project_id, @projects, :id, :title, :include_blank => true) %> (<%= link_to ts('new.record', :what => Project.model_name.human), new_project_path, { :target => '_blank' } %>)
 </p>
 <p>
-  <b><%= Sponsor.model_name.human.titleize.s %></b><br />
-  <%= f.collection_select(:sponsor_id, @sponsors, :id, :title, :include_blank => true) %> (<%= link_to ts('new.record', :what => Sponsor.model_name.human), new_sponsor_path, { :target => '_blank' } %>)
+    <b><%= Sponsor.model_name.human.titleize.s %></b><br />
+<%= f.collection_select(:sponsor_id, @sponsors, :id, :title, :include_blank => true) %> (<%= link_to ts('new.record', :what => Sponsor.model_name.human), new_sponsor_path, { :target => '_blank' } %>)
 </p>

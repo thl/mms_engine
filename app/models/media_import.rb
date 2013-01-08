@@ -1,13 +1,6 @@
 class MediaImport
-  attr_accessor :batch_processing_folder
-  attr_accessor :import_type_id
-  attr_accessor :media_classification_1
-  attr_accessor :media_classification_2
-  attr_accessor :media_classification_3
-  attr_accessor :has_images
-  attr_accessor :has_movies
-  attr_accessor :has_texts
-  attr_accessor :media_type_subfolder
+  attr_accessor :batch_processing_folder, :import_type_id, :media_classification_1, :media_classification_2,
+    :media_classification_3, :has_images, :has_mediapro_metadata, :has_movies, :has_texts, :media_type_subfolder
   
   def initialize(params)
     params.each{|key, value| send("#{key}=",value) }

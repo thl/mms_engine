@@ -4,7 +4,6 @@
 <%= form_for(:media_publisher, :url => medium_media_publisher_path(@medium), :html => {:method => :put}) do |f| %>
 	<p>
 	  <b><%= Medium.model_name.human.titleize.s %></b><br />    
-<%=   f.hidden_field :medium_id %>
 <%=   thumbnail_image_link(@medium) %></td>
 	</p>
 	<p>

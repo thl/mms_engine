@@ -1,12 +1,10 @@
 class MediaSourceAssociationsController < AclController
-  helper :media
   before_filter :find_medium
   
   # GET /media_source_associations
   # GET /media_source_associations.xml
   def index
     @media_source_associations = @medium.media_source_associations
-
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @media_source_associations }
@@ -17,7 +15,6 @@ class MediaSourceAssociationsController < AclController
   # GET /media_source_associations/1.xml
   def show
     @media_source_association = MediaSourceAssociation.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @media_source_association }
@@ -27,7 +24,7 @@ class MediaSourceAssociationsController < AclController
   # GET /media_source_associations/new
   # GET /media_source_associations/new.xml
   def new
-    @media_source_association = MediaSourceAssociation.new(:medium => @medium)
+    @media_source_association = @medium.media_source_associations.build
     @sources = Source.order('title')
     respond_to do |format|
       format.html # new.html.erb
@@ -44,7 +41,7 @@ class MediaSourceAssociationsController < AclController
   # POST /media_source_associations
   # POST /media_source_associations.xml
   def create
-    @media_source_association = MediaSourceAssociation.new(params[:media_source_association])
+    @media_source_association = @medium.media_source_associations.build(params[:media_source_association])
     respond_to do |format|
       if @media_source_association.save
         flash[:notice] = ts('new.successful', :what => MediaSourceAssociation.model_name.human.capitalize)
@@ -64,7 +61,6 @@ class MediaSourceAssociationsController < AclController
   # PUT /media_source_associations/1.xml
   def update
     @media_source_association = MediaSourceAssociation.find(params[:id])
-
     respond_to do |format|
       if @media_source_association.update_attributes(params[:media_source_association])
         flash[:notice] = ts('edit.successful', :what => MediaSourceAssociation.model_name.human.capitalize)
@@ -85,7 +81,6 @@ class MediaSourceAssociationsController < AclController
   def destroy
     @media_source_association = MediaSourceAssociation.find(params[:id])
     @media_source_association.destroy
-
     respond_to do |format|
       format.html { redirect_to(media_source_associations_url) }
       format.xml  { head :ok }

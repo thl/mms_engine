@@ -1,5 +1,6 @@
 class DescriptionType < ActiveRecord::Base
- validates_presence_of :title
+  attr_accessible :title
+  validates_presence_of :title
   has_many :captions  
   has_many :descriptions
 end

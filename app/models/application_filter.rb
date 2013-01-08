@@ -1,4 +1,5 @@
 class ApplicationFilter < ActiveRecord::Base
+  attr_accessible :title
   def self.application_filter
     cached_filter('application_filter')
   end

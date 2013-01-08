@@ -1,5 +1,5 @@
 class CaptureDeviceModel < ActiveRecord::Base
-  attr_accessible :title, :exif_tag
+  attr_accessible :capture_device_maker_id, :title, :exif_tag
   
   belongs_to :capture_device_maker
   has_many :media

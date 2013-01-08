@@ -128,8 +128,13 @@ class MediaController < AclController
   # PUT /media/1.xml
   def update
     @medium = Medium.find(params[:id])
+    params_medium = params[:medium]
     respond_to do |format|
-      @medium.attributes=params[:medium]
+      @medium.attributes = params_medium
+      if @medium.taken_on.nil?
+        a = [params_medium['taken_on(2i)'], params_medium['taken_on(3i)'], params_medium['taken_on(1i)']].reject(&:blank?)
+        @medium.partial_taken_on = a.join('/') if !a.empty?
+      end
       is_picture = @medium.instance_of? Picture
       redo_thumbs = @medium.rotation_changed? if is_picture
       if @medium.save # @medium.update_attributes(params[:medium])

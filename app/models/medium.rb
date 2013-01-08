@@ -16,6 +16,8 @@ class Medium < ActiveRecord::Base
     :document => {:singular => 'Document', :plural => 'Documents'}
     #:biblio => {:singular => 'Biblio', :plural => 'Biblio'}
   }
+  attr_accessible :recording_note, :resource_type_id, :photographer_id, :taken_on, :capture_device_model_id,
+    :quality_type_id, :private_note
   
   before_create  { |record| record.application_filter = ApplicationFilter.default_filter }
   after_create   { |record| record.rename } # TODO: handle if it couldn't be saved

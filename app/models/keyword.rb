@@ -1,4 +1,5 @@
 class Keyword < ActiveRecord::Base
+  attr_accessible :title
   translates :title
   validates_presence_of :title
   validates_uniqueness_of :title  

@@ -1,4 +1,5 @@
 class Source < ActiveRecord::Base
+  attr_accessible :title
   has_many :media_source_associations
   has_many :media, :through => :media_source_associations
 end

@@ -1,4 +1,5 @@
 class Status < ActiveRecord::Base
+  attr_accessible :title, :description, :position
   validates_presence_of :title, :position
   has_many :media, :through => :workflows 
 end

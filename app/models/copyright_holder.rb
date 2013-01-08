@@ -1,4 +1,5 @@
 class CopyrightHolder < ActiveRecord::Base
+  attr_accessible :title, :website
   validates_presence_of :title
   has_many :copyrights
 end

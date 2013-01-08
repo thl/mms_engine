@@ -1,6 +1,4 @@
 class MediaKeywordAssociationsController < AclController
-  helper :media
-  
   # GET /media_keyword_associations
   # GET /media_keyword_associations.xml
   def index
@@ -40,7 +38,7 @@ class MediaKeywordAssociationsController < AclController
       redirect_to countries_path
     else
       @keywords = Keyword.find(:all, :order => 'title')
-      @media_keyword_association = MediaKeywordAssociation.new(:medium => @medium)
+      @media_keyword_association = MediaKeywordAssociation.new(:medium_id => @medium.id)
     end
   end
 

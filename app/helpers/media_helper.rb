@@ -4,7 +4,7 @@ module MediaHelper
     return nil if captions.empty?
     current_language = session[:language]
     for caption in captions
-      if caption.language.code == current_language
+      if !caption.language.nil? && caption.language.code == current_language
         return caption
       end
     end

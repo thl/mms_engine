@@ -3,7 +3,6 @@
   <%= translated_title_name.s %><br />
   <%= f.text_area :title, fixed_language_options.merge({:rows => 3}) %>
 </p>
-<%= f.hidden_field :creator_id %>
 <%  creator = @title.creator %>
 <%= display_if_not_blank Caption.human_attribute_name('creator').s, h(creator.fullname).s if !creator.nil? %>
 <p>

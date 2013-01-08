@@ -30,12 +30,10 @@ class AffiliationsController < AclController
 
   # GET /affiliations/new
   def new
-    if !@medium.nil?
-      @affiliation = @medium.affiliations.build
-      @sponsors = Sponsor.order('title')
-      @organizations = Organization.order('title')
-      @projects = Project.order('title')
-    end
+    @affiliation = @medium.affiliations.build
+    @sponsors = Sponsor.order('title')
+    @organizations = Organization.order('title')
+    @projects = Project.order('title')
   end
 
   # GET /affiliations/1;edit
@@ -50,15 +48,14 @@ class AffiliationsController < AclController
   # POST /affiliations
   # POST /affiliations.xml
   def create
-    @affiliation = Affiliation.new(params[:affiliation])
+    @affiliation = @medium.affiliations.build(params[:affiliation])
     success = @affiliation.save
     respond_to do |format|
       if success
         flash[:notice] = ts('new.successful', :what => Affiliation.model_name.human.capitalize)
-        format.html { redirect_to edit_medium_url(@affiliation.medium) }
+        format.html { redirect_to edit_medium_url(@medium) }
         format.xml  { head :created, :location => medium_affiliation_url(@medium, @affiliation) }
       else
-        @medium = @affiliation.medium if @medium.nil?
         @sponsors = Sponsor.order('title')
         @organizations = Organization.order('title')
         @projects = Project.order('title')

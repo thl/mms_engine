@@ -61,7 +61,7 @@ class MediaImportsController < AclController
     @import_types = Array.new
     @@import_types.each_with_index {|name, index| @import_types << [name, index] }
     @media_classification = @@media_classification.each {|name| [name.humanize, name] }
-    @media_import = MediaImport.new(:batch_processing_folder => '', :import_type_id => 1, :has_images => true, :media_type_subfolder => 'no', :media_classification_1 => 'collection')
+    @media_import = MediaImport.new(:batch_processing_folder => '', :import_type_id => 1, :has_images => true, :media_classification_1 => 'collection')
 
     respond_to do |format|
       format.html # new.html.erb
@@ -76,7 +76,7 @@ class MediaImportsController < AclController
     setting = ApplicationSetting.find_by_title('batch_processing_folder')
     folder = setting.nil? ? '' : setting.string_value
     source_folder = File.expand_path(Rails.root.join(folder, media_import.batch_processing_folder))
-    no_subfolder = media_import.media_type_subfolder=='no'
+    no_subfolder = media_import.media_type_subfolder.to_i==0
     types_to_import = Array.new
     types_to_import << 'images' if media_import.has_images.to_i==1
     types_to_import << 'movies' if media_import.has_movies.to_i==1
@@ -108,7 +108,7 @@ class MediaImportsController < AclController
         @import_type = {:title => @@import_types[import_type_id], :id => import_type_id}
         for type in types_to_import
           actual_folder = no_subfolder ? source_folder : File.join(source_folder, type)
-          @media.concat(assess_media_importation(actual_folder, type, import_type_id==2, media_import.media_classification_1, media_import.media_classification_2, media_import.media_classification_3))
+          @media.concat(assess_media_importation(actual_folder, type, import_type_id==2, media_import.has_mediapro_metadata.to_i==1, media_import.media_classification_1, media_import.media_classification_2, media_import.media_classification_3))
         end
       rescue Exception => exc
         flash[:notice] = "<b>Import failed</b>: #{exc.to_s}"
@@ -133,6 +133,7 @@ class MediaImportsController < AclController
       media_id = media_separated[:id]
     end
     media_integrated = Array.new
+    metadata = Array.new
     0.upto(media_separated[:file_name].size-1) do |i|
       medium = { :file_name => media_file_name[i] }
       case import_type_id
@@ -144,12 +145,16 @@ class MediaImportsController < AclController
         medium[:classification] = classification
       when 2 # Update media files
         medium[:id] = media_id[i]
-      end 
-      media_integrated << medium
+      end
+      if medium[:type]=='metadata'
+        metadata << medium
+      else
+        media_integrated << medium
+      end
     end
     case import_type_id
     when 1 # Add new media to db
-      fork_media_importation(media_integrated, classifications)
+      fork_media_importation(media_integrated, metadata, classifications)
       redirect_to status_media_imports_url
     when 2 # Update media files
       fork_media_update(media_integrated)

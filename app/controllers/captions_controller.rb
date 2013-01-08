@@ -5,65 +5,57 @@ class CaptionsController < AclController
   # GET /media/1/captions
   # GET /media/1/captions.xml
   def index
-    if !@medium.nil?
-      @captions= @medium.captions      
-      respond_to do |format|
-        format.html # index.rhtml
-        format.xml  { render :xml => @captions.to_xml }
-      end
+    @captions= @medium.captions      
+    respond_to do |format|
+      format.html # index.rhtml
+      format.xml  { render :xml => @captions.to_xml }
     end
   end
 
   # GET /media/1/captions/1
   # GET /media/1/captions/1.xml
   def show
-    if !@medium.nil?
-      @caption = @medium.captions.find(params[:id])
-      respond_to do |format|
-        format.html # show.rhtml
-        format.xml  { render :xml => @caption.to_xml }
-      end
+    @caption = @medium.captions.find(params[:id])
+    respond_to do |format|
+      format.html # show.rhtml
+      format.xml  { render :xml => @caption.to_xml }
     end
   end
 
   # GET /media/1/captions/new
   def new
-    if !@medium.nil?
-      @description_types = DescriptionType.order('title')
-      @languages = ComplexScripts::Language.order('title')
-      language = ComplexScripts::Language.find_iso_code(I18n.locale)
-      @caption = Caption.new(:language => language, :description_type => @description_types.first, :creator => current_user.person)
-    end
+    @description_types = DescriptionType.order('title')
+    @languages = ComplexScripts::Language.order('title')
+    language = ComplexScripts::Language.find_iso_code(I18n.locale)
+    @caption = Caption.new(:language => language, :description_type => @description_types.first)
+    @caption.creator_id = current_user.person.id
   end
 
   # GET /media/1/captions/1;edit
   def edit
-    if !@medium.nil?
-      @description_types = DescriptionType.order('title')
-      @languages = ComplexScripts::Language..order('title')
-      @caption = @medium.captions.find(params[:id])
-    end
+    @description_types = DescriptionType.order('title')
+    @languages = ComplexScripts::Language..order('title')
+    @caption = @medium.captions.find(params[:id])
   end
 
   # POST /media/1/captions
   # POST /media/1/captions.xml
   def create
-    if !@medium.nil?
-      @caption = Caption.new(params[:caption])
-      success = @caption.save
-      @medium.captions << @caption if success
-      
-      respond_to do |format|
-        if success
-          flash[:notice] = ts('new.successful', :what => Caption.model_name.human.capitalize)
-          format.html { redirect_to edit_medium_url(@medium) }
-          format.xml  { head :created, :location => medium_caption_url(@medium, @caption) }
-        else
-          @description_types = DescriptionType.order('title')
-          @languages = ComplexScripts::Language.order('title')
-          format.html { render :action => 'new' }
-          format.xml  { render :xml => @caption.errors.to_xml }
-        end
+    @caption = Caption.new(params[:caption])
+    @caption.creator_id = current_user.person.id
+    success = @caption.save
+    @medium.captions << @caption if success
+    
+    respond_to do |format|
+      if success
+        flash[:notice] = ts('new.successful', :what => Caption.model_name.human.capitalize)
+        format.html { redirect_to edit_medium_url(@medium) }
+        format.xml  { head :created, :location => medium_caption_url(@medium, @caption) }
+      else
+        @description_types = DescriptionType.order('title')
+        @languages = ComplexScripts::Language.order('title')
+        format.html { render :action => 'new' }
+        format.xml  { render :xml => @caption.errors.to_xml }
       end
     end
   end
@@ -71,28 +63,26 @@ class CaptionsController < AclController
   # PUT /media/1/captions/1
   # PUT /media/1/captions/1.xml
   def update
-    if !@medium.nil?
-      @caption = @medium.captions.find(params[:id])
-      params_caption = params[:caption]
-      if params_caption[:title]==@caption.title || @caption.media.size==1
-        success = @caption.update_attributes(params_caption)
+    @caption = @medium.captions.find(params[:id])
+    params_caption = params[:caption]
+    if params_caption[:title]==@caption.title || @caption.media.size==1
+      success = @caption.update_attributes(params_caption)
+    else
+      @medium.captions.delete(@caption)
+      @caption = Caption.new(params_caption)
+      @medium.captions << @caption
+      success = @caption.save
+    end      
+    respond_to do |format|
+      if success
+        flash[:notice] = ts('edit.successful', :what => Caption.model_name.human.capitalize)
+        format.html { redirect_to edit_medium_url(@medium) }
+        format.xml  { head :ok }
       else
-        @medium.captions.delete(@caption)
-        @caption = Caption.new(params_caption)
-        @medium.captions << @caption
-        success = @caption.save
-      end      
-      respond_to do |format|
-        if success
-          flash[:notice] = ts('edit.successful', :what => Caption.model_name.human.capitalize)
-          format.html { redirect_to edit_medium_url(@medium) }
-          format.xml  { head :ok }
-        else
-          @description_types = DescriptionType.order('title')
-          @languages = ComplexScripts::Language.order('title')
-          format.html { render :action => 'edit' }
-          format.xml  { render :xml => @caption.errors.to_xml }
-        end
+        @description_types = DescriptionType.order('title')
+        @languages = ComplexScripts::Language.order('title')
+        format.html { render :action => 'edit' }
+        format.xml  { render :xml => @caption.errors.to_xml }
       end
     end
   end
@@ -100,17 +90,14 @@ class CaptionsController < AclController
   # DELETE /media/1/captions/1
   # DELETE /media/1/captions/1.xml
   def destroy
-    if !@medium.nil?
-      @caption = @medium.captions.find(params[:id])
-      @caption.destroy
+    @caption = @medium.captions.find(params[:id])
+    @caption.destroy
 
-      respond_to do |format|
-        format.html { redirect_to edit_medium_url(@medium) }
-        format.xml  { head :ok }
-      end
+    respond_to do |format|
+      format.html { redirect_to edit_medium_url(@medium) }
+      format.xml  { head :ok }
     end
   end
-  
   
   private
   

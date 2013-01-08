@@ -1,4 +1,5 @@
 class MediaSourceAssociation < ActiveRecord::Base
+  attr_accessible :medium_id, :source_id, :shot_number
   belongs_to :medium
   belongs_to :source
 end

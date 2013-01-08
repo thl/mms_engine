@@ -1,10 +1,8 @@
 class CopyrightsController < AclController
-  helper :media
-
   # GET /copyrights
   # GET /copyrights.xml
   def index
-      begin
+    begin
       @medium = Medium.find(params[:medium_id])
     rescue ActiveRecord::RecordNotFound
       logger.error("Attempt to access invalid medium #{params[:medium_id]}")

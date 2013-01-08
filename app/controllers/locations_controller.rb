@@ -1,5 +1,4 @@
 class LocationsController < AclController
-  helper :media
   before_filter :find_medium
     
   # GET /locations/1;edit
@@ -9,13 +8,13 @@ class LocationsController < AclController
   
   # GET /locations/new
   def new
-    @location = @medium.locations.new
+    @location = @medium.locations.build
   end
 
   # POST /locations
   # POST /locations.xml
   def create
-    @location = @medium.locations.new(params[:location])
+    @location = @medium.locations.build(params[:location])
     if @location.save
       respond_to do |format|
         flash[:notice] = ts('new.successful', :what => Location.model_name.human.capitalize)

@@ -1,4 +1,5 @@
 class ReproductionType < ActiveRecord::Base
+  attr_accessible :title, :order, :website
   validates_presence_of :title
   has_many :copyrights
 end

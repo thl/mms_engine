@@ -1,12 +1,11 @@
 <p>
 <%= thumbnail_image_link(@medium) %>
 </p>
-<%= f.hidden_field :medium_id %>
 <p>
-  <b><%= Publisher.model_name.human.titleize.s %></b><br />
-  <%= f.collection_select(:publisher_id, @publishers, :id, :title) %> (<%= link_to ts('new.record', :what => Publisher.model_name.human), new_publisher_path, { :target => '_blank' } %>)
+    <b><%= Publisher.model_name.human.titleize.s %></b><br />
+<%= f.collection_select(:publisher_id, @publishers, :id, :title) %> (<%= link_to ts('new.record', :what => Publisher.model_name.human), new_publisher_path, { :target => '_blank' } %>)
 </p>
 <p>
-    <%= f.label :date %><br />
-    <%= f.date_select :date %>
+<%= f.label :date %><br />
+<%= f.date_select :date %>
 </p>

@@ -1,4 +1,5 @@
 class Copyright < ActiveRecord::Base
+  attr_accessible :medium_id, :copyright_holder_id, :reproduction_type_id, :notes
   belongs_to :medium
   belongs_to :copyright_holder
   belongs_to :reproduction_type

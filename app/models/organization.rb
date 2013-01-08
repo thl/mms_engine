@@ -1,7 +1,8 @@
 class Organization < ActiveRecord::Base
- validates_presence_of :title
- has_many :affiliations
- has_many :glossaries
+  attr_accessible :title, :website
+  validates_presence_of :title
+  has_many :affiliations
+  has_many :glossaries
 end
 
 # == Schema Info

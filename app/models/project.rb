@@ -1,6 +1,7 @@
 class Project < ActiveRecord::Base
- validates_presence_of :title
- has_many :affiliations
+  attr_accessible :title
+  validates_presence_of :title
+  has_many :affiliations
 end
 
 # == Schema Info

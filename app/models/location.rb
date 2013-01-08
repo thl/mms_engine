@@ -1,4 +1,5 @@
 class Location < ActiveRecord::Base
+  attr_accessible :medium_id, :feature_id, :spot_feature, :notes, :lat, :lng
   validates_presence_of :medium_id, :feature_id
   belongs_to :medium
     

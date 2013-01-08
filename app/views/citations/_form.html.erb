@@ -22,7 +22,6 @@
     <%= Citation.human_attribute_name('note').s %><br />
     <%= f.text_area :note, :rows => 5 %>
   </p>
-<%= f.hidden_field :creator_id %>
 <%  creator = @reference.creator %>
 <%= display_if_not_blank(Caption.human_attribute_name('creator').s, h(creator.fullname).s) if !creator.nil? %>
 <%= javascript_tag "$('citation_medium_id').focus()" %>

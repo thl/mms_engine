@@ -12,13 +12,11 @@ class WorkflowsController < AclController
   # GET /workflows/1
   # GET /workflows/1.xml
   def show
-    if !@medium.nil?
-      @workflow = @medium.workflow
-      @statuses = Status.order('position')
-      respond_to do |format|
-        format.html # show.html.erb
-        format.xml  { render :xml => @workflow }
-      end
+    @workflow = @medium.workflow
+    @statuses = Status.order('position')
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @workflow }
     end
   end
 
@@ -30,23 +28,19 @@ class WorkflowsController < AclController
 
   # GET /workflows/1/edit
   def edit
-    if !@medium.nil?
-      @workflow = @medium.workflow
-      @workflow = @medium.create_workflow if @workflow.nil?
-    end  
+    @workflow = @medium.workflow
+    @workflow = @medium.create_workflow if @workflow.nil?
   end
 
   # POST /workflows
   # POST /workflows.xml
   def create
-    if !@medium.nil?
-      @workflow = @medium.build_workflow(params[:workflow])
-      respond_to do |format|
-        if @workflow.save
-          format.xml  { render :xml => @workflow, :status => :created, :location => medium_workflow_url(@medium) }
-        else
-          format.xml  { render :xml => @workflow.errors, :status => :unprocessable_entity }
-        end
+    @workflow = @medium.build_workflow(params[:workflow])
+    respond_to do |format|
+      if @workflow.save
+        format.xml  { render :xml => @workflow, :status => :created, :location => medium_workflow_url(@medium) }
+      else
+        format.xml  { render :xml => @workflow.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -54,17 +48,15 @@ class WorkflowsController < AclController
   # PUT /workflows/1
   # PUT /workflows/1.xml
   def update
-    if !@medium.nil?
-      @workflow = @medium.workflow
-      respond_to do |format|
-        if @workflow.update_attributes(params[:workflow])
-          flash[:notice] = ts('edit.successful', :what => Workflow.model_name.human.capitalize)
-          format.html { redirect_to edit_medium_path(@medium, :anchor => 'workflow') }
-          format.xml  { head :ok }
-        else
-          format.html { render :action => "edit" }
-          format.xml  { render :xml => @workflow.errors, :status => :unprocessable_entity }
-        end
+    @workflow = @medium.workflow
+    respond_to do |format|
+      if @workflow.update_attributes(params[:workflow])
+        flash[:notice] = ts('edit.successful', :what => Workflow.model_name.human.capitalize)
+        format.html { redirect_to edit_medium_path(@medium, :anchor => 'workflow') }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @workflow.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -72,13 +64,11 @@ class WorkflowsController < AclController
   # DELETE /workflows/1
   # DELETE /workflows/1.xml
   def destroy
-    if !@medium.nil?
-      @workflow = @medium.workflow
-      @workflow.destroy
-      respond_to do |format|
-        format.html { redirect_to media_url }
-        format.xml  { head :ok }
-      end
+    @workflow = @medium.workflow
+    @workflow.destroy
+    respond_to do |format|
+      format.html { redirect_to media_url }
+      format.xml  { head :ok }
     end
   end
 

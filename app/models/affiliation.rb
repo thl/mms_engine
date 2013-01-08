@@ -1,8 +1,9 @@
 class Affiliation < ActiveRecord::Base
- belongs_to :medium
- belongs_to :sponsor
- belongs_to :organization
- belongs_to :project
+  attr_accessible :medium_id, :organization_id, :project_id, :sponsor_id
+  belongs_to :medium
+  belongs_to :sponsor
+  belongs_to :organization
+  belongs_to :project
 end
 
 # == Schema Info
