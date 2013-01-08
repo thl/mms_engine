@@ -29,7 +29,7 @@ class DescriptionsController < AclController
     @languages = ComplexScripts::Language.order('title')
     language = ComplexScripts::Language.find_iso_code(I18n.locale)
     @description = Description.new(:language => language, :description_type => @description_types.first)
-    @description.creator => current_user.person
+    @description.creator = current_user.person
   end
 
   # GET /media/1/descriptions/1;edit
@@ -43,7 +43,7 @@ class DescriptionsController < AclController
   # POST /media/1/descriptions.xml
   def create
     @description = Description.new(params[:description])
-    @description.creator => current_user.person
+    @description.creator = current_user.person
     success = @description.save
     @medium.descriptions << @description if success
     
