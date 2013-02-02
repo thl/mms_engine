@@ -1,4 +1,4 @@
-require 'config/environment'
+#require 'config/environment'
 
 module DocumentProcessing
   def self.caption_to_title

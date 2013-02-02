@@ -10,5 +10,8 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require mms_engine/jquery-ui-1.8.24.custom.min
+//= require jquery
+//= require jquery_ujs
+//= require tinymce
+//= require interface_utils/jquery-ui-1.8.24.custom.min
 //= require mms_engine/popup-ui-handler

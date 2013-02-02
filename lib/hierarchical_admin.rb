@@ -4,7 +4,7 @@ module HierarchicalAdmin
     respond_to do |format|
       format.html { render :template => 'main/hierarchy/admin/index' }
       format.xml do
-        @dtd = @controller_name
+        @dtd = controller_name
         render :template => 'main/hierarchy/admin/index', :layout => 'application'
       end
     end
@@ -28,7 +28,7 @@ module HierarchicalAdmin
         respond_to do |format|
           format.html { render :template => 'main/hierarchy/admin/show' }
           format.xml  do
-            @dtd = @controller_name.singularize
+            @dtd = controller_name.singularize
             render :template => 'main/hierarchy/admin/show', :layout => 'application'
           end
         end

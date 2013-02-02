@@ -5,10 +5,10 @@
 <%=   f.select(:language, @available_languages.collect {|l| [l.title, l.id]} + [[ t('all.records', :what => ComplexScripts::Language.model_name.human(:count => :many)), 0]], {}, language_options) %>
 <%=   f.radio_button :type, :simple %><%= ts 'search.full_text' %>
 <%=   f.radio_button :type, :boolean %><%= ts :advanced %> (<%= link_to(ts('what_is', :what => t('this.this')), help_advanced_search_path, :remote => true, :id => 'advanced_search_link') %>)
-<%=   javascript_tag("$(\'#advanced_search_link\').bind(\'ajax:loading\', function(){ document.getElementById(\'advanced_search_type\').checked = true; });") %>
+<%=   javascript_tag("$(\'#advanced_search_link\').bind(\'ajax:beforeSend\', function(){ document.getElementById(\'advanced_search_type\').checked = true; });") %>
     </p>
 <%  end %>
-<%= javascript_tag("$(\'#search_form\').bind(\'ajax:loading\', function(){ #{javascript_searching('results') + javascript_load('browse_panel','')} });") %>
+<%= javascript_tag("$(\'#search_form\').bind(\'ajax:beforeSend\', function(){ #{javascript_searching('results') + javascript_load('browse_panel','')} });") %>
 <%= form_for(:dictionary_search, :url => dictionary_searches_path, :remote => true, :html => { :id => 'browse_form' }) do |f| %>
     <p>
 <%=   ts('or.this') %> <%= globalized_submit_tag 'browse.this', :id => 'browse' %>
@@ -16,6 +16,6 @@
       <input id="dictionary_search_type" name="dictionary_search[type]" type="hidden" value="browse" />
    </p>
 <% end %>
-<%= javascript_tag("$(\'#browse_form\').bind(\'ajax:loading\', function(){ #{javascript_searching('browse_panel') + javascript_load('results','')} });") %>
+<%= javascript_tag("$(\'#browse_form\').bind(\'ajax:beforeSend\', function(){ #{javascript_searching('browse_panel') + javascript_load('results','')} });") %>
 <div id="browse_panel"></div>
 <div id="results"></div>

@@ -1,6 +1,6 @@
 <% caption_title = Caption.model_name.human.capitalize %>
 <h1><%= ts :for, :what => t('edit.ing.record', :what => caption_title), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
-<%= form_for(:caption, :url => medium_caption_path(@medium, @caption), :html => {:method => :put}) do |f| %>
+<%= form_for(:caption, :url => medium_caption_path(@medium, @caption), :method => :put) do |f| %>
 <%=   render :partial => 'form', :locals => { :f => f, :caption_title => caption_title } %>
       <p><%= globalized_submit_tag 'update.this' %></p>
 <%  end %>

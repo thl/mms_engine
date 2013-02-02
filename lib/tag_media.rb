@@ -1,5 +1,5 @@
 # TagMedia
-require 'config/environment'
+# require 'config/environment'
 
 module TagMedia
   def self.tag_media(media_id_start, media_id_end, copyright_holder_id, reproduction_type_id, collection_id, organization_id = nil)

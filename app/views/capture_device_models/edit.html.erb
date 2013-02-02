@@ -1,6 +1,6 @@
 <h1><%= ts 'edit.ing.record', :what => CaptureDeviceModel.model_name.human.titleize.s %></h1>
 <%= error_messages_for :capture_device_model %>
-<%= form_for(:capture_device_model, :url => capture_device_maker_model_path(@capture_device_maker, @capture_device_model), :html => { :method => :put }) do |f| %>
+<%= form_for(:capture_device_model, :url => capture_device_maker_model_path(@capture_device_maker, @capture_device_model), :method => :put) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>
       <p>
 <%=     globalized_submit_tag 'update.this' %>

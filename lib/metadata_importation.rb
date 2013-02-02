@@ -1,5 +1,5 @@
 # MetadataImportation
-require 'config/environment'
+# require 'config/environment'
 require 'csv'
 
 class MetadataImportation < CsvImportation

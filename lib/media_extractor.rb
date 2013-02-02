@@ -1,5 +1,5 @@
 # MediaExtractor
-require 'config/environment'
+# require 'config/environment'
 require 'csv'
 
 module MediaExtractor

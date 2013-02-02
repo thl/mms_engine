@@ -1,5 +1,5 @@
 # CleanUpMedia
-require 'config/environment'
+#require 'config/environment'
 
 module CleanUpMedia
   def self.clean_up_media

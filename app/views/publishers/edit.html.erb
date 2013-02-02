@@ -1,6 +1,6 @@
 <h1><%= ts 'edit.ing.record', :what => h(@publisher.title) %></h1>
 <%= error_messages_for :publisher %>
-<%= form_for(:publisher, :url => publisher_path(@publisher), :html => {:method => :put}) do |f| %>
+<%= form_for(:publisher, :url => publisher_path(@publisher), :method => :put) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>
       <p><%= globalized_submit_tag 'update.this' %></p>
 <%  end %>

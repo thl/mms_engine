@@ -8,7 +8,11 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require mms_engine/jquery-ui-1.8.24.custom
+ *= require_self
+ *= require universal_navigation/jquery-ui-tabs
+ *= require interface_utils/jquery-ui-1.8.24.custom
+ *= require authenticated_system/application
+ *= require complex_scripts/application
  */
 
 h4, h5, h6 {

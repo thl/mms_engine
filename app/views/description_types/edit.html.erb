@@ -1,6 +1,6 @@
 <h1><%= ts 'edit.ing.record', :what => DescriptionType.model_name.human(:what => "#{Caption.model_name.human.titleize}/#{Description.model_name.human.titleize}") %></h1>
 <%= error_messages_for :description_type %>
-<%= form_for(:description_type, :url => description_type_path(@description_type), :html => { :method => :put }) do |f| %>
+<%= form_for(:description_type, :url => description_type_path(@description_type), :method => :put) do |f| %>
 <%=   render :partial => 'form', :locals => {:f => f} %>
       <p><%= globalized_submit_tag 'update.this' %></p>
 <%  end %>

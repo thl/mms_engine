@@ -1,5 +1,5 @@
 # DictionaryImportation
-require 'config/environment'
+#require 'config/environment'
 
 module DictionaryImportation
   COLUMN=0

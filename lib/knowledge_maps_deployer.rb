@@ -1,5 +1,5 @@
 # KnowledgeMapsDeployer
-require 'config/environment'
+# require 'config/environment'
 
 module Local
   class Collection < ActiveRecord::Base
