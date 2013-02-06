@@ -22,7 +22,7 @@
      <p><%= bookmark 'captions' %>
 	 <b><%= Caption.model_name.human(:count => captions.size).titleize.s %></b>
      (<%= link_to ts('new.record', :what => Caption.model_name.human), new_medium_caption_path(@medium) %>)</p>
-<%=  captions.collect{|caption| "<p>#{caption.title.s} (#{link_to caption.description_type.nil? ? ts('edit.this') : caption.description_type.title, edit_medium_caption_path(@medium, caption)})</p>"}.join("\n") %>
+<%=  captions.collect{|caption| "<p>#{caption.title.s} (#{link_to caption.description_type.nil? ? ts('edit.this') : caption.description_type.title, edit_medium_caption_path(@medium, caption)})</p>"}.join("\n").html_safe %>
      <hr/>
 <% end
    descriptions = @medium.descriptions
@@ -30,7 +30,7 @@
      <p><%= bookmark 'descriptions' %>
 	 <b><%= Description.model_name.human(:count => descriptions.size).titleize.s %></b>
 	 (<%=  link_to ts('new.record', :what => Description.model_name.human), new_medium_description_path(@medium) %>)</p>
-<%=  descriptions.collect{|description| "#{description.title.s}<p>#{link_to description.description_type.nil? ? ts('edit.this') : description.description_type.title, edit_medium_description_path(@medium, description)}</p><hr/>" }.join("\n") %>
+<%=  descriptions.collect{|description| "#{description.title.s}<p>#{link_to description.description_type.nil? ? ts('edit.this') : description.description_type.title, edit_medium_description_path(@medium, description)}</p><hr/>" }.join("\n").html_safe %>
 <% end %>
 <% locations = @medium.locations 
    if !locations.empty? %>

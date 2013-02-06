@@ -5,6 +5,8 @@
 <%=  thumbnail_image_link(@medium) %>
 </p>
 <%= display_if_not_blank Location.model_name.human(:count => 1).titleize.s, link_to(@location.feature.header, medium_places_path(@medium, @location.feature_id)) %>
+<%= display_if_not_blank Location.human_attribute_name('lat').s, @location.lat %>
+<%= display_if_not_blank Location.human_attribute_name('lng').s, @location.lng %>
 <%= display_if_not_blank Location.human_attribute_name('spot_feature').s, h(@location.spot_feature) %>
 <%= display_if_not_blank Location.human_attribute_name('notes').s, h(@location.notes) %>
 <p>&nbsp;<br/>

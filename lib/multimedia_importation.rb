@@ -329,7 +329,11 @@ module MultimediaImportation
         s = attrs['category']
         if !s.blank?
           fid = s.sub(/(.*)\{\D?(\d+)\D*\}(.*)/,'\2').to_i
-          Location.create(:medium_id => medium.id, :feature_id => fid, :lat => attrs['latitude'], :lng => attrs['longitude'], :spot_feature => attrs['Location Feature'], :notes => attrs['Location Notes'])
+          lat = attrs['latitude']
+          lat = lat.gsub(/(\w)\s+(\d+)\D+(\d+)\D+([\d\.]+)/){($1.upcase=='S' ? -1 : 1) * ($2.to_f + $3.to_f/60 + $4.to_f/3600)} if !lat.blank? && lat.to_f == 0
+          lng = attrs['longitude']
+          lng = lng.gsub(/(\w)\s+(\d+)\D+(\d+)\D+([\d\.]+)/){($1.upcase=='W' ? -1 : 1) * ($2.to_f + $3.to_f/60 + $4.to_f/3600)} if !lng.blank? && lng.to_f == 0
+          Location.create(:medium_id => medium.id, :feature_id => fid, :lat => lat, :lng => lng, :spot_feature => attrs['Location Feature'], :notes => attrs['Location Notes'])
         end
         s = attrs['caption']
         if !s.blank?
@@ -340,6 +344,7 @@ module MultimediaImportation
             creator = AuthenticatedSystem::Person.find_by_fullname(name)
             creator_id = creator.nil? ? nil : creator.id
           end
+          s = "<p>#{s}</p>" if !s.starts_with?('<p>')
           r = Description.find_by_title(s)
           if r.nil?
             r = Description.create :title => s, :creator_id => creator_id

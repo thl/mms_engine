@@ -1,5 +1,5 @@
 class Description < ActiveRecord::Base
-  attr_accessible :title, :description_type_id, :language_id
+  attr_accessible :title, :description_type_id, :language_id, :creator_id
   before_destroy { |record| record.media.clear }
   
   validates_presence_of :title

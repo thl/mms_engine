@@ -8,6 +8,14 @@
 <%= f.text_field :feature_id %>
 </p>
 <p>
+    <b><%= Location.human_attribute_name('lat').s %></b><br />
+    <%= f.text_field :lat %>
+</p>
+<p>
+    <b><%= Location.human_attribute_name('lng').s %></b><br />
+    <%= f.text_field :lng %>
+</p>
+<p>
     <b><%= Location.human_attribute_name('spot_feature').s %></b><br />
     <%= f.text_area :spot_feature, :rows => 5, :class => 'mceEditor' %>
 </p>

@@ -39,8 +39,13 @@
 <%   end
    end
    locations = @medium.locations
-   if !locations.empty? %>
-<%=  display_if_not_blank 'Location', locations.collect {|l| link_to h(l.feature.header).s, place_path(l.feature.fid)}.join(', ') %>
+   if !locations.empty? 
+	 location_string = locations.collect do |l|
+       s = link_to h(l.feature.header).s, place_path(l.feature.fid)
+       c = l.coordinates
+       c.nil? ? s : "#{s} (#{c})"
+     end.join(', ') %>
+<%=  display_if_not_blank 'Location', location_string %>
 <% end
    keywords = @medium.keywords
    if !keywords.empty? %>
@@ -50,7 +55,8 @@
    if !descriptions.empty? %>
      <p><b><%= Description.model_name.human(:count => descriptions.size).titleize.s %>:</b></p>
 <%   for description in descriptions %>
-       <p><%= description.title.s %></p>
+       <p><%= ts 'by.record', :whom => description.creator.fullname %></p>
+<%=    description.title.s %>
 <%   end
    end
    associated_resources = [

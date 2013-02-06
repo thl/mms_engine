@@ -10,6 +10,20 @@ class Location < ActiveRecord::Base
   def feature
     Feature.find(self.feature_id)
   end
+  
+  def coordinates
+    if self.lat.nil? && self.lng.nil?
+      return nil
+    else
+      s = ''
+      if !self.lat.nil?
+        s << "Latitude: #{self.lat}"
+        s << '; ' if !self.lng.nil?
+      end
+      s << "Longitude: #{self.lng}" if !self.lng.nil?
+      return s
+    end
+  end
 end
 
 # == Schema Info
