@@ -9,7 +9,7 @@ module MultimediaImportation
     levels = Hash.new
     objects = Hash.new
     media = Array.new
-    models = {'place' => Place, 'topic' => Topic }
+    models = {'topic' => Topic } # 'place' => Place
     Dir.chdir(source) do
       Dir.glob('*').sort.each do |classification_title_0|
         next if !File.directory?(classification_title_0)
@@ -18,7 +18,7 @@ module MultimediaImportation
         if classifications[0].blank?
           raise "First level folder found but no first level classification defined!"
         end
-        objects[classifications[0]] = classifications[0]=='recording_note' ? classification_title_0 : objects[classifications[0]] = models[classifications[0]].find_by_title(classification_title_0)
+        objects[classifications[0]] = classifications[0]=='recording_note' ? classification_title_0 : models[classifications[0]].find_by_title(classification_title_0, true)
         if objects[classifications[0]].nil?
           raise "Could not find the <i>#{classifications[0]}</i> called <i>#{classification_title_0}</i>. If this is what you meant, please create it first. If not, please recheck the settings under <i>classification scheme</i>."
         end
@@ -29,7 +29,7 @@ module MultimediaImportation
               if classifications[1].blank?
                 raise "Second level folder <i>#{classification_title_1}</i> found but no second level classification defined!"
               end
-              objects[classifications[1]] = classifications[1]=='recording_note' ? classification_title_1 : models[classifications[1]].find_by_title(classification_title_1)
+              objects[classifications[1]] = classifications[1]=='recording_note' ? classification_title_1 : models[classifications[1]].find_by_title(classification_title_1, true)
               if objects[classifications[1]].nil?
                 raise "Could not find the <i>#{classifications[1]}</i> called <i>#{classification_title_1}</i>. If this is what you meant, please create it first. If not, please recheck the settings under <i>classification scheme</i>."
               end
@@ -40,7 +40,7 @@ module MultimediaImportation
                     if classifications[2].blank?
                       raise "Third level folder <i>#{classification_title_2}</i> found but no third level classification defined!"
                     end
-                    objects[classifications[2]] = classifications[2]=='recording_note' ? classification_title_2 : models[classifications[2]].find_by_title(classification_title_2)
+                    objects[classifications[2]] = classifications[2]=='recording_note' ? classification_title_2 : models[classifications[2]].find_by_title(classification_title_2, true)
                     if objects[classifications[2]].nil?
                       raise "Could not find the <i>#{classifications[2]}</i> called <i>#{classification_title_2}</i>. If this is what you meant, please create it first. If not, please recheck the settings under <i>classification scheme</i>."
                     end                    

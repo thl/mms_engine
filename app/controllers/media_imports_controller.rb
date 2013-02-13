@@ -8,7 +8,7 @@ class MediaImportsController < AclController
   cache_sweeper :document_sweeper, :only => [:create]
   
   @@import_types = ['File copy (no db manipulation)', 'Add new media to db', 'Update media file']
-  @@media_classification = ['topic', 'place', 'recording_note']
+  @@media_classification = ['topic', 'recording_note'] # , 'place'
     
   # GET /media_imports
   # GET /media_imports.xml

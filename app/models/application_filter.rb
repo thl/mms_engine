@@ -15,10 +15,11 @@ class ApplicationFilter < ActiveRecord::Base
   private
   
   def self.cached_filter(title)
-    Rails.cache.fetch("#{self.table_name}_#{title}") do
+    value = Rails.cache.fetch("#{self.table_name}_#{title}") do
       setting = ApplicationSetting.find_by_title(title)
-      setting.nil? || setting.value.nil? ? nil : ApplicationFilter.find(setting.value)
-    end    
+      setting.nil? || setting.value.nil? ? nil : setting.value
+    end
+    value.nil? ? nil : ApplicationFilter.find(value)
   end
 end
 
