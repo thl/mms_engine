@@ -113,11 +113,11 @@
 <% end 
    if !@medium.recording_note.blank? %>
      <p><b><%= Medium.human_attribute_name('recording_note').s %>:</b></p>
-<%=  @medium.recording_note %>
+<%=  @medium.recording_note.html_safe %>
 <% end
    if authorized?(hash_for_edit_medium_path) && !@medium.private_note.blank? %>
      <p><b><%= Medium.human_attribute_name('private_note').s %>:</b></p>
-<%=  @medium.private_note %>
+<%=  @medium.private_note.html_safe %>
 <% end %>
 <p>
 <% if @medium.partial_taken_on.nil? 
