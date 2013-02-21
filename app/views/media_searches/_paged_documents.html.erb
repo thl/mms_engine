@@ -1,4 +1,3 @@
-<%= javascript_include_tag 'thickbox-compressed' %>
 <%= render :partial => 'documents/paged_table', :locals => { :media => @media, :title => @title } %>
 <% if !@media.empty? %>
 <%=  render :partial => 'media_searches/paged_links', :locals => { :media => @media } %>
