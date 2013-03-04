@@ -34,7 +34,7 @@ class CaptionsController < AclController
   # GET /media/1/captions/1;edit
   def edit
     @description_types = DescriptionType.order('title')
-    @languages = ComplexScripts::Language..order('title')
+    @languages = ComplexScripts::Language.order('title')
     @caption = @medium.captions.find(params[:id])
   end
 
