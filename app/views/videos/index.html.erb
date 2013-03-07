@@ -8,7 +8,7 @@
 <% for video in @videos %>
   <tr>
     <td><%= link_to picture.id, picture_path(video) %></td>
-    <td><%=h video.photographer.fullname %></td>
+    <td><%=h video.photographer.fullname if !video.photographer.nil? %></td>
     <td><%=h(video.quality_type.title).s %></td>
   </tr>
 <% end %>

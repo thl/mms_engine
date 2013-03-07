@@ -7,7 +7,7 @@ xml.__send__(medium.class.name.underscore.dasherize) do
   xml << render(:partial => 'descriptions/index', :locals => {:descriptions => medium.descriptions})
   xml << render(:partial => 'copyrights/index', :locals => {:copyrights => medium.copyrights})
   medium.topics.each { |category| xml.associated_category(:title => category.title, :id => category.id) }
-  medium.features.each { |feature| xml.associated_feature(:title => feature.header, :fid => feature.fid) }
+  medium.features.reject(&:nil?).each { |feature| xml.associated_feature(:title => feature.header, :fid => feature.fid) }
   attachment = medium.attachment
   if !attachment.nil?
     server = "#{request.protocol}#{request.host_with_port}"

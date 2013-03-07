@@ -18,9 +18,9 @@
       <td><%= ts 'found.none.this' %></td>
 <%  end 
     if caption.creator.nil? %>
-    <td>&nbsp;</td>
+      <td>&nbsp;</td>
 <%  else %>
-    <td><%=h caption.creator.fullname %></td>
+      <td><%=h caption.creator.fullname %></td>
 <%  end %>
     <td><%=h caption.language.title %></td>
     <td><%= link_to ts('manage.this'), medium_caption_path(@medium, caption) %></td>

@@ -36,7 +36,7 @@
    if !locations.empty? %>
      <p><%= bookmark 'locations' %>
 	 <b><%= Location.model_name.human(:count => locations.size).titleize.s %></b>
-<%=  locations.collect {|l| link_to l.feature.header, edit_medium_location_path(@medium, l)}.join(', ').html_safe %>
+<%=  locations.reject{ |l| l.feature.nil? }.collect {|l| link_to l.feature.header, edit_medium_location_path(@medium, l)}.join(', ').html_safe %>
 (<%= link_to ts('add.record', :what => Location.model_name.human), new_medium_location_path(@medium) %>)</p>
 <% end  %>
 <%= bookmark 'topics' %>

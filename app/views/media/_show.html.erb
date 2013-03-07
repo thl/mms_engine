@@ -35,13 +35,13 @@
    for root_topic in root_topics
 	 topics = grouped_topics[root_topic.id]
 	 if !topics.empty? %>
-<%=    display_if_not_blank root_topic.title, topics.collect {|a| link_to h(a.title_with_value).s, topic_path(a.category)}.join(', ') %>
+<%=    display_if_not_blank root_topic.title, topics.collect {|a| link_to h(a.title_with_value).s, topic_path(a.category.id)}.join(', ') %>
 <%   end
    end
    locations = @medium.locations
    if !locations.empty? 
 	 location_string = locations.collect do |l|
-       s = link_to h(l.feature.header).s, place_path(l.feature.fid)
+       s = l.feature.nil? ? '' : link_to(h(l.feature.header).s, place_path(l.feature.fid))
        c = l.coordinates
        c.nil? ? s : "#{s} (#{c})"
      end.join(', ') %>
@@ -54,8 +54,11 @@
    descriptions = @medium.descriptions
    if !descriptions.empty? %>
      <p><b><%= Description.model_name.human(:count => descriptions.size).titleize.s %>:</b></p>
-<%   for description in descriptions %>
-       <p><%= ts 'by.record', :whom => description.creator.fullname %></p>
+<%   for description in descriptions
+       creator = description.creator 
+       if !creator.nil? %>
+         <p><%= ts 'by.record', :whom => creator.fullname %></p>
+<%     end %>
 <%=    description.title.s %>
 <%   end
    end

@@ -9,7 +9,7 @@
   </tr>
 <% for location in @locations %>
      <tr>
-       <td><%= location.feature.header %></td>
+       <td><%= location.feature.header if !location.feature.nil? %></td>
        <td><%= link_to ts('manage.this'), edit_medium_location_path(@medium, location) %></td>
        <td><%= link_to ts('back.to', :what => t('all.records', :what => Medium.model_name.human(:count => :many))), medium_place_path(@medium, location.feature_id) %></td>
      </tr>

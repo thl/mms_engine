@@ -7,7 +7,7 @@
   <%= f.text_area :title, fixed_language_options.merge({:rows => 3}) %>
 </p>
 <%  creator = @title.creator %>
-<%= display_if_not_blank(Caption.human_attribute_name('creator').s, h(@title.creator.fullname).s) if !creator.nil? %>
+<%= display_if_not_blank(Caption.human_attribute_name('creator').s, h(creator.fullname).s) if !creator.nil? %>
 <p>
   <%= ComplexScripts::Language.model_name.human.titleize.s %><br />
 <%=  f.collection_select(:language_id, @languages, :id, :title) %> (<%= link_to ts('new.record', :what => ComplexScripts::Language.model_name.human), new_complex_scripts_language_path, { :target => '_blank' } %>)
