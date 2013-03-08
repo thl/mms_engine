@@ -1,15 +1,15 @@
+# == Schema Information
+#
+# Table name: sources
+#
+#  id         :integer          not null, primary key
+#  title      :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class Source < ActiveRecord::Base
   attr_accessible :title
   has_many :media_source_associations
   has_many :media, :through => :media_source_associations
 end
-
-# == Schema Info
-# Schema version: 20110412155958
-#
-# Table name: sources
-#
-#  id         :integer(4)      not null, primary key
-#  title      :string(255)
-#  created_at :datetime
-#  updated_at :datetime

@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: captions
+#
+#  id                  :integer          not null, primary key
+#  title               :text             default(""), not null
+#  description_type_id :integer
+#  creator_id          :integer
+#  language_id         :integer
+#  created_on          :datetime
+#  updated_on          :datetime
+#
+
 class Caption < ActiveRecord::Base
   attr_accessible :title, :description_type_id, :language_id
   before_destroy { |record| record.media.clear }
@@ -8,16 +21,3 @@ class Caption < ActiveRecord::Base
   belongs_to :language, :class_name => 'ComplexScripts::Language'
   has_and_belongs_to_many :media  
 end
-
-# == Schema Info
-# Schema version: 20110412155958
-#
-# Table name: captions
-#
-#  id                  :integer(4)      not null, primary key
-#  creator_id          :integer(4)
-#  description_type_id :integer(4)
-#  language_id         :integer(4)
-#  title               :text            not null, default("")
-#  created_on          :datetime
-#  updated_on          :datetime

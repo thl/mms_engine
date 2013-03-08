@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: citations
+#
+#  id             :integer          not null, primary key
+#  reference_id   :integer          not null
+#  reference_type :string(255)      not null
+#  creator_id     :integer
+#  medium_id      :integer
+#  page_number    :integer
+#  page_side      :string(5)
+#  line_number    :integer
+#  note           :text
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
 class Citation < ActiveRecord::Base
   attr_accessible :medium_id, :page_number, :page_side, :line_number, :note
   
@@ -7,20 +24,3 @@ class Citation < ActiveRecord::Base
   belongs_to :language, :class_name => 'ComplexScripts::Language'
   belongs_to :creator, :class_name => 'AuthenticatedSystem::Person', :foreign_key => 'creator_id'
 end
-
-# == Schema Info
-# Schema version: 20110412155958
-#
-# Table name: citations
-#
-#  id             :integer(4)      not null, primary key
-#  creator_id     :integer(4)
-#  medium_id      :integer(4)
-#  reference_id   :integer(4)      not null
-#  line_number    :integer(4)
-#  note           :text
-#  page_number    :integer(4)
-#  page_side      :string(5)
-#  reference_type :string(255)     not null
-#  created_at     :datetime
-#  updated_at     :datetime

@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: transformations
+#
+#  id          :integer          not null, primary key
+#  renderer_id :integer          not null
+#  title       :string(20)       not null
+#  path        :string(100)      not null
+#
+
 class Transformation < ActiveRecord::Base
   attr_accessible :renderer_id, :title, :path
   belongs_to :renderer, :class_name => 'FileRenderer'
@@ -7,13 +17,3 @@ class Transformation < ActiveRecord::Base
     renderer.path.sub(/:transformation/, path)
   end
 end
-
-# == Schema Info
-# Schema version: 20110412155958
-#
-# Table name: transformations
-#
-#  id          :integer(4)      not null, primary key
-#  renderer_id :integer(4)      not null
-#  path        :string(100)     not null
-#  title       :string(20)      not null

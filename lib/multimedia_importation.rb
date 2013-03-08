@@ -305,6 +305,9 @@ module MultimediaImportation
   def do_metadata_importation(metadata_files, imported_media)
     rep_type = ReproductionType.find(4)
     for metadata_file in metadata_files
+      basename = File.basename(metadata_file[:file_name])
+      metadata_source = MetadataSource.find_by_filename(basename)
+      metadata_source = MetadataSource.create(:filename => basename) if metadata_source.nil?
       parse_metadata(metadata_file[:file_name]).each do |filename, attrs|
         medium_id = imported_media[filename]
         medium = medium_id.blank? ? nil : Medium.find(medium_id)
@@ -313,6 +316,7 @@ module MultimediaImportation
           medium = w.medium if !w.nil?
         end
         next if medium.nil?
+        medium.workflow.update_attribute(:metadata_source_id, metadata_source.id)
         s = attrs['author']
         if !s.blank?
           r = AuthenticatedSystem::Person.find_by_fullname(attrs['author'])

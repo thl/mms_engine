@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: translated_titles
+#
+#  id          :integer          not null, primary key
+#  title       :text             default(""), not null
+#  creator_id  :integer
+#  title_id    :integer          not null
+#  language_id :integer          not null
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 class TranslatedTitle < ActiveRecord::Base
   attr_accessible :title, :language_id
   validates_presence_of :title, :title_id, :language_id
@@ -6,16 +19,3 @@ class TranslatedTitle < ActiveRecord::Base
   belongs_to :creator, :class_name => 'AuthenticatedSystem::Person', :foreign_key => 'creator_id'
   has_many   :citations, :as => :reference
 end
-
-# == Schema Info
-# Schema version: 20110412155958
-#
-# Table name: translated_titles
-#
-#  id          :integer(4)      not null, primary key
-#  creator_id  :integer(4)
-#  language_id :integer(4)      not null
-#  title_id    :integer(4)      not null
-#  title       :text            not null, default("")
-#  created_at  :datetime
-#  updated_at  :datetime

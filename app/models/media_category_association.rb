@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: media_category_associations
+#
+#  id            :integer          not null, primary key
+#  medium_id     :integer          not null
+#  category_id   :integer          not null
+#  root_id       :integer          not null
+#  created_at    :datetime
+#  updated_at    :datetime
+#  string_value  :string(255)
+#  numeric_value :integer
+#
+
 class MediaCategoryAssociation < ActiveRecord::Base
   attr_accessible :root_id, :category_id, :medium_id, :numeric_value, :string_value
   
@@ -58,17 +72,3 @@ class MediaCategoryAssociation < ActiveRecord::Base
     end
   end
 end
-
-# == Schema Info
-# Schema version: 20110412155958
-#
-# Table name: media_category_associations
-#
-#  id            :integer(4)      not null, primary key
-#  category_id   :integer(4)      not null
-#  medium_id     :integer(4)      not null
-#  root_id       :integer(4)      not null
-#  numeric_value :integer(4)
-#  string_value  :string(255)
-#  created_at    :datetime
-#  updated_at    :datetime

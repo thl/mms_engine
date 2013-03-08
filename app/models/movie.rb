@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: movies
+#
+#  id           :integer          not null, primary key
+#  content_type :string(255)
+#  filename     :string(255)
+#  size         :integer
+#  parent_id    :integer
+#  thumbnail    :string(10)
+#  width        :integer
+#  height       :integer
+#  status       :integer          default(0)
+#
+
 class Movie < ActiveRecord::Base
   attr_accessible :content_type, :temp_path, :filename
   
@@ -6,18 +21,3 @@ class Movie < ActiveRecord::Base
   acts_as_tree
   has_one :video, :foreign_key => 'attachment_id'
 end
-
-# == Schema Info
-# Schema version: 20110412155958
-#
-# Table name: movies
-#
-#  id           :integer(4)      not null, primary key
-#  parent_id    :integer(4)
-#  content_type :string(255)
-#  filename     :string(255)
-#  height       :integer(4)
-#  size         :integer(4)
-#  status       :integer(4)      default(0)
-#  thumbnail    :string(10)
-#  width        :integer(4)

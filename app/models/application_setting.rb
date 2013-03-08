@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: application_settings
+#
+#  id            :integer          not null, primary key
+#  title         :string(30)       not null
+#  description   :text
+#  value         :integer
+#  permission_id :integer
+#  string_value  :string(255)
+#
+
 class ApplicationSetting < ActiveRecord::Base
   attr_accessible :permission_id, :title, :value, :description, :string_value
   
@@ -27,15 +39,3 @@ class ApplicationSetting < ActiveRecord::Base
     end
   end  
 end
-
-# == Schema Info
-# Schema version: 20110412155958
-#
-# Table name: application_settings
-#
-#  id            :integer(4)      not null, primary key
-#  permission_id :integer(4)
-#  description   :text
-#  string_value  :string(255)
-#  title         :string(30)      not null
-#  value         :integer(4)

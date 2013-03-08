@@ -1,3 +1,11 @@
+# == Schema Information
+#
+# Table name: keywords
+#
+#  id    :integer          not null, primary key
+#  title :string(100)      not null
+#
+
 class Keyword < ActiveRecord::Base
   attr_accessible :title
   translates :title
@@ -22,11 +30,3 @@ class Keyword < ActiveRecord::Base
     end
   end
 end
-
-# == Schema Info
-# Schema version: 20110412155958
-#
-# Table name: keywords
-#
-#  id    :integer(4)      not null, primary key
-#  title :string(100)     not null

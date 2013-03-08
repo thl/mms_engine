@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :metadata_sources
+
+
   root :to => 'media#index'
   resources :application_settings, :copyrights, :copyright_holders, :description_types, :dictionary_searches,
     :application_filters, :glossaries, :keywords, :media_keyword_associations, :media_searches,

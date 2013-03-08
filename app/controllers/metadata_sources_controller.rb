@@ -1,0 +1,2 @@
+class MetadataSourcesController < ApplicationController
+end

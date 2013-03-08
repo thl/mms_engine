@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: letters
+#
+#  id    :integer          not null, primary key
+#  title :string(10)       not null
+#  order :integer
+#
+
 class Letter < ActiveRecord::Base
   has_many :words, :dependent => :destroy, :order => '`order`'
   
@@ -6,12 +15,3 @@ class Letter < ActiveRecord::Base
     Letter.find(letter_ids)
   end
 end
-
-# == Schema Info
-# Schema version: 20110412155958
-#
-# Table name: letters
-#
-#  id    :integer(4)      not null, primary key
-#  order :integer(4)
-#  title :string(10)      not null

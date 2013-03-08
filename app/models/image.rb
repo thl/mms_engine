@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: images
+#
+#  id           :integer          not null, primary key
+#  content_type :string(255)
+#  filename     :string(255)
+#  size         :integer
+#  parent_id    :integer
+#  thumbnail    :string(255)
+#  width        :integer
+#  height       :integer
+#
+
 class Image < ActiveRecord::Base
   attr_accessible :content_type, :temp_path, :filename
   
@@ -10,17 +24,3 @@ class Image < ActiveRecord::Base
   validates_as_attachment
   has_one :picture, :foreign_key => 'attachment_id'
 end
-
-# == Schema Info
-# Schema version: 20110412155958
-#
-# Table name: images
-#
-#  id           :integer(4)      not null, primary key
-#  parent_id    :integer(4)
-#  content_type :string(255)
-#  filename     :string(255)
-#  height       :integer(4)
-#  size         :integer(4)
-#  thumbnail    :string(255)
-#  width        :integer(4)

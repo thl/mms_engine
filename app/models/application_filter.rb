@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: application_filters
+#
+#  id         :integer          not null, primary key
+#  title      :string(255)      not null
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class ApplicationFilter < ActiveRecord::Base
   attr_accessible :title
   def self.application_filter
@@ -22,13 +32,3 @@ class ApplicationFilter < ActiveRecord::Base
     value.nil? ? nil : ApplicationFilter.find(value)
   end
 end
-
-# == Schema Info
-# Schema version: 20110412155958
-#
-# Table name: application_filters
-#
-#  id         :integer(4)      not null, primary key
-#  title      :string(255)     not null
-#  created_at :datetime
-#  updated_at :datetime

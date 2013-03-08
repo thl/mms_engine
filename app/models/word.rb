@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: words
+#
+#  id          :integer          not null, primary key
+#  title       :text             default(""), not null
+#  language_id :integer          not null
+#  order       :integer
+#  letter_id   :integer
+#
+
 class Word < ActiveRecord::Base
   belongs_to :language, :class_name => 'ComplexScripts::Language'
   belongs_to :letter
@@ -21,14 +32,3 @@ class Word < ActiveRecord::Base
     ComplexScripts::Language.find(language_ids)
   end
 end
-
-# == Schema Info
-# Schema version: 20110412155958
-#
-# Table name: words
-#
-#  id          :integer(4)      not null, primary key
-#  language_id :integer(4)      not null
-#  letter_id   :integer(4)
-#  order       :integer(4)
-#  title       :text            not null, default("")

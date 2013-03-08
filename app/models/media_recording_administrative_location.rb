@@ -1,17 +1,17 @@
-class MediaRecordingAdministrativeLocation < Location
-  attr_accessible :medium_id, :feature_id, :spot_feature, :notes
-end
-
-# == Schema Info
-# Schema version: 20110412155958
+# == Schema Information
 #
 # Table name: locations
 #
-#  id           :integer(4)      not null, primary key
-#  feature_id   :integer(4)      not null
-#  medium_id    :integer(4)      not null
+#  id           :integer          not null, primary key
+#  medium_id    :integer          not null
+#  spot_feature :text
+#  notes        :text
+#  type         :string(50)
+#  feature_id   :integer          not null
 #  lat          :decimal(9, 6)
 #  lng          :decimal(9, 6)
-#  notes        :text
-#  spot_feature :text
-#  type         :string(50)
+#
+
+class MediaRecordingAdministrativeLocation < Location
+  attr_accessible :medium_id, :feature_id, :spot_feature, :notes
+end

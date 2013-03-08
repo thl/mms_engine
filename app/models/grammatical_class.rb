@@ -1,11 +1,11 @@
-class GrammaticalClass < ActiveRecord::Base
-  has_many :definitions, :dependent => :nullify
-end
-
-# == Schema Info
-# Schema version: 20110412155958
+# == Schema Information
 #
 # Table name: grammatical_classes
 #
-#  id    :integer(4)      not null, primary key
-#  title :string(50)      not null
+#  id    :integer          not null, primary key
+#  title :string(50)       not null
+#
+
+class GrammaticalClass < ActiveRecord::Base
+  has_many :definitions, :dependent => :nullify
+end

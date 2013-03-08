@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: locations
+#
+#  id           :integer          not null, primary key
+#  medium_id    :integer          not null
+#  spot_feature :text
+#  notes        :text
+#  type         :string(50)
+#  feature_id   :integer          not null
+#  lat          :decimal(9, 6)
+#  lng          :decimal(9, 6)
+#
+
 class Location < ActiveRecord::Base
   attr_accessible :medium_id, :feature_id, :spot_feature, :notes, :lat, :lng
   validates_presence_of :medium_id, :feature_id
@@ -25,17 +39,3 @@ class Location < ActiveRecord::Base
     end
   end
 end
-
-# == Schema Info
-# Schema version: 20110412155958
-#
-# Table name: locations
-#
-#  id           :integer(4)      not null, primary key
-#  feature_id   :integer(4)      not null
-#  medium_id    :integer(4)      not null
-#  lat          :decimal(9, 6)
-#  lng          :decimal(9, 6)
-#  notes        :text
-#  spot_feature :text
-#  type         :string(50)

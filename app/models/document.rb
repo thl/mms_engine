@@ -1,3 +1,25 @@
+# == Schema Information
+#
+# Table name: media
+#
+#  id                       :integer          not null, primary key
+#  photographer_id          :integer
+#  quality_type_id          :integer
+#  created_on               :datetime
+#  updated_on               :datetime
+#  recording_note           :text
+#  private_note             :text
+#  type                     :string(10)       not null
+#  attachment_id            :integer
+#  taken_on                 :datetime
+#  recording_orientation_id :integer
+#  capture_device_model_id  :integer
+#  partial_taken_on         :string(255)
+#  application_filter_id    :integer          not null
+#  resource_type_id         :integer          not null
+#  rotation                 :integer
+#
+
 class Document < Medium
   attr_accessible :typescript, :recording_note, :resource_type_id, :photographer_id, :taken_on,
     :capture_device_model_id, :quality_type_id, :private_note
@@ -33,25 +55,3 @@ class Document < Medium
     super(media_search, limit, offset, 'Document')
   end
 end
-
-# == Schema Info
-# Schema version: 20110412155958
-#
-# Table name: media
-#
-#  id                       :integer(4)      not null, primary key
-#  application_filter_id    :integer(4)      not null
-#  attachment_id            :integer(4)
-#  capture_device_model_id  :integer(4)
-#  photographer_id          :integer(4)
-#  quality_type_id          :integer(4)
-#  recording_orientation_id :integer(4)
-#  resource_type_id         :integer(4)      not null
-#  private_note             :text
-#  recording_note           :text
-#  rotation                 :integer(4)
-#  type                     :string(10)      not null
-#  created_on               :datetime
-#  partial_taken_on         :string(255)
-#  taken_on                 :datetime
-#  updated_on               :datetime
