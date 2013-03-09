@@ -9,6 +9,7 @@ module MultimediaImportation
     levels = Hash.new
     objects = Hash.new
     media = Array.new
+    files = Array.new
     models = {'topic' => Topic } # 'place' => Place
     Dir.chdir(source) do
       Dir.glob('*').sort.each do |classification_title_0|
@@ -50,7 +51,7 @@ module MultimediaImportation
                         if File.directory?(classification_title_3)
                           raise "Found fourth level folder <i>#{classification_title_3}</i> found but importation does not support fourth level classifications!"
                         elsif has_mediapro_metadata && FilenameUtils.extension_without_dot(classification_title_3).downcase=='xml'
-                          assess_media_pro_xml_file(classification_title_3)
+                          files += assess_media_pro_xml_file(classification_title_3)
                           media << media_pro_xml_hash(classification_title_3, File.join(source, classification_title_0, classification_title_1, classification_title_2, classification_title_3))
                         elsif invalid_extension(classification_title_3, type)
                           next
@@ -62,7 +63,7 @@ module MultimediaImportation
                     end
                     objects[levels[2]] = nil
                   elsif has_mediapro_metadata && FilenameUtils.extension_without_dot(classification_title_2).downcase=='xml'
-                    assess_media_pro_xml_file(classification_title_2)
+                    files += assess_media_pro_xml_file(classification_title_2)
                     media << media_pro_xml_hash(classification_title_2, File.join(source, classification_title_0, classification_title_1, classification_title_2))
                   elsif invalid_extension(classification_title_2, type)
                     next
@@ -74,7 +75,7 @@ module MultimediaImportation
               end
               objects[levels[1]] = nil
             elsif has_mediapro_metadata && FilenameUtils.extension_without_dot(classification_title_1).downcase=='xml'
-              assess_media_pro_xml_file(classification_title_1)
+              files += assess_media_pro_xml_file(classification_title_1)
               media << media_pro_xml_hash(classification_title_1, File.join(source, classification_title_0, classification_title_1))
             elsif invalid_extension(classification_title_1, type)
               next
@@ -87,7 +88,7 @@ module MultimediaImportation
         objects[levels[0]] = nil
       end
     end
-    return media
+    return has_mediapro_metadata ? media.select{|m| m[:type]=='metadata' || files.include?(m[:file_name])} : media
   end
   
   def assess_media_pro_xml_file(file)
@@ -99,7 +100,7 @@ module MultimediaImportation
     (doc/'userfield_1').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the organization #{s} mentioned in #{file}! Please create it first." if Organization.find_by_title(s).nil? }
     (doc/'userfield_2').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the project #{s} mentioned in #{file}! Please create it first." if Project.find_by_title(s).nil? }
     (doc/'userfield_3').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the sponsor #{s} mentioned in #{file}! Please create it first." if Sponsor.find_by_title(s).nil? }
-    return true
+    return (doc/'filename').collect(&:inner_text)
   end
   
   def invalid_extension(filename, type)
