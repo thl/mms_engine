@@ -7,17 +7,17 @@
      if !@pictures.empty? %>
        <h3><%= ts(:in, :what => Picture.model_name.human(:count => :many).titleize, :where => title) %></h3>
 <%     no_media = false %>
-<%=    render :partial => 'media/media_table', :locals => { :media => @pictures, :more => pictures_topic_path(@topic) } %>
+<%=    render :partial => 'media/media_table', :locals => { :media => @pictures, :more => pictures_topic_path(@topic.id) } %>
 <%   end
      if !@videos.empty? %>
        <h3><%= ts(:in, :what => Video.model_name.human(:count => :many).titleize, :where => title) %></h3>
 <%     no_media = false %>
-<%=    render :partial => 'media/media_table', :locals => { :media => @videos, :more => videos_topic_path(@topic) } %>
+<%=    render :partial => 'media/media_table', :locals => { :media => @videos, :more => videos_topic_path(@topic.id) } %>
 <%   end
      if !@documents.empty? %>
        <h3><%= ts(:in, :what => Document.model_name.human(:count => :many).titleize, :where => title) %></h3>
 <%     no_media = false %>
-<%=    render :partial => 'documents/media_table', :locals => { :media => @documents, :more => documents_topic_path(@topic) } %>
+<%=    render :partial => 'documents/media_table', :locals => { :media => @documents, :more => documents_topic_path(@topic.id) } %>
 <%   end
      if no_media %>
        <p><%= ts 'media.none' %></p>
@@ -28,6 +28,6 @@
 <p>
 <%= link_to ts(:in, :what => @topic.title, :where => Topic.model_name.human(:count => :many).titleize), Category.element_url(@topic.id, :format => 'html') %>
 <%  if authorized?(hash_for_sponsor_path(:action => 'destroy')) && !@topic.nil? && @topic.media_count - @topic.media_category_associations.size <= 0 %>
-      | <%= link_to "Delete all associations with #{Topic.model_name.human}", topic_path(@topic), :confirm => te('delete.confirmation'), :method => :delete %>
+      | <%= link_to "Delete all associations with #{Topic.model_name.human}", topic_path(@topic.id), :confirm => te('delete.confirmation'), :method => :delete %>
 <%  end %>
 </p>

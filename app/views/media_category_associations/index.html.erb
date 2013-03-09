@@ -18,7 +18,7 @@
        <td><%= association.string_value %></td>
        <td><%= association.numeric_value %></td>
        <td><%= link_to ts('manage.this'), edit_medium_topic_association_path(association.medium.id, topic.root.id, association) %></td>
-       <td><%= link_to ts('back.to', :what => Medium.model_name.human(:count => :many)), topic_path(topic) %></td>
+       <td><%= link_to ts('back.to', :what => Medium.model_name.human(:count => :many)), topic_path(topic.id) %></td>
      </tr>
 <% end %>
 </table>

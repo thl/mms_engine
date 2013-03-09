@@ -1,3 +1,3 @@
 module MmsEngine
-  VERSION = '2.1.11'
+  VERSION = '2.2.1'
 end

@@ -3,7 +3,7 @@
    cache cache_key do
      @current = @topic.ancestor_and_self_ids if !@topic.nil? %>
      <div id="primary">
-       <h4>Browse by <%= select_tag :root_topics, options_for_select((@root.nil? ? [''] : []) + Topic.roots_with_media.collect{|topic| [topic.title, topic_path(topic)]}, @root.nil? ? '' : topic_path(@root)), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %></h4>
+       <h4>Browse by <%= select_tag :root_topics, options_for_select((@root.nil? ? [''] : []) + Topic.roots_with_media.collect{|topic| [topic.title, topic_path(topic.id)]}, @root.nil? ? '' : topic_path(@root.id)), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %></h4>
        <div id="navigation" class="normal">
 <%       if !@root.nil? %>
 <%=        render :partial => 'topics_index', :locals => {:topics => @root.children.select{|element| element.media_count > 0}, :margin_depth => 0} %>
