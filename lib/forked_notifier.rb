@@ -3,6 +3,8 @@
 module ForkedNotifier
   include FileUtils
   
+  protected
+  
   def background_process(do_forking=true, do_detach=true)
     if RUBY_PLATFORM =~ /(:?mswin|mingw)/ || !do_forking
       Thread.new { yield }

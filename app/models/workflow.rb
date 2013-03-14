@@ -14,10 +14,11 @@
 #  status_id            :integer
 #  processing_status_id :integer
 #  metadata_source_id   :integer
+#  original_path        :text
 #
 
 class Workflow < ActiveRecord::Base
-  attr_accessible :medium_id, :original_filename, :status_id
+  attr_accessible :medium_id, :original_filename, :status_id, :original_medium_id, :metadata_source_id
   belongs_to :medium
   belongs_to :status
   belongs_to :processing_status

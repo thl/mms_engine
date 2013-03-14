@@ -10,7 +10,7 @@
 </p>
 <p>
   <b><%= Medium.human_attribute_name(:taken_on, :what => klass.model_name.human.titleize).s %></b><br/>
-<%= f.datetime_select(:taken_on, :start_year => 1930, :include_blank => true, :include_seconds => true) %>
+<%= f.datetime_select(:taken_on, :include_blank => true, :order => [:day, :month, :year], :include_seconds => true) %>
 </p>
 <p>
   <b><%= klass.human_attribute_name(:capture_device_model).s %></b><br />

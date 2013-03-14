@@ -156,6 +156,7 @@
 <% end %></p>
 <% workflow = @medium.workflow
    if !workflow.nil? %>
+     <hr/>
 <%=  bookmark 'workflow' %>
      <h3><%= Workflow.model_name.human.titleize.s %></h3>
 <%=  render :partial => 'workflows/show', :locals => {:workflow => workflow} %>

@@ -1,0 +1,5 @@
+<%  if authorized?(hash_for_metadata_source_path(:action => 'destroy')) %>
+<%=   link_to ts('delete.this'), @metadata_source, :method => :delete, :data => { :confirm => 'Are you sure?' } %> |
+<%  end %>
+<%= link_to ts('back.to', :what => t('all.records', :what => MetadataSource.model_name.human(:count => :many))), metadata_sources_path %> |
+<%= render :partial => 'main/back_to_admin_or_media' %>

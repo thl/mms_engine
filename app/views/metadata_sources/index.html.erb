@@ -1,0 +1,17 @@
+<h1><%= ts 'list.ing.records', :what => MetadataSource.model_name.human(:count => :many).s %></h1>
+<table border="1" class="normal">
+  <tr>
+    <th><%= MetadataSource.human_attribute_name('filename').titleize.s %></th>
+    <th><%= MetadataSource.human_attribute_name('creator').titleize.s %></th>
+  </tr>
+<% can_edit = authorized? hash_for_edit_metadata_source_path
+   @metadata_sources.each do |metadata_source| %>
+  <tr>
+    <td><%= link_to(metadata_source.filename, can_edit ? edit_metadata_source_path(metadata_source) : metadata_source) %></td>
+    <td><%= metadata_source.creator.nil? ? '-' : metadata_source.creator.fullname %></td>
+  </tr>
+<% end %>
+</table>
+<p>&nbsp;<br/>
+<%= render :partial => 'main/back_to_admin_or_media' %>
+</p>

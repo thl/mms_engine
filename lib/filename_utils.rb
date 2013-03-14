@@ -13,6 +13,8 @@ module FilenameUtils
     File.basename(filename, '.*')
   end
   
+  protected
+  
   def extension(filename)
     FilenameUtils.extension(filename)
   end

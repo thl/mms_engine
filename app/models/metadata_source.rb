@@ -4,7 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  creator_id :integer
-#  filename   :string(255)
+#  filename   :string(255)      not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

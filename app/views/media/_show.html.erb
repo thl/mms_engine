@@ -152,6 +152,7 @@
    if authorized? hash_for_medium_workflow_path
      workflow = @medium.workflow
      if !workflow.nil? %>
+       <h3><%= Workflow.model_name.human.titleize.s %></h3>
 <%=    render :partial => 'workflows/show', :locals => {:workflow => workflow} %>
 <%   end
    end %>

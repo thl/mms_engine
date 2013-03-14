@@ -2,6 +2,8 @@
 module MediaProcessor
   module ControllerExtension
     include ForkedNotifier
+    
+    protected
 
     def log_suffix
       return 'processing'
@@ -451,7 +453,7 @@ module MediaProcessor
           end
         end
         if wf.nil?
-          Workflow.create :medium_id => self.id, :original_filename => parent.filename
+          self.create_workflow :original_filename => parent.filename
           parent.filename = id_name
           parent.save
         end

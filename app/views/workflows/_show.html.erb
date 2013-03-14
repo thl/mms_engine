@@ -1,5 +1,10 @@
-<%= display_if_not_blank Workflow.human_attribute_name('original_filename').s, h(workflow.original_filename) %>
-<%= display_if_not_blank Workflow.human_attribute_name('original_medium_id').s, h(workflow.original_medium_id) %>
-<%= display_if_not_blank Workflow.human_attribute_name('other_id').s, h(workflow.other_id) %>
-<%= display_if_not_blank Workflow.human_attribute_name('notes').s, h(workflow.notes) %>
-<%= display_if_not_blank Workflow.human_attribute_name('sequence_order').s, h(workflow.sequence_order) %>
+<%= display_if_not_blank Workflow.human_attribute_name('original_filename').s, workflow.original_path || workflow.original_filename %>
+<%= display_if_not_blank Workflow.human_attribute_name('original_medium_id').s, workflow.original_medium_id %>
+<%= display_if_not_blank Workflow.human_attribute_name('other_id').s, workflow.other_id %>
+<%= display_if_not_blank Workflow.human_attribute_name('notes').s, workflow.notes %>
+<%= display_if_not_blank Workflow.human_attribute_name('sequence_order').s, workflow.sequence_order %>
+<% metadata_source = workflow.metadata_source
+   if !metadata_source.nil? %>
+<%=  display_if_not_blank MetadataSource.human_attribute_name('filename').titleize.s, metadata_source.filename %>
+<%=  display_if_not_blank(MetadataSource.human_attribute_name('creator').titleize.s, metadata_source.creator.fullname) if !metadata_source.creator.nil? %>
+<% end %>

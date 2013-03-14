@@ -1,4 +1,4 @@
-<% @onload = 'updateRadioButton(); updateClassification();' %>
+<% @onload = 'updateRadioButton();' %>
 <script type="text/javascript">   
 	function updateRadioButton()
 	{
@@ -22,14 +22,6 @@
 		  button.disabled = false;
 		}
 	}
-	
-	function updateClassification()
-	{
-		value = ($('media_import_import_type_id').selectedIndex == 0);
-		$('media_import_media_classification_1').disabled = value;
-		$('media_import_media_classification_2').disabled = value;
-		$('media_import_media_classification_3').disabled = value;		
-	}
 </script>
 <h1>New <%= Medium.model_name.human.s %> importation</h1>
 <%= form_for(:media_import, :url => confirm_media_imports_path) do |f| %>
@@ -49,11 +41,6 @@
 </p>
 <p><b>Importation type</b>
 <%= f.select :import_type_id, @import_types, {}, {:onchange => 'updateClassification();'} %>
-</p>
-<p><b>Classification scheme</b>
-<%= f.select :media_classification_1, @media_classification, :include_blank => false %>
-<%= f.select :media_classification_2, @media_classification, :include_blank => true %>
-<%= f.select :media_classification_3, @media_classification, :include_blank => true %>
 </p>
 <p><%= globalized_submit_tag :import %></p>
 <% end %>
