@@ -9,12 +9,12 @@
 </p>
 <p>
     <b><%= DescriptionType.model_name.human(:what => Description.model_name.human).titleize.s %></b><br />
-<%= f.collection_select(:description_type_id, @description_types, :id, :title) %> (<%= link_to ts('new.record', :what => DescriptionType.model_name.human(:what => Description.model_name.human)), new_description_type_path, { :target => '_blank' } %>)
+<%= f.collection_select(:description_type_id, @description_types, :id, :title, :include_blank => true) %> (<%= link_to ts('new.record', :what => DescriptionType.model_name.human(:what => Description.model_name.human)), new_description_type_path, { :target => '_blank' } %>)
 </p>
 <% if !@description.creator.nil? %>
 <%=  display_if_not_blank Description.human_attribute_name('creator').s, h(@description.creator.fullname).s %>
 <% end %>
 <p>
     <b><%= ComplexScripts::Language.model_name.human.titleize.s %></b><br />
-<%= f.collection_select(:language_id, @languages, :id, :title) %> (<%= link_to ts('new.record', :what => ComplexScripts::Language.model_name.human), new_complex_scripts_language_path, { :target => '_blank' } %>)
+<%= f.collection_select(:language_id, @languages, :id, :title, :include_blank => true) %> (<%= link_to ts('new.record', :what => ComplexScripts::Language.model_name.human), new_complex_scripts_language_path, { :target => '_blank' } %>)
 </p>
