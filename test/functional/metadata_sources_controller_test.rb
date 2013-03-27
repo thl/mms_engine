@@ -18,7 +18,7 @@ class MetadataSourcesControllerTest < ActionController::TestCase
 
   test "should create metadata_source" do
     assert_difference('MetadataSource.count') do
-      post :create, :metadata_source => { :creator_id => @metadata_source.creator_id, :filename => @metadata_source.filename }
+      post :create, :metadata_source => { :filename => @metadata_source.filename }
     end
 
     assert_redirected_to metadata_source_path(assigns(:metadata_source))
@@ -35,7 +35,7 @@ class MetadataSourcesControllerTest < ActionController::TestCase
   end
 
   test "should update metadata_source" do
-    put :update, :id => @metadata_source, :metadata_source => { :creator_id => @metadata_source.creator_id, :filename => @metadata_source.filename }
+    put :update, :id => @metadata_source, :metadata_source => { :filename => @metadata_source.filename }
     assert_redirected_to metadata_source_path(assigns(:metadata_source))
   end
 

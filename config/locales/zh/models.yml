@@ -75,6 +75,8 @@ zh:
             medium:
                 one: '媒体对象'
                 other: '媒体对象'
+            metadata_source:
+                one: 'metadata source'
             movie:
                 one: '影片'
                 other: '影片'
@@ -96,7 +98,7 @@ zh:
             recording_orientation:
                 one: '录音录影指南'
                 other: '录音录影指南'
-            file_renderer:
+            renderer:
                 one: '渲染'
                 other: '渲染'
             reproduction_type:
@@ -203,6 +205,11 @@ zh:
                 updated_on: '更新于'
                 recording_note: '拍摄注释'
                 taken_on: '%{what} 日期'
+            metadata_source:
+                creator:
+                    one: 'Content Creator'
+                    other: 'Content Creators'
+                filename: 'File Name'
             organization:
                 title: '组织名称'
                 website: '网址'
@@ -220,7 +227,7 @@ zh:
                 title: '相质类型名称'
             recording_orientation:
                 title: '录音录影指南名称'
-            file_renderer:
+            renderer:
                 title: '渲染名称'
                 path: '路径'
             reproduction_type:

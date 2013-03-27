@@ -75,6 +75,8 @@ en:
             medium:
                 one: 'resource'
                 other: 'resources'
+            metadata_source:
+                one: 'metadata source'
             movie:
                 one: 'movie'
                 other: 'movies'
@@ -96,7 +98,7 @@ en:
             recording_orientation:
                 one: 'recording orientation'
                 other: 'recording orientations'
-            file_renderer:
+            renderer:
                 one: 'renderer'
                 other: 'renderers'
             reproduction_type:
@@ -203,6 +205,11 @@ en:
                 updated_on: 'Updated on'
                 recording_note: 'Recording Note'
                 taken_on: '%{what} Date'
+            metadata_source:
+                creator:
+                    one: 'Content Creator'
+                    other: 'Content Creators'
+                filename: 'File Name'
             organization:
                 title: 'Organization Name'
                 website: 'Website'
@@ -220,7 +227,7 @@ en:
                 title: 'Quality Type Name'
             recording_orientation:
                 title: 'Recording Orientation Name'
-            file_renderer:
+            renderer:
                 title: 'Renderer Name'
                 path: 'Path'
             reproduction_type:

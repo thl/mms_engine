@@ -9,12 +9,7 @@
       </ul>
     </div>
   <% end %>
-  <div class="field">
-  <p>
-    <b><%= f.label :creator_id %></b><br />
-    <%= f.select(:creator_id, AuthenticatedSystem::Person.order('fullname').collect {|p| [ p.fullname, p.id ] }, { :include_blank => true }) %>
-  </p>
-  </div>
+<%= display_if_not_blank MetadataSource.human_attribute_name('creator', :count => :many).titleize.s, @metadata_source.creators.collect(&:fullname).join(', ') %>
   <div class="field">
   <p>
     <b><%= f.label :filename %></b><br />

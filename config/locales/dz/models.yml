@@ -75,6 +75,8 @@ dz:
             medium:
                 one: 'བརྡ་སྟོན་ལམ།'
                 other: 'བརྡ་སྟོན་ལམ་ཚུ།'
+            metadata_source:
+                one: 'metadata source'
             movie:
                 one: 'གློག་བརྙན།'
                 other: 'གློག་བརྙན་ཚུ།'
@@ -96,7 +98,7 @@ dz:
             recording_orientation:
                 one: 'སྒྲ་བཟུང་ཁ་ཕྱོགས།'
                 other: 'སྒྲ་བཟུང་ཁ་ཕྱོགས་ཚུ།'
-            file_renderer:
+            renderer:
                 one: 'བྱིན་མིའི་མིང་།'
                 other: 'བྱིན་མིའི་མིང་ཚུ།'
             reproduction_type:
@@ -135,7 +137,7 @@ dz:
                 creator: 'གསར་བསྐྲུན་པ།'
                 description: 'འགྲེལ་བཤད།'
                 is_problematic: 'ལཱ་ཁག་འདུག་ཡ?'
-                parent: 'རྩ་ལག་'
+                parent: 'རྩ་ལག'
                 title: 'བདག་སྐྱོང་ལས་ཚན།'
             application_filter:
                 title: 'མགོ་མིང་།'
@@ -177,7 +179,7 @@ dz:
                     other: 'མགོ་མིང་།'
                 photographer: 'རྩོམ་པ་པོ།'
             glossary:
-                abbreviation: 'བསྡུས་ཚིག་'
+                abbreviation: 'བསྡུས་ཚིག'
                 description: 'འགྲེལ་བཤད།'
                 is_public: 'མི་སྡེ་གིས་སྤྱོད་ནི་ཨིན་ན?'
                 title: 'ཚིག་ཐོ་མིང་།'
@@ -203,6 +205,11 @@ dz:
                 updated_on: 'དུས་མཐུན་བཟོ་བའི་དུས་ཚེས།'
                 recording_note: 'སྒྲ་པར་བཟུང་ནིའི་དྲན་འཛིན།'
                 taken_on: '%{what} དུས་ཚེས།'
+            metadata_source:
+                creator:
+                    one: 'Content Creator'
+                    other: 'Content Creators'
+                filename: 'File Name'
             organization:
                 title: 'ཚོགས་སྡེའི་མིང་།'
                 website: 'ཝེབ་ས་ཁོངས།'
@@ -220,7 +227,7 @@ dz:
                 title: 'སྤུས་ཚད་དབྱེ་བའི་མིང་།'
             recording_orientation:
                 title: 'སྒྲ་བཟུང་བསྒྱུར་བཅོས་མིང་།'
-            file_renderer:
+            renderer:
                 title: 'བྱིན་མིའི་མིང་།'
                 path: 'འགྲུལ་ལམ།'
             reproduction_type:

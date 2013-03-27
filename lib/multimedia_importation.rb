@@ -223,6 +223,7 @@ module MultimediaImportation
       basename = File.basename(metadata_file[:filename])
       metadata_source = MetadataSource.find_by_filename(basename)
       metadata_source = MetadataSource.create(:filename => basename) if metadata_source.nil?
+      writers = []
       parse_metadata(metadata_file[:path]).each do |filename, attrs|
         medium_id = imported_media[filename]
         medium = medium_id.blank? ? nil : Medium.find(medium_id)
@@ -260,7 +261,12 @@ module MultimediaImportation
           creator_id = nil
         else
           creator = AuthenticatedSystem::Person.find_by_fullname(name)
-          creator_id = creator.nil? ? nil : creator.id
+          if creator.nil?
+            creator_id = nil
+          else
+            creator_id = creator.id
+            writers << creator if !writers.include?(creator)
+          end
         end
         s = attrs['caption']
         if !s.blank?
@@ -314,6 +320,7 @@ module MultimediaImportation
           end
         end
       end
+      metadata_source.creators << writers
     end
   end
   

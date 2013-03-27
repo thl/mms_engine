@@ -6,5 +6,5 @@
 <% metadata_source = workflow.metadata_source
    if !metadata_source.nil? %>
 <%=  display_if_not_blank MetadataSource.human_attribute_name('filename').titleize.s, metadata_source.filename %>
-<%=  display_if_not_blank(MetadataSource.human_attribute_name('creator').titleize.s, metadata_source.creator.fullname) if !metadata_source.creator.nil? %>
+<%=  display_if_not_blank MetadataSource.human_attribute_name('creator', :count => :many).titleize.s, metadata_source.creators.collect(&:fullname).join(', ') %>
 <% end %>
