@@ -10,15 +10,18 @@ module MultimediaImportation
   def assess_media_folder(absolute_path, relative_path, source, type, check_existence, topic)
     media = Array.new
     files = Array.new
-    Dir.chdir(source) do
-      Dir.glob('*').sort.each do |filename|
-        if File.directory?(filename)
-          media += assess_media_folder(absolute_path, relative_path.blank? ? source : File.join(relative_path, source), filename, type, check_existence, topic)
-        else
-          next if invalid_extension(filename, type)
-          media << media_hash(type, topic, relative_path.blank? ? File.join(source, filename) : File.join(relative_path, source, filename), File.join(absolute_path, relative_path, source, filename), check_existence)
+    begin
+      Dir.chdir(source) do
+        Dir.glob('*').sort.each do |filename|
+          if File.directory?(filename)
+            media += assess_media_folder(absolute_path, relative_path.blank? ? source : File.join(relative_path, source), filename, type, check_existence, topic)
+          else
+            next if invalid_extension(filename, type)
+            media << media_hash(type, topic, relative_path.blank? ? File.join(source, filename) : File.join(relative_path, source, filename), File.join(absolute_path, relative_path, source, filename), check_existence)
+          end
         end
       end
+    rescue Exception
     end
     return media
   end
