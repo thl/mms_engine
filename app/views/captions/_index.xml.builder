@@ -2,7 +2,7 @@ if !captions.empty?
   for caption in captions
     hash = {:id => caption.id}
     lang = caption.language
-    hash['xml:lang'] = lang.code if !lang.nil?
+    hash['lang'] = lang.code if !lang.nil?
     xml.caption(hash) do
       xml.title(caption.title, :type => 'string')
       caption_type = caption.description_type

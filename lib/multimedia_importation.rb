@@ -48,7 +48,7 @@ module MultimediaImportation
   
   def assess_media_pro_xml_file(file)
     doc = open(file) { |f| Hpricot(f) }
-    ((doc/'author').collect(&:inner_text).uniq + (doc/'writer').collect(&:inner_text).uniq).reject(&:blank?).each{|s| raise "Could not find the person #{s} mentioned in #{file}! Please create it first." if AuthenticatedSystem::Person.find_by_fullname(s).nil? }
+    ((doc/'author').collect(&:inner_text) + (doc/'writer').collect(&:inner_text)).uniq.reject(&:blank?).each{|s| raise "Could not find the person #{s} mentioned in #{file}! Please create it first." if AuthenticatedSystem::Person.find_by_fullname(s).nil? }
     (doc/'copyright').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the copyright holder #{s} mentioned in #{file}! Please create it first." if CopyrightHolder.find_by_title(s).nil? }
     (doc/'category').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the feature #{s} mentioned in #{file}! Please create it first." if Place.find(s.sub(/(.*)\{\D?(\d+)\D*\}(.*)/,'\2').to_i).nil? }
     (doc/'subjectreference').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the subject #{s} mentioned in #{file}! Please create it first." if Topic.find(s.sub(/(.*)\{\D?(\d+)\D*\}(.*)/,'\2').to_i).nil? }
