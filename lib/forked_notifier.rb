@@ -12,13 +12,18 @@ module ForkedNotifier
       # This will avoid mysql connection from dropping
       dbconfig = ActiveRecord::Base.remove_connection
       pid = fork do
-        begin
-          ActiveRecord::Base.establish_connection(dbconfig)
-          yield
-        ensure
-          ActiveRecord::Base.remove_connection
-          exit!
+        success = false
+        until success
+          begin
+            ActiveRecord::Base.establish_connection(dbconfig)
+            success = true
+          rescue
+            write_to_log("Connection to db failed. Retrying in one minute...")
+            sleep 60
+          end
         end
+        yield
+        ActiveRecord::Base.remove_connection
       end
       ActiveRecord::Base.establish_connection(dbconfig)
       # avoids the process becoming a zombie
