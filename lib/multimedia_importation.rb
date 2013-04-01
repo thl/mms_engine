@@ -111,7 +111,7 @@ module MultimediaImportation
         end
         do_metadata_importation(metadata, imported_media)
       rescue Exception => exc
-        finish_log("Import was abruptly terminated: #{exc.to_s}")
+        write_to_log("Import was abruptly terminated: #{exc.to_s}")
         finish_log(exc.backtrace.join("\n"))
       else
         finish_log("Importation finished normally.")
