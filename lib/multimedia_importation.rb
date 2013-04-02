@@ -106,13 +106,17 @@ module MultimediaImportation
           wait([sid])
           last_processed = Rails.cache.read("multimedia_importation/last_processed/#{sid.handle}")
           Rails.cache.delete("multimedia_importation/last_processed/#{sid.handle}")
-          imported_media.merge!(last_processed)
+          if last_processed.nil?
+            write_to_log("There where problems with the following batch: #{ media_batch.collect{ |m| m[:filename] }.join(', ') }")
+          else
+            imported_media.merge!(last_processed)
+          end
           current = limit
         end
         do_metadata_importation(metadata, imported_media)
       rescue Exception => exc
         write_to_log("Import was abruptly terminated: #{exc.to_s}")
-        finish_log(exc.backtrace.join("<br>\n"))
+        finish_log(exc.backtrace.join("\n"))
       else
         finish_log("Importation finished normally.")
       end
