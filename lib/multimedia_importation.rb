@@ -82,44 +82,53 @@ module MultimediaImportation
     #avoids race condition
     register_active_process
     spawn_block do
-      begin
-        start_log('Beginning importation.')
-        write_to_log("Spawning main process #{Process.pid}.")
-        parent = Process.pid
-        done = true
-        current = 0
-        size = media.size
-        imported_media = Hash.new
-        while current<size
-          interval = 1 # media[current][:type]=='typescripts' ? 1 : 10
-          upper_limit = current+interval
-          limit = upper_limit<=size ? upper_limit : size
-          media_batch = media[current...limit]
-          last_processed = nil
-          sid = spawn_block do
-            write_to_log("Spawning sub-process #{Process.pid}.")
-            register_active_process
+      start_log('Beginning importation.')
+      write_to_log("Spawning main process #{Process.pid}.")
+      parent = Process.pid
+      done = true
+      current = 0
+      size = media.size
+      imported_media = Hash.new
+      while current<size
+        interval = 1 # media[current][:type]=='typescripts' ? 1 : 10
+        upper_limit = current+interval
+        limit = upper_limit<=size ? upper_limit : size
+        media_batch = media[current...limit]
+        last_processed = nil
+        sid = spawn_block do
+          write_to_log("Spawning sub-process #{Process.pid}.")
+          register_active_process
+          begin
             last_processed = do_media_importation(media_batch)
-            Rails.cache.write("multimedia_importation/last_processed/#{Process.pid}", last_processed)
-            register_active_process(parent)
+          rescue Exception => exc
+            write_to_log("There where possible problems with image files #{ media_batch.collect{ |m| m[:filename] }.join(', ') }: #{exc.to_s}")
+            write_to_log(exc.backtrace.join("\n"))
           end
-          wait([sid])
-          last_processed = Rails.cache.read("multimedia_importation/last_processed/#{sid.handle}")
-          Rails.cache.delete("multimedia_importation/last_processed/#{sid.handle}")
-          if last_processed.nil?
-            write_to_log("There where problems with the following batch: #{ media_batch.collect{ |m| m[:filename] }.join(', ') }")
-          else
-            imported_media.merge!(last_processed)
-          end
-          current = limit
+          Rails.cache.write("multimedia_importation/last_processed/#{Process.pid}", last_processed)
+          register_active_process(parent)
         end
+        begin
+          wait([sid])
+        rescue Exception => exc
+          write_to_log("There problems managing the thread that processed image files #{ media_batch.collect{ |m| m[:filename] }.join(', ') }: #{exc.to_s}")
+          write_to_log(exc.backtrace.join("\n"))
+        end
+        last_processed = Rails.cache.read("multimedia_importation/last_processed/#{sid.handle}")
+        Rails.cache.delete("multimedia_importation/last_processed/#{sid.handle}")
+        if last_processed.nil?
+          write_to_log("There where subsequent problems with image files #{ media_batch.collect{ |m| m[:filename] }.join(', ') }.")
+        else
+          imported_media.merge!(last_processed)
+        end
+        current = limit
+      end
+      begin
         do_metadata_importation(metadata, imported_media)
       rescue Exception => exc
-        write_to_log("Import was abruptly terminated: #{exc.to_s}")
+        write_to_log("Problems with metadata importation: #{exc.to_s}")
         finish_log(exc.backtrace.join("\n"))
-      else
-        finish_log("Importation finished normally.")
       end
+      finish_log("Importation finished.")
     end
   end
   
