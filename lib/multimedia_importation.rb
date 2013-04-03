@@ -101,8 +101,10 @@ module MultimediaImportation
           begin
             last_processed = do_media_importation(media_batch)
           rescue Exception => exc
-            write_to_log("There where possible problems with image files #{ media_batch.collect{ |m| m[:filename] }.join(', ') }: #{exc.to_s}")
-            write_to_log(exc.backtrace.join("\n"))
+            write_to_log("PROBLEM: possibly with image files #{ media_batch.collect{ |m| m[:filename] }.join(', ') }: #{exc.to_s}")
+            write_to_log("\n#{exc.backtrace.join("\n")}\n")
+            write_to_log("Waiting before re-processing...")
+            sleep(300)
           end
           Rails.cache.write("multimedia_importation/last_processed/#{Process.pid}", last_processed)
           register_active_process(parent)
@@ -110,13 +112,13 @@ module MultimediaImportation
         begin
           wait([sid])
         rescue Exception => exc
-          write_to_log("There problems managing the thread that processed image files #{ media_batch.collect{ |m| m[:filename] }.join(', ') }: #{exc.to_s}")
-          write_to_log(exc.backtrace.join("\n"))
+          write_to_log("PROBLEM: Managing the thread that processed image files #{ media_batch.collect{ |m| m[:filename] }.join(', ') }: #{exc.to_s}")
+          write_to_log("\n#{exc.backtrace.join("\n")}\n")
         end
         last_processed = Rails.cache.read("multimedia_importation/last_processed/#{sid.handle}")
         Rails.cache.delete("multimedia_importation/last_processed/#{sid.handle}")
         if last_processed.nil?
-          write_to_log("There where subsequent problems with image files #{ media_batch.collect{ |m| m[:filename] }.join(', ') }.")
+          write_to_log("PROBLEM: subsequently with image files #{ media_batch.collect{ |m| m[:filename] }.join(', ') }.")
         else
           imported_media.merge!(last_processed)
         end
@@ -125,8 +127,8 @@ module MultimediaImportation
       begin
         do_metadata_importation(metadata, imported_media)
       rescue Exception => exc
-        write_to_log("Problems with metadata importation: #{exc.to_s}")
-        finish_log(exc.backtrace.join("\n"))
+        write_to_log("PROBLEM: With metadata importation: #{exc.to_s}")
+        write_to_log("\n#{exc.backtrace.join("\n")}\n")
       end
       finish_log("Importation finished.")
     end
@@ -226,7 +228,8 @@ module MultimediaImportation
         imported_media[filename] = medium.id
         write_to_log("Imported #{filename} as medium #{medium.id}.")
       rescue Exception => exc
-        write_to_log("Import of #{filename} failed: #{exc}")
+        write_to_log("PROBLEM: Import of #{filename} failed: #{exc}")
+        write_to_log("\n#{exc.backtrace.join("\n")}\n")
       else
         MediaCategoryAssociation.create :medium_id => medium.id, :category_id => medium_to_import[:topic].id, :root_id => medium_to_import[:topic].root.id
       end
