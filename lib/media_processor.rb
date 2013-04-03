@@ -282,7 +282,11 @@ module MediaProcessor
       if self.taken_on.nil?
         date_time = image.date_time_original
         if !date_time.nil?
-          self.taken_on = date_time
+          if date_time.instance_of? String
+            self.partial_taken_on = date_time if !date_time.blank?
+          else
+            self.taken_on = date_time
+          end
           updated = true
         end
       end

@@ -258,6 +258,14 @@ module MultimediaImportation
         next if medium.nil?
         workflow = medium.workflow
         workflow.update_attributes(:metadata_source_id => metadata_source.id, :original_medium_id => attrs['uniqueid'])
+        s = attrs['created']
+        if !s.nil?
+          if s.instance_of? String
+            medium.partial_taken_on = s if !s.blank? && medium.partial_taken_on.nil?
+          else
+            medium.taken_on = s if medium.taken_on.nil?
+          end
+        end
         s = attrs['author']
         if !s.blank?
           r = AuthenticatedSystem::Person.find_by_fullname(attrs['author'])
@@ -358,6 +366,15 @@ module MultimediaImportation
       asset_props = (m/'assetproperties').first
       filepath = (asset_props/'filepath').first.inner_text.gsub(/:/, '/')
       attrs = {'uniqueid' => (asset_props/'uniqueid').first.inner_text.to_i}
+      date_created_str = (asset_props/'created').first.inner_text
+      if !date_created_str.blank?
+        begin
+          date_created = DateTime.parse(date_created_str.split(":",3).join("-"))
+          attrs['created'] = date_created
+        rescue Exception
+          attrs['created'] = date_created_str
+        end
+      end
       (m/'annotationfields').first.children.select(&:elem?).each{|e| attrs[e.name] = e.inner_text}
       (m/'userfields').first.children.select(&:elem?).each{|e| attrs[user_field_names[e.name.gsub(/[^\d]/,'').to_i-1]] = e.inner_text}
       metadata[filepath] = attrs
