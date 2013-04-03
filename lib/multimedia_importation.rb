@@ -114,6 +114,8 @@ module MultimediaImportation
         rescue Exception => exc
           write_to_log("PROBLEM: Managing the thread that processed image files #{ media_batch.collect{ |m| m[:filename] }.join(', ') }: #{exc.to_s}")
           write_to_log("\n#{exc.backtrace.join("\n")}\n")
+          write_to_log("Waiting before re-processing...")
+          sleep(300)
         end
         last_processed = Rails.cache.read("multimedia_importation/last_processed/#{sid.handle}")
         Rails.cache.delete("multimedia_importation/last_processed/#{sid.handle}")
@@ -129,6 +131,8 @@ module MultimediaImportation
       rescue Exception => exc
         write_to_log("PROBLEM: With metadata importation: #{exc.to_s}")
         write_to_log("\n#{exc.backtrace.join("\n")}\n")
+        write_to_log("Waiting before re-processing...")
+        sleep(300)
       end
       finish_log("Importation finished.")
     end
