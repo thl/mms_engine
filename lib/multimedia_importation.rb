@@ -268,7 +268,7 @@ module MultimediaImportation
         end
         s = attrs['author']
         if !s.blank?
-          r = AuthenticatedSystem::Person.find_by_fullname(attrs['author'])
+          r = AuthenticatedSystem::Person.find_by_fullname(s)
           medium.photographer = r if !r.nil?
         end
         s = attrs['Private Note']
@@ -277,7 +277,10 @@ module MultimediaImportation
         s = attrs['copyright']
         if !s.blank?
           r = CopyrightHolder.find_by_title(s)
-          Copyright.create(:medium_id => medium.id, :copyright_holder_id => r.id, :reproduction_type_id => rep_type.id) if !r.nil?
+          if !r.nil?
+            conditions = { :medium_id => medium.id, :copyright_holder_id => r.id, :reproduction_type_id => rep_type.id }
+            Copyright.create(conditions) if Copyright.where(conditions).count == 0
+          end
         end        
         s = attrs['category']
         if !s.blank?
@@ -286,7 +289,8 @@ module MultimediaImportation
           lat = lat.gsub(/(\w)\s+(\d+)\D+(\d+)\D+([\d\.]+)/){($1.upcase=='S' ? -1 : 1) * ($2.to_f + $3.to_f/60 + $4.to_f/3600)} if !lat.blank? && lat.to_f == 0
           lng = attrs['longitude']
           lng = lng.gsub(/(\w)\s+(\d+)\D+(\d+)\D+([\d\.]+)/){($1.upcase=='W' ? -1 : 1) * ($2.to_f + $3.to_f/60 + $4.to_f/3600)} if !lng.blank? && lng.to_f == 0
-          Location.create(:medium_id => medium.id, :feature_id => fid, :lat => lat, :lng => lng, :spot_feature => attrs['Location Feature'], :notes => attrs['Location Notes'])
+          conditions = { :medium_id => medium.id, :feature_id => fid, :lat => lat, :lng => lng, :spot_feature => attrs['Location Feature'], :notes => attrs['Location Notes'] }
+          Location.create(conditions) if Location.where(conditions).count == 0
         end
         name = attrs['writer']
         if name.blank?
@@ -317,7 +321,8 @@ module MultimediaImportation
           topic_id = s.sub(/(.*)\{\D?(\d+)\D*\}(.*)/,'\2').to_i
           t = Topic.find(topic_id)
           if !t.nil?
-            MediaCategoryAssociation.create(:category_id => topic_id, :medium_id => medium.id, :root_id => t.root.id)
+            conditions = { :category_id => topic_id, :medium_id => medium.id, :root_id => t.root.id }
+            MediaCategoryAssociation.create(conditions) if MediaCategoryAssociation.where(conditions).count == 0
           end
         end
         s = attrs['Affiliation Organization']
@@ -338,14 +343,16 @@ module MultimediaImportation
               sponsor = Sponsor.find_by_title(sponsor_title)
               sponsor_id = sponsor.nil? ? nil : sponsor.id
             end
-            Affiliation.create :medium_id => medium.id, :organization_id => organization.id, :project_id => project_id, :sponsor_id => sponsor_id
+            conditions = { :medium_id => medium.id, :organization_id => organization.id, :project_id => project_id, :sponsor_id => sponsor_id }
+            Affiliation.create(conditions) if Affiliation.where(conditions).count == 0
           end          
         end
         s = attrs['Caption']
         if !s.blank?
           r = Caption.find_by_title(s)
           if r.nil?
-            r = Caption.create :title => s, :creator_id => creator_id
+            conditions = { :title => s, :creator_id => creator_id }
+            r = Caption.create(conditions) if Caption.where(conditions).count == 0
             medium.captions << r
           else
             medium.captions << r if !medium.caption_ids.include? r.id
@@ -366,7 +373,8 @@ module MultimediaImportation
       asset_props = (m/'assetproperties').first
       filepath = (asset_props/'filepath').first.inner_text.gsub(/:/, '/')
       attrs = {'uniqueid' => (asset_props/'uniqueid').first.inner_text.to_i}
-      date_created_str = (asset_props/'created').first.inner_text
+      created_tag = (asset_props/'created').first
+      date_created_str = created_tag.nil? ? nil : created_tag.inner_text
       if !date_created_str.blank?
         begin
           date_created = DateTime.parse(date_created_str.split(":",3).join("-"))
