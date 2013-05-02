@@ -49,7 +49,7 @@ class PicturesController < AclController
     begin
       @image = Image.new(params[:image])
       success = @image.save
-    rescue
+    rescue => e
       @image = Image.new if @image.nil?
       success = false
     else

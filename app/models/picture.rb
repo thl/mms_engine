@@ -22,7 +22,7 @@
 
 class Picture < Medium
   attr_accessible :image, :recording_note, :resource_type_id, :photographer_id, :taken_on, :capture_device_model_id,
-    :quality_type_id, :private_note, :rotation
+    :quality_type_id, :private_note, :rotation, :recording_orientation_id
   
   include MediaProcessor::PictureExtension
   
