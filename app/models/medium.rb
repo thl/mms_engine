@@ -28,7 +28,7 @@ class Medium < ActiveRecord::Base
   PREVIEW_ROWS = 2
   FULL_ROWS = 4
   FULL_COLS = 8
-  COMMON_SIZES = {:compact => '70:95x95#', :thumb => '70:120x120#', :search => '70:150x150', :essay => '80:280x280>', :normal => '80:500x500>', :large => '80:800x700>', :huge => '90:2000x2000>'}
+  COMMON_SIZES = {:compact => {:quality => 70, :geometry => 'c95x95', :density => 260}, :thumb => {:quality => 70, :geometry => 'c120x120', :density => 260}, :search => {:quality => 70, :geometry => '150x150', :density => 260}, :essay => {:quality => 80, :geometry => '280x280>', :density => 260}, :normal => {:quality => 80, :geometry => '500x500>', :density => 260}, :large => {:quality => 80, :geometry => '800x700>', :density => 260}, :huge => {:quality => 90, :geometry => '2000x2000>'} }
   # The keys of TYPES should correspond to class names
   TYPES = {
     :picture => {:singular => 'Picture', :plural => 'Pictures'},

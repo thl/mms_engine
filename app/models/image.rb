@@ -19,7 +19,7 @@ class Image < ActiveRecord::Base
   # 'art', 'avs', 'cin', 'cmyka', 'cur', 'cut', 'dcm', 'dcx', 'dib', 'djvu', 'dot', 'epdf', 'epi', 'eps', 'eps2', 'eps3','epsf', 'epsi', 'ept', 'exr', 'fax', 'fig', 'fits', 'gplt', 'gray', 'hpgl', 'ico', 'icon', 'info', 'jbig', 'bie', 'jbg', 'jng', 'jp2', 'jpc', 'mat', 'miff', 'mono', 'mng', 'mtv', 'mvg', 'otb', 'p7', 'palm', 'pam', 'pix', 'pcd', 'pcds', 'pcx', 'pdb', 'pef', 'pfa', 'pfb', 'pfb', 'pfm', 'picon', 'png8', 'png24', 'png32', 'ps', 'ps2', 'ps3', 'psd', 'ptif', 'pwp', 'rad', 'rgba', 'rla', 'rle', 'sct', 'sfw', 'sgi', 'sun', 'svg', 'tga', 'icb', 'vda', 'vst', 'tim', 'ttf', 'uil', 'uyvy', 'vicar', 'viff', 'wbmp', 'wpg', 'x', 'xcf', 'xpm', 'xwd', 'ycbcr', 'ycbcra', 'yuv'
   VALID_MIME_TYPES = Array.new
   VALID_TYPES.each_value { |value| VALID_MIME_TYPES << value }
-  has_attachment :storage => :file_system, :processor => :rmagick, :max_size => 500.megabytes, :content_type => VALID_TYPES.collect {|key, value| value}, :thumbnails => Medium::COMMON_SIZES.merge(:jiats_large => '700x>', :jiats_huge => '1200x>')
+  has_attachment :storage => :file_system, :processor => :rmagick, :max_size => 500.megabytes, :content_type => VALID_TYPES.collect {|key, value| value}, :thumbnails => Medium::COMMON_SIZES.merge(:jiats_large => {:geometry => '700x>', :density => 300}, :jiats_huge => {:geometry => '1200x>', :density => 300})
   acts_as_tree
   validates_as_attachment
   has_one :picture, :foreign_key => 'attachment_id'
