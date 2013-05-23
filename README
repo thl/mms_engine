@@ -23,7 +23,7 @@ Besides either of these two, the required plugins are:
 - open_id_authentication: 			git://github.com/rails/open_id_authentication.git
 - permalink_fu: 					git://github.com/technoweenie/permalink_fu.git
 - tiny_mce:							git://github.com/kete/tiny_mce.git
-- topical_map_builder_integration:	git://github.com/thl/kmaps_integration.git
+- topical_map_builder_integration:	git://github.com/thl/topical_map_integration.git
 - restful-authentication: 			git://github.com/technoweenie/restful-authentication.git
 
 Also recommended but not required are:

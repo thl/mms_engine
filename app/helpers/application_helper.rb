@@ -11,7 +11,7 @@ module ApplicationHelper
     str = "<h3 class=\"head\">#{link_to 'All Multimedia', '#nogo', {:hreflang => 'The media management system stores, organize and display pictures, videos and texts.'}}</h3>\n<ul>\n" +
           "<li>#{link_to 'Home', media_path, {:hreflang => 'Browse pictures, videos, and texts.'}}</li>\n" +
           "<li>#{link_to 'Advanced Search', new_media_search_path, {:hreflang => 'Search pictures, videos, and texts.'}}</li>\n" +
-          "<li>#{link_to ts('browse.records', :what => Topic.model_name.human(:count => :many).titleize), topics_path, {:hreflang => ts('browse.by', :what => 'pictures, videos, and texts', :whom => Topic.model_name.human(:count => :many))}}</li>\n"
+          "<li>#{link_to ts('browse.records', :what => Topic.human_name(:count => :many).titleize), topics_path, {:hreflang => ts('browse.by', :what => 'pictures, videos, and texts', :whom => Topic.human_name(:count => :many))}}</li>\n"
     authorized_only(hash_for_admin_path) { str += "<li>#{link_to 'Administration', admin_path, {:hreflang => 'Manage countries, keywords, glossaries, static pages, copyright holders, organizations, projects, sponsors, translations, people, users, roles, themes, languages, settings and media importation.'}}</li>\n" }
     str += "</ul>"
     return str

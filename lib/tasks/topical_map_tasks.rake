@@ -1,6 +1,6 @@
 # require 'config/environment'
 namespace :mms do
-  namespace :kmaps do
+  namespace :topical_map do
     desc "Deploys collections to knowledge maps (authenticating through TMB_USER arguments) making the appropriate replacements."  
     task :deploy do |t|
       require File.join(File.dirname(__FILE__), "../lib/knowledge_maps_deployer.rb")

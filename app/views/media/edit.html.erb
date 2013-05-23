@@ -134,7 +134,7 @@
 <%=    link_to ts('associate.to', :what => root_topic.title.downcase), new_medium_topic_association_path(@medium.id, root_topic.id) %> |
 <%   end
    end %>
-<%= link_to ts('associate.to', :what => Topic.model_name.human), new_medium_association_path(@medium.id) %> |
+<%= link_to ts('associate.to', :what => Topic.human_name), new_medium_association_path(@medium.id) %> |
 <%= ts 'associate.to_from', :what => Topic.human_attribute_name(:child).downcase, :whom => Topic.human_attribute_name(:root).downcase %>:
 <%= select_tag :root_topics, options_for_select([''] + @root_topics.collect{|topic| [topic.title, new_medium_topic_association_path(@medium.id, topic.id)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %><br/>
 <% if media_source_associations.empty? %>
