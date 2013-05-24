@@ -279,6 +279,10 @@ class Medium < ActiveRecord::Base
     return !cold_storage_file.nil? && File.exist?(cold_storage_file) ? cold_storage_file : nil
   end
   
+  def self.human_name(*args)
+    self.model_name.human(*args)
+  end
+  
   private
       
   def delete_from_coldstorage
