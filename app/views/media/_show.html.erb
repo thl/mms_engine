@@ -64,7 +64,7 @@
    end
    associated_resources = [
     ["Places", @medium.feature_count, @medium.places_url],
-    [Topic.human_name(:count => :many).titleize.s, @medium.category_count, @medium.kmaps_url]
+    [Topic.human_name(:count => :many).titleize.s, @medium.category_count, @medium.topical_map_url]
    ]
    if associated_resources.collect{|ar| ar[1]}.sum > 0 %>
      <h3>Associated Resources</h3>

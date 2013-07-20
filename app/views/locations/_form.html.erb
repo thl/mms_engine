@@ -4,7 +4,7 @@
 <%= thumbnail_image_link(@medium) %></td>
 </p>
 <p>
-    <b><%= Location.human_attribute_name('feature_id').s %></b> (<%= link_to ts('browse.records', :what => 'Places Dictionary'), PlacesResource.get_url, :target => '_blank' %>)<br />
+    <b><%= Location.human_attribute_name('feature_id').s %></b> (<%= link_to ts('browse.records', :what => 'Places Dictionary'), PlacesIntegration::PlacesResource.get_url, :target => '_blank' %>)<br />
 <%= f.text_field :feature_id %>
 </p>
 <p>

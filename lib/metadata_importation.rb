@@ -136,11 +136,11 @@ class MetadataImportation < CsvImportation
         geo_code_type = self.fields.delete("#{prefix}geo_code_types.code")
         geo_code = self.fields.delete("#{prefix}features.geo_code")
         if !geo_code_type.blank? && !geo_code.blank?
-          feature = Feature.find_by_geo_code(geo_code_type, geo_code)
+          feature = Place.find_by_geo_code(geo_code_type, geo_code)
           puts "Place with geo code #{geo_code} not found!" if feature.nil?
         end
       else
-        feature = Feature.find(feature_str)
+        feature = Place.find(feature_str)
         puts "Place with FID #{feature_str} not found!" if feature.nil?
       end
       if !feature.nil?

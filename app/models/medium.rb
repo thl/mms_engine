@@ -138,12 +138,12 @@ class Medium < ActiveRecord::Base
     Location.where(:medium_id => self.id).count
   end
   
-  def kmaps_url
+  def topical_map_url
     TopicalMapResource.get_url + medium_path
   end
   
   def places_url
-    PlacesResource.get_url + medium_path
+    PlacesIntegration::PlacesResource.get_url + medium_path
   end
   
   def thumbnail_image

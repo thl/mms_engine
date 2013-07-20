@@ -1,6 +1,6 @@
 <%= javascript_include_tag 'mms_engine/swfobject' %>
 <% movie = @medium.screen_size_movie
-   relative_url = ActionController::Base.relative_url_root 
+   relative_url = ActionController::Base.relative_url_root
    image = @medium.screen_size_image
    if movie.status==1
 	 transcript_path = @medium.transcript.nil? ? nil : @transcript_params.nil? ? subtitles_path(@medium) : subtitles_path(@medium, @transcript_params) %>

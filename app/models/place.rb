@@ -1,5 +1,5 @@
-class Place < Feature
-  headers['Host'] = PlacesResource.headers['Host'] if !PlacesResource.headers['Host'].blank?
+class Place < PlacesIntegration::Feature
+  headers['Host'] = PlacesIntegration::PlacesResource.headers['Host'] if !PlacesIntegration::PlacesResource.headers['Host'].blank?
   
   self.element_name = 'feature'
   
@@ -37,6 +37,10 @@ class Place < Feature
   
   def title
     self.header
+  end
+  
+  def fid
+    self.id
   end
   
   alias count_inherited_media media_count

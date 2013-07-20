@@ -3,7 +3,7 @@
   <%= f.text_field :title %>
 </p>
 <p>
-  <b><%= Publisher.human_attribute_name('country_id').s %></b> (<%= link_to ts('browse.records', :what => 'Places Dictionary'), PlacesResource.get_url, :target => '_blank' %>)<br />
+  <b><%= Publisher.human_attribute_name('country_id').s %></b> (<%= link_to ts('browse.records', :what => 'Places Dictionary'), PlacesIntegration::PlacesResource.get_url, :target => '_blank' %>)<br />
 <%= f.text_field :country_id %>
 </p>
 

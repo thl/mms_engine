@@ -22,7 +22,7 @@ class Location < ActiveRecord::Base
   end
   
   def feature
-    Feature.find(self.feature_id)
+    Place.find(self.feature_id)
   end
   
   def coordinates
