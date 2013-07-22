@@ -141,6 +141,7 @@ class Medium < ActiveRecord::Base
   def topical_map_url
     TopicalMapResource.get_url + medium_path
   end
+  alias :kmaps_url :topical_map_url
   
   def places_url
     PlacesIntegration::PlacesResource.get_url + medium_path
