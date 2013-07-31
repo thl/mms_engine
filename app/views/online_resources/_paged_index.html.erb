@@ -1,0 +1,4 @@
+<%= render :partial => 'online_resources/paged_table', :locals => { :media => @media, :title => @title } %>
+<%  if !@media.empty? %>
+<%=   render :partial => 'media/paged_links', :locals => { :media => @media } %>
+<%  end %>

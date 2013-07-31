@@ -14,6 +14,11 @@
 <%   no_media = false %>
 <%=  render :partial => 'documents/media_table', :locals => {:media => @documents, :more => media_searches_path(@pagination_params.merge({:media_type => 'Document'}))} %>
 <% end
+   if !@online_resources.empty? %>
+     <h3><%= @titles[:online_resource] %></h3>
+<%   no_media = false %>
+<%=  render :partial => 'online_resources/media_table', :locals => {:media => @online_resources, :more => media_searches_path(@pagination_params.merge({:media_type => 'OnlineResource'}))} %>
+<% end
    if no_media %>
      <h3><%= ts 'media.none' %></h3>
 <% end %>

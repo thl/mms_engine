@@ -30,7 +30,8 @@ class MediaController < AclController
           @pictures = Picture.find_by_sql ["SELECT * FROM media m JOIN (SELECT MAX(ID) AS ID FROM media) AS m2 ON m.ID >= FLOOR(m2.ID*RAND()) where m.type = 'Picture' LIMIT ?", Medium::COLS * Medium::PREVIEW_ROWS]
           @videos = Video.order('RAND()').limit(Medium::COLS)
           @documents = Document.order('RAND()').limit(Medium::COLS)
-          @titles = { :picture => ts(:daily, :what => Picture.model_name.human(:count => :many).titleize), :video => ts(:daily, :what => Video.model_name.human(:count => :many).titleize), :document => ts(:daily, :what => Document.model_name.human(:count => :many).titleize) }
+          @online_resources = OnlineResource.order('RAND()').limit(Medium::COLS)
+          @titles = { :picture => ts(:daily, :what => Picture.model_name.human(:count => :many).titleize), :video => ts(:daily, :what => Video.model_name.human(:count => :many).titleize), :document => ts(:daily, :what => Document.model_name.human(:count => :many).titleize), :online_resource => ts(:daily, :what => OnlineResource.model_name.human(:count => :many).titleize) }
           @more = { :type => '' }
         end
       end
@@ -45,6 +46,8 @@ class MediaController < AclController
           if defined? @media.offset
             if @type == 'Document'
               render 'documents/paged_index_full'
+            elsif @type == 'OnlineResource'
+                render 'online_resources/paged_index_full'
             else
               if @type.blank?
                 calculate_keyword_font_sizes

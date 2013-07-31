@@ -1,0 +1,14 @@
+<table border="0" cellpadding="0px" cellspacing="5px" id="picframe">
+<% for medium in media
+	 next if medium.nil? %>
+     <tr align="center" valign="middle">
+	   <td align="left" class="normal"><%= link_to medium.prioritized_title.s, medium_path(medium), :class => 'media-thumb', :remote => true %></td>
+     </tr>
+<% end %>
+   </tr>
+<% if !more.nil? %>
+     <tr>
+   	   <td colspan="<%= Medium::COLS %>" align="right" class="media_keywords"><%= link_to 'More', more.is_a?(String) ? more : media_path(more) %></td>
+     </tr>
+<% end %>
+</table>

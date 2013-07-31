@@ -1,5 +1,5 @@
 class MediaSearchesController < AclController
-  @@media_types = {:picture => Picture, :video => Video, :document => Document}
+  @@media_types = {:picture => Picture, :video => Video, :document => Document, :online_resource => OnlineResource}
   helper :media
   
   def initialize
@@ -37,6 +37,7 @@ class MediaSearchesController < AclController
       @pictures = Medium.media_search(@media_search, 'Picture').paginate(:per_page => per_page, :page => params[:page])
       @videos = Medium.media_search(@media_search, 'Video').paginate(:per_page => per_page, :page => params[:page])
       @documents = Medium.media_search(@media_search, 'Document').paginate(:per_page => per_page, :page => params[:page])
+      @online_resources = Medium.media_search(@media_search, 'OnlineResource').paginate(:per_page => per_page, :page => params[:page])
       @keywords = Keyword.where([Util.search_condition_string(@media_search.type, 'title', true), @media_search.title])
       @titles = Hash.new
       @@media_types.each{ |key, value| @titles[key] = "#{value.model_name.human(:count => :many).titleize} about \"#{@media_search.title}\"" }

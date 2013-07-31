@@ -1,0 +1,21 @@
+<h1>Listing online_resources</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @online_resources.each do |online_resource| %>
+  <tr>
+    <td><%= link_to 'Show', online_resource %></td>
+    <td><%= link_to 'Edit', edit_online_resource_path(online_resource) %></td>
+    <td><%= link_to 'Destroy', online_resource, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Online resource', new_online_resource_path %>

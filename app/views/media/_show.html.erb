@@ -8,12 +8,15 @@
 <%=  render :partial => 'pictures/large' %>
 <% else
      large = false
-     if @medium.instance_of? Picture %>
+     case @medium.class.model_name
+     when 'Picture' %>
 <%=    render :partial => 'pictures/show' %>
-<%   elsif @medium.instance_of? Video %>
+<%   when 'Video' %>
 <%=    render :partial => 'videos/show' %>
-<%   elsif @medium.instance_of? Document %>
+<%   when 'Document' %>
 <%=    render :partial => 'documents/show' %>
+<%   when 'OnlineResource' %>
+<%=    render :partial => 'online_resources/show' %>
 <%   end %>
 <%=  display_if_not_blank Medium.human_attribute_name(:id).s, "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})".html_safe %>
 <%=  render :partial => 'titles/index_display_only', :locals => {:medium => @medium} %>

@@ -210,6 +210,9 @@ class Medium < ActiveRecord::Base
       ids += Workflow.where([Util.search_condition_string(media_search.type, 'original_medium_id', false), "%#{media_search.title}%"]).select('DISTINCT(medium_id)').collect(&:medium_id)
     end
     ids += Workflow.where(['workflows.original_filename LIKE ?', "%#{media_search.title}%"]).select('DISTINCT(medium_id)').collect(&:medium_id)
+    if type=='OnlineResource'
+      ids += WebAddress.where(['web_addresses.url LIKE ?', "%#{media_search.title}%"]).select('DISTINCT(online_resource_id)').collect(&:online_resource_id)
+    end
     # for now asumming that its English; change later TODO
     ids += Medium.joins(:captions).where(Util.search_condition_string(media_search.type, 'captions.title', true), media_search.title).select('DISTINCT(media.id)').collect(&:id)
     ids += Medium.joins(:descriptions).where(Util.search_condition_string(media_search.type, 'descriptions.title', true), media_search.title).select('DISTINCT(media.id)').collect(&:id)

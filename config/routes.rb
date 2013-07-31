@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   root :to => 'media#index'
   resources :application_settings, :copyrights, :copyright_holders, :description_types, :dictionary_searches,
     :application_filters, :glossaries, :keywords, :media_keyword_associations, :media_searches,
-    :organizations, :pictures, :projects, :quality_types, :recording_orientations, :reproduction_types,
-    :sources, :sponsors, :transformations, :videos, :statuses, :publishers  
+    :online_resources, :organizations, :pictures, :projects, :quality_types, :recording_orientations,
+    :reproduction_types, :sources, :sponsors, :transformations, :videos, :statuses, :publishers  
   match 'admin' => 'main#admin', :as => 'admin'
   match 'subtitles/:video_id/:language/:form' => 'subtitles#index', :as => 'subtitles', :defaults => { :form => 'script', :language => 'bo' }
   match 'help' => 'help#advanced_search', :as => 'help_advanced_search'

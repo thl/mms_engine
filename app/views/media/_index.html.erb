@@ -17,6 +17,12 @@
      @more[:type] = 'Document' if !@more.nil? %>
 <%=  render :partial => 'documents/media_table', :locals => {:media => @documents, :more => @more} %>
 <% end
+   if !@online_resources.empty? %>
+     <h3><%= @titles[:online_resource] %></h3>
+<%   no_media = false
+     @more[:type] = 'OnlineResource' if !@more.nil? %>
+<%=  render :partial => 'online_resources/media_table', :locals => {:media => @online_resources, :more => @more} %>
+<% end
    if no_media %>
      <p><%= ts 'media.none' %></p>
 <% end %>

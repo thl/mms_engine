@@ -37,6 +37,9 @@
 <%=  link_to ts('new.record', :what => 'Audio-Video'), new_video_path %> |
 <% end
    if authorized? hash_for_new_document_path %>
-<%=  link_to ts('new.record', :what => 'Text-Website'), new_document_path %>
+<%=  link_to ts('new.record', :what => 'Text'), new_document_path %> |
+<% end
+   if authorized? hash_for_new_online_resource_path %>
+<%=  link_to ts('new.record', :what => 'Online Resource'), new_online_resource_path %>
 <% end %>
 </p>

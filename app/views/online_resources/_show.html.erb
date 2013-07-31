@@ -1,0 +1,2 @@
+<%= display_if_not_blank WebAddress.human_attribute_name('url').s, link_to(h(@medium.web_address.url), @medium.web_address.url) %>
+<%= display_if_not_blank WebAddress.human_attribute_name('parent_resource_id').s, h(@medium.web_address.parent_resource.id) if !@medium.web_address.parent_resource.nil? %>

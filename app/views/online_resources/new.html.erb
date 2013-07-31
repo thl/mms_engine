@@ -1,0 +1,14 @@
+<h1><%= ts 'new.record', :what => 'Online Resource' %></h1>
+<%= error_messages_for :medium %>
+<%= error_messages_for :web_address %>
+<%= form_for(:medium, :url => online_resources_path) do |f| %>
+      <p><b><%= WebAddress.human_attribute_name('url').s %></b><br />
+<%=   text_field :web_address, :url %></p>
+      <p><b><%= WebAddress.human_attribute_name('parent_resource_id').s %></b><br />
+<%=   text_field :web_address, :parent_resource_id %></p>
+<%=   render :partial => 'media/form', :locals => {:f => f} %>
+      <p><%= globalized_submit_tag 'creat.e.this' %></p>
+<%  end %>
+<p>
+<%= link_to ts('back.this'), media_path %>
+</p>

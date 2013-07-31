@@ -39,10 +39,9 @@ class Place < PlacesIntegration::Feature
     self.header
   end
   
-  if !defined? self.fid
-    def fid
-      self.id
-    end
+  def fid
+    fid = self.attributes['fid']
+    fid.nil? ? self.id : fid
   end
     
   alias count_inherited_media media_count
