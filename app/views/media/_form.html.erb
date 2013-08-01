@@ -1,11 +1,10 @@
 <%= tagged_tinymce_script %>
-<% klass = @medium.class %>
 <p>
   <b><%= Medium.human_attribute_name(:resource_type).s %></b><br />
 <%= f.collection_select(:resource_type_id, @resource_types, :id, :title, { :include_blank => false }) %>
 </p>
 <p>
-  <b><%= Medium.human_attribute_name(:taken_on, :what => klass.model_name.human.titleize).s %></b><br/>
+  <b><%= Medium.human_attribute_name(:taken_on, :what => @medium.class.model_name.human.titleize).s %></b><br/>
 <%= f.datetime_select(:taken_on, :include_blank => true, :order => [:day, :month, :year], :include_seconds => true, :start_year => -500, :max_years_allowed => 3000) %>
 </p>
 <p>

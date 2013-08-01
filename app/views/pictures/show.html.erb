@@ -1,5 +1,5 @@
-<div id="primary">
+<div id="secondary">
+<%=  display_if_not_blank Medium.human_attribute_name(:id).s, "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})".html_safe %>
 <%= render :partial => 'show' %>
 </div>
-<div id="secondary"></div>
 <div class="clear"></div>

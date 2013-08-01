@@ -1,2 +1,2 @@
-<%= display_if_not_blank WebAddress.human_attribute_name('url').s, link_to(h(@medium.web_address.url), @medium.web_address.url) %>
-<%= display_if_not_blank WebAddress.human_attribute_name('parent_resource_id').s, h(@medium.web_address.parent_resource.id) if !@medium.web_address.parent_resource.nil? %>
+<%= display_if_not_blank WebAddress.human_attribute_name('url').s, link_to(@medium.web_address.url, @medium.web_address.url) %>
+<%= display_if_not_blank WebAddress.human_attribute_name('parent_resource_id').s, link_to(@medium.web_address.parent_resource.prioritized_title.s, medium_path(@medium.web_address.parent_resource), :class => 'media-thumb', :remote => true) if !@medium.web_address.parent_resource.nil? %>

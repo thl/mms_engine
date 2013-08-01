@@ -1,4 +1,7 @@
 <div id="secondary">
 <%= render :partial => 'show' %>
+<p>
+| <%= link_to ts('back.to', :what => t('all.records', :what => Medium.model_name.human(:count => :many))), media_path %>
+</p>
 </div>
 <div class="clear"></div>

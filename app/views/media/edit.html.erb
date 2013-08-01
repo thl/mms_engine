@@ -1,9 +1,14 @@
 <h1><%= ts :for, :what => t('edit.ing.record', :what => t(:catalog_record)), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <%= error_messages_for :medium %>
-<%= form_for(:medium, :url => medium_path(@medium), :method => :put) do |f| %>
+<%= form_for(@medium, :as => :medium, :url => medium_path(@medium), :method => :put) do |f| %>
       <p><b><%= Medium.model_name.human.titleize.s %></b><br />
-<%=   thumbnail_image_link(@medium) %></p>
-<%=   render(:partial => 'pictures/form', :locals => {:f => f}) if @medium.instance_of? Picture %>
+<%=   thumbnail_image_link(@medium) if !@medium.instance_of? OnlineResource %></p>
+<%    case @medium.class.model_name
+      when 'Picture' %>
+<%=     render :partial => 'pictures/form', :locals => {:f => f} %>
+<%    when 'OnlineResource' %>
+<%=     render :partial => 'online_resources/form', :locals => {:f => f} %>
+<%    end %>
 <%=   render :partial => 'media/form', :locals => {:f => f} %>
       <p><%= globalized_submit_tag 'update.this' %></p>
 <%  end %>

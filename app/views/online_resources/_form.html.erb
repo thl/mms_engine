@@ -1,17 +1,6 @@
-<%= form_for(@online_resource) do |f| %>
-  <% if @online_resource.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@online_resource.errors.count, "error") %> prohibited this online_resource from being saved:</h2>
-
-      <ul>
-      <% @online_resource.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+<%= f.fields_for :web_address do |web_fields| %>
+      <p><b><%= WebAddress.human_attribute_name('url').s %></b><br />
+<%=   web_fields.text_field :url %></p>
+      <p><b><%= WebAddress.human_attribute_name('parent_resource_id').s %></b><br />
+<%=   web_fields.text_field :parent_resource_id %></p>
+<%  end %>

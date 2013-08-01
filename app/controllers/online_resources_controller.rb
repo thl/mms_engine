@@ -27,7 +27,7 @@ class OnlineResourcesController < AclController
     @quality_types = QualityType.order('id')
     @resource_types = Topic.find(2636).children
     @medium = OnlineResource.new(:resource_type_id => 2677)
-    @web_address = WebAddress.new
+    @medium.build_web_address
     respond_to do |format|
       format.html # new.html.erb
     end
@@ -41,20 +41,10 @@ class OnlineResourcesController < AclController
   # POST /online_resources
   # POST /online_resources.json
   def create
-    begin
-      @medium = OnlineResource.new(params[:medium])
-      @web_address = WebAddress.new(params[:web_address])
-      success = @medium.save
-    rescue => e
-      success = false
-    else
-      if success
-        @web_address.online_resource = @medium
-        success = @web_address.save        
-      end
-    end
+    web_address_params = params[:medium].delete('web_address_attributes')
+    @medium = OnlineResource.new(params[:medium])
     respond_to do |format|
-      if success
+      if @medium.save && @medium.create_web_address(web_address_params)
         format.html { redirect_to @medium, :notice => 'Online resource was successfully created.' }
         format.json { render :json => @medium, :status => :created, :location => @medium }
       else
