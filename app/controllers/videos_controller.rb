@@ -65,7 +65,9 @@ class VideosController < AclController
       end
     end
     if success
+      params_video = params[:video]
       @medium = Video.new(params[:video])
+      @medium.ingest_taken_on(params_video)
       @medium.movie = @movie
       success = @medium.save 
     end

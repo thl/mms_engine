@@ -42,7 +42,9 @@ class OnlineResourcesController < AclController
   # POST /online_resources.json
   def create
     web_address_params = params[:medium].delete('web_address_attributes')
-    @medium = OnlineResource.new(params[:medium])
+    params_medium = params[:medium]
+    @medium = OnlineResource.new(params_medium)
+    @medium.ingest_taken_on(params_medium)
     respond_to do |format|
       if @medium.save && @medium.create_web_address(web_address_params)
         format.html { redirect_to @medium, :notice => 'Online resource was successfully created.' }

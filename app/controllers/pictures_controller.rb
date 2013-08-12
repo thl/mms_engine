@@ -54,7 +54,9 @@ class PicturesController < AclController
       success = false
     else
       if success
-        @medium = Picture.new(params[:picture])
+        params_picture = params[:picture]
+        @medium = Picture.new(params_picture)
+        @medium.ingest_taken_on(params_picture)
         @medium.image = @image
         success = @medium.save
       end

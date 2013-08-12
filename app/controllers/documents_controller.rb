@@ -100,6 +100,7 @@ class DocumentsController < AclController
       params_medium = params[:medium]
       params_medium = params[:document] if params_medium.nil?
       @medium = Document.new(params_medium)
+      @medium.ingest_taken_on(params_medium)
       @medium.typescript = @typescript
       success = @medium.save
     end

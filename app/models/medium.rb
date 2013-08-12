@@ -287,6 +287,16 @@ class Medium < ActiveRecord::Base
     self.model_name.human(*args)
   end
   
+  def ingest_taken_on(params)
+    if self.taken_on.nil? || self.taken_on.year < 0
+      year_str = params['taken_on(1i)']
+      year = year_str.to_i
+      year_str = "#{year.abs} BCE" if !year_str.blank? && year < 0
+      a = [params['taken_on(2i)'], params['taken_on(3i)'], year_str].reject(&:blank?)
+      self.partial_taken_on = a.join('/') if !a.empty?
+    end
+  end
+  
   private
       
   def delete_from_coldstorage
