@@ -134,7 +134,7 @@ class MediaController < AclController
     params_medium = params[:medium]
     respond_to do |format|
       @medium.attributes = params_medium
-      if @medium.taken_on.nil?
+      if @medium.taken_on.nil? || @medium.taken_on.year < 0
         a = [params_medium['taken_on(2i)'], params_medium['taken_on(3i)'], params_medium['taken_on(1i)']].reject(&:blank?)
         @medium.partial_taken_on = a.join('/') if !a.empty?
       end

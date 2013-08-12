@@ -126,7 +126,7 @@
 <%=  @medium.private_note.html_safe %>
 <% end %>
 <p>
-<% if @medium.partial_taken_on.nil? 
+<% if @medium.partial_taken_on.blank? 
 	 if !@medium.taken_on.nil? %>
        <b><%= Medium.human_attribute_name('taken_on', :what => @medium.class.model_name.human.titleize).s %>:</b>
 <%=    h(@medium.taken_on.strftime('%d/%b/%Y')) %>

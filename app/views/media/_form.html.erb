@@ -5,7 +5,13 @@
 </p>
 <p>
   <b><%= Medium.human_attribute_name(:taken_on, :what => @medium.class.model_name.human.titleize).s %></b><br/>
-<%= f.datetime_select(:taken_on, :include_blank => true, :order => [:day, :month, :year], :include_seconds => true, :start_year => -500, :max_years_allowed => 3000) %>
+<% if !@medium.partial_taken_on.blank? %>
+<%=  f.text_field :partial_taken_on %>
+<% end %>
+<% if @medium.partial_taken_on.blank? || !@medium.taken_on.nil? %>
+<%=  f.datetime_select(:taken_on, :include_blank => true, :order => [:day, :month, :year], :include_seconds => true, :start_year => -500, :end_year => Time.now.year, :max_years_allowed => 3000) %>&nbsp;
+<%=  link_to_function 'Clear', "jQuery('#medium_taken_on_1i').val(''); jQuery('#medium_taken_on_2i').val('');  jQuery('#medium_taken_on_3i').val('');  jQuery('#medium_taken_on_4i').val('');  jQuery('#medium_taken_on_5i').val(''); jQuery('#medium_taken_on_6i').val('')" %>
+<% end %>
 </p>
 <p>
   <b><%= QualityType.model_name.human.titleize.s %></b><br />

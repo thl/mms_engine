@@ -38,7 +38,7 @@ class Medium < ActiveRecord::Base
     :document => {:singular => 'Document', :plural => 'Documents'}
     #:biblio => {:singular => 'Biblio', :plural => 'Biblio'}
   }
-  attr_accessible :recording_note, :resource_type_id, :photographer_id, :taken_on, :capture_device_model_id,
+  attr_accessible :recording_note, :resource_type_id, :photographer_id, :taken_on, :partial_taken_on, :capture_device_model_id,
     :quality_type_id, :private_note
   
   before_create  { |record| record.application_filter = ApplicationFilter.default_filter }
