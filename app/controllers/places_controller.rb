@@ -47,10 +47,13 @@ class PlacesController < ApplicationController
   end
   
   def render_media
-    get_tab_options
     respond_to do |format|
-      format.html { render(:action => @medium.nil? ? 'show' : 'show_for_medium') }
+      format.html do
+        get_tab_options
+        render(:action => @medium.nil? ? 'show' : 'show_for_medium')
+      end
       format.js   { render 'show' }
+      format.xml  { render 'show' }
     end
   end
   
