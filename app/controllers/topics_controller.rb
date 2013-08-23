@@ -82,9 +82,9 @@ class TopicsController < AclController
   end
   
   def render_media
-    get_tab_options
     respond_to do |format|
       format.html do
+        get_tab_options
         if !@medium.nil?
           render :action => 'show_for_medium'
         elsif !@topic.nil?
@@ -93,7 +93,8 @@ class TopicsController < AclController
           render :action => 'index'
         end          
       end
-      format.js { render 'show' }
+      format.js  { render 'show' }
+      format.xml { render 'show' }
     end
   end
   
