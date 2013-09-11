@@ -19,7 +19,7 @@ xml.__send__(medium.class.name.underscore.dasherize) do
     server << relative_url if !relative_url.blank?
     xml << render(:partial => 'documents/typescript', :locals => {:server => server, :typescript => attachment}) if attachment.instance_of? Typescript
     xml.images(:type => 'array') do
-      attachment.children.each{ |child| xml << render(:partial => 'pictures/image', :locals => {:server => server, :image => child}) }
+      attachment.children.each{ |child| xml << render(:partial => 'pictures/image', :locals => {:server => server, :image => child}) if !child.filename.blank? }
     end
   end
 end
