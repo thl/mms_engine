@@ -1,5 +1,8 @@
 <div id="primary">
 <%= render :partial => 'media/show', :locals => { :large => true } %>
+<p>
+| <%= link_to ts('back.to', :what => t('all.records', :what => Medium.model_name.human(:count => :many))), media_path %>
+</p>
 </div>
 <div id="secondary"></div>
 <div class="clear"></div>

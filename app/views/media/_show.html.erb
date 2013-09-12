@@ -172,11 +172,5 @@
        has_previous = true
 	 end %>
 <%=  link_to ts('delete.this'), medium_path(@medium), :confirm => te('delete.confirmation'), :method => :delete %>
-<% end 
-   if large
-	 if has_previous %>
-	   |
-<%   end %>
-<%=  link_to ts('back.to', :what => Medium.model_name.human), medium_path(@medium) %>
 <% end %>
 </p>

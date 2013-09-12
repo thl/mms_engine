@@ -1,5 +1,6 @@
 <div id="secondary">
 <%=  display_if_not_blank Medium.human_attribute_name(:id).s, "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})".html_safe %>
 <%= render :partial => 'show' %>
+<%= render :partial => 'media/persistent_links' %>
 </div>
 <div class="clear"></div>
