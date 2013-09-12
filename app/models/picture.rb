@@ -9,7 +9,7 @@
 #  updated_on               :datetime
 #  recording_note           :text
 #  private_note             :text
-#  type                     :string(10)       not null
+#  type                     :string(20)       not null
 #  attachment_id            :integer
 #  taken_on                 :datetime
 #  recording_orientation_id :integer

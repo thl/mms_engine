@@ -6,6 +6,14 @@
 #  title :string(100)      not null
 #
 
+# == Schema Information
+#
+# Table name: keywords
+#
+#  id    :integer          not null, primary key
+#  title :string(100)      not null
+#
+
 class Keyword < ActiveRecord::Base
   attr_accessible :title
   translates :title
