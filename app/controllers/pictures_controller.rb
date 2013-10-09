@@ -1,5 +1,6 @@
 class PicturesController < AclController
-  helper :media
+  caches_page :show, :if => Proc.new { |c| c.request.format.xml? }
+  cache_sweeper :medium_sweeper, :only => [:update, :destroy]
 
   # GET /pictures
   # GET /pictures.xml

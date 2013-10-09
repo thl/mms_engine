@@ -6,6 +6,7 @@ xml.__send__(medium.class.name.underscore.dasherize) do
   xml << render(:partial => 'captions/index', :locals => {:captions => medium.captions})
   xml << render(:partial => 'descriptions/index', :locals => {:descriptions => medium.descriptions})
   xml << render(:partial => 'copyrights/index', :locals => {:copyrights => medium.copyrights})
+  xml << render(:partial => 'locations/index', :locals => {:locations => medium.locations})
   xml.associated_categories(:type => 'array') do
     medium.topics.each { |category| xml.associated_category(:title => category.title, :id => category.id) }
   end
