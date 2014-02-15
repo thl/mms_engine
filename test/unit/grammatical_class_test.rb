@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require_relative '../test_helper'
 
 class GrammaticalClassTest < Test::Unit::TestCase
   fixtures :grammatical_classes

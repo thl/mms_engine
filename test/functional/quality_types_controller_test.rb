@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require_relative '../test_helper'
 require 'quality_types_controller'
 
 # Re-raise errors caught by the controller.

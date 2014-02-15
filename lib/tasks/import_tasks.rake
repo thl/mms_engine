@@ -34,7 +34,7 @@ namespace :mms do
     
     desc media_import_description
     task :images do |t|
-      require File.join(File.dirname(__FILE__), "../multimedia_importation.rb")
+      require_relative '../multimedia_importation.rb'
       source = ENV['SOURCE']
       ENV['CLASSIFICATION'] ||= 'administrative_unit'
       if source.blank?
@@ -46,7 +46,7 @@ namespace :mms do
 
     desc media_import_description
     task :movies do |t|
-      require File.join(File.dirname(__FILE__), "../multimedia_importation.rb")
+      require_relative '../multimedia_importation.rb'
       source = ENV['SOURCE']
       ENV['CLASSIFICATION'] ||= 'administrative_unit'
       if source.blank?
@@ -58,7 +58,7 @@ namespace :mms do
 
     desc media_import_description
     task :typescripts do |t|
-      require File.join(File.dirname(__FILE__), "../multimedia_importation.rb")
+      require_relative '../multimedia_importation.rb'
       source = ENV['SOURCE']
       ENV['CLASSIFICATION'] ||= 'administrative_unit'
       if source.blank?
@@ -102,7 +102,7 @@ namespace :mms do
     # rake import:dictionary FILE_NAME=db/migrate/dicts/tibetan/tshig-mdzod.txt WORD_LANGUAGE=bod DEFINITION_LANGUAGE=bod COLS=letter,word,definition "GLOSSARY_NAME=bod rgya tshig mdzod chen mo"  
     desc media_import_description
     task :dictionary do |t|
-      require File.join(File.dirname(__FILE__), "../dictionary_importation.rb")
+      require_relative '../dictionary_importation.rb'
       cols_string = ENV['COLS']
       cols = Hash.new
       order_options = Hash.new
@@ -121,7 +121,7 @@ namespace :mms do
     # rake import:dictionaries FILE_NAMES=A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z WORD_LANGUAGE=eng DEFINITION_LANGUAGE=dzo PATH_TO_DICTS=db/migrate/dicts/eng-dzo COLS=word,grammatical_class,definition "GLOSSARY_NAME=English to Dzongkha Dictionary"
     desc media_import_description
     task :dictionaries do |t|
-      require File.join(File.dirname(__FILE__), "../dictionary_importation.rb")
+      require_relative '../dictionary_importation.rb'
       cols_string = ENV['COLS']
       cols = Hash.new
       cols_string.split(',').each_with_index { |col_name, col_num| cols[col_name.to_sym] = col_num } if !cols_string.blank?
@@ -130,7 +130,7 @@ namespace :mms do
 
     desc metadata_description
     task :metadata do |t|
-      require File.join(File.dirname(__FILE__), "../metadata_importation.rb")
+      require_relative '../metadata_importation.rb'
       filename = ENV['FILENAME']
       if filename.blank?
         puts metadata_description

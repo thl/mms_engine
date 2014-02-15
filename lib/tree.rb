@@ -19,8 +19,7 @@ module Tree
       else 
         lineage = (ancestors.reverse << self).collect do |e| 
           title = e.title
-          chars = title.mb_chars
-          chars.size>size ? "#{chars[0...size].to_s}..." : title
+          title.size>size ? "#{title[0...size]}..." : title
         end
       end
       lineage.join(' > ')

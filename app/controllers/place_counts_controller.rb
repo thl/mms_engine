@@ -3,7 +3,7 @@ class PlaceCountsController < ApplicationController
   
   # GET /cached_category_counts.xml
   def index
-    Dir.foreach(File.join(File.dirname(__FILE__), '..', 'models')) { |file_name| require_dependency(file_name) if /.rb$/ =~ file_name }
+    Dir.foreach(File.join(__dir__, '..', 'models')) { |file_name| require_dependency(file_name) if /.rb$/ =~ file_name }
     feature_id = params[:place_id].to_i
     place_counts = ([nil] + Medium.descendants.collect(&:name)).collect do |medium_type|
       if medium_type.nil?

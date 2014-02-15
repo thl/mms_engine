@@ -18,19 +18,19 @@ namespace :mms do
         
     desc 'Deletes all original pictures and videos from the public folder.'
     task :cleanup do |t|
-      require File.join(File.dirname(__FILE__), "../lib/clean_up_media.rb")
+      require_relative '../lib/clean_up_media.rb'
       CleanUpMedia.clean_up_media
     end
     
     desc 'Auxiliary method used to associate copyright, copyright holder, and collection to Bhutanese material.'
     task :tag do |t|
-      require File.join(File.dirname(__FILE__), "../lib/tag_media.rb")
+      require_relative '../lib/tag_media.rb'
       TagMedia.tag_current_media
     end
     
     desc media_extractor_description
     task :extract do |t|
-      require File.join(File.dirname(__FILE__), "../lib/media_extractor.rb")
+      require_relative '../lib/media_extractor.rb'
       filename = ENV['FILENAME']
       if filename.blank?
         puts media_extractor_description
@@ -43,13 +43,13 @@ namespace :mms do
   namespace :dictionaries do
     desc 'Empties all dictionary tables. Use only if you want to re-import.'
     task :wipe do |t|
-      require File.join(File.dirname(__FILE__), "../lib/clean_up_media.rb")
+      require_relative '../lib/clean_up_media.rb'
       CleanUpMedia.wipe_dictionaries
     end
 
     desc 'rake import:sort_dictionary LANGUAGES=lg1,lg2,...'
     task :sort do |t|
-      require File.join(File.dirname(__FILE__), "../lib/dictionary_importation.rb")
+      require_relative '../lib/dictionary_importation.rb'
       DictionaryImportation.sort_words(ENV['LANGUAGES'].split(','))
     end
   end
@@ -57,7 +57,7 @@ namespace :mms do
   namespace :documents do
     desc 'Task to convert captions to titles for documents.'
     task :caption_to_title do |t|
-      require File.join(File.dirname(__FILE__), "../lib/document_processing.rb")
+      require_relative '../lib/document_processing.rb'
       DocumentProcessing.caption_to_title      
     end
   end
@@ -70,7 +70,7 @@ namespace :mms do
     "rake mms:pictures:match_date_with_topic TOPIC_IDS=1,2,3"
     desc match_date_with_topic_description
     task :match_date_with_topic do |t|
-      require File.join(File.dirname(__FILE__), "../lib/tag_media.rb")
+      require_relative '../lib/tag_media.rb'
       topic_ids = ENV['TOPIC_IDS']
       if topic_ids.blank?
         puts match_date_with_topic_description

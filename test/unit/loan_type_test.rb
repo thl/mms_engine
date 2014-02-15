@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require_relative '../test_helper'
 
 class LoanTypeTest < Test::Unit::TestCase
   fixtures :loan_types
