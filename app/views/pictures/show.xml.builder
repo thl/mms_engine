@@ -1,2 +1,2 @@
 xml.instruct!
-xml << render(:partial => 'media/show', :locals => {:medium => @medium})
+xml << render(:partial => 'media/show.xml.builder', :locals => {:medium => @medium})

@@ -9,7 +9,8 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require interface_utils/jquery-ui-1.8.24.custom
+ *= require interface_utils/application
+ *= require interface_utils/ui-lightness/jquery-ui-1.10.4.custom
  *= require authenticated_system/application
  *= require complex_scripts/application
  */

@@ -5,7 +5,7 @@ xml.titles(:type => 'array') do
     hash['lang'] = lang.code if !lang.nil?
     xml.title(hash) do
       xml.title(title.title, :type => 'string')
-      xml << render(:partial => 'translated_titles/index', :locals => {:translated_titles => title.translated_titles})        
+      xml << render(:partial => 'translated_titles/index.xml.builder', :locals => {:translated_titles => title.translated_titles})
     end
   end
 end

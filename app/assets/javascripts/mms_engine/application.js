@@ -13,5 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require tinymce
-//= require interface_utils/jquery-ui-1.8.24.custom.min
+//= require interface_utils/jquery-ui-1.10.4.custom.min
 //= require mms_engine/popup-ui-handler

@@ -1,1 +1,1 @@
-xml << render(:partial => 'main/hierarchy/admin/element', :locals => { :include_children => true })
+xml << render(:partial => 'main/hierarchy/admin/element.xml.builder', :locals => { :include_children => true })

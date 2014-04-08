@@ -54,6 +54,7 @@ class PlacesController < ApplicationController
       end
       format.js   { render 'show' }
       format.xml  { render 'show' }
+      format.json { render :json => Hash.from_xml(render_to_string(:action => 'show.xml.builder')) }
     end
   end
   
