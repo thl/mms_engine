@@ -25,7 +25,7 @@ class ApplicationFilter < ActiveRecord::Base
   private
   
   def self.cached_filter(title)
-    value = Rails.cache.fetch("#{self.table_name}_#{title}") do
+    value = Rails.cache.fetch("#{self.table_name}_#{title}", :expires_in => 1.day) do
       setting = ApplicationSetting.find_by_title(title)
       setting.nil? || setting.value.nil? ? nil : setting.value
     end

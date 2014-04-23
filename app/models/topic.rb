@@ -36,7 +36,7 @@ class Topic < Category
   end
   
   def self.roots_with_media
-    Rails.cache.fetch('topics/roots_with_media') { self.roots.select{ |topic| topic.media_count>0 } }
+    Rails.cache.fetch('topics/roots_with_media', :expires_in => 1.day) { self.roots.select{ |topic| topic.media_count>0 } }
   end
   
   def ancestor_and_self_ids

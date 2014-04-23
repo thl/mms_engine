@@ -23,12 +23,12 @@ class Word < ActiveRecord::Base
   end  
 
   def self.available_languages
-    language_ids = Rails.cache.fetch('words/available_languages'){ Word.select('language_id').uniq.order('language_id').collect(&:language_id) }
+    language_ids = Rails.cache.fetch('words/available_languages', :expires_in => 1.day){ Word.select('language_id').uniq.order('language_id').collect(&:language_id) }
     language_ids.collect{ |id| ComplexScripts::Language.find(id) }
   end
 
   def self.head_term_languages
-    language_ids = Rails.cache.fetch('words/head_term_languages') { Word.find_by_sql("SELECT DISTINCT language_id FROM words WHERE id IN (SELECT DISTINCT definiendum_id FROM definitions)").collect(&:language_id) }
+    language_ids = Rails.cache.fetch('words/head_term_languages', :expires_in => 1.day) { Word.find_by_sql("SELECT DISTINCT language_id FROM words WHERE id IN (SELECT DISTINCT definiendum_id FROM definitions)").collect(&:language_id) }
     language_ids.collect{ |id| ComplexScripts::Language.find(id) }
   end
 end

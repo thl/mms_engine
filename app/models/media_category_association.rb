@@ -58,7 +58,7 @@ class MediaCategoryAssociation < ActiveRecord::Base
   end
   
   def self.latest_update
-    Rails.cache.fetch('media_category_associations/max_updated_at') { self.maximum(:updated_at) }
+    Rails.cache.fetch('media_category_associations/max_updated_at', :expires_in => 1.day) { self.maximum(:updated_at) }
   end
     
   private

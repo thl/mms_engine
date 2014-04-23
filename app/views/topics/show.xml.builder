@@ -17,7 +17,7 @@ xml.topic do
       end
     end
   elsif !@media.nil?
-    xml.media(:type => 'array') do
+    xml.media(:type => 'array', :page => params[:page] || 1, :total_pages => @media.total_pages) do
       for medium in @media
         xml << render(:partial => 'media/show.xml.builder', :locals => {:medium => medium})
       end

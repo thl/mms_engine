@@ -77,7 +77,7 @@ class TopicsController < AclController
   
   def get_media_by_type(type)
     @topic = Topic.find(params[:id])
-    @media = @topic.media(:type => type).paginate(:page => params[:page], :per_page => Medium::FULL_COLS * Medium::FULL_ROWS, :total_entries => @topic.media_count(type))
+    @media = @topic.media(:type => type).paginate(:page => params[:page], :per_page => params[:per_page] || Medium::FULL_COLS * Medium::FULL_ROWS, :total_entries => @topic.media_count(type))
     @pagination_params = { :category_id => @topic.id, :type => type }
   end
   
@@ -95,7 +95,13 @@ class TopicsController < AclController
       end
       format.js  { render 'show' }
       format.xml { render 'show' }
-      format.json { render :json => Hash.from_xml(render_to_string(:action => 'show.xml.builder')) }
+      format.json do
+        h = Hash.from_xml(render_to_string(:action => 'show.xml.builder'))
+        mh = h['topic']
+        mh[:page] = params[:page] || 1
+        mh[:total_pages] = @media.total_pages
+        render :json => h
+      end
     end
   end
   
