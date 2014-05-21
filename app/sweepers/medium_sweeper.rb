@@ -11,7 +11,7 @@ class MediumSweeper < ActionController::Caching::Sweeper
   end
   
   def expire_cache(medium)
-    options = {:skip_relative_url_root => true, :only_path => true}
+    options = {:only_path => true}
     FORMATS.each do |format|
       options[:format] = format
       paths = [medium_url(medium, options)]

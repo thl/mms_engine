@@ -10,7 +10,7 @@ class WorkflowSweeper < ActionController::Caching::Sweeper
   end
   
   def expire_cache(workflow)
-    expire_page medium_workflow_url(workflow.medium, :skip_relative_url_root => true, :only_path => true, :format => :xml)
+    expire_page medium_workflow_url(workflow.medium, :only_path => true, :format => :xml)
   end
 end
   
