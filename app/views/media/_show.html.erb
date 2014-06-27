@@ -38,7 +38,7 @@
    for root_topic in root_topics
 	 topics = grouped_topics[root_topic.id]
 	 if !topics.empty? %>
-<%=    display_if_not_blank root_topic.title, topics.collect {|a| link_to h(a.title_with_value).s, topic_path(a.category.id)}.join(', ') %>
+<%=    display_if_not_blank root_topic.header, topics.collect {|a| link_to h(a.title_with_value).s, topic_path(a.category.id)}.join(', ') %>
 <%   end
    end
    locations = @medium.locations

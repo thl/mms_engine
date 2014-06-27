@@ -11,7 +11,7 @@
      <div class="line"></div>
      <table border="0">
        <tr valign="top">
-	     <td><h3>Browse by <%= select_tag :root_topics, options_for_select([''] + Topic.roots_with_media.collect{|topic| [topic.title, topic_path(topic.id)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %></h3></td>
+	     <td><h3>Browse by <%= select_tag :root_topics, options_for_select([''] + Topic.roots_with_media.collect{|topic| [topic.header, topic_path(topic.id)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %></h3></td>
        </tr>
        <tr>
          <td valign="top">

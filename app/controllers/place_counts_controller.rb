@@ -7,9 +7,9 @@ class PlaceCountsController < ApplicationController
     feature_id = params[:place_id].to_i
     place_counts = ([nil] + Medium.descendants.collect(&:name)).collect do |medium_type|
       if medium_type.nil?
-        {:medium_type => nil, :count => Location.where(:feature_id => feature_id).count}
+        {:medium_type => nil, :count => CumulativeMediaLocationAssociation.where(:feature_id => feature_id).count}
       else
-        {:medium_type => medium_type, :count => Location.where('media.type' => medium_type, 'locations.feature_id' => feature_id).joins(:medium).count }
+        {:medium_type => medium_type, :count => CumulativeMediaLocationAssociation.where('media.type' => medium_type, 'cumulative_media_location_associations.feature_id' => feature_id).joins(:medium).count }
       end
     end
     respond_to do |format|

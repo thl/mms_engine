@@ -1,9 +1,9 @@
 <% if !@pictures.nil? || !@videos.nil? || !@documents.nil?
      if !@topic.nil? %>
-	   <h2><%= Medium.model_name.human(:count => :many).titleize.s %> Associated with <%= @topic.title %></h2>
+	   <h2><%= Medium.model_name.human(:count => :many).titleize.s %> Associated with <%= @topic.header %></h2>
 <%   end %>
 <%   no_media = true
-     title = @topic.title
+     title = @topic.header
      if !@pictures.empty? %>
        <h3><%= ts(:in, :what => Picture.model_name.human(:count => :many).titleize, :where => title) %></h3>
 <%     no_media = false %>
@@ -26,7 +26,7 @@
 <%=  render :partial => 'media/paged_index_full' %>
 <% end %>
 <p>
-<%= link_to ts(:in, :what => @topic.title, :where => Topic.human_name(:count => :many).titleize), Category.element_url(@topic.id, :format => 'html') %>
+<%= link_to ts(:in, :what => @topic.header, :where => Topic.human_name(:count => :many).titleize), Topic.element_url(@topic.id, :format => 'html') %>
 <%  if authorized?(hash_for_sponsor_path(:action => 'destroy')) && !@topic.nil? && @topic.media_count - @topic.media_category_associations.size <= 0 %>
       | <%= link_to "Delete all associations with #{Topic.human_name}", topic_path(@topic.id), :confirm => te('delete.confirmation'), :method => :delete %>
 <%  end %>

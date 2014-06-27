@@ -5,9 +5,9 @@ class Place < PlacesIntegration::Feature
   
   def paged_media(limit, offset = nil, type = nil)
     if type.nil?
-      media = Medium.where('locations.feature_id' => self.fid).joins(:locations).limit(limit).offset(offset).order('media.created_on DESC')
+      media = Medium.where('cumulative_media_location_associations.feature_id' => self.fid).joins(:cumulative_media_location_associations).limit(limit).offset(offset).order('media.created_on DESC')
     else
-      media = Medium.where('locations.feature_id' => self.fid, 'media.type' => type).joins(:locations).limit(limit).offset(offset).order('media.created_on DESC')
+      media = Medium.where('cumulative_media_location_associations.feature_id' => self.fid, 'media.type' => type).joins(:cumulative_media_location_associations).limit(limit).offset(offset).order('media.created_on DESC')
     end
     media
   end
@@ -18,16 +18,16 @@ class Place < PlacesIntegration::Feature
   
   def media(options = {})
     type = options[:type]
-    conditions = {'locations.feature_id' => self.fid}
+    conditions = {'cumulative_media_location_associations.feature_id' => self.fid}
     conditions['media.type'] = type if !type.nil?
-    Medium.where(conditions).joins(:locations).order('media.created_on DESC')
+    Medium.where(conditions).joins(:cumulative_media_location_associations).order('media.created_on DESC')
   end
     
   def media_count(type = nil)
     if type.nil?
-      count = Location.where('locations.feature_id' => self.fid).count
+      count = CumulativeMediaLocationAssociation.where(:feature_id => self.fid).count
     else
-      count = Location.where('locations.feature_id' => self.fid, 'media.type' => type).joins(:medium).count
+      count = CumulativeMediaLocationAssociation.where('cumulative_media_location_associations.feature_id' => self.fid, 'media.type' => type).joins(:medium).count
     end
     count
   end

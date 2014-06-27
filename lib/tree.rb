@@ -15,10 +15,10 @@ module Tree
   def full_lineage(size = nil)
     Rails.cache.fetch("#{self.class.element_name}-#{self.id}/full_lineage", :expires_in => 1.day) do
       if (size==nil)
-        lineage = (ancestors.reverse << self).collect{|e| e.title }
+        lineage = (ancestors.reverse << self).collect{|e| e.header }
       else 
         lineage = (ancestors.reverse << self).collect do |e| 
-          title = e.title
+          title = e.header
           title.size>size ? "#{title[0...size]}..." : title
         end
       end

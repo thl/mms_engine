@@ -53,9 +53,9 @@
      associations = topic_associations[root_topic.id] 
      if !associations.empty? %>
 	   <p><%= bookmark "topics-#{root_topic.id}" %>
-	   <b><%= root_topic.title %>:</b>
+	   <b><%= root_topic.header %>:</b>
 <%=    associations.collect{|a| link_to h(a.title_with_value).s, edit_medium_topic_association_path(@medium.id, root_topic.id, a)}.join(', ').html_safe %>
-       (<%= link_to ts('add.record', :what => root_topic.title.downcase), new_medium_topic_association_path(@medium.id, root_topic.id) %>)</p>
+       (<%= link_to ts('add.record', :what => root_topic.header.downcase), new_medium_topic_association_path(@medium.id, root_topic.id) %>)</p>
 <%   end
    end
    media_keyword_associations = @medium.media_keyword_associations
@@ -136,12 +136,12 @@
    for root_topic in root_topics_with_media
      if topic_associations[root_topic.id].empty? %>
 <%=    bookmark "topics-#{root_topic.id}" %>
-<%=    link_to ts('associate.to', :what => root_topic.title.downcase), new_medium_topic_association_path(@medium.id, root_topic.id) %> |
+<%=    link_to ts('associate.to', :what => root_topic.header.downcase), new_medium_topic_association_path(@medium.id, root_topic.id) %> |
 <%   end
    end %>
 <%= link_to ts('associate.to', :what => Topic.human_name), new_medium_association_path(@medium.id) %> |
 <%= ts 'associate.to_from', :what => Topic.human_attribute_name(:child).downcase, :whom => Topic.human_attribute_name(:root).downcase %>:
-<%= select_tag :root_topics, options_for_select([''] + @root_topics.collect{|topic| [topic.title, new_medium_topic_association_path(@medium.id, topic.id)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %><br/>
+<%= select_tag :root_topics, options_for_select([''] + @root_topics.collect{|topic| [topic.header, new_medium_topic_association_path(@medium.id, topic.id)]}, ''), :onchange => "if ($(this).val() != '') window.location = $(this).val();" %><br/>
 <% if media_source_associations.empty? %>
 <%=   bookmark 'sources' %>
 <%=   link_to ts('associate.to', :what => Source.model_name.human), new_medium_source_association_path(@medium) %>

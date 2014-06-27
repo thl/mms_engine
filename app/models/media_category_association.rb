@@ -42,7 +42,7 @@ class MediaCategoryAssociation < ActiveRecord::Base
   end
     
   def title_with_value
-    s = self.category.title
+    s = self.category.header
     if self.string_value.blank?
       if !self.numeric_value.nil?
         s += ": #{self.numeric_value}"

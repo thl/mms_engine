@@ -43,21 +43,21 @@ class TopicsController < AclController
   # GET /topics/1/pictures
   def pictures
     get_media_by_type('Picture')
-    @title = ts :in, :what => Picture.model_name.human(:count => :many).titleize, :where => @topic.title
+    @title = ts :in, :what => Picture.model_name.human(:count => :many).titleize, :where => @topic.header
     render_media
   end
   
   # GET /topics/1/videos
   def videos
     get_media_by_type('Video')
-    @title = ts :in, :what => Video.model_name.human(:count => :many).titleize, :where => @topic.title
+    @title = ts :in, :what => Video.model_name.human(:count => :many).titleize, :where => @topic.header
     render_media
   end
   
   # GET /topics/1/documents
   def documents
     get_media_by_type('Document')
-    @title = ts :in, :what => Document.model_name.human(:count => :many).titleize, :where => @topic.title
+    @title = ts :in, :what => Document.model_name.human(:count => :many).titleize, :where => @topic.header
     render_media
   end
   

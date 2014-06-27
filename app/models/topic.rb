@@ -1,13 +1,10 @@
-class Topic < Category
-  headers['Host'] = TopicalMapResource.headers['Host'] if !TopicalMapResource.headers['Host'].blank?
-  
-  self.element_name = 'category'
+class Topic < SubjectsIntegration::Feature
+  headers['Host'] = SubjectsIntegration::Feature.headers['Host'] if !SubjectsIntegration::Feature.headers['Host'].blank?
+  self.element_name = 'feature'
   
   def is_childless?
     # making sure expand link does not show up when children don't have media
-    self.children_count.to_i==0 || self.children.detect{|element| element.media_count > 0}.nil?
-  	# return true if children_count? && children_count == '0' or !children_count? && children.empty? # 'or' should be lower precedence than '&&'
-  	# return false
+    self.children.detect { |c| Topic.find(c.id).media_count > 0 }.nil?
   end
   
   def media_category_associations
@@ -44,7 +41,7 @@ class Topic < Category
   end
   
   def full_lineage
-    self.ancestors.collect(&:title).reverse.join(' > ')
+    self.ancestors.collect(&:header).reverse.join(' > ')
   end
 
   alias count_inherited_media media_count

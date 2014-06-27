@@ -81,6 +81,7 @@ class Medium < ActiveRecord::Base
   has_many :locations, :dependent => :destroy
   has_many :media_category_associations, :dependent => :destroy
   has_many :media_keyword_associations, :dependent => :destroy
+  has_many :cumulative_media_location_associations
   has_many :copyrights, :dependent => :destroy
   has_many :affiliations, :dependent => :destroy
   has_many :keywords, :through => :media_keyword_associations, :order => 'title'
@@ -135,7 +136,7 @@ class Medium < ActiveRecord::Base
   end
   
   def feature_count
-    Location.where(:medium_id => self.id).count
+    CumulativeMediaLocationAssociation.where(:medium_id => self.id).count
   end
   
   def topical_map_url
