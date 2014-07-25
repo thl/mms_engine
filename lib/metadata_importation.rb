@@ -2,8 +2,8 @@
 # require 'config/environment'
 require 'csv'
 
-class MetadataImportation < CsvImportation
-  attr_accessor :medium, :workflow, :english, :topic_root_ids
+class MetadataImportation
+  attr_accessor :medium, :workflow, :english, :topic_root_ids, :fields
     
   def get_medium
     medium_id = self.fields.delete('media.id')
@@ -243,7 +243,8 @@ class MetadataImportation < CsvImportation
   def do_metadata_importation(filename)
     self.english = ComplexScripts::Language.find_by_code('eng')
     self.topic_root_ids = Hash.new
-    self.do_csv_import(filename) do
+    CSV.foreach(filename, headers: true, col_sep: "\t") do |row|
+      self.fields = row.to_hash
       next unless self.get_medium
       self.process_media_core_fields
       self.process_workflow

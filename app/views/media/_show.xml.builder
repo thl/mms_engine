@@ -1,5 +1,8 @@
-xml.__send__(medium.class.name.underscore.dasherize) do
-  xml.id(medium.id)
+klass = medium.class
+class_name = klass.name
+xml.__send__(class_name.underscore.dasherize) do
+  xml.id(medium.id, :type => 'integer')
+  xml.type(class_name)
   photographer = medium.photographer
   xml.photographer(:fullname => photographer.fullname, :id => photographer.id) if !photographer.nil?
   xml << render(:partial => 'titles/index.xml.builder', :locals => {:titles => medium.titles})
@@ -22,5 +25,9 @@ xml.__send__(medium.class.name.underscore.dasherize) do
     xml.images(:type => 'array') do
       attachment.children.each{ |child| xml << render(:partial => 'pictures/image.xml.builder', :locals => {:server => server, :image => child}) if !child.filename.blank? }
     end
+  end
+  if klass == OnlineResource
+    web_address = medium.web_address
+    xml << render(:partial => 'online_resources/show.xml.builder', :locals => {:web_address => web_address}) if !web_address.nil?
   end
 end
