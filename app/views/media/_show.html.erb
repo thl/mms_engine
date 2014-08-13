@@ -33,10 +33,10 @@
 <% end
    grouped_topics = Hash.new
    root_topics = Topic.roots_with_media
-   root_topics.each{ |topic| grouped_topics[topic.id] = Array.new }
+   root_topics.each{ |topic| grouped_topics[topic.id.to_i] = Array.new }
    @medium.media_category_associations.each{ |association| grouped_topics[association.root_id] << association }
    for root_topic in root_topics
-	 topics = grouped_topics[root_topic.id]
+	 topics = grouped_topics[root_topic.id.to_i]
 	 if !topics.empty? %>
 <%=    display_if_not_blank root_topic.header, topics.collect {|a| link_to h(a.title_with_value).s, topic_path(a.category.id)}.join(', ') %>
 <%   end
@@ -104,7 +104,7 @@
 <%   end %>
    </p>
 <% end %>
-<%= display_if_not_blank Medium.human_attribute_name('resource_type').s, @medium.resource_type.title %>
+<%= display_if_not_blank Medium.human_attribute_name('resource_type').s, @medium.resource_type.header %>
 <% photographer = @medium.photographer
    if !photographer.nil? %>
 <%=  display_if_not_blank @medium.class.human_attribute_name('photographer').s, link_to(h(photographer.fullname).s, authenticated_system_person_path(photographer)) %>

@@ -47,10 +47,10 @@
 <%= bookmark 'topics' %>
 <% topic_associations = Hash.new
    root_topics_with_media = Topic.roots_with_media
-   root_topics_with_media.each{ |topic| topic_associations[topic.id] = Array.new }
+   root_topics_with_media.each{ |topic| topic_associations[topic.id.to_i] = Array.new }
    @medium.media_category_associations.each{ |association| topic_associations[association.root_id] << association }
    for root_topic in root_topics_with_media
-     associations = topic_associations[root_topic.id] 
+     associations = topic_associations[root_topic.id.to_i]
      if !associations.empty? %>
 	   <p><%= bookmark "topics-#{root_topic.id}" %>
 	   <b><%= root_topic.header %>:</b>
@@ -134,7 +134,7 @@
 <%=  link_to ts('associate.to', :what => Location.model_name.human), new_medium_location_path(@medium) %> |
 <% end
    for root_topic in root_topics_with_media
-     if topic_associations[root_topic.id].empty? %>
+     if topic_associations[root_topic.id.to_i].empty? %>
 <%=    bookmark "topics-#{root_topic.id}" %>
 <%=    link_to ts('associate.to', :what => root_topic.header.downcase), new_medium_topic_association_path(@medium.id, root_topic.id) %> |
 <%   end
