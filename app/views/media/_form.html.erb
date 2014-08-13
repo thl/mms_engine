@@ -1,7 +1,7 @@
 <%= tagged_tinymce_script %>
 <p>
   <b><%= Medium.human_attribute_name(:resource_type).s %></b><br />
-<%= f.collection_select(:resource_type_id, @resource_types, :id, :title, { :include_blank => false }) %>
+<%= f.collection_select(:resource_type_id, @resource_types, :id, :header, { :include_blank => false }) %>
 </p>
 <p>
   <b><%= Medium.human_attribute_name(:taken_on, :what => @medium.class.model_name.human.titleize).s %></b><br/>
@@ -10,7 +10,7 @@
 <% end %>
 <% if @medium.partial_taken_on.blank? || !@medium.taken_on.nil? %>
 <%=  f.datetime_select(:taken_on, :include_blank => true, :order => [:day, :month, :year], :include_seconds => true, :start_year => -500, :end_year => Time.now.year, :max_years_allowed => 3000) %>&nbsp;
-<%=  link_to_function 'Clear', "jQuery('#medium_taken_on_1i').val(''); jQuery('#medium_taken_on_2i').val('');  jQuery('#medium_taken_on_3i').val('');  jQuery('#medium_taken_on_4i').val('');  jQuery('#medium_taken_on_5i').val(''); jQuery('#medium_taken_on_6i').val('')" %>
+<%=  link_to 'Clear', '#', onclick: "jQuery('#medium_taken_on_1i').val(''); jQuery('#medium_taken_on_2i').val('');  jQuery('#medium_taken_on_3i').val('');  jQuery('#medium_taken_on_4i').val('');  jQuery('#medium_taken_on_5i').val(''); jQuery('#medium_taken_on_6i').val('')" %>
 <% end %>
 </p>
 <p>

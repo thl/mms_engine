@@ -54,11 +54,11 @@ class Medium < ActiveRecord::Base
       description.destroy
     end
     record.descriptions.clear
-    delete_setting = ApplicationSetting.find_by_title('delete_from_cold_storage')
+    delete_setting = ApplicationSetting.where(title: 'delete_from_cold_storage').first
     delete_from_coldstorage if delete_setting.nil? || delete_setting.value==1
   end
   
-  default_scope :conditions => {:application_filter_id => ApplicationFilter.application_filter.id} if !ApplicationFilter.application_filter.nil?
+  default_scope { where(:application_filter_id => ApplicationFilter.application_filter.id) } if !ApplicationFilter.application_filter.nil?
   
   belongs_to :capture_device_model  
   belongs_to :application_filter
@@ -140,7 +140,7 @@ class Medium < ActiveRecord::Base
   end
   
   def topical_map_url
-    TopicalMapResource.get_url + medium_path
+    SubjectsIntegration.get_url + medium_path
   end
   alias :kmaps_url :topical_map_url
   

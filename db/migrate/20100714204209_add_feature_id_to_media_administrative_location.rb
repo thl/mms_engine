@@ -20,7 +20,7 @@ class AddFeatureIdToMediaAdministrativeLocation < ActiveRecord::Migration
     rename_table :locations, :media_administrative_locations
     change_table :media_administrative_locations do |t|
       t.integer :administrative_unit_id
-      MediaAdministrativeLocation.all(:order => :id).each { |location| location.update_attribute(:administrative_unit_id, AdministrativeUnit.find_by_feature_id(location.feature_id)).id }
+      MediaAdministrativeLocation.all(:order => :id).each { |location| location.update_attribute(:administrative_unit_id, AdministrativeUnit.where(feature_id: location.feature_id).first).id }
       t.change :administrative_unit_id, :integer, :null => false
       t.index [:medium_id, :administrative_unit_id], :unique => true, :name => 'index_locations_on_medium_and_unit'
       t.remove :feature_id

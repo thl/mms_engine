@@ -6,16 +6,16 @@ class ChangeTitleAndPathInRenderer < ActiveRecord::Migration
     renderer.title = 'Saxon servlet for documents'
     renderer.path = '/ndlb/texts/SaxonServlet?source=base.xml&style=:transformation&xml=:document&clear-stylesheet-cache=yes'
     renderer.save
-    renderer = FileRenderer.find_by_title('Vanilla saxon servlet') 
+    renderer = FileRenderer.where(title: 'Vanilla saxon servlet').first
     renderer = FileRenderer.create(:title => 'Vanilla saxon servlet', :path => '/ndlb/texts/VanillaSaxonServlet?source=:document&style=:transformation') if renderer.nil?
-    transformation = Transformation.find_by_title('Captions')
+    transformation = Transformation.where(title: 'Captions').first
     if transformation.nil?
       transformation = Transformation.create(:title => 'Captions', :path => '/transformations/transcript2timedtext.xsl', :renderer_id =>  renderer.id)
     else
       transformation.renderer = renderer
       transformation.save 
     end
-    application_setting = ApplicationSetting.find_by_title('captions_transformation_id')
+    application_setting = ApplicationSetting.where(title: 'captions_transformation_id').first
     if application_setting.nil?
       application_setting = ApplicationSetting.create(:title => 'captions_transformation_id', :value => transformation.id)
     else

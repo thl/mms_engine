@@ -8,7 +8,7 @@ class CreateThemes < ActiveRecord::Migration
     end
     theme = RegisteredTheme.create :title => 'Generic', :namespace => 'generic', :description => 'This theme is designed as a generic interface, for usage of the MMC when it is not associated with any organization participating in its development. The open-source license allows for it to be modified to fit the application\'s needs.'
     permission_title = 'registered_themes/index'
-    permission = AuthenticatedSystem::Permission.find_by_title(permission_title)
+    permission = AuthenticatedSystem::Permission.where(title: permission_title).first
     permission = AuthenticatedSystem::Permission.create(:title => permission_title) if permission.nil?
     ApplicationSetting.create :title => 'active_theme_id', :value => theme.id, :permission => permission
     

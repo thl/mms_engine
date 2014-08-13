@@ -63,7 +63,7 @@ class MetadataImportation
     end
     photographer_str = self.fields.delete('media.photographer')
     if !photographer_str.blank? && self.medium.photographer.nil?
-      photographer = AuthenticatedSystem::Person.find_by_fullname(photographer_str)
+      photographer = AuthenticatedSystem::Person.where(fullname: photographer_str).first
       if photographer.nil?
         puts "Photographer named #{photographer_str} not found!"
       else
@@ -75,7 +75,7 @@ class MetadataImportation
       orientation_str.strip!
       if !orientation_str.nil?
         begin
-          orientation = RecordingOrientation.find_by_title(orientation_str)
+          orientation = RecordingOrientation.where(title: orientation_str).first
         rescue
           orientation = nil
         end
@@ -111,7 +111,7 @@ class MetadataImportation
     if !topic_id.blank? || !topic_str.blank?
       begin
         if topic_id.blank?
-          topic = topic_str.blank? ? nil : Topic.find_by_title(topic_str)
+          topic = topic_str.blank? ? nil : Topic.where(title: topic_str).first
         else
           topic = Topic.find(topic_id)
         end
@@ -169,7 +169,7 @@ class MetadataImportation
       description_creator_str = self.fields.delete('descriptions.creator')
       description_creator = nil
       if !description_creator_str.nil?
-        description_creator = AuthenticatedSystem::Person.find_by_fullname(description_creator_str)
+        description_creator = AuthenticatedSystem::Person.where(fullname: description_creator_str).first
         if description_creator.nil?
           puts "Description creator named #{description_creator_str} not found!"
         end
@@ -197,7 +197,7 @@ class MetadataImportation
         keywords = self.medium.keywords
         keyword_ids = keywords.collect{|k| k.id}
         for keyword_str in keywords_array
-          keyword = Keyword.find_by_title(keyword_str)
+          keyword = Keyword.where(title: keyword_str).first
           if keyword.nil?
             puts "Keyword #{keyword_str} not found!"
           else
@@ -213,7 +213,7 @@ class MetadataImportation
     if !source_str.nil?
       source_str.strip!
       if !source_str.blank?
-        source = Source.find_by_title(source_str)
+        source = Source.where(title: source_str).first
         if source.nil?
           puts "Source #{source_str} not found!"
         else
@@ -241,7 +241,7 @@ class MetadataImportation
   # keywords.title
   # sources.title, media_source_associations.shot_number
   def do_metadata_importation(filename)
-    self.english = ComplexScripts::Language.find_by_code('eng')
+    self.english = ComplexScripts::Language.where(code: 'eng').first
     self.topic_root_ids = Hash.new
     CSV.foreach(filename, headers: true, col_sep: "\t") do |row|
       self.fields = row.to_hash
@@ -263,6 +263,6 @@ class MetadataImportation
   end
   
   def self.truncated_find(model, str)
-    return str.size<=200 ? model.find_by_title(str) : model.find(:first, :conditions => ['LEFT(title, 100) = ?', str[0...200]])
+    return str.size<=200 ? model.where(title: str).first : model.where(['LEFT(title, 100) = ?', str[0...200]]).first
   end
 end

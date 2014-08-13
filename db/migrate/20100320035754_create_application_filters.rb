@@ -32,11 +32,11 @@ class CreateApplicationFilters < ActiveRecord::Migration
     drop_table :application_filters
     remove_column :media, :application_filter_id
     remove_column :countries, :application_filter_id
-    s = ApplicationSetting.find_by_title('default_filter')
+    s = ApplicationSetting.where(title: 'default_filter').first
     s.destroy if !s.nil?
-    s = ApplicationSetting.find_by_title('application_filter')
+    s = ApplicationSetting.where(title: 'application_filter').first
     s.destroy if !s.nil?
-    s = ApplicationSetting.find_by_title('country_filter')
+    s = ApplicationSetting.where(title: 'country_filter').first
     s.destroy if !s.nil?
   end
 end

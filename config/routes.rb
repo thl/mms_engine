@@ -1,35 +1,35 @@
 Rails.application.routes.draw do
-  root :to => 'media#index'
+  root to: 'media#index'
   resources :application_settings, :copyrights, :copyright_holders, :description_types, :dictionary_searches,
     :application_filters, :glossaries, :keywords, :media_keyword_associations, :media_searches,
     :online_resources, :organizations, :pictures, :projects, :quality_types, :recording_orientations,
     :reproduction_types, :sources, :sponsors, :transformations, :videos, :statuses, :publishers  
-  match 'admin' => 'main#admin', :as => 'admin'
-  match 'subtitles/:video_id/:language/:form' => 'subtitles#index', :as => 'subtitles', :defaults => { :form => 'script', :language => 'bo' }
-  match 'help' => 'help#advanced_search', :as => 'help_advanced_search'
+  get 'admin', to: 'main#admin', as: 'admin'
+  get 'subtitles/:video_id/:language/:form', to: 'subtitles#index', as: 'subtitles', defaults: { form: 'script', language: 'bo' }
+  get 'help', to: 'help#advanced_search', as: 'help_advanced_search'
   
   resources :capture_device_makers do
-    resources :models, :controller => 'capture_device_models'
+    resources :models, controller: 'capture_device_models'
   end
   resources :categories do
     member do
       get :contract
       get :expand
     end
-    resources :children, :controller => 'categories' do
+    resources :children, controller: 'categories' do
       member do
         get :contract
         get :expand
       end
     end
-    resources :counts, :controller => 'cached_category_counts', :only => 'index'
+    resources :counts, controller: 'cached_category_counts', only: 'index'
   end
   resources :documents do
-    match 'by_title/:title.:format' => 'documents#by_title'
+    get 'by_title/:title.:format', to: 'documents#by_title'
   end
-  resources :media_objects, :as => 'media', :controller => :media do
+  resources :media_objects, as: 'media', controller: :media do
     resources :affiliations, :captions, :descriptions, :locations, :places
-    resources :associations, :controller => 'media_category_associations'
+    resources :associations, controller: 'media_category_associations'
     resource :media_publisher, :workflow
     collection do
       get :rename_all
@@ -40,18 +40,18 @@ Rails.application.routes.draw do
       get :large
       get :full_size
     end
-    resources :rotations, :only => [:index, :show, :create] do
+    resources :rotations, only: [:index, :show, :create] do
       collection { get :status }
     end
     resources :topics do
-      resources :associations, :controller => 'media_category_associations'
+      resources :associations, controller: 'media_category_associations'
     end
-    resources :source_associations, :controller => 'media_source_associations'
+    resources :source_associations, controller: 'media_source_associations'
     resources :titles do
       resources :citations
-      resources(:translations, :as => 'translated_titles', :controller => :translated_titles) { resources :citations }
+      resources(:translations, as: 'translated_titles', controller: :translated_titles) { resources :citations }
     end
-    resources :topic_associations, :controller => 'media_category_associations'
+    resources :topic_associations, controller: 'media_category_associations'
   end
   resources :media_imports do
     collection do
@@ -62,16 +62,16 @@ Rails.application.routes.draw do
   resources :media_processes do
     collection { get :status }
   end
-  resources :metadata_sources, :except => [:new, :create]
+  resources :metadata_sources, except: [:new, :create]
   resources :places do  
     member do
       get :pictures
       get :documents
       get :videos
     end
-    resources :counts, :controller => 'place_counts', :only => 'index'
+    resources :counts, controller: 'place_counts', only: 'index'
   end
-  resources :renderers, :controller => 'file_renderers'
+  resources :renderers, controller: 'file_renderers'
   resources :topics do
     member do
       get :contract
@@ -81,7 +81,7 @@ Rails.application.routes.draw do
       get :videos
     end
   end
-  resources(:videos) { member { match 'subtitles/:language/:form' => 'videos#show', :as => 'subtitles', :defaults => { :form => 'script', :language => 'bo' } } }
+  resources(:videos) { member { get 'subtitles/:language/:form', to: 'videos#show', as: 'subtitles', defaults: { form: 'script', language: 'bo' } } }
   #match ':controller(/:action(/:id(.:format)))'
   comatose_admin
   # comatose_root 'ndlb/pages'  

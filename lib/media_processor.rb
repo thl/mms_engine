@@ -197,7 +197,7 @@ module MediaProcessor
     end
     
     def partition_cold_storage(path)
-      cold_storage_setting = ApplicationSetting.find_by_title('cold_storage_folder')
+      cold_storage_setting = ApplicationSetting.where(title: 'cold_storage_folder').first
       return if cold_storage_setting.nil?
       cold_storage_folder = cold_storage_setting.string_value
       return if cold_storage_folder.blank? || !File.exist?(cold_storage_folder)
@@ -293,7 +293,7 @@ module MediaProcessor
       if self.capture_device_model.nil?
         model_str = image.model
         if !model_str.blank?
-          model = CaptureDeviceModel.find_by_exif_tag(model_str)
+          model = CaptureDeviceModel.where(exif_tag: model_str).first
           if model.nil?
             maker_str = image.make
             if !maker_str.blank?
