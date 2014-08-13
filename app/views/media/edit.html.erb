@@ -50,7 +50,7 @@
    root_topics_with_media.each{ |topic| topic_associations[topic.id.to_i] = Array.new }
    @medium.media_category_associations.each{ |association| topic_associations[association.root_id] << association }
    for root_topic in root_topics_with_media
-     associations = topic_associations[root_topic.id.to_i] 
+     associations = topic_associations[root_topic.id.to_i]
      if !associations.empty? %>
 	   <p><%= bookmark "topics-#{root_topic.id}" %>
 	   <b><%= root_topic.header %>:</b>
