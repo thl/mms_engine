@@ -37,7 +37,7 @@ class MediaKeywordAssociationsController < AclController
       logger.error("Attempt to access invalid medium #{params[:medium_id]}")
       redirect_to countries_path
     else
-      @keywords = Keyword.find(:all, :order => 'title')
+      @keywords = Keyword.all.order('title')
       @media_keyword_association = MediaKeywordAssociation.new(:medium_id => @medium.id)
     end
   end
@@ -46,13 +46,13 @@ class MediaKeywordAssociationsController < AclController
   def edit
     @media_keyword_association = MediaKeywordAssociation.find(params[:id])
     @medium = @media_keyword_association.medium
-    @keywords = Keyword.find(:all, :order => 'title')
+    @keywords = Keyword.all.order('title')
   end
 
   # POST /media_keyword_associations
   # POST /media_keyword_associations.xml
   def create
-    @media_keyword_association = MediaKeywordAssociation.new(params[:media_keyword_association])
+    @media_keyword_association = MediaKeywordAssociation.new(media_keyword_association_params)
     @medium = @media_keyword_association.medium
 
     respond_to do |format|
@@ -73,7 +73,7 @@ class MediaKeywordAssociationsController < AclController
     @media_keyword_association = MediaKeywordAssociation.find(params[:id])
     @medium = @media_keyword_association.medium
     respond_to do |format|
-      if @media_keyword_association.update_attributes(params[:media_keyword_association])
+      if @media_keyword_association.update_attributes(media_keyword_association_params)
         flash[:notice] = ts('edit.successful', :what => MediaKeywordAssociation.model_name.human.capitalize)
         format.html { redirect_to edit_medium_url(@medium) }
         format.xml  { head :ok }
@@ -95,5 +95,11 @@ class MediaKeywordAssociationsController < AclController
       format.html { redirect_to edit_medium_url(@medium) }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def media_keyword_association_params
+    params.require(:media_keyword_association).permit(:keyword_id, :medium_id)
   end
 end

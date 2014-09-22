@@ -6,12 +6,12 @@
     <th><%= Organization.model_name.human.titleize.s %></th>
     <th><%= Glossary.human_attribute_name('is_public').s %></th>
   </tr>
-<% can_edit = authorized? hash_for_edit_glossary_path
-   for glossary in @glossaries %>
+<% for glossary in @glossaries
+	 path = edit_glossary_path(glossary) %>
   <tr>
     <td>
-<%  if can_edit %>
-<%=   link_to h(glossary.title), edit_glossary_path(glossary) %>
+<%  if authorized? path %>
+<%=   link_to h(glossary.title), path %>
 <%  else %>
 <%=   link_to h(glossary.title), glossary_path(glossary) %>
 <%  end %>
@@ -23,8 +23,9 @@
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<% if authorized? hash_for_new_glossary_path %>
-<%=  link_to ts('new.record', :what => Glossary.model_name.human), new_glossary_path %> |
+<% path = new_glossary_path
+   if authorized? path %>
+<%=  link_to ts('new.record', :what => Glossary.model_name.human), path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_dicts' %>
 </p>

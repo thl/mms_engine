@@ -13,14 +13,12 @@
 #
 
 class MediaCategoryAssociation < ActiveRecord::Base
-  attr_accessible :root_id, :category_id, :medium_id, :numeric_value, :string_value
-  
   before_destroy { |record| Rails.cache.delete('topics/roots_with_media') if Rails.cache.exist?('topics/roots_with_media') && Topic.roots_with_media.collect(&:id).include?(record.root_id) }
   after_destroy  { |record| MediaCategoryAssociation.delete_cumulative_information(record.category, record.medium_id, record.medium.class.name) }
   before_save    { |record| MediaCategoryAssociation.delete_cumulative_information(Category.find(record.category_id_was), record.medium_id_was, record.medium.class.name) if record.changed? && !record.category_id_was.nil? }
   after_save    do |record|
     current = record.category
-    while !current.nil? && CumulativeMediaCategoryAssociation.where(:category_id => current.id, :medium_id => medium_id).first.nil?
+    while !current.nil? && CumulativeMediaCategoryAssociation.find_by(category_id: current.id, medium_id: medium_id).nil?
       CumulativeMediaCategoryAssociation.create(:category_id => current.id, :medium_id => self.medium_id)
       current = current.parent
     end

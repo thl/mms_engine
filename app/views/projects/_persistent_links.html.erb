@@ -1,5 +1,6 @@
-<%  if authorized?(hash_for_project_path(:action => 'destroy')) %>
-<%=   link_to ts('delete.this'), project_path(@project), :confirm => te('delete.confirmation'), :method => :delete %> |
+<%  path = project_path(@project)
+    if authorized?(path, :action => 'destroy') %>
+<%=   link_to ts('delete.this'), path, method: :delete, data: { confirm: te('delete.confirmation') } %> |
 <%  end %>
 <%= link_to ts('back.to', :what => t('all.records', :what => Project.model_name.human(:count => :many))), projects_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>

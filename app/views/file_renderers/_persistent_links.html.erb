@@ -1,5 +1,6 @@
-<%  if authorized?(hash_for_renderer_path(:action => 'destroy')) %>
-<%=   link_to ts('delete.this'), renderer_path(@file_renderer), :confirm => te('delete.confirmation'), :method => :delete %> |
+<%  path = renderer_path(@file_renderer)
+    if authorized?(path, :action => 'destroy') %>
+<%=   link_to ts('delete.this'), path, method: :delete, data: { confirm: te('delete.confirmation') } %> |
 <%  end %>
 <%= link_to ts('back.to', :what => t('all.records', :what => FileRenderer.model_name.human(:count => :many))), renderers_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>

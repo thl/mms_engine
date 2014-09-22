@@ -5,8 +5,9 @@
 </div>
 <p>&nbsp;<br/>
 <%= link_to 'Media Processes Home', media_processes_path %> |
-<%  if authorized?(hash_for_media_process_path(:action => 'destroy')) %>
-<%=   link_to 'Delete log'.ts, media_process_path(@user), :confirm => 'Are you sure?'.te, :method => :delete %> |
-<%  end %>
+<% path = media_process_path(@user)
+   if authorized?(path, :action => 'destroy') %>
+<%=  link_to 'Delete log'.ts, path, method: :delete, data: { confirm: te('delete.confirmation') } %> |
+<% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

@@ -1,4 +1,5 @@
-<%  if authorized?(hash_for_medium_source_association_path(:action => 'destroy')) %>
-<%=   link_to ts('delete.this'), medium_source_association_path(@medium, @media_source_association), :confirm => te('delete.confirmation'), :method => :delete %> |
+<%  path = medium_source_association_path(@medium, @media_source_association)
+    if authorized?(path, :action => 'destroy') %>
+<%=   link_to ts('delete.this'), path, method: :delete, data: { confirm: te('delete.confirmation') } %> |
 <%  end %>
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'sources'} %>

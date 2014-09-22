@@ -34,7 +34,7 @@ class CopyrightHoldersController < AclController
   # POST /copyright_holders
   # POST /copyright_holders.xml
   def create
-    @copyright_holder = CopyrightHolder.new(params[:copyright_holder])
+    @copyright_holder = CopyrightHolder.new(copyright_holder_params)
 
     respond_to do |format|
       if @copyright_holder.save
@@ -53,7 +53,7 @@ class CopyrightHoldersController < AclController
   def update
     @copyright_holder = CopyrightHolder.find(params[:id])
     respond_to do |format|
-      if @copyright_holder.update_attributes(params[:copyright_holder])
+      if @copyright_holder.update_attributes(copyright_holder_params)
         flash[:notice] = ts('edit.successful', :what => CopyrightHolder.model_name.human.capitalize)
         format.html { redirect_to copyright_holder_url(@copyright_holder) }
         format.xml  { head :ok }
@@ -74,5 +74,11 @@ class CopyrightHoldersController < AclController
       format.html { redirect_to copyright_holders_url }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def copyright_holder_params
+    params.require(:copyright_holder).permit(:title, :website)
   end
 end

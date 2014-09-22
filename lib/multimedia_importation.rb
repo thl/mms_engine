@@ -48,13 +48,13 @@ module MultimediaImportation
   
   def assess_media_pro_xml_file(file)
     doc = open(file) { |f| Hpricot(f) }
-    ((doc/'author').collect(&:inner_text) + (doc/'writer').collect(&:inner_text)).uniq.reject(&:blank?).each{|s| raise "Could not find the person #{s} mentioned in #{file}! Please create it first." if AuthenticatedSystem::Person.where(fullname: s).first.nil? }
-    (doc/'copyright').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the copyright holder #{s} mentioned in #{file}! Please create it first." if CopyrightHolder.where(title: s).first.nil? }
+    ((doc/'author').collect(&:inner_text) + (doc/'writer').collect(&:inner_text)).uniq.reject(&:blank?).each{|s| raise "Could not find the person #{s} mentioned in #{file}! Please create it first." if AuthenticatedSystem::Person.find_by(fullname: s).nil? }
+    (doc/'copyright').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the copyright holder #{s} mentioned in #{file}! Please create it first." if CopyrightHolder.find_by(title: s).nil? }
     (doc/'category').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the feature #{s} mentioned in #{file}! Please create it first." if Place.find(s.sub(/(.*)\{\D?(\d+)\D*\}(.*)/,'\2').to_i).nil? }
     (doc/'subjectreference').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the subject #{s} mentioned in #{file}! Please create it first." if Topic.find(s.sub(/(.*)\{\D?(\d+)\D*\}(.*)/,'\2').to_i).nil? }
-    (doc/'userfield_1').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the organization #{s} mentioned in #{file}! Please create it first." if Organization.where(title: s).first.nil? }
-    (doc/'userfield_2').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the project #{s} mentioned in #{file}! Please create it first." if Project.where(title: s).first.nil? }
-    (doc/'userfield_3').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the sponsor #{s} mentioned in #{file}! Please create it first." if Sponsor.where(title: s).first.nil? }
+    (doc/'userfield_1').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the organization #{s} mentioned in #{file}! Please create it first." if Organization.find_by(title: s).nil? }
+    (doc/'userfield_2').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the project #{s} mentioned in #{file}! Please create it first." if Project.find_by(title: s).nil? }
+    (doc/'userfield_3').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the sponsor #{s} mentioned in #{file}! Please create it first." if Sponsor.find_by(title: s).nil? }
     return (doc/'filepath').collect{ |f| f.inner_text.gsub(/:/, '/') }
   end
   
@@ -72,7 +72,7 @@ module MultimediaImportation
   def media_hash(type, c, filename, path, check_existence)
     medium_hash = { :type => type, :topic => c, :filename => filename, :path => path }
     if check_existence
-      medium = Medium.find(:first, :joins => [:workflow, :media_category_associations], :conditions => ['workflows.original_filename LIKE ? AND media_category_associations.category_id = ?', "#{basename(filename)}.%", c.id])
+      medium = Medium.joins([:workflow, :media_category_associations]).find_by(['workflows.original_filename LIKE ? AND media_category_associations.category_id = ?', "#{basename(filename)}.%", c.id])
       medium_hash[:id] = medium.id if !medium.nil?
     end
     medium_hash
@@ -245,14 +245,14 @@ module MultimediaImportation
     rep_type = ReproductionType.find(4)
     for metadata_file in metadata_files
       basename = File.basename(metadata_file[:filename])
-      metadata_source = MetadataSource.where(filename: basename).first
+      metadata_source = MetadataSource.find_by(filename: basename)
       metadata_source = MetadataSource.create(:filename => basename) if metadata_source.nil?
       writers = []
       parse_metadata(metadata_file[:path]).each do |filename, attrs|
         medium_id = imported_media[filename]
         medium = medium_id.blank? ? nil : Medium.find(medium_id)
         if medium.nil?
-          w = Workflow.where(original_path: filename).first
+          w = Workflow.find_by(original_path: filename)
           medium = w.medium if !w.nil?
         end
         next if medium.nil?
@@ -268,7 +268,7 @@ module MultimediaImportation
         end
         s = attrs['author']
         if !s.blank?
-          r = AuthenticatedSystem::Person.where(fullname: s).first
+          r = AuthenticatedSystem::Person.find_by(fullname: s)
           medium.photographer = r if !r.nil?
         end
         s = attrs['Private Note']
@@ -276,7 +276,7 @@ module MultimediaImportation
         medium.save if medium.changed?
         s = attrs['copyright']
         if !s.blank?
-          r = CopyrightHolder.where(title: s).first
+          r = CopyrightHolder.find_by(title: s)
           if !r.nil?
             conditions = { :medium_id => medium.id, :copyright_holder_id => r.id, :reproduction_type_id => rep_type.id }
             Copyright.create(conditions) if Copyright.where(conditions).count == 0
@@ -296,7 +296,7 @@ module MultimediaImportation
         if name.blank?
           creator_id = nil
         else
-          creator = AuthenticatedSystem::Person.where(fullname: name).first
+          creator = AuthenticatedSystem::Person.find_by(fullname: name)
           if creator.nil?
             creator_id = nil
           else
@@ -307,7 +307,7 @@ module MultimediaImportation
         s = attrs['caption']
         if !s.blank?
           s = "<p>#{s}</p>" if !s.starts_with?('<p>')
-          r = Description.where(title: s).first
+          r = Description.find_by(title: s)
           if r.nil?
             r = Description.create :title => s, :creator_id => creator_id
             medium.descriptions << r
@@ -327,20 +327,20 @@ module MultimediaImportation
         end
         s = attrs['Affiliation Organization']
         if !s.blank?
-          organization = Organization.where(title: s).first
+          organization = Organization.find_by(title: s)
           if !organization.nil?
             project_title = attrs['Affiliation Project']
             if project_title.blank?
               project_id = nil
             else
-              project =  Project.where(title: project_title).first
+              project =  Project.find_by(title: project_title)
               project_id = project.nil? ? nil : project.id
             end
             sponsor_title = attrs['Affiliation Sponsor']
             if sponsor_title.blank?
               sponsor_id = nil
             else
-              sponsor = Sponsor.where(title: sponsor_title).first
+              sponsor = Sponsor.find_by(title: sponsor_title)
               sponsor_id = sponsor.nil? ? nil : sponsor.id
             end
             conditions = { :medium_id => medium.id, :organization_id => organization.id, :project_id => project_id, :sponsor_id => sponsor_id }
@@ -349,7 +349,7 @@ module MultimediaImportation
         end
         s = attrs['Caption']
         if !s.blank?
-          r = Caption.where(title: s).first
+          r = Caption.find_by(title: s)
           if r.nil?
             conditions = { :title => s, :creator_id => creator_id }
             r = Caption.create(conditions) if Caption.where(conditions).count == 0

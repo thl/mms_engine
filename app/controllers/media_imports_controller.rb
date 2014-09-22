@@ -55,7 +55,7 @@ class MediaImportsController < AclController
   # GET /media_imports/new
   # GET /media_imports/new.xml
   def new
-    setting = ApplicationSetting.where(title: 'batch_processing_folder').first
+    setting = ApplicationSetting.find_by(title: 'batch_processing_folder')
     @folder = setting.nil? ? '' : setting.string_value
     @import_types = Array.new
     @@import_types.each_with_index {|name, index| @import_types << [name, index] }
@@ -71,7 +71,7 @@ class MediaImportsController < AclController
   # POST /media_imports/confirm.xml
   def confirm
     media_import = MediaImport.new(params[:media_import])
-    setting = ApplicationSetting.where(title: 'batch_processing_folder').first
+    setting = ApplicationSetting.find_by(title: 'batch_processing_folder')
     folder = setting.nil? ? '' : setting.string_value
     source_folder = File.expand_path(Rails.root.join(folder, media_import.batch_processing_folder))
     no_subfolder = media_import.media_type_subfolder.to_i==0

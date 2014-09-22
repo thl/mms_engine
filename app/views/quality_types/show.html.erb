@@ -1,6 +1,6 @@
 <%= display_if_not_blank QualityType.human_attribute_name('title').s, h(@quality_type.title) %>
 <p>
 <%= link_to ts('edit.this'), edit_quality_type_path(@quality_type) %> |
-<%= link_to ts('delete.this'), quality_type_path(@quality_type), :confirm => te('delete.confirmation'), :method => :delete %> |
+<%= link_to ts('delete.this'), quality_type_path(@quality_type), method: :delete, data: { confirm: te('delete.confirmation') } %> |
 <%= link_to ts('back.this'), quality_types_path %>
 </p>

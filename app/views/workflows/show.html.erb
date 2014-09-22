@@ -9,8 +9,9 @@
 <%  end %>
 <%= render :partial => 'show', :locals => {:workflow => @workflow} %>
 <p>
-<% if authorized? hash_for_edit_medium_workflow_path %>
-<%=  link_to ts('edit.this'), edit_medium_workflow_path(@medium) %> |
+<% path = edit_medium_workflow_path(@medium)
+   if authorized? path %>
+<%=  link_to ts('edit.this'), path %> |
 <% end %>
 <%= render :partial => 'persistent_links' %>
 </p>

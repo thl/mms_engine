@@ -6,8 +6,9 @@
 <%=  display_if_not_blank ts('admin.page'), link_to(h(@application_setting.permission.title), @application_setting.configuration_path) %>
 <% end %>
 <p>&nbsp;<br/>
-<% if authorized? hash_for_application_setting_path %>
-<%=  link_to ts('edit.this'), edit_application_setting_path(@application_setting) %> |
+<% path = edit_application_setting_path(@application_setting)
+   if authorized? path %>
+<%=  link_to ts('edit.this'), path %> |
 <% end %>
 <%= render :partial => 'persistent_links' %>
 </p>

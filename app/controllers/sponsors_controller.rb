@@ -32,7 +32,7 @@ class SponsorsController < AclController
   # POST /sponsors
   # POST /sponsors.xml
   def create
-    @sponsor = Sponsor.new(params[:sponsor])
+    @sponsor = Sponsor.new(sponsor_params)
     respond_to do |format|
       if @sponsor.save
         flash[:notice] = ts('new.successful', :what => Sponsor.model_name.human.capitalize)
@@ -50,7 +50,7 @@ class SponsorsController < AclController
   def update
     @sponsor = Sponsor.find(params[:id])
     respond_to do |format|
-      if @sponsor.update_attributes(params[:sponsor])
+      if @sponsor.update_attributes(sponsor_params)
         flash[:notice] = ts('edit.successful', :what => Sponsor.model_name.human.capitalize)
         format.html { redirect_to sponsor_url(@sponsor) }
         format.xml  { head :ok }
@@ -70,5 +70,11 @@ class SponsorsController < AclController
       format.html { redirect_to sponsors_url }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def sponsor_params
+    params.require(:sponsor).permit(:title)
   end
 end

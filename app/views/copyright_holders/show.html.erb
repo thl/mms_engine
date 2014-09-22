@@ -1,8 +1,9 @@
 <%= display_if_not_blank CopyrightHolder.human_attribute_name('title').s, h(@copyright_holder.title).s %>
 <%= display_if_not_blank CopyrightHolder.human_attribute_name('website').s, h(@copyright_holder.website) %>
 <p>&nbsp;<br/>
-<% if authorized? hash_for_edit_copyright_holder_path %>
-<%=  link_to ts('edit.this'), edit_copyright_holder_path(@copyright_holder) %> |
+<% path = edit_copyright_holder_path(@copyright_holder)
+   if authorized? path %>
+<%=  link_to ts('edit.this'), path %> |
 <% end %>
 <%= render :partial => 'persistent_links' %>
 </p>

@@ -34,7 +34,7 @@ class ProjectsController < AclController
   # POST /projects
   # POST /projects.xml
   def create
-    @project = Project.new(params[:project])
+    @project = Project.new(project_params)
 
     respond_to do |format|
       if @project.save
@@ -53,7 +53,7 @@ class ProjectsController < AclController
   def update
     @project = Project.find(params[:id])
     respond_to do |format|
-      if @project.update_attributes(params[:project])
+      if @project.update_attributes(project_params)
         flash[:notice] = ts('edit.successful', :what => Project.model_name.human.capitalize)
         format.html { redirect_to project_url(@project) }
         format.xml  { head :ok }
@@ -73,5 +73,11 @@ class ProjectsController < AclController
       format.html { redirect_to projects_url }
       format.xml  { head :ok }
     end
-  end  
+  end
+  
+  private
+  
+  def project_params
+    params.require(:project).permit(:title)
+  end
 end

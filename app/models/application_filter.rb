@@ -9,7 +9,6 @@
 #
 
 class ApplicationFilter < ActiveRecord::Base
-  attr_accessible :title
   def self.application_filter
     cached_filter('application_filter')
   end
@@ -26,7 +25,7 @@ class ApplicationFilter < ActiveRecord::Base
   
   def self.cached_filter(title)
     value = Rails.cache.fetch("#{self.table_name}_#{title}", :expires_in => 1.day) do
-      setting = ApplicationSetting.where(title: title).first
+      setting = ApplicationSetting.find_by(title: title)
       setting.nil? || setting.value.nil? ? nil : setting.value
     end
     value.nil? ? nil : ApplicationFilter.find(value)

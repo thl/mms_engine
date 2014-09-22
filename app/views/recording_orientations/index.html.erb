@@ -3,16 +3,17 @@
   <tr>
     <th><%= RecordingOrientation.model_name.human.titleize %></th>
   </tr>
-<% can_edit = authorized? hash_for_edit_recording_orientation_path
-   for recording_orientation in @recording_orientations %>
+<% for recording_orientation in @recording_orientations
+	 path = edit_recording_orientation_path(recording_orientation) %>
   <tr>
-    <td><%= can_edit ? link_to(h(recording_orientation.title), edit_recording_orientation_path(recording_orientation)) : link_to(h(recording_orientation.title), recording_orientation_path(recording_orientation)) %></td>
+    <td><%= authorized?(path) ? link_to(h(recording_orientation.title), path) : link_to(h(recording_orientation.title), recording_orientation_path(recording_orientation)) %></td>
   </tr>
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<% if authorized? hash_for_new_recording_orientation_path %>
-<%= link_to ts('new.record', :what => RecordingOrientation.model_name.human), new_recording_orientation_path %> |
+<% path = new_recording_orientation_path
+   if authorized? path %>
+<%= link_to ts('new.record', :what => RecordingOrientation.model_name.human), path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

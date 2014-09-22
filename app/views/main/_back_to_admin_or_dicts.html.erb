@@ -1,1 +1,2 @@
-<%= authorized?(hash_for_admin_path) ? link_to(ts('back.to', :what => t('admin.page')), admin_path) : link_to(ts('back.to', :what => t('dictionaries.tab')), new_dictionary_search_path) %>
+<%  path = admin_path %>
+<%= authorized?(path) ? link_to(ts('back.to', :what => t('admin.page')), path) : link_to(ts('back.to', :what => t('dictionaries.tab')), new_dictionary_search_path) %>

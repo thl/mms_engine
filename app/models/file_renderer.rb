@@ -8,7 +8,6 @@
 #
 
 class FileRenderer < ActiveRecord::Base
-  attr_accessible :title, :path
   has_many :transformations
   table_name = 'renderers'
 end

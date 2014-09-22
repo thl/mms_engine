@@ -14,11 +14,13 @@
 <p><b>Note:</b></p>
 <%=h @citation.note %>
 <p>&nbsp;<br/>
-<% if authorized? hash_for_new_medium_title_citation_path %>
-<%=  link_to ts(:for, :what => t('new.record', :what => Citation.model_name.human), :whom => reference_title), new_polymorphic_path(@reference_stack + [Citation]) %> |
-<% end %>
-<% if authorized? hash_for_edit_medium_title_citation_path %>
-<%=   link_to 'Edit', edit_polymorphic_path(@reference_stack + [@citation]) %> |
+<% path = new_polymorphic_path(@reference_stack + [Citation])
+   if authorized? path %>
+<%=  link_to ts(:for, :what => t('new.record', :what => Citation.model_name.human), :whom => reference_title), path %> |
+<% end
+   path = edit_polymorphic_path(@reference_stack + [@citation])
+   if authorized? path %>
+<%=   link_to 'Edit', path %> |
 <% end %>
 <%= render :partial => 'persistent_links' %>
 </p>

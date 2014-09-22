@@ -1,5 +1,6 @@
-<%  if authorized?(hash_for_glossary_path(:action => 'destroy')) %>
-<%=   link_to ts('delete.this'), glossary_path(@glossary), :confirm => te('delete.confirmation'), :method => :delete %> |
+<%  path = glossary_path(@glossary)
+    if authorized?(path, :action => 'destroy') %>
+<%=   link_to ts('delete.this'), path, method: :delete, data: { confirm: te('delete.confirmation') } %> |
 <%  end %>
 <%= link_to ts('back.to', :what => t('all.records', :what => Glossary.model_name.human(:count => :many))), glossaries_path %> |
 <%= render :partial => 'main/back_to_admin_or_dicts' %>

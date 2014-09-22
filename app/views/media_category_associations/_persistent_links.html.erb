@@ -1,3 +1,3 @@
-<%= link_to ts('delete.this'), medium_topic_association_path(@medium.id, @media_category_association.root.id, @media_category_association), :confirm => te('delete.confirmation'), :method => :delete %> |
+<%= link_to ts('delete.this'), medium_topic_association_path(@medium.id, @media_category_association.root.id, @media_category_association), method: :delete, data: { confirm: te('delete.confirmation') } %> |
 <%= link_to ts('back.to', :what => t('all.records', :what => Medium.model_name.human(:count => :many))), topic_path(@media_category_association.category.id) %> |
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => "topics-#{@media_category_association.root_id}"} %>

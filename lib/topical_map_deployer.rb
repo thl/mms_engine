@@ -21,7 +21,7 @@ module KnowledgeMapsDeployer
   private
   
   def self.deploy_category(local_model, remote)
-    local_model.find(:all, :conditions => {:parent_id => nil}).each{ |local| self.deploy_category_tree(local, remote) }
+    local_model.where(:parent_id => nil).each{ |local| self.deploy_category_tree(local, remote) }
   end
   
   def self.deploy_category_tree(local, remote_parent)
@@ -35,9 +35,9 @@ module KnowledgeMapsDeployer
   def self.switch_dependencies_with_new_id(local, remote)
     remote_class = remote.class
     if remote_class==Collection
-      associations = MediaCollectionAssociation.find(:all, :conditions => {:collection_id => local.id})
+      associations = MediaCollectionAssociation.where(:collection_id => local.id)
     elsif remote_class==Subject
-      associations = MediaSubjectAssociation.find(:all, :conditions => {:subject_id => local.id})
+      associations = MediaSubjectAssociation.where(:subject_id => local.id)
     end  
     associations.each { |a| MediaCategoryAssociation.create(:category_id => remote.id, :medium => a.medium, :root_id => remote_class.root.id) }
   end

@@ -1,6 +1,6 @@
 class TitlesController < AclController
   helper :media
-  before_filter :find_medium
+  before_action :find_medium
   caches_page :index, :show, :if => Proc.new { |c| c.request.format.xml? }
   cache_sweeper :title_sweeper, :only => [:create, :update, :destroy]
   
@@ -46,7 +46,7 @@ class TitlesController < AclController
   # POST /titles
   # POST /titles.xml
   def create
-    @title = @medium.titles.new(params[:title])
+    @title = @medium.titles.new(title_params)
     @title.creator = current_user.person
     respond_to do |format|
       if @title.save
@@ -66,12 +66,12 @@ class TitlesController < AclController
   def update
     @title = Title.find(params[:id])
     respond_to do |format|
-      if @title.update_attributes(params[:title])
+      if @title.update_attributes(title_params)
         flash[:notice] = ts('edit.successful', :what => Title.model_name.human.capitalize)
         format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
         format.xml  { head :ok }
       else
-        @languages = ComplexScripts::Language.find(:all, :order => 'title')
+        @languages = ComplexScripts::Language.all.order('title')
         format.html { render :action => "edit" }
         format.xml  { render :xml => @title.errors, :status => :unprocessable_entity }
       end
@@ -91,6 +91,10 @@ class TitlesController < AclController
   end
   
   private
+  
+  def title_params
+    params.require(:title).permit(:title, :language_id)
+  end
   
   def find_medium
     begin

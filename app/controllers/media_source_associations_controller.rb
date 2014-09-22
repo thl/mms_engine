@@ -1,5 +1,5 @@
 class MediaSourceAssociationsController < AclController
-  before_filter :find_medium
+  before_action :find_medium
   
   # GET /media_source_associations
   # GET /media_source_associations.xml
@@ -41,7 +41,7 @@ class MediaSourceAssociationsController < AclController
   # POST /media_source_associations
   # POST /media_source_associations.xml
   def create
-    @media_source_association = @medium.media_source_associations.build(params[:media_source_association])
+    @media_source_association = @medium.media_source_associations.build(media_source_association_params)
     respond_to do |format|
       if @media_source_association.save
         flash[:notice] = ts('new.successful', :what => MediaSourceAssociation.model_name.human.capitalize)
@@ -62,7 +62,7 @@ class MediaSourceAssociationsController < AclController
   def update
     @media_source_association = MediaSourceAssociation.find(params[:id])
     respond_to do |format|
-      if @media_source_association.update_attributes(params[:media_source_association])
+      if @media_source_association.update_attributes(media_source_association_params)
         flash[:notice] = ts('edit.successful', :what => MediaSourceAssociation.model_name.human.capitalize)
         format.html { redirect_to edit_medium_path(@medium) }
         format.xml  { head :ok }
@@ -88,6 +88,10 @@ class MediaSourceAssociationsController < AclController
   end
   
   private
+  
+  def media_source_association_params
+    params.require(:media_source_association).permit(:medium_id, :source_id, :shot_number)
+  end
   
   def find_medium
     @medium = Medium.find(params[:medium_id])

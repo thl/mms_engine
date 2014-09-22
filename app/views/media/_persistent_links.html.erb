@@ -1,5 +1,7 @@
 <p>
-<%= "#{link_to(ts('edit.record', :what => t(:catalog_record)), edit_medium_path(@medium))} |".html_safe if authorized?(hash_for_edit_medium_path) %>
-<%= "#{link_to(ts('delete.this'), medium_path(@medium), :confirm => te('delete.confirmation'), :method => :delete)} |".html_safe if authorized?(hash_for_medium_path(:action => 'destroy')) %>
+<% path = edit_medium_path(@medium) %>
+<%= "#{link_to(ts('edit.record', :what => t(:catalog_record)), path)} |".html_safe if authorized?(path) %>
+<% path = medium_path(@medium) %>
+<%= "#{link_to(ts('delete.this'), path, method: :delete, data: { confirm: te('delete.confirmation') })} |".html_safe if authorized?(path, :action => 'destroy') %>
 <%= link_to ts('back.to', :what => t('all.records', :what => Medium.model_name.human(:count => :many))), media_path %>
 </p>

@@ -18,7 +18,6 @@
 #
 
 class Workflow < ActiveRecord::Base
-  attr_accessible :medium_id, :original_filename, :status_id, :original_medium_id, :metadata_source_id
   belongs_to :medium
   belongs_to :status
   belongs_to :processing_status

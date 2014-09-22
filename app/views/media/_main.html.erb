@@ -30,16 +30,20 @@
      </table>
 <% end %>
 <p>
-<% if authorized? hash_for_new_picture_path %>
-<%=  link_to ts('new.record', :what => 'Photo-Immersive Object'), new_picture_path %> |
+<% path = new_picture_path
+   if authorized? path %>
+<%=  link_to ts('new.record', :what => 'Photo-Immersive Object'), path %> |
 <% end
-   if authorized? hash_for_new_video_path %>
-<%=  link_to ts('new.record', :what => 'Audio-Video'), new_video_path %> |
+   path = new_video_path
+   if authorized? path %>
+<%=  link_to ts('new.record', :what => 'Audio-Video'), path %> |
 <% end
-   if authorized? hash_for_new_document_path %>
-<%=  link_to ts('new.record', :what => 'Text'), new_document_path %> |
+   path = new_document_path
+   if authorized? path %>
+<%=  link_to ts('new.record', :what => 'Text'), path %> |
 <% end
-   if authorized? hash_for_new_online_resource_path %>
-<%=  link_to ts('new.record', :what => 'Online Resource'), new_online_resource_path %>
+   path = new_online_resource_path
+   if authorized? path %>
+<%=  link_to ts('new.record', :what => 'Online Resource'), path %>
 <% end %>
 </p>

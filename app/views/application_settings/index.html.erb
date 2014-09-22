@@ -7,12 +7,12 @@
     <th><%= ApplicationSetting.human_attribute_name('value').s %></th>
     <th><%= ApplicationSetting.human_attribute_name('string_value').s %></th>
   </tr>
-<% can_edit = authorized? hash_for_edit_application_setting_path
-   for application_setting in @application_settings %>
+<% for application_setting in @application_settings
+	 path = edit_application_setting_path(application_setting) %>
   <tr>
     <td>
-<%  if can_edit %>
-<%=   link_to h(application_setting.title), edit_application_setting_path(application_setting) %>
+<%  if authorized? path %>
+<%=   link_to h(application_setting.title), path %>
 <%  else %>
 <%=   link_to h(application_setting.title), application_setting_path(application_setting) %>
 <%  end %>
@@ -30,8 +30,9 @@
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<% if authorized? hash_for_new_application_setting_path %>
-<%=  link_to ts('new.record', :what => ApplicationSetting.model_name.human), new_application_setting_path %> |
+<% path = new_application_setting_path
+   if authorized? path %>
+<%=  link_to ts('new.record', :what => ApplicationSetting.model_name.human), path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

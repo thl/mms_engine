@@ -11,8 +11,9 @@
 <%  end %>
 <%= display_if_not_blank Glossary.human_attribute_name('is_public').s, (@glossary.is_public ? ts(:affirmation) : ts(:negation)) %>
 <p>&nbsp;<br/>
-<%  if authorized? hash_for_edit_glossary_path %>
-<%=   link_to ts('edit.this'), edit_glossary_path(@glossary) %> |
+<%  path = edit_glossary_path(@glossary)
+    if authorized? path %>
+<%=   link_to ts('edit.this'), path %> |
 <%  end %>
 <%= render :partial => 'persistent_links' %>
 </p>

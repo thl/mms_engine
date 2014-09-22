@@ -64,10 +64,10 @@ class DocumentsController < AclController
   # POST /documents
   # POST /documents.xml
   def create
-    typescript_params = params[:typescript]
+    typescript_params = params.require(:typescript).permit(:content_type, :temp_path, :filename, :parent_id, :thumbnail)
     @typescript = nil
     if !typescript_params.nil? && !typescript_params[:uploaded_data].nil?
-      @typescript = Typescript.new(params[:typescript])
+      @typescript = Typescript.new(typescript_params)
       success = @typescript.save
       has_typescript = true
     else
@@ -76,7 +76,7 @@ class DocumentsController < AclController
     end
     has_preview = false
     if success
-      thumbnail_params = params[:thumbnail]
+      thumbnail_params = params[:thumbnail].permit(:content_type, :temp_path, :filename, :parent_id, :thumbnail)
       if !thumbnail_params.nil? && !thumbnail_params[:uploaded_data].nil?
         # If thumbnail preview was given, use that as the original preview.
         if has_typescript
@@ -97,8 +97,9 @@ class DocumentsController < AclController
     end
     if success
       # creating medium before thumbnail to get id name.
-      params_medium = params[:medium]
-      params_medium = params[:document] if params_medium.nil?
+      params_medium = params[:medium].permit(:recording_note, :resource_type_id, :photographer_id, :taken_on,
+        :partial_taken_on, :capture_device_model_id, :quality_type_id, :private_note)
+      params_medium = document_params if params_medium.nil?
       @medium = Document.new(params_medium)
       @medium.ingest_taken_on(params_medium)
       @medium.typescript = @typescript
@@ -134,7 +135,7 @@ class DocumentsController < AclController
     @document = Document.find(params[:id])
 
     respond_to do |format|
-      if @document.update_attributes(params[:document])
+      if @document.update_attributes(document_params)
         flash[:notice] = ts('edit.successful', :what => Document.model_name.human.capitalize)
         format.html { redirect_to document_url(@document) }
         format.xml  { head :ok }
@@ -163,5 +164,12 @@ class DocumentsController < AclController
       format.html { redirect_to documents_url }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def document_params
+    params.requre(:document).permit(:typescript, :recording_note, :resource_type_id, :photographer_id,
+    :taken_on, :capture_device_model_id, :quality_type_id, :private_note)
   end
 end

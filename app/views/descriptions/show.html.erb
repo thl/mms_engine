@@ -14,8 +14,9 @@
 <% end %>
 <%= display_if_not_blank ComplexScripts::Language.model_name.human.titleize.s, h(@description.language.title).s %>
 <p>&nbsp;<br/>
-<% if authorized? hash_for_edit_medium_description_path %>
-<%=  link_to ts('edit.this'), edit_medium_description_path(@medium, @description) %> |
+<% path = edit_medium_description_path(@medium, @description)
+   if authorized? path %>
+<%=  link_to ts('edit.this'), path %> |
 <% end %>
 <%= render :partial => 'persistent_links' %>
 </p>

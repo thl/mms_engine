@@ -21,9 +21,6 @@
 #
 
 class Picture < Medium
-  attr_accessible :image, :recording_note, :resource_type_id, :photographer_id, :taken_on, :capture_device_model_id,
-    :quality_type_id, :private_note, :rotation, :recording_orientation_id
-  
   include MediaProcessor::PictureExtension
   
   validates_presence_of :attachment_id
@@ -41,7 +38,7 @@ class Picture < Medium
   def huge_image
     att = attachment
     return nil if att.nil?
-    att.children.find(:first, :conditions => {:thumbnail => 'huge'})
+    att.children.find_by(thumbnail: 'huge')
   end
   
   def self.public_folder

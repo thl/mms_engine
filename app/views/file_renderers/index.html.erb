@@ -4,12 +4,12 @@
     <th><%= FileRenderer.model_name.human.titleize.s %></th>
     <th><%= FileRenderer.human_attribute_name('path').s %></th>
   </tr>
-<% can_edit = authorized? hash_for_edit_renderer_path
-   for renderer in @file_renderers %>
+<% for renderer in @file_renderers 
+	 path = edit_renderer_path(renderer) %>
   <tr>
     <td>
-<%  if can_edit %>
-<%=   link_to h(renderer.title).s, edit_renderer_path(renderer) %>
+<%  if authorized? path %>
+<%=   link_to h(renderer.title).s, path %>
 <%  else %>
 <%=   link_to h(renderer.title).s, renderer_path(renderer) %>
 <%  end %>
@@ -19,8 +19,9 @@
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<% if authorized? hash_for_new_renderer_path %>
-<%=  link_to ts('new.record', :what => FileRenderer.model_name.human), new_renderer_path %> |
+<% path = new_renderer_path
+   if authorized? path %>
+<%=  link_to ts('new.record', :what => FileRenderer.model_name.human), path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

@@ -12,7 +12,6 @@
 #
 
 class TranslatedTitle < ActiveRecord::Base
-  attr_accessible :title, :language_id
   validates_presence_of :title, :title_id, :language_id
   belongs_to :parent_title, :class_name => 'Title', :foreign_key => 'title_id'
   belongs_to :language, :class_name => 'ComplexScripts::Language'

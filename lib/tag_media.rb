@@ -3,7 +3,7 @@
 
 module TagMedia
   def self.tag_media(media_id_start, media_id_end, copyright_holder_id, reproduction_type_id, collection_id, organization_id = nil)
-    media = Medium.find(:all, :conditions => ['id >= ? AND id <= ?', media_id_start, media_id_end])
+    media = Medium.where(['id >= ? AND id <= ?', media_id_start, media_id_end])
     
     if !copyright_holder_id.blank?
       copyright_holder = CopyrightHolder.find(copyright_holder_id)
@@ -22,15 +22,15 @@ module TagMedia
         
     for medium in media
       if !copyright_holder.nil?
-        copyright = Copyright.find :first, :conditions => {:medium_id => medium, :copyright_holder_id => copyright_holder}
+        copyright = Copyright.find_by(medium_id: medium, copyright_holder_id: copyright_holder)
         Copyright.create :medium => medium, :copyrightHolder => copyright_holder, :reproductionType => reproduction_type if copyright.nil?
       end
       if !collection.nil?
-        media_collection_association = MediaCollectionAssociation.find :first, :conditions => {:medium_id => medium, :collection_id => collection}
+        media_collection_association = MediaCollectionAssociation.find_by(medium_id: medium, collection_id: collection)
         MediaCollectionAssociation.create :medium => medium, :collection => collection if media_collection_association.nil? 
       end
       if !organization.nil?
-        affiliation = Affiliation.find :first, :conditions => {:medium_id => medium, :organization_id => organization}
+        affiliation = Affiliation.find_by(medium_id: medium, organization_id: organization)
         Affiliation.create :medium => medium, :organization => organization if affiliation.nil?
       end
     end    

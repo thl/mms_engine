@@ -40,7 +40,7 @@ class ApplicationFiltersController < AclController
   # POST /filters
   # POST /filters.xml
   def create
-    @filter = ApplicationFilter.new(params[:filter])
+    @filter = ApplicationFilter.new(filter_params)
 
     respond_to do |format|
       if @filter.save
@@ -60,7 +60,7 @@ class ApplicationFiltersController < AclController
     @filter = ApplicationFilter.find(params[:id])
 
     respond_to do |format|
-      if @filter.update_attributes(params[:filter])
+      if @filter.update_attributes(filter_params)
         flash[:notice] = 'Filter was successfully updated.'
         format.html { redirect_to(@filter) }
         format.xml  { head :ok }
@@ -81,5 +81,11 @@ class ApplicationFiltersController < AclController
       format.html { redirect_to(filters_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def filter_params
+    params.require(:filter).permit(:title)
   end
 end

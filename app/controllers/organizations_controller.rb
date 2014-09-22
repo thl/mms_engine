@@ -34,7 +34,7 @@ class OrganizationsController < AclController
   # POST /organizations
   # POST /organizations.xml
   def create
-    @organization = Organization.new(params[:organization])
+    @organization = Organization.new(organization_params)
 
     respond_to do |format|
       if @organization.save
@@ -54,7 +54,7 @@ class OrganizationsController < AclController
     @organization = Organization.find(params[:id])
 
     respond_to do |format|
-      if @organization.update_attributes(params[:organization])
+      if @organization.update_attributes(organization_params)
         flash[:notice] = ts('edit.successful', :what => Organization.model_name.human.capitalize)
         format.html { redirect_to organization_url(@organization) }
         format.xml  { head :ok }
@@ -75,5 +75,11 @@ class OrganizationsController < AclController
       format.html { redirect_to organizations_url }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def organization_params
+    params.require(:organization).permit(:title, :website)
   end
 end

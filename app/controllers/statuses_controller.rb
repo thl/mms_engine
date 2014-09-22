@@ -38,7 +38,7 @@ class StatusesController < AclController
   # POST /statuses
   # POST /statuses.xml
   def create
-      @status = Status.new(params[:status])
+      @status = Status.new(status_params)
       respond_to do |format|
         if @status.save
           flash[:notice] = ts('new.successful', :what => Status.model_name.human.capitalize)
@@ -56,7 +56,7 @@ class StatusesController < AclController
   def update
       @status = Status.find(params[:id])
       respond_to do |format|
-        if @status.update_attributes(params[:status])
+        if @status.update_attributes(status_params)
           flash[:notice] = ts('edit.successful', :what => Status.model_name.human.capitalize)
           format.html { redirect_to statuses_url }
           format.xml  { head :ok }
@@ -76,5 +76,11 @@ class StatusesController < AclController
         format.html { redirect_to statuses_url }
         format.xml  { head :ok }
       end
+  end
+  
+  private
+  
+  def status_params
+    params.require(:status).permit(:title, :description, :position)
   end
 end

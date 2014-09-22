@@ -1,6 +1,6 @@
 class MediaCategoryAssociationsController < AclController
   cache_sweeper :media_category_association_sweeper, :only => [:create, :update, :destroy]
-  before_filter :find_medium_and_topic
+  before_action :find_medium_and_topic
   helper :media
   
   # GET /media_category_associations
@@ -58,7 +58,7 @@ class MediaCategoryAssociationsController < AclController
   # POST /media_category_associations
   # POST /media_category_associations.xml
   def create
-    mca_hash = params[:media_category_association]
+    mca_hash = media_category_association_params
     mca_cats = mca_hash[:category_id]
     errors = []
     mca_cats.each do |c|
@@ -95,7 +95,7 @@ class MediaCategoryAssociationsController < AclController
   # PUT /media_category_associations/1.xml
   def update
     @media_category_association = MediaCategoryAssociation.find(params[:id])
-    media_category_association_hash = params[:media_category_association]
+    media_category_association_hash = media_category_association_params
     respond_to do |format|
       category_id = media_category_association_hash[:category_id]
       if category_id.blank?
@@ -130,6 +130,10 @@ class MediaCategoryAssociationsController < AclController
   end
   
   private
+  
+  def media_category_association_params
+    params.require(:media_category_association).permit(:root_id, :category_id, :medium_id, :numeric_value, :string_value)
+  end
   
   def find_medium_and_topic
     medium_id = params[:medium_id]

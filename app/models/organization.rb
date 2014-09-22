@@ -8,7 +8,6 @@
 #
 
 class Organization < ActiveRecord::Base
-  attr_accessible :title, :website
   validates_presence_of :title
   has_many :affiliations
   has_many :glossaries

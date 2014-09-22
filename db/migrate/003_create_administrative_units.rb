@@ -23,7 +23,7 @@ class CreateAdministrativeUnits < ActiveRecord::Migration
             parent = nil
           end
           previous_row[i] = col
-          units[i] = AdministrativeUnit.find(:first, :conditions => { :title => col, :administrative_level_id => levels[i], :parent_id => parent })
+          units[i] = AdministrativeUnit.find_by(:title => col, :administrative_level_id => levels[i], :parent_id => parent)
           units[i]= AdministrativeUnit.create(:title => col, :administrativeLevel => levels[i], :parent => parent) if units[i].nil?
         end
       end

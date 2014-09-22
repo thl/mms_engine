@@ -1,6 +1,6 @@
 class CaptionsController < AclController
   helper :media
-  before_filter :find_medium
+  before_action :find_medium
   
   # GET /media/1/captions
   # GET /media/1/captions.xml
@@ -27,7 +27,7 @@ class CaptionsController < AclController
     @description_types = DescriptionType.order('title')
     @languages = ComplexScripts::Language.order('title')
     language = ComplexScripts::Language.find_iso_code(I18n.locale)
-    @caption = Caption.new(:language => language, :description_type => @description_types.first)
+    @caption = Caption.new(language: language, description_type: @description_types.first)
     @caption.creator_id = current_user.person.id
   end
 
@@ -41,7 +41,7 @@ class CaptionsController < AclController
   # POST /media/1/captions
   # POST /media/1/captions.xml
   def create
-    @caption = Caption.new(params[:caption])
+    @caption = Caption.new(caption_params)
     @caption.creator_id = current_user.person.id
     success = @caption.save
     @medium.captions << @caption if success
@@ -64,7 +64,7 @@ class CaptionsController < AclController
   # PUT /media/1/captions/1.xml
   def update
     @caption = @medium.captions.find(params[:id])
-    params_caption = params[:caption]
+    params_caption = caption_params
     if params_caption[:title]==@caption.title || @caption.media.size==1
       success = @caption.update_attributes(params_caption)
     else
@@ -112,5 +112,9 @@ class CaptionsController < AclController
       flash[:notice] = 'Attempt to access invalid medium.'
       redirect_to media_path
     end
+  end
+  
+  def caption_params
+    params.require(:caption).permit(:title, :description_type_id, :language_id, :creator_id)
   end
 end

@@ -25,7 +25,7 @@ class PublishersController < AclController
   # GET /publishers/new.xml
   def new
     @publisher = Publisher.new
-    # @countries = Country.find(:all)
+    # @countries = Country.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,13 +36,13 @@ class PublishersController < AclController
   # GET /publishers/1/edit
   def edit
     @publisher = Publisher.find(params[:id])
-    # @countries = Country.find(:all)
+    # @countries = Country.all
   end
 
   # POST /publishers
   # POST /publishers.xml
   def create
-    @publisher = Publisher.new(params[:publisher])
+    @publisher = Publisher.new(publisher_params)
 
     respond_to do |format|
       if @publisher.save
@@ -51,7 +51,7 @@ class PublishersController < AclController
         format.xml  { head :created, :location => glossary_url(@publisher) }
       else
         format.html do
-          # @countries = Country.find(:all)
+          # @countries = Country.all
           render :action => 'new'
         end
         format.xml  { render :xml => @publisher.errors.to_xml }
@@ -65,7 +65,7 @@ class PublishersController < AclController
     @publisher = Publisher.find(params[:id])
 
     respond_to do |format|
-      if @publisher.update_attributes(params[:publisher])
+      if @publisher.update_attributes(publisher_params)
         flash[:notice] = ts('edit.successful', :what => Publisher.model_name.human.capitalize)
         format.html { redirect_to publishers_url }
         format.xml  { head :ok }
@@ -86,5 +86,11 @@ class PublishersController < AclController
       format.html { redirect_to publishers_url }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def publisher_params
+    params.require(:publisher).permit(:title, :country_id)
   end
 end

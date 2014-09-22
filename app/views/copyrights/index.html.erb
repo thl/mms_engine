@@ -17,8 +17,9 @@
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<% if authorized? hash_for_new_copyright_path %>
-<%=  link_to ts('new.record', :what => Copyright.model_name.human), new_copyright_path(:medium_id => @medium) %> |
+<% path = new_copyright_path(:medium_id => @medium)
+   if authorized? path %>
+<%=  link_to ts('new.record', :what => Copyright.model_name.human), path %> |
 <% end %>
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'copyrights'} %>
 </p>

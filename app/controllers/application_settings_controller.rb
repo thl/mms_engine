@@ -35,7 +35,7 @@ class ApplicationSettingsController < AclController
   # POST /application_settings
   # POST /application_settings.xml
   def create
-    @application_setting = ApplicationSetting.new(params[:application_setting])
+    @application_setting = ApplicationSetting.new(application_setting_params)
 
     respond_to do |format|
       if @application_setting.save
@@ -54,7 +54,7 @@ class ApplicationSettingsController < AclController
   def update
     @application_setting = ApplicationSetting.find(params[:id])
     respond_to do |format|
-      if @application_setting.update_attributes(params[:application_setting])
+      if @application_setting.update_attributes(application_setting_params)
         flash[:notice] = ts('edit.successful', :what => ApplicationSetting.model_name.human.capitalize)
         format.html { redirect_to application_settings_url }
         format.xml  { head :ok }
@@ -75,5 +75,11 @@ class ApplicationSettingsController < AclController
       format.html { redirect_to application_settings_url }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def application_setting_params
+    params.require(:application_setting).permit(:permission_id, :title, :value, :description, :string_value)
   end
 end

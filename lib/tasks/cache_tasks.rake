@@ -8,8 +8,8 @@ namespace :mms do
       associations = MediaCategoryAssociation.group('category_id').order('category_id')
       associations = associations.joins(:medium).where('media.application_filter_id' => ApplicationFilter.application_filter.id) if !ApplicationFilter.application_filter.nil?
       associations.collect(&:category).each do |category|
-        medium_ids = ApplicationFilter.application_filter.nil? ? MediaCategoryAssociation.where(:category_id => category.id).collect(&:medium_id) : MediaCategoryAssociation.find(:all, :joins => :medium, :conditions => {:category_id => category.id, 'media.application_filter_id' => ApplicationFilter.application_filter.id}).collect(&:medium_id)
-        ([category] + category.ancestors).each{ |c| medium_ids.each { |medium_id| CumulativeMediaCategoryAssociation.create(:category_id => c.id, :medium_id => medium_id) if CumulativeMediaCategoryAssociation.find(:first, :conditions => {:category_id => c.id, :medium_id => medium_id}).nil? } }
+        medium_ids = ApplicationFilter.application_filter.nil? ? MediaCategoryAssociation.where(:category_id => category.id).collect(&:medium_id) : MediaCategoryAssociation.joins(:medium).where(:category_id => category.id, 'media.application_filter_id' => ApplicationFilter.application_filter.id).collect(&:medium_id)
+        ([category] + category.ancestors).each{ |c| medium_ids.each { |medium_id| CumulativeMediaCategoryAssociation.create(:category_id => c.id, :medium_id => medium_id) if CumulativeMediaCategoryAssociation.find_by(category_id: c.id, medium_id: medium_id).nil? } }
       end
     end
     
@@ -21,7 +21,7 @@ namespace :mms do
       associations = associations.joins(:medium).where('media.application_filter_id' => ApplicationFilter.application_filter.id) if !ApplicationFilter.application_filter.nil?
       associations.collect(&:feature).each do |feature|
         medium_ids = ApplicationFilter.application_filter.nil? ? Location.where(:feature_id => feature.id).collect(&:medium_id) : Location.joins(:medium).where(:feature_id => feature.id, 'media.application_filter_id' => ApplicationFilter.application_filter.id).collect(&:medium_id)
-        ([feature] + feature.ancestors).each { |f| medium_ids.each { |medium_id| CumulativeMediaLocationAssociation.create(:feature_id => f.id, :medium_id => medium_id) if CumulativeMediaLocationAssociation.where(:feature_id => f.id, :medium_id => medium_id).first.nil? } }
+        ([feature] + feature.ancestors).each { |f| medium_ids.each { |medium_id| CumulativeMediaLocationAssociation.create(:feature_id => f.id, :medium_id => medium_id) if CumulativeMediaLocationAssociation.find_by(feature_id: f.id, medium_id: medium_id).nil? } }
       end
     end
     

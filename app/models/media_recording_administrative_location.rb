@@ -13,5 +13,4 @@
 #
 
 class MediaRecordingAdministrativeLocation < Location
-  attr_accessible :medium_id, :feature_id, :spot_feature, :notes
 end

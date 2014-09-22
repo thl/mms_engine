@@ -48,14 +48,14 @@ class PicturesController < AclController
   # POST /pictures.xml
   def create
     begin
-      @image = Image.new(params[:image])
+      @image = Image.new(params.require(:image).permit(:content_type, :temp_path, :filename, :uploaded_data))
       success = @image.save
     rescue => e
       @image = Image.new if @image.nil?
       success = false
     else
       if success
-        params_picture = params[:picture]
+        params_picture = picture_params
         @medium = Picture.new(params_picture)
         @medium.ingest_taken_on(params_picture)
         @medium.image = @image
@@ -86,7 +86,7 @@ class PicturesController < AclController
   def update
     @medium = Picture.find(params[:id])
     respond_to do |format|
-      if @medium.update_attributes(params[:picture])
+      if @medium.update_attributes(picture_params)
         flash[:notice] = ts('edit.successful', :what => Picture.model_name.human.capitalize)
         format.html { redirect_to picture_url(@medium) }
         format.xml  { head :ok }
@@ -113,5 +113,12 @@ class PicturesController < AclController
       format.html { redirect_to pictures_url }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def picture_params
+    params.require(:picture).permit(:image, :recording_note, :resource_type_id, :photographer_id, :taken_on,
+      :capture_device_model_id, :quality_type_id, :private_note, :rotation, :recording_orientation_id)
   end
 end

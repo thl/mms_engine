@@ -37,7 +37,7 @@ class MetadataSourcesController < AclController
     @metadata_source = MetadataSource.find(params[:id])
 
     respond_to do |format|
-      if @metadata_source.update_attributes(params[:metadata_source])
+      if @metadata_source.update_attributes(params.require(:metadata_source).permit(:creator_id, :filename))
         format.html { redirect_to @metadata_source, :notice => 'Metadata source was successfully updated.' }
         format.json { head :no_content }
       else

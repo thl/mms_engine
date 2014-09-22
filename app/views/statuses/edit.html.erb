@@ -18,8 +18,9 @@
       </p>
 <% end %>
 <p>
-<% if authorized?(hash_for_statuses_path(:action => 'destroy')) %>
-     <td><%= link_to 'Delete', @status, :confirm => 'Are you sure?', :method => :delete %></td> |
+<% path = status_path(@status)
+   if authorized?(path, :action => 'destroy') %>
+     <td><%= link_to 'Delete', path, method: :delete, data: { confirm: te('delete.confirmation') } %></td> |
 <% end %>
 <%= link_to ts('back.to', :what => t('all.records', :what => Status.model_name.human(:count => :many))), statuses_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>

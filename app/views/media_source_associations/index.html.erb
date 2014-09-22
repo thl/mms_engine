@@ -6,10 +6,10 @@
     <th><%= Source.model_name.human.titleize.s %></th>
     <th><%= Source.human_attribute_name('shot_number').s %></th>
   </tr>
-<% can_edit = authorized? hash_for_edit_medium_source_association_path
-   for media_source_association in @media_source_associations %>
+<% for media_source_association in @media_source_associations
+	 path = edit_medium_source_association_path(@medium, media_source_association) %>
   <tr>
-    <td><%= can_edit ? link_to(h(media_source_association.source.title), edit_medium_source_association_path(@medium, media_source_association)) : link_to(h(media_source_association.source.title), medium_source_association_path(@medium, media_source_association)) %>
+    <td><%= authorized?(path) ? link_to(h(media_source_association.source.title), path) : link_to(h(media_source_association.source.title), medium_source_association_path(@medium, media_source_association)) %>
     <td><%=h media_source_association.shot_number %></td>
   </tr>
 <% end %>

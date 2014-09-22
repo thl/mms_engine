@@ -4,7 +4,7 @@ class AddBatchProcessingFolderToApplicationSettings < ActiveRecord::Migration
     add_column :application_settings, :string_value, :string
     ApplicationSetting.reset_column_information
     
-    application_setting = ApplicationSetting.where(title: 'batch_processing_folder').first
+    application_setting = ApplicationSetting.find_by(title: 'batch_processing_folder')
     if application_setting.nil?
       application_setting = ApplicationSetting.create(:title => 'batch_processing_folder', :string_value => '../../batch-processing')
     else
@@ -12,7 +12,7 @@ class AddBatchProcessingFolderToApplicationSettings < ActiveRecord::Migration
       application_setting.save
     end
     
-    application_setting = ApplicationSetting.where(title: 'cold_storage_folder').first
+    application_setting = ApplicationSetting.find_by(title: 'cold_storage_folder')
     if application_setting.nil?
       application_setting = ApplicationSetting.create(:title => 'cold_storage_folder', :string_value => '../../coldstorage')
     else

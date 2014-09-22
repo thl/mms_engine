@@ -3,12 +3,12 @@
   <tr>
     <th><%= Keyword.model_name.human.titleize.s %></th>
   </tr>
-<% can_edit = authorized? hash_for_edit_keyword_path
-   for keyword in @keywords %>
+<% for keyword in @keywords
+	 path = edit_keyword_path(keyword) %>
   <tr>
     <td>
-<%    if can_edit %>
-<%=     link_to h(keyword.title).s, edit_keyword_path(keyword) %>
+<%    if authorized? path %>
+<%=     link_to h(keyword.title).s, path %>
 <%    else %>
 <%=     link_to h(keyword.title).s, keyword_path(keyword) %>
 <%    end %>
@@ -17,9 +17,11 @@
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<% if base_language? && authorized?(hash_for_new_keyword_path) %>
-<%=  link_to ts('new.record', :what => Keyword.model_name.human), new_keyword_path %> |
-<% end %>
+<% if base_language?
+     path = new_keyword_path
+	 if authorized?(path) %>
+<%=    link_to ts('new.record', :what => Keyword.model_name.human), path %> |
+<%   end
+   end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>
-

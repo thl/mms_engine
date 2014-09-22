@@ -4,16 +4,17 @@
   <tr>
     <th><%= ApplicationFilter.model_name.human.titleize.s %></th>
   </tr>
-<% can_edit = authorized? hash_for_edit_application_filter_path
-   for filter in @filters %>
+<% for filter in @filters
+	 path = edit_application_filter_path(filter) %>
   <tr>
-    <td><%= link_to(h(filter.title), can_edit ? edit_application_filter_path(filter) : application_filter_path(filter)) %></td>
+    <td><%= link_to(h(filter.title), authorized?(path) ? path : application_filter_path(filter)) %></td>
   </tr>
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<% if authorized? hash_for_new_application_filter_path %>
-<%=  link_to ts('new.record', :what => ApplicationFilter.model_name.human), new_application_filter_path %> |
+<% path = new_application_filter_path
+   if authorized? path %>
+<%=  link_to ts('new.record', :what => ApplicationFilter.model_name.human), path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

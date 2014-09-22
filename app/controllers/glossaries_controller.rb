@@ -41,7 +41,7 @@ class GlossariesController < AclController
   # POST /glossaries
   # POST /glossaries.xml
   def create
-    @glossary = Glossary.new(params[:glossary])
+    @glossary = Glossary.new(glossary_params)
 
     respond_to do |format|
       if @glossary.save
@@ -64,7 +64,7 @@ class GlossariesController < AclController
     @glossary = Glossary.find(params[:id])
 
     respond_to do |format|
-      if @glossary.update_attributes(params[:glossary])
+      if @glossary.update_attributes(glossary_params)
         flash[:notice] = ts('edit.successful', :what => Glossary.model_name.human.capitalize)
         format.html { redirect_to glossaries_url }
         format.xml  { head :ok }
@@ -85,5 +85,11 @@ class GlossariesController < AclController
       format.html { redirect_to glossaries_url }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def glossary_params
+    params.require(:glossary).permit(:title, :abbreviation, :organization_id, :description)
   end
 end

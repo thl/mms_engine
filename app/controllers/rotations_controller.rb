@@ -1,6 +1,6 @@
 class RotationsController < AclController
   include ForkedNotifier
-  before_filter :find_medium_and_user
+  before_action :find_medium_and_user
   
   def initialize
     super
@@ -16,7 +16,7 @@ class RotationsController < AclController
   # GET /rotations/1.xml
   def show
     @rotation = params[:id]
-    if @rotation.blank? || @rotation.to_i.to_s != @rotation || Rotation.where(id: @rotation.to_i).first.nil?
+    if @rotation.blank? || @rotation.to_i.to_s != @rotation || Rotation.find_by(id: @rotation.to_i).nil?
       redirect_to medium_url(@medium)
     else
       respond_to do |format|

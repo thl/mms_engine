@@ -4,7 +4,7 @@ class ReplaceCreatorAsUserForPerson < ActiveRecord::Migration
   end
   
   def self.update(model)
-    for element in model.find(:all, :conditions => 'creator_id IS NOT NULL') do
+    for element in model.where('creator_id IS NOT NULL') do
       id = element.creator_id
       begin
         user = AuthenticatedSystem::User.find(id)
@@ -18,7 +18,7 @@ class ReplaceCreatorAsUserForPerson < ActiveRecord::Migration
   end
 
   def self.unupdate(model)
-    for element in model.find(:all, :conditions => 'creator_id IS NOT NULL') do
+    for element in model.where('creator_id IS NOT NULL') do
       id = element.creator_id
       person = AuthenticatedSystem::Person.find(id)
       element.creator = person.user

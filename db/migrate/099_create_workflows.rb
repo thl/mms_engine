@@ -10,7 +10,7 @@ class CreateWorkflows < ActiveRecord::Migration
       t.timestamps
     end
     
-    Medium.find(:all).each do |medium|
+    Medium.all.each do |medium|
       attachment = medium.attachment
       if attachment.nil?
         say "#{medium.id} has no attachment."
@@ -23,7 +23,7 @@ class CreateWorkflows < ActiveRecord::Migration
   end
 
   def self.down
-    Workflow.find(:all).each do |w|
+    Workflow.all.each do |w|
       attachment = w.medium.attachment
       attachment.filename = w.original_filename
       attachment.save

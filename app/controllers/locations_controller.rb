@@ -1,5 +1,5 @@
 class LocationsController < AclController
-  before_filter :find_medium
+  before_action :find_medium
     
   # GET /locations/1;edit
   def edit
@@ -14,7 +14,7 @@ class LocationsController < AclController
   # POST /locations
   # POST /locations.xml
   def create
-    @location = @medium.locations.build(params[:location])
+    @location = @medium.locations.build(location_params)
     if @location.save
       respond_to do |format|
         flash[:notice] = ts('new.successful', :what => Location.model_name.human.capitalize)
@@ -34,7 +34,7 @@ class LocationsController < AclController
   def update
     @location = Location.find(params[:id])
 
-    if @location.update_attributes(params[:location])
+    if @location.update_attributes(location_params)
       respond_to do |format|
         flash[:notice] = ts('edit.successful', :what => Location.model_name.human.capitalize)
         format.html { redirect_to edit_medium_url(@medium, :anchor => 'locations') }
@@ -81,6 +81,10 @@ class LocationsController < AclController
   end
     
   private
+  
+  def location_params
+    params.require(:location).permit(:medium_id, :feature_id, :spot_feature, :notes, :lat, :lng)
+  end
   
   def find_medium
     begin

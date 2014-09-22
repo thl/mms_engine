@@ -1,4 +1,5 @@
-<% if authorized?(hash_for_medium_media_publisher_path(:action => 'destroy')) %>
-<%=  link_to ts('delete.this'), medium_media_publisher_path(@medium), :confirm => te('delete.confirmation'), :method => :delete %> |
+<% path = medium_media_publisher_path(@medium)
+   if authorized?(path, :action => 'destroy') %>
+<%=  link_to ts('delete.this'), path, method: :delete, data: { confirm: te('delete.confirmation') } %> |
 <% end %>
 <%= render :partial => 'media/back_to_edit', :locals => {:anchor => 'media_publisher'} %>

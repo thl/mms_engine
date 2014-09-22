@@ -1,6 +1,6 @@
 class TranslatedTitlesController < AclController
   helper :media
-  before_filter :find_medium_and_title  
+  before_action :find_medium_and_title  
   
   # GET /translated_titles
   # GET /translated_titles.xml
@@ -44,7 +44,7 @@ class TranslatedTitlesController < AclController
   # POST /translated_titles
   # POST /translated_titles.xml
   def create
-    @translated_title = @title.translated_titles.new(params[:translated_title])
+    @translated_title = @title.translated_titles.new(translated_title_params)
     @translated_title.creator = current_user.person
     respond_to do |format|
       if @translated_title.save
@@ -64,7 +64,7 @@ class TranslatedTitlesController < AclController
   def update
     @translated_title = TranslatedTitle.find(params[:id])
     respond_to do |format|
-      if @translated_title.update_attributes(params[:translated_title])
+      if @translated_title.update_attributes(translated_title_params)
         flash[:notice] = ts('edit.successful', :what => TranslatedTitle.model_name.human.capitalize)
         format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
         format.xml  { head :ok }
@@ -88,6 +88,10 @@ class TranslatedTitlesController < AclController
   end
   
   private
+  
+  def translated_title_params
+    params.require(:translated_title).permit(:title, :language_id, :author_ids)
+  end
   
   def find_medium_and_title
     @medium, @title = nil

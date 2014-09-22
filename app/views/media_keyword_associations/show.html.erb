@@ -6,7 +6,8 @@
 </p>
 <%= display_if_not_blank Keyword.model_name.human.titleize.s, link_to(h(@keyword.title).s, keyword_path(@keyword)) %>
 <p>&nbsp;<br/>
-<% if authorized? hash_for_edit_media_keyword_association_path %>
-<%= link_to 'Edit'.ts, edit_media_keyword_association_path(@media_keyword_association) %> |
+<% path = edit_media_keyword_association_path(@media_keyword_association)
+   if authorized? path %>
+<%= link_to 'Edit'.ts, path %> |
 <%= render :partial => 'persistent_links' %>
 </p>

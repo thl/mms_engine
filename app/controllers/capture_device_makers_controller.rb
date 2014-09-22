@@ -40,7 +40,7 @@ class CaptureDeviceMakersController < AclController
   # POST /capture_device_makers
   # POST /capture_device_makers.xml
   def create
-    @capture_device_maker = CaptureDeviceMaker.new(params[:capture_device_maker])
+    @capture_device_maker = CaptureDeviceMaker.new(capture_device_maker_params)
 
     respond_to do |format|
       if @capture_device_maker.save
@@ -60,7 +60,7 @@ class CaptureDeviceMakersController < AclController
     @capture_device_maker = CaptureDeviceMaker.find(params[:id])
 
     respond_to do |format|
-      if @capture_device_maker.update_attributes(params[:capture_device_maker])
+      if @capture_device_maker.update_attributes(capture_device_maker_params)
         flash[:notice] = ts('edit.successful', :what => CaptureDeviceMaker.model_name.human.capitalize)
         format.html { redirect_to capture_device_makers_url }
         format.xml  { head :ok }
@@ -80,5 +80,11 @@ class CaptureDeviceMakersController < AclController
       format.html { redirect_to(capture_device_makers_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def capture_device_maker_params
+    params.require(:capture_device_maker).permit(:title, :exif_tag)
   end
 end

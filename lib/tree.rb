@@ -39,27 +39,27 @@ module Tree
   
   def paged_media(limit, offset = nil, type = nil)
     if type.nil?
-      media = Medium.find(:all, :conditions => {'cumulative_media_category_associations.category_id' => self.id}, :joins => :cumulative_media_category_associations, :limit => limit, :offset => offset, :order => 'created_on DESC')
+      media = Medium.where('cumulative_media_category_associations.category_id' => self.id).joins(:cumulative_media_category_associations).limit(limit).offset(offset).order('created_on DESC')
     else
-      media = Medium.find(:all, :conditions => {'cumulative_media_category_associations.category_id' => self.id, 'media.type' => type}, :joins => :cumulative_media_category_associations, :limit => limit, :offset => offset, :order => 'created_on DESC')
+      media = Medium.where('cumulative_media_category_associations.category_id' => self.id, 'media.type' => type).joins(:cumulative_media_category_associations).limit(limit).offset(offset).order('created_on DESC')
     end
     media
   end
   
   def media_count(type = nil)
     if type.nil?
-      count = Medium.count(:all, :conditions => {'cumulative_media_category_associations.category_id' => self.id}, :joins => :cumulative_media_category_associations, :select => 'media.id')
+      count = Medium.where('cumulative_media_category_associations.category_id' => self.id).joins(:cumulative_media_category_associations).select('media.id').count
     else
-      count = Medium.count(:all, :conditions => {'cumulative_media_category_associations.category_id' => self.id, 'media.type' => type}, :joins => :cumulative_media_category_associations, :select => 'media.id')
+      count = Medium.where('cumulative_media_category_associations.category_id' => self.id, 'media.type' => type).joins(:cumulative_media_category_associations).select('media.id').count
     end
     count
   end
   
   def media(type = nil)
     if type.nil?
-      media = Medium.find(:all, :conditions => {'cumulative_media_category_associations.category_id' => self.id}, :joins => :cumulative_media_category_associations, :order => 'created_on DESC')
+      media = Medium.where('cumulative_media_category_associations.category_id' => self.id).joins(:cumulative_media_category_associations).order('created_on DESC')
     else
-      media = Medium.find(:all, :conditions => {'cumulative_media_category_associations.category_id' => self.id, 'media.type' => type}, :joins => :cumulative_media_category_associations, :order => 'created_on DESC')
+      media = Medium.where('cumulative_media_category_associations.category_id' => self.id, 'media.type' => type).joins(:cumulative_media_category_associations).order('created_on DESC')
     end
     media
   end

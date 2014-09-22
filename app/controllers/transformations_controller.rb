@@ -32,7 +32,7 @@ class TransformationsController < AclController
   # POST /transformations
   # POST /transformations.xml
   def create
-    @transformation = Transformation.new(params[:transformation])
+    @transformation = Transformation.new(transformation_params)
     respond_to do |format|
       if @transformation.save
         flash[:notice] = ts('new.successful', :what => Transformation.model_name.human.capitalize)
@@ -50,7 +50,7 @@ class TransformationsController < AclController
   def update
     @transformation = Transformation.find(params[:id])
     respond_to do |format|
-      if @transformation.update_attributes(params[:transformation])
+      if @transformation.update_attributes(transformation_params)
         flash[:notice] = ts('edit.successful', :what => Transformation.model_name.human.capitalize)
         format.html { redirect_to transformation_url(@transformation) }
         format.xml  { head :ok }
@@ -70,5 +70,11 @@ class TransformationsController < AclController
       format.html { redirect_to transformations_url }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def transformation_params
+    params.require(:transformation).permit(:renderer_id, :title, :path)
   end
 end

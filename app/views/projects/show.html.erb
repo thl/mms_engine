@@ -1,7 +1,8 @@
 <%= display_if_not_blank Project.human_attribute_name('title').s, h(@project.title).s %>
 <p>&nbsp;<br/>
-<% if authorized? hash_for_edit_project_path %>
-<%=  link_to ts('edit.this'), edit_project_path(@project) %> |
+<% path = edit_project_path(@project)
+   if authorized? path %>
+<%=  link_to ts('edit.this'), path %> |
 <% end %>
 <%= render :partial => 'persistent_links' %>
 </p>

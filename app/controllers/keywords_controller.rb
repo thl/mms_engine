@@ -36,7 +36,7 @@ class KeywordsController < AclController
   # POST /keywords
   # POST /keywords.xml
   def create
-    @keyword = Keyword.new(params[:keyword])
+    @keyword = Keyword.new(keyword_params)
     success = @keyword.save
       
     respond_to do |format|
@@ -57,7 +57,7 @@ class KeywordsController < AclController
     @keyword = Keyword.find(params[:id])
 
     respond_to do |format|
-      if @keyword.update_attributes(params[:keyword])
+      if @keyword.update_attributes(keyword_params)
         flash[:notice] = ts('edit.successful', :what => Keyword.model_name.human.capitalize)
         format.html { redirect_to keywords_url }
         format.xml  { head :ok }
@@ -78,5 +78,11 @@ class KeywordsController < AclController
       format.html { redirect_to keywords_url }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def keyword_params
+    params.require(:keyword).permit(:title)
   end
 end

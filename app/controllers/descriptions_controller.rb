@@ -1,6 +1,6 @@
 class DescriptionsController < AclController
   helper :media
-  before_filter :find_medium
+  before_action :find_medium
   
   # GET /media/1/descriptions
   # GET /media/1/descriptions.xml
@@ -42,7 +42,7 @@ class DescriptionsController < AclController
   # POST /media/1/descriptions
   # POST /media/1/descriptions.xml
   def create
-    @description = Description.new(params[:description])
+    @description = Description.new(description_params)
     @description.creator = current_user.person
     success = @description.save
     @medium.descriptions << @description if success
@@ -65,7 +65,7 @@ class DescriptionsController < AclController
   # PUT /media/1/descriptions/1.xml
   def update
     @description = Description.find(params[:id])
-    params_description = params[:description]
+    params_description = description_params
     if params_description[:title]==@description.title || @description.media.size==1
       success = @description.update_attributes(params_description)
     else
@@ -100,6 +100,10 @@ class DescriptionsController < AclController
   end
   
   private
+  
+  def description_params
+    params.require(:description).permit(:title, :description_type_id, :language_id, :creator_id, :author_ids)
+  end
   
   def find_medium
     begin

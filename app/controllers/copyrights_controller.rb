@@ -59,7 +59,7 @@ class CopyrightsController < AclController
   # POST /copyrights
   # POST /copyrights.xml
   def create
-    @copyright = Copyright.new(params[:copyright])
+    @copyright = Copyright.new(copyright_params)
     @medium = @copyright.medium
 
     respond_to do |format|
@@ -81,7 +81,7 @@ class CopyrightsController < AclController
     @medium = @copyright.medium
 
     respond_to do |format|
-      if @copyright.update_attributes(params[:copyright])
+      if @copyright.update_attributes(copyright_params)
         flash[:notice] = ts('edit.successful', :what => Copyright.model_name.human.capitalize)
         format.html { redirect_to edit_medium_url(@medium) }
         format.xml  { head :ok }
@@ -102,5 +102,11 @@ class CopyrightsController < AclController
       format.html { redirect_to edit_medium_url(@medium) }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def copyright_params
+    params.require(:copyright).permit(:medium_id, :copyright_holder_id, :reproduction_type_id, :notes)
   end
 end

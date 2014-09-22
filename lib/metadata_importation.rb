@@ -11,7 +11,7 @@ class MetadataImportation
       original_filename = self.fields.delete('workflows.original_filename')
       if original_filename.blank?
       else
-        workflow = Workflow.find(:first, :conditions => ['original_filename LIKE ?', '%s.%' % original_filename])
+        workflow = Workflow.find_by(['original_filename LIKE ?', '%s.%' % original_filename])
         if workflow.nil?
           puts "Media with original filename #{original_filename} not found!"
           return false
@@ -63,7 +63,7 @@ class MetadataImportation
     end
     photographer_str = self.fields.delete('media.photographer')
     if !photographer_str.blank? && self.medium.photographer.nil?
-      photographer = AuthenticatedSystem::Person.where(fullname: photographer_str).first
+      photographer = AuthenticatedSystem::Person.find_by(fullname: photographer_str)
       if photographer.nil?
         puts "Photographer named #{photographer_str} not found!"
       else
@@ -75,7 +75,7 @@ class MetadataImportation
       orientation_str.strip!
       if !orientation_str.nil?
         begin
-          orientation = RecordingOrientation.where(title: orientation_str).first
+          orientation = RecordingOrientation.find_by(title: orientation_str)
         rescue
           orientation = nil
         end
@@ -111,7 +111,7 @@ class MetadataImportation
     if !topic_id.blank? || !topic_str.blank?
       begin
         if topic_id.blank?
-          topic = topic_str.blank? ? nil : Topic.where(title: topic_str).first
+          topic = topic_str.blank? ? nil : Topic.find_by(title: topic_str)
         else
           topic = Topic.find(topic_id)
         end
@@ -149,7 +149,7 @@ class MetadataImportation
         lat = self.fields.delete("#{prefix}locations.lat")
         lng = self.fields.delete("#{prefix}locations.lng")
         locations = medium.locations
-        location = locations.first(:conditions => {:feature_id => feature.fid})
+        location = locations.find_by(:feature_id => feature.fid)
         if location.nil?
           location = locations.create(:feature_id => feature.fid, :spot_feature => spot, :notes => location_note, :lat => lat, :lng => lng)
         else
@@ -169,7 +169,7 @@ class MetadataImportation
       description_creator_str = self.fields.delete('descriptions.creator')
       description_creator = nil
       if !description_creator_str.nil?
-        description_creator = AuthenticatedSystem::Person.where(fullname: description_creator_str).first
+        description_creator = AuthenticatedSystem::Person.find_by(fullname: description_creator_str)
         if description_creator.nil?
           puts "Description creator named #{description_creator_str} not found!"
         end
@@ -197,7 +197,7 @@ class MetadataImportation
         keywords = self.medium.keywords
         keyword_ids = keywords.collect{|k| k.id}
         for keyword_str in keywords_array
-          keyword = Keyword.where(title: keyword_str).first
+          keyword = Keyword.find_by(title: keyword_str)
           if keyword.nil?
             puts "Keyword #{keyword_str} not found!"
           else
@@ -213,12 +213,12 @@ class MetadataImportation
     if !source_str.nil?
       source_str.strip!
       if !source_str.blank?
-        source = Source.where(title: source_str).first
+        source = Source.find_by(title: source_str)
         if source.nil?
           puts "Source #{source_str} not found!"
         else
           shot = self.fields.delete('media_source_associations.shot_number')
-          source_association = MediaSourceAssociation.find(:first, :conditions => {:medium_id => self.medium.id, :source_id => source.id})
+          source_association = MediaSourceAssociation.find_by(medium_id: self.medium.id, source_id: source.id)
           if source_association.nil?
             source_association = MediaSourceAssociation.create(:medium => self.medium, :source => source, :shot_number => shot)
           else
@@ -241,7 +241,7 @@ class MetadataImportation
   # keywords.title
   # sources.title, media_source_associations.shot_number
   def do_metadata_importation(filename)
-    self.english = ComplexScripts::Language.where(code: 'eng').first
+    self.english = ComplexScripts::Language.find_by(code: 'eng')
     self.topic_root_ids = Hash.new
     CSV.foreach(filename, headers: true, col_sep: "\t") do |row|
       self.fields = row.to_hash
@@ -263,6 +263,6 @@ class MetadataImportation
   end
   
   def self.truncated_find(model, str)
-    return str.size<=200 ? model.where(title: str).first : model.where(['LEFT(title, 100) = ?', str[0...200]]).first
+    return str.size<=200 ? model.find_by(title: str) : model.find_by(['LEFT(title, 100) = ?', str[0...200]])
   end
 end

@@ -34,7 +34,7 @@ class DescriptionTypesController < AclController
   # POST /description_types
   # POST /description_types.xml
   def create
-    @description_type = DescriptionType.new(params[:description_type])
+    @description_type = DescriptionType.new(description_type_params)
 
     respond_to do |format|
       if @description_type.save
@@ -54,7 +54,7 @@ class DescriptionTypesController < AclController
     @description_type = DescriptionType.find(params[:id])
 
     respond_to do |format|
-      if @description_type.update_attributes(params[:description_type])
+      if @description_type.update_attributes(description_type_params)
         flash[:notice] =ts('edit.successful', :what => DescriptionType.model_name.human(:what => Description.model_name.human).capitalize)
         format.html { redirect_to description_type_url(@description_type) }
         format.xml  { head :ok }
@@ -75,5 +75,11 @@ class DescriptionTypesController < AclController
       format.html { redirect_to description_types_url }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def description_type_params
+    params.require(:description_type).permit(:title)
   end
 end

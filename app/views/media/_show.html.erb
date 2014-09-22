@@ -121,7 +121,7 @@
      <p><b><%= Medium.human_attribute_name('recording_note').s %>:</b></p>
 <%=  @medium.recording_note.html_safe %>
 <% end
-   if authorized?(hash_for_edit_medium_path) && !@medium.private_note.blank? %>
+   if authorized?(edit_medium_path(@medium)) && !@medium.private_note.blank? %>
      <p><b><%= Medium.human_attribute_name('private_note').s %>:</b></p>
 <%=  @medium.private_note.html_safe %>
 <% end %>
@@ -152,7 +152,7 @@
 <%=    display_if_not_blank Source.model_name.human(:count => media_source_associations.size).titleize.s, media_source_associations.collect {|s| "#{s.source.title} #{"(#{s.shot_number})" if !s.shot_number.nil?}".html_safe}.join(', ') %>
 <%   end
    end
-   if authorized? hash_for_medium_workflow_path
+   if authorized?(medium_workflow_path(@medium))
      workflow = @medium.workflow
      if !workflow.nil? %>
        <h3><%= Workflow.model_name.human.titleize.s %></h3>
@@ -161,16 +161,17 @@
    end %>
 <p>
 <% has_previous = false
-   if authorized? hash_for_edit_medium_path %>
+   if authorized?(edit_medium_path(@medium)) %>
 <%=  link_to ts('edit.record', :what => t(:catalog_record)), edit_medium_path(@medium) %>
 <%   has_previous = true
    end
-   if authorized?(hash_for_medium_path(:action => 'destroy'))
+   path = medium_path(@medium)
+   if authorized?(path, :action => 'destroy')
 	 if has_previous %>
 	   |
 <%   else
        has_previous = true
 	 end %>
-<%=  link_to ts('delete.this'), medium_path(@medium), :confirm => te('delete.confirmation'), :method => :delete %>
+<%=  link_to ts('delete.this'), path, method: :delete, data: { confirm: te('delete.confirmation') } %>
 <% end %>
 </p>

@@ -1,5 +1,6 @@
-<%  if authorized?(hash_for_organization_path(:action => 'destroy')) %>
-<%=   link_to ts('delete.this'), organization_path(@organization), :confirm => te('delete.confirmation'), :method => :delete %> |
+<%  path = organization_path(@organization)
+    if authorized?(path, :action => 'destroy') %>
+<%=   link_to ts('delete.this'), path, method: :delete, data: { confirm: te('delete.confirmation') } %> |
 <%  end %>
 <%= link_to ts('back.to', :what => t('all.records', :what => Organization.model_name.human(:count => :many))), organizations_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>

@@ -37,7 +37,7 @@ class SourcesController < AclController
   # POST /sources
   # POST /sources.xml
   def create
-    @source = Source.new(params[:source])
+    @source = Source.new(source_params)
     respond_to do |format|
       if @source.save
         flash[:notice] = ts('new.successful', :what => Source.model_name.human.capitalize)
@@ -53,7 +53,7 @@ class SourcesController < AclController
   # PUT /sources/1
   # PUT /sources/1.xml
   def update
-    @source = Source.find(params[:id])
+    @source = Source.find(source_params)
     respond_to do |format|
       if @source.update_attributes(params[:source])
         flash[:notice] = ts('edit.successful', :what => Source.model_name.human.capitalize)
@@ -75,5 +75,11 @@ class SourcesController < AclController
       format.html { redirect_to(sources_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def source_params
+    params.require(:source).permit(:title)
   end
 end

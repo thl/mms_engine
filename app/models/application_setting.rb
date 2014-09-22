@@ -11,8 +11,6 @@
 #
 
 class ApplicationSetting < ActiveRecord::Base
-  attr_accessible :permission_id, :title, :value, :description, :string_value
-  
   belongs_to :permission, :class_name => 'AuthenticatedSystem::Permission'
   
   def configuration_path
@@ -27,7 +25,7 @@ class ApplicationSetting < ActiveRecord::Base
   def self.cold_storage_folder
     Rails.cache.fetch("application_settings/cold_storage_folder", :expires_in => 1.day) do
       full_path = nil
-      cold_storage_setting = ApplicationSetting.where(title: 'cold_storage_folder').first
+      cold_storage_setting = ApplicationSetting.find_by(title: 'cold_storage_folder')
       if !cold_storage_setting.nil?
         cold_storage_folder = cold_storage_setting.string_value
         if !cold_storage_folder.blank?

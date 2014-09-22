@@ -1,6 +1,6 @@
 class CitationsController < AclController
  helper :media
-  before_filter :find_medium_and_reference
+  before_action :find_medium_and_reference
   # GET /citations
   # GET /citations.xml
   def index
@@ -44,7 +44,7 @@ class CitationsController < AclController
   # POST /citations
   # POST /citations.xml
   def create
-    @citation = @reference.citations.new(params[:citation])
+    @citation = @reference.citations.new(citation_params)
     @citation.creator = current_user.person
     respond_to do |format|
       if @citation.save
@@ -64,7 +64,7 @@ class CitationsController < AclController
   def update
     @citation = Citation.find(params[:id])
     respond_to do |format|
-      if @citation.update_attributes(params[:citation])
+      if @citation.update_attributes(citation_params)
         flash[:notice] = 'Citation was successfully updated.'
         format.html { redirect_to edit_medium_url(@medium, :anchor => 'titles') }
         format.xml  { head :ok }
@@ -86,8 +86,12 @@ class CitationsController < AclController
       format.xml  { head :ok }
     end
   end
-
-private
+  
+  private
+  
+  def citation_params
+    params.require(:citation).permit(:medium_id, :page_number, :page_side, :line_number, :note)
+  end
   
   def find_medium_and_reference
   	@reference_stack = []

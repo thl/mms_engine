@@ -32,7 +32,7 @@ class FileRenderersController < AclController
   # POST /renderers
   # POST /renderers.xml
   def create
-    @file_renderer = FileRenderer.new(params[:renderer])
+    @file_renderer = FileRenderer.new(renderer_params)
     respond_to do |format|
       if @file_renderer.save
         flash[:notice] = ts('new.successful', :what => FileRenderer.model_name.human.capitalize)
@@ -50,7 +50,7 @@ class FileRenderersController < AclController
   def update
     @file_renderer = FileRenderer.find(params[:id])
     respond_to do |format|
-      if @file_renderer.update_attributes(params[:renderer])
+      if @file_renderer.update_attributes(renderer_params)
         flash[:notice] = ts('edit.successful', :what => FileRenderer.model_name.human.capitalize)
         format.html { redirect_to renderer_url(@file_renderer) }
         format.xml  { head :ok }
@@ -70,5 +70,11 @@ class FileRenderersController < AclController
       format.html { redirect_to renderers_url }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def renderer_params
+    params.require(:renderer).permit(:title, :path)
   end
 end

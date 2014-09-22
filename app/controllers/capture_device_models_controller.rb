@@ -1,5 +1,5 @@
 class CaptureDeviceModelsController < AclController
-  before_filter :find_capture_device_maker
+  before_action :find_capture_device_maker
   # GET /capture_device_models
   # GET /capture_device_models.xml
   def index
@@ -41,7 +41,7 @@ class CaptureDeviceModelsController < AclController
   # POST /capture_device_models
   # POST /capture_device_models.xml
   def create
-    @capture_device_model = CaptureDeviceModel.new(params[:capture_device_model])
+    @capture_device_model = CaptureDeviceModel.new(capture_device_model_params)
 
     respond_to do |format|
       if @capture_device_model.save
@@ -61,7 +61,7 @@ class CaptureDeviceModelsController < AclController
   def update
     @capture_device_model = CaptureDeviceModel.find(params[:id])
     respond_to do |format|
-      if @capture_device_model.update_attributes(params[:capture_device_model])
+      if @capture_device_model.update_attributes(capture_device_model_params)
         flash[:notice] = ts('edit.successful', :what => CaptureDeviceModel.model_name.human.capitalize)
         format.html { redirect_to capture_device_makers_url }
         format.xml  { head :ok }
@@ -89,5 +89,9 @@ class CaptureDeviceModelsController < AclController
   
   def find_capture_device_maker
     @capture_device_maker = CaptureDeviceMaker.find(params[:capture_device_maker_id])
+  end
+  
+  def capture_device_model_params
+    params.require(:capture_device_model).permit(:capture_device_maker_id, :title, :exif_tag)
   end
 end

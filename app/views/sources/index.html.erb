@@ -3,16 +3,17 @@
   <tr>
     <th><%= Source.model_name.human.titleize %></th>
   </tr>
-<% can_edit = authorized? hash_for_edit_source_path
-   for source in @sources %>
+<% for source in @sources
+	 path = edit_source_path(source) %>
   <tr>
-    <td><%= link_to(h(source.title), can_edit ? edit_source_path(source) : source_path(source)) %></td>
+    <td><%= link_to(h(source.title), authorized?(path) ? path : source_path(source)) %></td>
   </tr>
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<% if authorized? hash_for_new_source_path %>
-<%=  link_to ts('new.record', :what => Source.model_name.human), new_source_path %> |
+<% path = new_source_path
+   if authorized? path %>
+<%=  link_to ts('new.record', :what => Source.model_name.human), path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

@@ -38,7 +38,7 @@ class ReproductionTypesController < AclController
   # POST /reproduction_types
   # POST /reproduction_types.xml
   def create
-    @reproduction_type = ReproductionType.new(params[:reproduction_type])
+    @reproduction_type = ReproductionType.new(reproduction_type_params)
 
     respond_to do |format|
       if @reproduction_type.save
@@ -57,7 +57,7 @@ class ReproductionTypesController < AclController
   def update
     @reproduction_type = ReproductionType.find(params[:id])
     respond_to do |format|
-      if @reproduction_type.update_attributes(params[:reproduction_type])
+      if @reproduction_type.update_attributes(reproduction_type_params)
         flash[:notice] = ts('edit.successful', :what => ReproductionType.model_name.human.capitalize)
         format.html { redirect_to reproduction_type_url(@reproduction_type) }
         format.xml  { head :ok }
@@ -77,5 +77,11 @@ class ReproductionTypesController < AclController
       format.html { redirect_to reproduction_types_url }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def reproduction_type_params
+    params.require(:reproduction_type).permit(:title, :order, :website)
   end
 end

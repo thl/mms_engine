@@ -1,6 +1,6 @@
 class MediaPublishersController < AclController 
   helper :media
-  before_filter :find_medium
+  before_action :find_medium
   caches_page :show, :if => Proc.new { |c| c.request.format.xml? }
   
   def initialize
@@ -23,7 +23,7 @@ class MediaPublishersController < AclController
   # GET /media_publishers/1.xml
   def show
     @media_publisher = @medium.media_publisher
-    @publishers = Publisher.find(:all)
+    @publishers = Publisher.all
 
     respond_to do |format|
       format.html # show.html.erb
@@ -53,7 +53,7 @@ class MediaPublishersController < AclController
   # POST /media_publishers
   # POST /media_publishers.xml
   def create
-    @media_publisher = @medium.build_media_publisher(params[:media_publisher])
+    @media_publisher = @medium.build_media_publisher(media_publisher_params)
     respond_to do |format|
       if @media_publisher.save
         flash[:notice] = ts('new.successful', :what => MediaPublisher.model_name.human.capitalize)
@@ -71,7 +71,7 @@ class MediaPublishersController < AclController
   def update
     @media_publisher = @medium.media_publisher
     respond_to do |format|
-      if @media_publisher.update_attributes(params[:media_publisher])
+      if @media_publisher.update_attributes(media_publisher_params)
         flash[:notice] = ts('edit.successful', :what => MediaPublisher.model_name.human.capitalize)
         format.html { redirect_to edit_medium_path(@medium, :anchor => 'media_publisher') }
         format.xml  { head :ok }
@@ -95,6 +95,10 @@ class MediaPublishersController < AclController
   end
 
   private
+  
+  def media_publisher_params
+    params.require(:media_publisher).permit(:medium_id, :publisher_id, :date)
+  end
   
   def find_medium
     begin

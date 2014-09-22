@@ -37,7 +37,7 @@ class RecordingOrientationsController < AclController
   # POST /recording_orientations
   # POST /recording_orientations.xml
   def create
-    @recording_orientation = RecordingOrientation.new(params[:recording_orientation])
+    @recording_orientation = RecordingOrientation.new(recording_orientation_params)
     respond_to do |format|
       if @recording_orientation.save
         flash[:notice] = ts('new.successful', :what => RecordingOrientation.model_name.human.capitalize)
@@ -55,7 +55,7 @@ class RecordingOrientationsController < AclController
   def update
     @recording_orientation = RecordingOrientation.find(params[:id])
     respond_to do |format|
-      if @recording_orientation.update_attributes(params[:recording_orientation])
+      if @recording_orientation.update_attributes(recording_orientation_params)
         flash[:notice] = ts('edit.successful', :what => RecordingOrientation.model_name.human.capitalize)
         format.html { redirect_to recording_orientations_url }
         format.xml  { head :ok }
@@ -75,5 +75,11 @@ class RecordingOrientationsController < AclController
       format.html { redirect_to(recording_orientations_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def recording_orientation_params
+    params.require(:recording_orientation).permit(:title)
   end
 end

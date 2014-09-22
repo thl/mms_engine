@@ -25,7 +25,7 @@ class MediaController < AclController
           @media = Medium.where(:type => @type).order('created_on DESC').paginate(:per_page => Medium::FULL_COLS * Medium::FULL_ROWS, :page => params[:page]) # :total_entries => Medium.where(:type => @type).count
           @title = @type.constantize.model_name.human.titleize.pluralize
         else
-          #@pictures = Picture.find(:all, :order => 'RAND()', :limit => Medium::COLS * Medium::PREVIEW_ROWS)
+          #@pictures = Picture.all.limit(Medium::COLS * Medium::PREVIEW_ROWS).order('RAND()')
           # TODO: railsify the sql query below
           @pictures = Picture.find_by_sql ["SELECT * FROM media m JOIN (SELECT MAX(ID) AS ID FROM media) AS m2 ON m.ID >= FLOOR(m2.ID*RAND()) where m.type = 'Picture' LIMIT ?", Medium::COLS * Medium::PREVIEW_ROWS]
           @videos = Video.order('RAND()').limit(Medium::COLS)
@@ -75,9 +75,9 @@ class MediaController < AclController
     @tab_options[:entity] = @medium
     respond_to do |format|
       format.html do # show.rhtml
-        @pictures = Picture.find(:all, :order => 'RAND()', :limit => Medium::COLS * Medium::PREVIEW_ROWS)
-        @videos = Video.find(:all, :order => 'RAND()', :limit => 1)
-        @documents = Document.find(:all, :order => 'RAND()', :limit => 1)
+        @pictures = Picture.all.order('RAND()').limit(Medium::COLS * Medium::PREVIEW_ROWS)
+        @videos = Video.all.order('RAND()').limit(1)
+        @documents = Document.all.order('RAND()').limit(1)
         @titles = { :picture => ts(:daily, :what => Picture.model_name.human(:count => :many).titleize), :video => ts(:daily, :what => Video.model_name.human(:count => :many).titleize), :document => ts(:daily, :what => Document.model_name.human(:count => :many).titleize) }
         @more = { :type => '' }
       end
@@ -118,12 +118,12 @@ class MediaController < AclController
 
   # GET /media/1;edit
   def edit
-    @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
-    @media_publisher = MediaPublisher.find(:all)
+    @capture_device_models = CaptureDeviceMaker.all.order('title').collect{|maker| maker.capture_device_models}.flatten
+    @media_publisher = MediaPublisher.all
     @medium = Medium.find(params[:id])
-    @photographers = AuthenticatedSystem::Person.find(:all, :order => 'fullname')
-    @quality_types = QualityType.find(:all, :order => 'id')
-    @recording_orientations = RecordingOrientation.find(:all, :order => 'title')
+    @photographers = AuthenticatedSystem::Person.all.order('fullname')
+    @quality_types = QualityType.all.order('id')
+    @recording_orientations = RecordingOrientation.all.order('title')
     @resource_types = Topic.find(2636).children
     @root_topics = Topic.roots
   end
@@ -132,7 +132,8 @@ class MediaController < AclController
   # PUT /media/1.xml
   def update
     @medium = Medium.find(params[:id])
-    params_medium = params[:medium]
+    params_medium = params.require(:medium).permit(:recording_note, :resource_type_id, :photographer_id, :taken_on, :partial_taken_on, :capture_device_model_id,
+    :quality_type_id, :private_note)
     respond_to do |format|
       @medium.attributes = params_medium
       @medium.ingest_taken_on(params_medium)
@@ -145,11 +146,11 @@ class MediaController < AclController
         format.xml  { head :ok }
       else
         format.html do
-          @capture_device_models = CaptureDeviceMaker.find(:all, :order => 'title').collect{|maker| maker.capture_device_models}.flatten
-          @media_publisher = MediaPublisher.find(:all)
-          @photographers = AuthenticatedSystem::Person.find(:all, :order => 'fullname')
-          @quality_types = QualityType.find(:all, :order => 'id')
-          @recording_orientations = RecordingOrientation.find(:all, :order => 'title')
+          @capture_device_models = CaptureDeviceMaker.all.order('title').collect{|maker| maker.capture_device_models}.flatten
+          @media_publisher = MediaPublisher.all
+          @photographers = AuthenticatedSystem::Person.all.order('fullname')
+          @quality_types = QualityType.all.order('id')
+          @recording_orientations = RecordingOrientation.all.order('title')
           @resource_types = Topic.find(2636).children
           @root_topics = Topic.roots          
           render :action => 'edit'

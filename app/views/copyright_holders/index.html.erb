@@ -4,12 +4,12 @@
     <th><%= CopyrightHolder.model_name.human.titleize.s %></th>
     <th><%= CopyrightHolder.human_attribute_name('website').s %></th>
   </tr>
-<% can_edit = authorized? hash_for_edit_copyright_holder_path
-   for copyright_holder in @copyright_holders %>
+<% for copyright_holder in @copyright_holders %>
   <tr>
     <td>
-<%  if can_edit %>
-<%=   link_to h(copyright_holder.title), edit_copyright_holder_path(copyright_holder) %>
+<%  path = edit_copyright_holder_path(copyright_holder)
+    if authorized? path %>
+<%=   link_to h(copyright_holder.title), path %>
 <%  else %>
 <%=   link_to h(copyright_holder.title), copyright_holder_path(copyright_holder) %>
 <%  end %>
@@ -21,8 +21,9 @@
 <% end %>
 </table>
 <p>&nbsp;<br/>
-<% if authorized? hash_for_new_copyright_holder_path %>
-<%=  link_to ts('new.record', :what => CopyrightHolder.model_name.human), new_copyright_holder_path %> |
+<% path = new_copyright_holder_path
+   if authorized? path %>
+<%=  link_to ts('new.record', :what => CopyrightHolder.model_name.human), path %> |
 <% end %>
 <%= render :partial => 'main/back_to_admin_or_media' %>
 </p>

@@ -11,7 +11,6 @@
 #
 
 class MediaPublisher < ActiveRecord::Base
-  attr_accessible :medium_id, :publisher_id, :date
   belongs_to :medium
   belongs_to :publisher
 end

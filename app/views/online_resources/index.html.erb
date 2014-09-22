@@ -11,7 +11,7 @@
   <tr>
     <td><%= link_to 'Show', online_resource %></td>
     <td><%= link_to 'Edit', edit_online_resource_path(online_resource) %></td>
-    <td><%= link_to 'Destroy', online_resource, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+    <td><%= link_to 'Destroy', online_resource, :method => :delete, :data => { confirm: te('delete.confirmation') } %></td>
   </tr>
 <% end %>
 </table>

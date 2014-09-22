@@ -1,6 +1,6 @@
 module HierarchicalAdmin
   def index
-    @elements = @model.find(:all, :conditions => {:parent_id => nil}, :order => 'title')
+    @elements = @model.where(:parent_id => nil).order('title')
     respond_to do |format|
       format.html { render :template => 'main/hierarchy/admin/index' }
       format.xml do
@@ -13,7 +13,7 @@ module HierarchicalAdmin
   def show
     @element = @model.find(params[:id])
     if request.xhr?
-      @elements = @model.find(:all, :conditions => {:parent_id => nil}, :order => 'title')
+      @elements = @model.where(:parent_id => nil).order('title')
       @margin_depth = @element.ancestors.size
       @current = @element.ancestors.collect{|c| c.id}
       @current << @element.id
@@ -41,7 +41,7 @@ module HierarchicalAdmin
     title = @element.title
     @child = @element.parent
     @element.destroy
-    @elements = @model.find(:all, :conditions => {:parent_id => nil}, :order => 'title')
+    @elements = @model.where(:parent_id => nil).order('title')
     if request.xhr?
       render :update do |page|
         page.replace_html 'content-main', ('%s deleted succesfully.'/title).s
@@ -118,7 +118,7 @@ module HierarchicalAdmin
       if request.xhr?
         @child = @element.parent
         @current = [@element.id]
-        @elements = @model.find(:all, :conditions => {:parent_id => nil}, :order => 'title')
+        @elements = @model.where(:parent_id => nil).order('title')
         render :update do |page|
           page.replace_html 'secondary', :partial => 'main/hierarchy/admin/show'
           if @child.nil?
@@ -156,7 +156,7 @@ module HierarchicalAdmin
     if @element.update_attributes(params[:element])
       flash[:notice] = '%s was successfully updated.'/@human_name
       if request.xhr?
-        @elements = @model.find(:all, :conditions => {:parent_id => nil}, :order => 'title')                
+        @elements = @model.where(:parent_id => nil).order('title')                
         render(:update) do |page|
           page.replace_html 'secondary', :partial => 'main/hierarchy/admin/show'
           @element.reload
@@ -171,7 +171,7 @@ module HierarchicalAdmin
         end
       end
     else
-      @elements = @model.find(:all, :conditions => {:parent_id => nil}, :order => 'title')
+      @elements = @model.where(:parent_id => nil).order('title')
       if block_given?
         yield
       else

@@ -15,7 +15,7 @@ module MediaExtractor
       mms_id = fields['media.id']
       if mms_id.blank?
         original_filename = fields['workflows.original_filename']
-        workflow = Workflow.find(:first, :conditions => ['original_filename LIKE ?', '%s.%' % original_filename])
+        workflow = Workflow.find_by(['original_filename LIKE ?', '%s.%' % original_filename])
         medium = workflow.medium
       else
         medium = Medium.find(mms_id)

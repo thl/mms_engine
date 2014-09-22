@@ -53,10 +53,10 @@ class VideosController < AclController
   # POST /videos
   # POST /videos.xml
   def create
-    @movie = Movie.new(params[:movie])
+    @movie = Movie.new(params.require(:movie).permit(:content_type, :temp_path, :filename))
     success = @movie.save
     if success
-      transcript_params = params[:transcript]
+      transcript_params = params[:transcript].permit(:content_type, :temp_path, :filename, :parent_id, :thumbnail)
       if !transcript_params.blank?
         transcript_params[:parent_id] = @movie.id
         transcript_params[:thumbnail] = 'transcript'
@@ -65,8 +65,8 @@ class VideosController < AclController
       end
     end
     if success
-      params_video = params[:video]
-      @medium = Video.new(params[:video])
+      params_video = video_params
+      @medium = Video.new(params_video)
       @medium.ingest_taken_on(params_video)
       @medium.movie = @movie
       success = @medium.save 
@@ -96,7 +96,7 @@ class VideosController < AclController
   def update
     @video = Video.find(params[:id])
     respond_to do |format|
-      if @video.update_attributes(params[:video])
+      if @video.update_attributes(params_video)
         flash[:notice] = ts('edit.successful', :what => Video.model_name.human.capitalize)
         format.html { redirect_to medium_url(@video) }
         format.xml  { head :ok }
@@ -123,5 +123,12 @@ class VideosController < AclController
       format.html { redirect_to videos_url }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def video_params
+    params.require(:video).permit(:movie, :recording_note, :resource_type_id, :photographer_id, :taken_on,
+    :capture_device_model_id, :quality_type_id, :private_note)
   end
 end

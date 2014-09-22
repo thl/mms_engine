@@ -10,7 +10,7 @@
 #
 
 class CumulativeMediaLocationAssociation < ActiveRecord::Base
-  attr_accessible :feature_id, :medium_id
+  #attr_accessible :feature_id, :medium_id
   
   belongs_to :medium
   

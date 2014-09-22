@@ -6,7 +6,7 @@
   <tr>
     <td><%= link_to ts('show.this'), document_path(document) %></td>
     <td><%= link_to ts('edit.this'), edit_document_path(document) %></td>
-    <td><%= link_to ts('delete.this'), document_path(document), :confirm => te('delete.confirmation'), :method => :delete %></td>
+    <td><%= link_to ts('delete.this'), document_path(document), method: :delete, data: { confirm: te('delete.confirmation') } %></td>
   </tr>
 <% end %>
 </table>

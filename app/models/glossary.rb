@@ -11,7 +11,6 @@
 #
 
 class Glossary < ActiveRecord::Base
-  attr_accessible :title, :abbreviation, :organization_id, :description
   has_many :definitions
   belongs_to :organization
 end

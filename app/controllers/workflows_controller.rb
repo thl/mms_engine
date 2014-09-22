@@ -1,6 +1,6 @@
 class WorkflowsController < AclController
   helper :media
-  before_filter :find_medium
+  before_action :find_medium
   caches_page :show, :if => Proc.new { |c| c.request.format.xml? }
   cache_sweeper :workflow_sweeper, :only => [:update, :destroy]
   
@@ -35,7 +35,7 @@ class WorkflowsController < AclController
   # POST /workflows
   # POST /workflows.xml
   def create
-    @workflow = @medium.build_workflow(params[:workflow])
+    @workflow = @medium.build_workflow(workflow_params)
     respond_to do |format|
       if @workflow.save
         format.xml  { render :xml => @workflow, :status => :created, :location => medium_workflow_url(@medium) }
@@ -50,7 +50,7 @@ class WorkflowsController < AclController
   def update
     @workflow = @medium.workflow
     respond_to do |format|
-      if @workflow.update_attributes(params[:workflow])
+      if @workflow.update_attributes(workflow_params)
         flash[:notice] = ts('edit.successful', :what => Workflow.model_name.human.capitalize)
         format.html { redirect_to edit_medium_path(@medium, :anchor => 'workflow') }
         format.xml  { head :ok }
@@ -73,6 +73,10 @@ class WorkflowsController < AclController
   end
 
   private
+  
+  def workflow_params
+    params.require(:workflow).permit(:medium_id, :original_filename, :status_id, :original_medium_id, :metadata_source_id)
+  end
   
   def find_medium
     begin

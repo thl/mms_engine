@@ -3,8 +3,9 @@
 <%=   render :partial => 'form', :locals => {:f => f} %>
 <%  end %>
 <p>&nbsp;<br/>
-<% if authorized? hash_for_edit_medium_media_publisher_path %>
-<%=  link_to ts('edit.this'), edit_medium_media_publisher_path(@medium) %> |
+<% path = edit_medium_media_publisher_path(@medium)
+   if authorized? path %>
+<%=  link_to ts('edit.this'), path %> |
 <% end %>
 <%= render :partial => 'persistent_links' %>
 </p>

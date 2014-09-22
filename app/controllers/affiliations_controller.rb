@@ -1,6 +1,6 @@
 class AffiliationsController < AclController
   helper :media
-  before_filter :find_medium
+  before_action :find_medium
   
   # GET /affiliations
   # GET /affiliations.xml
@@ -48,7 +48,7 @@ class AffiliationsController < AclController
   # POST /affiliations
   # POST /affiliations.xml
   def create
-    @affiliation = @medium.affiliations.build(params[:affiliation])
+    @affiliation = @medium.affiliations.build(affiliation_params)
     success = @affiliation.save
     respond_to do |format|
       if success
@@ -71,7 +71,7 @@ class AffiliationsController < AclController
     @affiliation = Affiliation.find(params[:id])
     @medium = @affiliation.medium if @medium.nil?
     respond_to do |format|
-      if @affiliation.update_attributes(params[:affiliation])
+      if @affiliation.update_attributes(affiliation_params)
         flash[:notice] = ts('edit.successful', :what => Affiliation.model_name.human.capitalize)
         format.html { redirect_to edit_medium_url(@medium, :anchor => 'affiliations') }
         format.xml  { head :ok }
@@ -110,5 +110,9 @@ class AffiliationsController < AclController
       flash[:notice] = 'Attempt to access invalid medium.'
       redirect_to media_path
     end
+  end
+  
+  def affiliation_params
+    params.require(:affiliation).permit(:medium_id, :organization_id, :project_id, :sponsor_id)
   end
 end

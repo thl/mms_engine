@@ -1,5 +1,6 @@
-<%  if authorized?(hash_for_publisher_path(:action => 'destroy')) %>
-<%=   link_to ts('delete.this'), publisher_path(@publisher), :confirm => te('delete.confirmation'), :method => :delete %> |
+<%  path = publisher_path(@publisher)
+    if authorized?(path, :action => 'destroy') %>
+<%=   link_to ts('delete.this'), path, method: :delete, data: { confirm: te('delete.confirmation') } %> |
 <%  end %>
 <%= link_to ts('back.to', :what => t('all.records', :what => Publisher.model_name.human(:count => :many))), publishers_path %> |
 <%= render :partial => 'main/back_to_admin_or_media' %>

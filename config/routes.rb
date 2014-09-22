@@ -83,6 +83,6 @@ Rails.application.routes.draw do
   end
   resources(:videos) { member { get 'subtitles/:language/:form', to: 'videos#show', as: 'subtitles', defaults: { form: 'script', language: 'bo' } } }
   #match ':controller(/:action(/:id(.:format)))'
-  comatose_admin
+  #comatose_admin
   # comatose_root 'ndlb/pages'  
 end

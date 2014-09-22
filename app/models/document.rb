@@ -20,10 +20,7 @@
 #  rotation                 :integer
 #
 
-class Document < Medium
-  attr_accessible :typescript, :recording_note, :resource_type_id, :photographer_id, :taken_on,
-    :capture_device_model_id, :quality_type_id, :private_note
-  
+class Document < Medium  
   include MediaProcessor::DocumentExtension
   
   before_create  { |record| record.resource_type_id = 2639 if record.resource_type_id.nil? }
@@ -48,7 +45,7 @@ class Document < Medium
   
   def preview_image
     typescript = self.typescript
-    return typescript.nil? ? nil : typescript.children.where(:thumbnail => PREVIEW_TYPE.to_s).first
+    return typescript.nil? ? nil : typescript.children.find_by(thumbnail: PREVIEW_TYPE.to_s)
   end
     
   def self.paged_media_search(media_search, limit = 10, offset = 0)

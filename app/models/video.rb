@@ -22,10 +22,7 @@
 
 require 'fileutils'
 
-class Video < Medium
-  attr_accessible :movie, :recording_note, :resource_type_id, :photographer_id, :taken_on, :capture_device_model_id,
-    :quality_type_id, :private_note
-  
+class Video < Medium  
   include Util
   include ForkedNotifier
 
@@ -43,23 +40,23 @@ class Video < Medium
   def thumbnail_image
     att = attachment
     return nil if att.nil?
-    att.children.find(:first, :conditions => {:thumbnail => 'thumb'} )
+    att.children.find_by(thumbnail: 'thumb')
   end
   
   def screen_size_image
-    attachment.children.find(:first, :conditions => {:thumbnail => 'preview'} )
+    attachment.children.find_by(thumbnail: 'preview')
   end
   
   def screen_size_movie
-    movie.children.find(:first, :conditions => {:thumbnail => 'high'})
+    movie.children.find_by(thumbnail: 'high')
   end
 
   def low_res_screen_size_movie
-    movie.children.find(:first, :conditions => {:thumbnail => 'low'})
+    movie.children.find_by(thumbnail: 'low')
   end
   
   def transcript
-    movie.children.find(:first, :conditions => {:thumbnail => 'transcript'})
+    movie.children.find_by(thumbnail: 'transcript')
   end
   
   # Requirements: gem rvideo, ffmpeg, x264, faac.

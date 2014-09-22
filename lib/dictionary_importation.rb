@@ -49,15 +49,15 @@ module DictionaryImportation
     if glossary_name.blank?
       glossary = nil
     else
-      glossary = Glossary.where(title: glossary_name).first
+      glossary = Glossary.find_by(title: glossary_name)
       glossary = Glossary.create(:title => glossary_name) if glossary.nil?
     end
     includes_grammatical_class = !cols[:grammatical_class].nil?
     includes_loan_type = !cols[:loan_type].nil?
     includes_dialect = !cols[:dialect].nil?
     includes_keywords = !cols[:keywords].nil?
-    word_language = ComplexScripts::Language.where(code: word_language_code).first
-    definition_language = ComplexScripts::Language.where(code: definition_language_code).first
+    word_language = ComplexScripts::Language.find_by(code: word_language_code)
+    definition_language = ComplexScripts::Language.find_by(code: definition_language_code)
     CSV.open(file_name, "r", "\t") do |row|
       next if row.empty?
       if letter_mode==COLUMN || first && letter_mode==ROW
@@ -66,7 +66,7 @@ module DictionaryImportation
         letter_title = row[cols[:word]].base_letter(word_language_code)
       end
       if !letter_title.blank?
-        letter = Letter.where(title: letter_title).first
+        letter = Letter.find_by(title: letter_title)
         if letter.nil?
           puts "#{row[cols[:word]]}: #{letter_title}"
           letter = Letter.create(:title => letter_title, :order => letter_order)
@@ -86,7 +86,7 @@ module DictionaryImportation
       dialect_title = clean_field(row[cols[:dialect]]) if includes_dialect
       keywords_title = clean_field(row[cols[:keywords]]) if includes_keywords
       
-      word = Word.find(:first, :conditions => { :title => word_title, :language_id => word_language })
+      word = Word.find_by(title: word_title, language_id: word_language)
       if word.nil?
         word = Word.create(:title => word_title, :language => word_language, :order => word_order, :letter => letter)
       else
@@ -95,9 +95,9 @@ module DictionaryImportation
         word.save
       end
       if definition_title.chars.size>200
-        word_definition = Word.find(:first, :conditions => ['LEFT(title, 200) = ? AND language_id = ?', definition_title.chars[0...200], definition_language])
+        word_definition = Word.find_by(['LEFT(title, 200) = ? AND language_id = ?', definition_title.chars[0...200], definition_language])
       else      
-        word_definition = Word.find(:first, :conditions => { :title => definition_title, :language_id => definition_language })
+        word_definition = Word.find_by(title: definition_title, language_id: definition_language)
       end
       if word_definition.nil?
         word_definition = Word.create(:title => definition_title, :language => definition_language)
@@ -108,24 +108,24 @@ module DictionaryImportation
         end 
       end
       if includes_grammatical_class && !grammatical_class_title.blank?
-        grammatical_class = GrammaticalClass.where(title: grammatical_class_title).first
+        grammatical_class = GrammaticalClass.find_by(title: grammatical_class_title)
         grammatical_class = GrammaticalClass.create(:title => grammatical_class_title) if grammatical_class.nil?
       else
         grammatical_class = nil
       end
       if includes_loan_type && !loan_type_title.blank?
-        loan_type = LoanType.where(title: loan_type_title).first
+        loan_type = LoanType.find_by(title: loan_type_title)
         loan_type = LoanType.create(:title => loan_type_title) if loan_type.nil?
       else
         loan_type = nil
       end
       if includes_dialect && !dialect_title.blank?
-        dialect = Dialect.where(title: dialect_title).first
+        dialect = Dialect.find_by(title: dialect_title)
         dialect = Dialect.create(:title => dialect_title) if dialect.nil?
       else
         dialect = nil
       end
-      definition = Definition.find(:first, :conditions => { :definiendum_id => word, :definition_id => word_definition, :glossary_id => glossary })
+      definition = Definition.find_by(definiendum_id: word, definition_id: word_definition, glossary_id: glossary)
       if definition.nil? 
         definition = Definition.create(:definiendum => word, :definition => word_definition, :grammaticalClass => grammatical_class, :glossary => glossary, :loanType => loan_type, :dialect => dialect)
       else
@@ -148,7 +148,7 @@ module DictionaryImportation
         for keyword_title in keywords_title.split(',')
           keyword_title.strip!
           next if keyword_title.blank? || keyword_title=='-'
-          keyword = Keyword.where(title: keyword_title).first
+          keyword = Keyword.find_by(title: keyword_title)
           keyword = Keyword.create(:title => keyword_title) if keyword.nil?
           definition.keywords << keyword if !definition.keywords.include? keyword
         end
@@ -171,7 +171,7 @@ module DictionaryImportation
   end
   
   def self.sort_words(langs)
-    Word.order('title').where(["language_id IN #{Util::interrogation_set(langs.size)}"] + langs.collect{ |l| ComplexScripts::Language.where(code: l).first.id}).each_with_index do |word, index|
+    Word.order('title').where(["language_id IN #{Util::interrogation_set(langs.size)}"] + langs.collect{ |l| ComplexScripts::Language.find_by(code: l).id}).each_with_index do |word, index|
       word.order = index
       word.save 
     end

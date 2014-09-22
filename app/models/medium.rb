@@ -38,8 +38,6 @@ class Medium < ActiveRecord::Base
     :document => {:singular => 'Document', :plural => 'Documents'}
     #:biblio => {:singular => 'Biblio', :plural => 'Biblio'}
   }
-  attr_accessible :recording_note, :resource_type_id, :photographer_id, :taken_on, :partial_taken_on, :capture_device_model_id,
-    :quality_type_id, :private_note
   
   before_create  { |record| record.application_filter = ApplicationFilter.default_filter }
   after_create   { |record| record.rename } # TODO: handle if it couldn't be saved
@@ -54,7 +52,7 @@ class Medium < ActiveRecord::Base
       description.destroy
     end
     record.descriptions.clear
-    delete_setting = ApplicationSetting.where(title: 'delete_from_cold_storage').first
+    delete_setting = ApplicationSetting.find_by(title: 'delete_from_cold_storage')
     delete_from_coldstorage if delete_setting.nil? || delete_setting.value==1
   end
   
@@ -77,14 +75,14 @@ class Medium < ActiveRecord::Base
   
   has_many :media_source_associations, :dependent => :destroy
   has_many :sources, :through => :media_source_associations
-  has_many :media_content_administrative_locations, :order => 'type DESC', :dependent => :destroy
+  has_many :media_content_administrative_locations, -> { order 'type DESC' }, dependent: :destroy
   has_many :locations, :dependent => :destroy
   has_many :media_category_associations, :dependent => :destroy
   has_many :media_keyword_associations, :dependent => :destroy
   has_many :cumulative_media_location_associations
   has_many :copyrights, :dependent => :destroy
   has_many :affiliations, :dependent => :destroy
-  has_many :keywords, :through => :media_keyword_associations, :order => 'title'
+  has_many :keywords, -> { order 'title' }, through: :media_keyword_associations
   has_many :cumulative_media_category_associations, :dependent => :destroy
   has_many :titles, :dependent => :destroy
     
@@ -151,24 +149,24 @@ class Medium < ActiveRecord::Base
   def thumbnail_image
     att = attachment
     return nil if att.nil?
-    att.children.where(:thumbnail => 'compact').first
+    att.children.find_by(thumbnail: 'compact')
   end
   
   def screen_size_image
     att = attachment
     return nil if att.nil?
-    #img = att.children.find(:first, :conditions => {:thumbnail => 'large'})
+    #img = att.children.find_by(thumbnail: 'large')
     #return img if !img.nil?
-    img = att.children.where(:thumbnail => 'normal').first
+    img = att.children.find_by(thumbnail: 'normal')
     return img if !img.nil?
-    img = att.children.where(:thumbnail => 'essay').first
+    img = att.children.find_by(thumbnail: 'essay')
     return img
   end
   
   def large_image
     att = attachment
     return nil if att.nil?
-    att.children.where(:thumbnail => 'large').first
+    att.children.find_by(thumbnail: 'large')
   end
 
   #not meant to be called in itself but within the page_media of administrative_units, subjects, collections, and ethnicities

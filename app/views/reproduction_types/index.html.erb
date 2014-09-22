@@ -5,13 +5,13 @@
     <th><%= ReproductionType.model_name.human.titleize.s %></th>
 	<th><%= ReproductionType.human_attribute_name('website').s %></th>
   </tr>
-<% can_edit = authorized? hash_for_edit_reproduction_type_path
-   for reproduction_type in @reproduction_types %>
+<% for reproduction_type in @reproduction_types
+	 path = edit_reproduction_type_path(reproduction_type) %>
   <tr>
   	<td><%= reproduction_type.order %></td>
     <td>
-<%    if can_edit %>
-<%=     link_to h(reproduction_type.title), edit_reproduction_type_path(reproduction_type) %>
+<%    if authorized? path %>
+<%=     link_to h(reproduction_type.title), path %>
 <%    else %>
 <%=     link_to h(reproduction_type.title), reproduction_type_path(reproduction_type) %>
 <%    end %>

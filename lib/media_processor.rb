@@ -55,7 +55,7 @@ module MediaProcessor
           parent = Process.pid
           interval = 10
           current = 0
-          documents = Document.find(:all, :conditions => 'attachment_id IS NOT NULL')
+          documents = Document.where('attachment_id IS NOT NULL')
           size = documents.size
           while current<size
             upper_limit = current+interval
@@ -197,7 +197,7 @@ module MediaProcessor
     end
     
     def partition_cold_storage(path)
-      cold_storage_setting = ApplicationSetting.where(title: 'cold_storage_folder').first
+      cold_storage_setting = ApplicationSetting.find_by(title: 'cold_storage_folder')
       return if cold_storage_setting.nil?
       cold_storage_folder = cold_storage_setting.string_value
       return if cold_storage_folder.blank? || !File.exist?(cold_storage_folder)
@@ -293,11 +293,11 @@ module MediaProcessor
       if self.capture_device_model.nil?
         model_str = image.model
         if !model_str.blank?
-          model = CaptureDeviceModel.where(exif_tag: model_str).first
+          model = CaptureDeviceModel.find_by(exif_tag: model_str)
           if model.nil?
             maker_str = image.make
             if !maker_str.blank?
-              maker = CaptureDeviceMaker.where(['exif_tag = ? OR title = ?', maker_str, maker_str.titleize]).first
+              maker = CaptureDeviceMaker.find_by(['exif_tag = ? OR title = ?', maker_str, maker_str.titleize])
               maker = CaptureDeviceMaker.create(:title => maker_str.titleize, :exif_tag => maker_str) if maker.nil?
               model = maker.capture_device_models.create(:title => model_str, :exif_tag => model_str) 
               self.capture_device_model = model
@@ -343,7 +343,7 @@ module MediaProcessor
       end
 
       def get_thumbnail_if_exists(thumbname)
-        thumb = image.children.find(:first, :conditions => {:thumbnail => thumbname})
+        thumb = image.children.find_by(thumbnail: thumbname)
         if !thumb.nil?
           candidate = thumb.full_filename
           return candidate if File.exist?(candidate)
@@ -403,7 +403,7 @@ module MediaProcessor
         end
         # create db record
         attributes = { :size => File.size(full_path), :width => thumbnail.columns, :height => thumbnail.rows, :content_type => 'image/jpeg', :filename => main_beginning + filename_ending }
-        derivative = typescript.children.find(:first, :conditions => {:thumbnail => type.to_s})
+        derivative = typescript.children.find_by(thumbnail: type.to_s)
         if derivative.nil?
           Typescript.create attributes.merge(:parent_id => typescript.id, :thumbnail => type.to_s)
         else

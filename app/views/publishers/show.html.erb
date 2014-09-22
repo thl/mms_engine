@@ -2,8 +2,9 @@
 <%= display_if_not_blank Publisher.human_attribute_name('country_id').s, h(@publisher.country.header) %>
 
 <p>&nbsp;<br/>
-<%  if authorized? hash_for_edit_publisher_path %>
-<%=   link_to ts('edit.this'), edit_publisher_path(@publisher) %> |
+<% path = edit_publisher_path(@publisher)
+   if authorized? path %>
+<%=   link_to ts('edit.this'), path %> |
 <%  end %>
 <%= render :partial => 'persistent_links' %>
 </p>

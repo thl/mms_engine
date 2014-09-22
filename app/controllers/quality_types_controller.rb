@@ -32,7 +32,7 @@ class QualityTypesController < AclController
   # POST /quality_types
   # POST /quality_types.xml
   def create
-    @quality_type = QualityType.new(params[:quality_type])
+    @quality_type = QualityType.new(quality_type_params)
     respond_to do |format|
       if @quality_type.save
         flash[:notice] = ts('new.successful', :what => QualityType.model_name.human.capitalize)
@@ -51,7 +51,7 @@ class QualityTypesController < AclController
     @quality_type = QualityType.find(params[:id])
 
     respond_to do |format|
-      if @quality_type.update_attributes(params[:quality_type])
+      if @quality_type.update_attributes(quality_type_params)
         flash[:notice] = ts('edit.successful', :what => QualityType.model_name.human.capitalize)
         format.html { redirect_to quality_type_url(@quality_type) }
         format.xml  { head :ok }
@@ -71,5 +71,11 @@ class QualityTypesController < AclController
       format.html { redirect_to quality_types_url }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def quality_type_params
+    params.require(:quality_type).permit(:title)
   end
 end

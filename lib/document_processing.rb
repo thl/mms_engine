@@ -2,7 +2,7 @@
 
 module DocumentProcessing
   def self.caption_to_title
-    Document.find(:all, :order => :id).each do |document|
+    Document.all.order(:id).each do |document|
       captions = document.captions
       next if captions.size != 1
       caption = captions.first

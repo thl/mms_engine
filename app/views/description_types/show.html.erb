@@ -1,6 +1,6 @@
 <%= display_if_not_blank DescriptionType.human_attribute_name('title').s, h(@description_type.title).s %>
 <p>
 <%= link_to ts('edit.this'), edit_description_type_path(@description_type) %> |
-<%= link_to ts('delete.this'), description_type_path(@description_type), :confirm => te('delete.confirmation'), :method => :delete %> |
+<%= link_to ts('delete.this'), description_type_path(@description_type), method: :delete, data: { confirm: te('delete.confirmation') } %> |
 <%= link_to ts('back.this'), description_types_path %>
 </p>

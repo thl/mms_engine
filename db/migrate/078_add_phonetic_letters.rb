@@ -1,7 +1,7 @@
 class AddPhoneticLetters < ActiveRecord::Migration
   @@order = 1
   def self.add_letter(letter_title)
-    letter = Letter.find(:first, :conditions => {:title => letter})
+    letter = Letter.find_by(title: letter)
     if letter.nil?
       Letter.create :title => letter_title, :order => @@order
     else

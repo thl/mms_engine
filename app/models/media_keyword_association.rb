@@ -8,7 +8,6 @@
 #
 
 class MediaKeywordAssociation < ActiveRecord::Base
-  attr_accessible :keyword_id, :medium_id
   validates_presence_of :medium_id, :keyword_id
   belongs_to  :medium
   belongs_to  :keyword
