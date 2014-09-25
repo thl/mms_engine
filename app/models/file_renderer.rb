@@ -9,5 +9,5 @@
 
 class FileRenderer < ActiveRecord::Base
   has_many :transformations
-  table_name = 'renderers'
+  self.table_name = 'renderers'
 end

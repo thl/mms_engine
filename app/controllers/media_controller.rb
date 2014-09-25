@@ -1,5 +1,6 @@
 class MediaController < AclController
   caches_page :show, :if => Proc.new { |c| c.request.format.xml? || c.request.format.json?}
+  caches_page :index, :if => Proc.new { |c| c.request.format.xml? || c.request.format.json?}
   cache_sweeper :medium_sweeper, :only => [:update, :destroy]
   
   # Adding redundant candidates (e.g. category_id and :topic_id) for now to prevent errors, but these should be consolidated
@@ -62,7 +63,14 @@ class MediaController < AclController
           end
         end
         format.js # index.js.erb
-        format.xml  { render :xml => @media.to_xml }
+        format.xml  do
+          @media = Medium.all.order('id')
+          render :xml => @media
+        end
+        format.json do
+          @media = Medium.all.order('id')
+          render :json => @media #Hash.from_xml(render_to_string(:action => 'index.xml.builder'))
+        end
       end
     end
   end

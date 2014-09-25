@@ -25,7 +25,7 @@ class MediaCategoryAssociationSweeper < ActionController::Caching::Sweeper
   def expire_media_cache(m)
     return if m.nil?
     options = {:only_path => true, :format => :xml}
-    paths = [medium_url(m, options)]
+    paths = [medium_url(m, options), media_url(options)]
     paths << document_url(m, options) if m.instance_of? Document
     paths.each{ |path| expire_page(path) }
   end
