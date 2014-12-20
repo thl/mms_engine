@@ -93,15 +93,9 @@ class TopicsController < AclController
           render :action => 'index'
         end          
       end
-      format.js  { render 'show' }
-      format.xml { render 'show' }
-      format.json do
-        h = Hash.from_xml(render_to_string(:action => 'show.xml.builder'))
-        mh = h['topic']
-        mh[:page] = params[:page] || 1
-        mh[:total_pages] = @media.total_pages
-        render :json => h
-      end
+      format.js   { render 'show' }
+      format.xml  { render 'show' }
+      format.json { render :json => Hash.from_xml(render_to_string(:action => 'show.xml.builder')) }
     end
   end
   

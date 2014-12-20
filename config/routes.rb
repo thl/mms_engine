@@ -39,6 +39,7 @@ Rails.application.routes.draw do
       get :rename
       get :large
       get :full_size
+      get :external
     end
     resources :rotations, only: [:index, :show, :create] do
       collection { get :status }

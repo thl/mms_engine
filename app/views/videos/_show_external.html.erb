@@ -1,0 +1,30 @@
+<%= javascript_include_tag 'mms_engine/swfobject' %>
+<% movie = @medium.screen_size_movie
+   server = root_url.chop
+   image = @medium.screen_size_image
+   if movie.status==1
+	 transcript_path = @medium.transcript.nil? ? nil : @transcript_params.nil? ? subtitles_url(@medium) : subtitles_url(@medium, @transcript_params) %>
+     <p id="player1"><a href="http://www.macromedia.com/go/getflashplayer"><%= ts 'video.needs_flash' %></a></p>
+     <script type="text/javascript">
+	   var s1 = new SWFObject(<%= "\"#{server}/flash/mediaplayer.swf\"" %>,"single","<%= movie.width %>","<%= movie.height + 20 %>","7");
+	   s1.addParam("allowscriptaccess", "always");
+	   s1.addParam("allowfullscreen", "true");
+	   s1.addVariable("file",<%= "\"#{server}#{movie.public_filename}\"" %>);
+	   s1.addVariable("overstretch", "false");
+	   s1.addVariable("image",<%= "\"#{server}#{image.public_filename}\"" %>);
+<%     if !transcript_path.nil? %>
+         s1.addVariable("captions", <%= "\"#{server}#{transcript_path}\"" %>);
+<%     end %>
+	   s1.write("player1");
+     </script>
+<%   if !transcript_path.nil? %>
+	 <p>
+<%=    link_to ts('tibetan.script'), subtitles_video_url(@medium, :language => 'bo'), :remote => true %> |
+<%=    link_to ts('tibetan.transliteration'), subtitles_video_url(@medium, :language => 'bo', :form => 'transliteration'), :remote => true %> |
+<%=    link_to ts(:english), subtitles_video_url(@medium, :language => 'en'), :remote => true %>
+	 </p>
+<%   end
+   else %>
+<%=  image_tag(server + image.public_filename) %>
+     <p><%= ts 'video.not_ready' %></p>
+<% end %>

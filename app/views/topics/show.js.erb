@@ -4,5 +4,3 @@
 $('#secondary').html("<%= escape_javascript(render(:partial => 'media_index')) %>")
 $('.selected_branch').removeClass('selected_branch')
 $("#<%= @topic.id %>_div").html("<%= escape_javascript(render(:partial => 'expanded', :object => @topic, :locals => {:margin_depth => @margin_depth})) %>")
-ActivateThlPopups('#secondary')
-tb_init(a.thickbox, area.thickbox, input.thickbox)

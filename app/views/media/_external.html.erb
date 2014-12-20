@@ -1,0 +1,128 @@
+<p>
+<% chosen_caption = chosen_caption(@medium)
+   if !chosen_caption.nil? %>
+     <h2><%=  chosen_caption.title.s %></h2>
+<% end
+     case @medium.class.name
+     when 'Picture' %>
+<%=    render 'pictures/show_external' %>
+<%   when 'Video' %>
+<%=    render 'videos/show_external' %>
+<%   when 'Document' %>
+<%=    render 'documents/show_external' %>
+<%   when 'OnlineResource' %>
+<%=    render 'online_resources/show' %>
+<%   end %>
+<%=  display_if_not_blank Medium.human_attribute_name(:id).s, "#{@medium.id} (#{link_to ts(:url_for_reference), medium_url(@medium)})".html_safe %>
+<%=  render :partial => 'titles/index_display_only_external', :locals => {:medium => @medium} %>
+<%   captions = @medium.captions
+   if !captions.empty? && captions.size>1 %>
+     <p>
+<%   for caption in captions
+       if caption != chosen_caption %>
+<%=      caption.title.s %><br/>
+<%     end
+     end %>
+     </p>  
+<% end
+   grouped_topics = Hash.new
+   root_topics = Topic.roots_with_media
+   root_topics.each{ |topic| grouped_topics[topic.id.to_i] = Array.new }
+   @medium.media_category_associations.each{ |association| grouped_topics[association.root_id] << association }
+   for root_topic in root_topics
+	 topics = grouped_topics[root_topic.id.to_i]
+	 if !topics.empty? %>
+<%=    display_if_not_blank root_topic.header, topics.collect {|a| link_to h(a.title_with_value).s, topic_url(a.category.id)}.join(', ') %>
+<%   end
+   end
+   locations = @medium.locations
+   if !locations.empty? 
+	 location_string = locations.collect do |l|
+       s = l.feature.nil? ? '' : link_to(h(l.feature.header).s, place_url(l.feature.fid))
+       c = l.coordinates
+       c.nil? ? s : "#{s} (#{c})"
+     end.join(', ') %>
+<%=  display_if_not_blank 'Location', location_string %>
+<% end
+   keywords = @medium.keywords
+   if !keywords.empty? %>
+<%=  display_if_not_blank Keyword.model_name.human(:count => :many).titleize.s, keywords.collect {|k| link_to h(k.title).s, media_url(:keyword_id => k)}.join(", ") %>
+<% end
+   descriptions = @medium.descriptions
+   if !descriptions.empty? %>
+     <p><b><%= Description.model_name.human(:count => descriptions.size).titleize.s %>:</b></p>
+<%   for description in descriptions
+       creator = description.creator 
+       if !creator.nil? %>
+         <p><%= ts 'by.record', :whom => creator.fullname %></p>
+<%     end %>
+<%=    description.title.s %>
+<%   end
+   end
+   associated_resources = [
+    ["Places", @medium.feature_count, @medium.places_url],
+    [Topic.human_name(:count => :many).titleize.s, @medium.category_count, @medium.topical_map_url]
+   ]
+   if associated_resources.collect{|ar| ar[1]}.sum > 0 %>
+     <h3>Associated Resources</h3>
+     <ul class="normal">
+<%=    associated_resources.reject{|ar| ar[1] == 0}.collect{ |ar| "<li>#{link_to("#{ar[0]} (#{ar[1]})", ar[2])}</li>" }.join.html_safe %>
+     </ul>
+<% end
+   affiliations = @medium.affiliations
+   copyrights = @medium.copyrights
+   if !affiliations.empty? || !copyrights.empty? %>
+   <p>
+<%   if !affiliations.empty?
+	   affiliations_list = affiliations.collect do |c|
+         title = c.organization.website.blank? ? h(c.organization.title): link_to(h(c.organization.title), c.organization.website, :target => '_blank')
+         project = c.project
+         sponsor = c.sponsor
+		 if !project.nil? || !sponsor.nil?
+           parenthesis = ' ('
+           if !project.nil?
+             parenthesis << project.title
+             parenthesis << ' ' if !sponsor.nil?
+           end
+           parenthesis << t(:sponsored_by, :what => sponsor.title) if !sponsor.nil?
+           parenthesis << ')'
+         else
+           parenthesis = ''
+         end
+         "#{title}#{parenthesis}".html_safe
+	   end %>
+<%=    ts 'copyright.message.provider', :what => Medium.model_name.human, :whom => affiliations_list.join(', ') %>
+<%   end
+     if !copyrights.empty? %>
+<%=    ts 'copyright.message.holder', :count => copyrights.size, :whom => copyrights.collect{|c| "#{c.copyright_holder.website.blank? ? h(c.copyright_holder.title): link_to(h(c.copyright_holder.title), c.copyright_holder.website)} (#{c.reproduction_type.website.blank? ? h(c.reproduction_type.title).downcase : link_to(h(c.reproduction_type.title).downcase, c.reproduction_type.website)})".html_safe}.join(', ') %>
+<%   end %>
+   </p>
+<% end %>
+<%= display_if_not_blank Medium.human_attribute_name('resource_type').s, @medium.resource_type.header %>
+<% photographer = @medium.photographer
+   if !photographer.nil? %>
+<%=  display_if_not_blank @medium.class.human_attribute_name('photographer').s, link_to(h(photographer.fullname).s, authenticated_system_person_url(photographer)) %>
+<% end
+   quality_type = @medium.quality_type 
+   if !quality_type.nil? %>
+<%=  display_if_not_blank QualityType.model_name.human.titleize.s, h(quality_type.title).s %>
+<% end 
+   orientation = @medium.recording_orientation
+   if !orientation.nil? %>
+<%=  display_if_not_blank RecordingOrientation.model_name.human.titleize.s, h(orientation.title).s %>
+<% end 
+   if !@medium.recording_note.blank? %>
+     <p><b><%= Medium.human_attribute_name('recording_note').s %>:</b></p>
+<%=  @medium.recording_note.html_safe %>
+<% end %>
+<p>
+<% if @medium.partial_taken_on.blank? 
+	 if !@medium.taken_on.nil? %>
+       <b><%= Medium.human_attribute_name('taken_on', :what => @medium.class.model_name.human.titleize).s %>:</b>
+<%=    h(@medium.taken_on.strftime('%d/%b/%Y')) %>
+<%   end
+   else %>
+     <b><%= Medium.human_attribute_name('taken_on', :what => @medium.class.model_name.human.titleize).s %>:</b>
+<%=  h(@medium.partial_taken_on) %>
+<% end %>
+</p>
