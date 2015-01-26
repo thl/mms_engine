@@ -1,4 +1,7 @@
 class TitleSweeper < ActionController::Caching::Sweeper
+  include Rails.application.routes.url_helpers
+  include ActionController::Caching::Pages
+  
   observe Title
   
   def after_save(title)

@@ -1,6 +1,9 @@
 #require 'document'
 
 class DocumentSweeper < ActionController::Caching::Sweeper
+  include Rails.application.routes.url_helpers
+  include ActionController::Caching::Pages
+  
   observe Document
   
   def after_save(document)

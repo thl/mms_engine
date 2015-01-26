@@ -1,4 +1,7 @@
 class WorkflowSweeper < ActionController::Caching::Sweeper
+  include Rails.application.routes.url_helpers
+  include ActionController::Caching::Pages
+  
   observe Workflow
   
   def after_save(workflow)

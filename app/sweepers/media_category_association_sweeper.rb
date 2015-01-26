@@ -1,4 +1,7 @@
 class MediaCategoryAssociationSweeper < ActionController::Caching::Sweeper
+  include Rails.application.routes.url_helpers
+  include ActionController::Caching::Pages
+  
   observe MediaCategoryAssociation
   
   def before_save(cf)
