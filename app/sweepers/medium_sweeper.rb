@@ -22,4 +22,11 @@ class MediumSweeper < ActionController::Caching::Sweeper
       paths.each{ |path| expire_page path }
     end
   end
+  
+  private
+  
+  # Very weird! ActionController::Caching seems to assume it is being called from controller. Adding this as hack
+  def self.perform_caching
+    Rails.configuration.action_controller.perform_caching
+  end
 end

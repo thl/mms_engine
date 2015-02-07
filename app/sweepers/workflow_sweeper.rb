@@ -15,5 +15,12 @@ class WorkflowSweeper < ActionController::Caching::Sweeper
   def expire_cache(workflow)
     expire_page medium_workflow_url(workflow.medium, :only_path => true, :format => :xml)
   end
+  
+  private
+  
+  # Very weird! ActionController::Caching seems to assume it is being called from controller. Adding this as hack
+  def self.perform_caching
+    Rails.configuration.action_controller.perform_caching
+  end
 end
   
