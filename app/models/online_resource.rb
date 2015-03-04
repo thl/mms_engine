@@ -22,8 +22,9 @@
 
 class OnlineResource < Medium
   before_create  { |record| record.resource_type_id = 2677 if record.resource_type_id.nil? }
-  
+
   has_one :web_address
+  accepts_nested_attributes_for :web_address
     
   def self.maker_title
     'Web admin'
