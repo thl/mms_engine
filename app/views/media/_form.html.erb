@@ -1,4 +1,5 @@
-<%= tagged_tinymce_script %>
+<%= tinymce_assets %>
+<%= tinymce %>
 <p>
   <b><%= Medium.human_attribute_name(:resource_type).s %></b><br />
 <%= f.collection_select(:resource_type_id, @resource_types, :id, :header, { :include_blank => false }) %>
@@ -19,9 +20,9 @@
 </p>
 <p>
   <b><%= Medium.human_attribute_name(:recording_note).s %></b><br />
-<%= f.text_area :recording_note, :rows => 5, :class => 'mceEditor' %>
+<%= f.text_area :recording_note, :rows => 5, :class => 'tinymce' %>
 </p>
 <p>
   <b><%= Medium.human_attribute_name(:private_note).s %></b><br />
-<%= f.text_area :private_note, :rows => 5, :class => 'mceEditor' %>
+<%= f.text_area :private_note, :rows => 5, :class => 'tinymce' %>
 </p>

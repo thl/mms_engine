@@ -64,7 +64,7 @@ class DocumentsController < AclController
   # POST /documents
   # POST /documents.xml
   def create
-    typescript_params = params.require(:typescript).permit(:content_type, :temp_path, :filename, :parent_id, :thumbnail)
+    typescript_params = params[:typescript].nil? ? nil : params.require(:typescript).permit(:content_type, :temp_path, :filename, :parent_id, :thumbnail)
     @typescript = nil
     if !typescript_params.nil? && !typescript_params[:uploaded_data].nil?
       @typescript = Typescript.new(typescript_params)
@@ -76,7 +76,7 @@ class DocumentsController < AclController
     end
     has_preview = false
     if success
-      thumbnail_params = params[:thumbnail].permit(:content_type, :temp_path, :filename, :parent_id, :thumbnail)
+      thumbnail_params = params[:thumbnail].nil? ? nil : params[:thumbnail].permit(:content_type, :temp_path, :filename, :parent_id, :thumbnail)
       if !thumbnail_params.nil? && !thumbnail_params[:uploaded_data].nil?
         # If thumbnail preview was given, use that as the original preview.
         if has_typescript

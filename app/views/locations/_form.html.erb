@@ -1,4 +1,5 @@
-<%= tagged_tinymce_script %>
+<%= tinymce_assets %>
+<%= tinymce %>
 <p>
     <b><%= Medium.model_name.human.titleize.s %></b><br />    
 <%= thumbnail_image_link(@medium) %></td>
@@ -17,9 +18,9 @@
 </p>
 <p>
     <b><%= Location.human_attribute_name('spot_feature').s %></b><br />
-    <%= f.text_area :spot_feature, :rows => 5, :class => 'mceEditor' %>
+    <%= f.text_area :spot_feature, :rows => 5, :class => 'tinymce' %>
 </p>
 <p>
     <b><%= Location.human_attribute_name('notes').s %></b><br />
-    <%= f.text_area :notes, :rows => 5, :class => 'mceEditor' %>
+    <%= f.text_area :notes, :rows => 5, :class => 'tinymce' %>
 </p>

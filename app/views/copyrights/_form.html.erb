@@ -1,5 +1,5 @@
-<%= tagged_tinymce_script %>
-
+<%= tinymce_assets %>
+<%= tinymce %>
 <p>
 <%= thumbnail_image_link(@medium) %>
 </p>
@@ -14,5 +14,5 @@
 </p>
 <p>
     <b><%= Copyright.human_attribute_name('notes').s %></b><br />
-<%= f.text_area :notes, :rows => 5, :class => 'mceEditor', :class => 'mceEditor' %>
+<%= f.text_area :notes, :rows => 5, :class => 'tinymce' %>
 </p>

@@ -1,11 +1,12 @@
-<%= tagged_tinymce_script %>
+<%= tinymce_assets %>
+<%= tinymce %>
 <p>
     <b><%= Medium.model_name.human.titleize.s %></b><br />
 <%= thumbnail_image_link(@medium) %>
 </p>
 <p>
     <b><%= Description.human_attribute_name('title').s %></b><br />
-<%= f.text_area :title, :rows => 5, :class => 'mceEditor' %>
+<%= f.text_area :title, :rows => 5, :class => 'tinymce' %>
 </p>
 <p>
     <b><%= DescriptionType.model_name.human(:what => Description.model_name.human).titleize.s %></b><br />
