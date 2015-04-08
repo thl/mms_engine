@@ -1,6 +1,7 @@
 class MediumSweeper < ActionController::Caching::Sweeper
   include Rails.application.routes.url_helpers
   include ActionController::Caching::Pages
+  include InterfaceUtils::Extensions::Sweeper
   
   observe Medium
   FORMATS = ['xml', 'json']
@@ -21,12 +22,5 @@ class MediumSweeper < ActionController::Caching::Sweeper
       paths << document_url(medium, options) if medium.instance_of? Document
       paths.each{ |path| expire_page path }
     end
-  end
-  
-  private
-  
-  # Very weird! ActionController::Caching seems to assume it is being called from controller. Adding this as hack
-  def self.perform_caching
-    Rails.configuration.action_controller.perform_caching
   end
 end

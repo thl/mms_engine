@@ -37,7 +37,7 @@ module MultimediaImportation
             media << media_pro_xml_hash(topic_name, File.join(source, topic_name))
           end
         else
-          topic = Topic.find_by_title(topic_name, true)
+          topic = Topic.find_by_name(topic_name)
           raise("Could not find the subject called <i>#{topic_name}</i>. If this is what you meant, please create it first. If not, please recheck the settings under <i>classification scheme</i>.") if topic.nil?
           media += assess_media_folder(source, '', topic_name, type, check_existence, topic)
         end
@@ -50,8 +50,16 @@ module MultimediaImportation
     doc = open(file) { |f| Hpricot(f) }
     ((doc/'author').collect(&:inner_text) + (doc/'writer').collect(&:inner_text)).uniq.reject(&:blank?).each{|s| raise "Could not find the person #{s} mentioned in #{file}! Please create it first." if AuthenticatedSystem::Person.find_by(fullname: s).nil? }
     (doc/'copyright').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the copyright holder #{s} mentioned in #{file}! Please create it first." if CopyrightHolder.find_by(title: s).nil? }
-    (doc/'category').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the feature #{s} mentioned in #{file}! Please create it first." if Place.find(s.sub(/(.*)\{\D?(\d+)\D*\}(.*)/,'\2').to_i).nil? }
-    (doc/'subjectreference').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the subject #{s} mentioned in #{file}! Please create it first." if Topic.find(s.sub(/(.*)\{\D?(\d+)\D*\}(.*)/,'\2').to_i).nil? }
+    (doc/'category').collect(&:inner_text).uniq.reject(&:blank?).each do |s|
+      if s.include?('{') && Place.find(s.sub(/(.*)\{\D?(\d+)\D*\}(.*)/,'\2').to_i).nil?
+        raise "Could not find the feature #{s} mentioned in #{file}! Please create it first."
+      end
+    end
+    (doc/'subjectreference').collect(&:inner_text).uniq.reject(&:blank?).each do |s|
+      if s.include?('{') && Topic.find(s.sub(/(.*)\{\D?(\d+)\D*\}(.*)/,'\2').to_i).nil?
+        raise "Could not find the subject #{s} mentioned in #{file}! Please create it first."
+      end
+    end
     (doc/'userfield_1').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the organization #{s} mentioned in #{file}! Please create it first." if Organization.find_by(title: s).nil? }
     (doc/'userfield_2').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the project #{s} mentioned in #{file}! Please create it first." if Project.find_by(title: s).nil? }
     (doc/'userfield_3').collect(&:inner_text).uniq.reject(&:blank?).each{|s| raise "Could not find the sponsor #{s} mentioned in #{file}! Please create it first." if Sponsor.find_by(title: s).nil? }
@@ -110,7 +118,7 @@ module MultimediaImportation
           register_active_process(parent)
         end
         begin
-          wait([sid])
+          Spawnling.wait([sid])
         rescue Exception => exc
           write_to_log("PROBLEM: Managing the thread that processed image files #{ media_batch.collect{ |m| m[:filename] }.join(', ') }: #{exc.to_s}")
           write_to_log("\n#{exc.backtrace.join("\n")}\n")
@@ -358,6 +366,12 @@ module MultimediaImportation
             medium.captions << r if !medium.caption_ids.include? r.id
           end
         end
+        ks = attrs['keywords']
+        ks.each do |k_s|
+          k = Keyword.find_by_title(k_s)
+          k = Keyword.create(title: k_s) if k.nil?
+          medium.keywords << k
+        end
       end
       metadata_source.creators << writers
     end
@@ -383,6 +397,7 @@ module MultimediaImportation
           attrs['created'] = date_created_str
         end
       end
+      attrs['keywords'] = (m/'keyword').select(&:elem?).collect(&:inner_text)
       (m/'annotationfields').first.children.select(&:elem?).each{|e| attrs[e.name] = e.inner_text}
       (m/'userfields').first.children.select(&:elem?).each{|e| attrs[user_field_names[e.name.gsub(/[^\d]/,'').to_i-1]] = e.inner_text}
       metadata[filepath] = attrs

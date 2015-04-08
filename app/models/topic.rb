@@ -42,7 +42,7 @@ class Topic < SubjectsIntegration::Feature
   end
   
   def full_lineage
-    self.ancestors.collect(&:header).reverse.join(' > ')
+    self.ancestors.collect(&:header).join(' > ')
   end
 
   alias count_inherited_media media_count

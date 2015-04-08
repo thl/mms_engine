@@ -457,7 +457,7 @@ module MediaProcessor
           end
         end
         if wf.nil?
-          self.create_workflow :original_filename => parent.filename
+          self.create_workflow original_filename: parent.filename, original_medium_id: ''
           parent.filename = id_name
           parent.save
         end
