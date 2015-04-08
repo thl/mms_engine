@@ -1,4 +1,7 @@
 class KeywordSweeper < ActionController::Caching::Sweeper
+  include ActionController::Caching::Fragments
+  include InterfaceUtils::Extensions::Sweeper
+  
   observe Keyword
   
   def after_save(k)

@@ -1,4 +1,7 @@
 class PlaceCountSweeper < ActiveRecord::Observer
+  include ActionController::Caching::Pages
+  include InterfaceUtils::Extensions::Sweeper
+  
   observe Location
   
   def before_save(l)
@@ -14,6 +17,6 @@ class PlaceCountSweeper < ActiveRecord::Observer
   end
   
   def expire_cache(f)
-    ApplicationController.expire_page("/places/#{f}/counts.xml") if !f.nil?
+    expire_page("/places/#{f}/counts.xml") if !f.nil?
   end
 end
