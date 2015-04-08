@@ -119,18 +119,23 @@ module MultimediaImportation
         end
         begin
           Spawnling.wait([sid])
+          finished = true
         rescue Exception => exc
           write_to_log("PROBLEM: Managing the thread that processed image files #{ media_batch.collect{ |m| m[:filename] }.join(', ') }: #{exc.to_s}")
           write_to_log("\n#{exc.backtrace.join("\n")}\n")
           write_to_log("Waiting before re-processing...")
+          finished = false
+          register_active_process(parent)
           sleep(300)
         end
-        last_processed = Rails.cache.read("multimedia_importation/last_processed/#{sid.handle}")
-        Rails.cache.delete("multimedia_importation/last_processed/#{sid.handle}")
-        if last_processed.nil?
-          write_to_log("PROBLEM: subsequently with image files #{ media_batch.collect{ |m| m[:filename] }.join(', ') }.")
-        else
-          imported_media.merge!(last_processed)
+        if finished
+          last_processed = Rails.cache.read("multimedia_importation/last_processed/#{sid.handle}")
+          Rails.cache.delete("multimedia_importation/last_processed/#{sid.handle}")
+          if last_processed.nil?
+            write_to_log("PROBLEM: subsequently with image files #{ media_batch.collect{ |m| m[:filename] }.join(', ') }.")
+          else
+            imported_media.merge!(last_processed)
+          end
         end
         current = limit
       end
