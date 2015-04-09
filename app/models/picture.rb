@@ -26,7 +26,7 @@ class Picture < Medium
   validates_presence_of :attachment_id
   
   before_create  { |record| record.resource_type_id = 2660 if record.resource_type_id.nil? }
-  before_destroy { |record| record.image.destroy }
+  before_destroy { |record| record.image.destroy if !record.image.nil? }
   after_create   { |record| record.update_from_image_properties }
   
   belongs_to :image, :foreign_key => 'attachment_id'
