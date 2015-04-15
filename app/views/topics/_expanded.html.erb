@@ -8,7 +8,7 @@
 <% else %>
 <%=  link_to '-', contract_topic_path(expanded.id, :margin_depth => margin_depth), :remote => true, :class => 'collapsable' %>
 <% end
-   selected = !@topic.nil? && (expanded.id == @topic.id.to_i)
+   selected = !@topic.nil? && (expanded.id == @topic.id)
    if selected %>
      <span class="selected_branch">
 <% end %>
