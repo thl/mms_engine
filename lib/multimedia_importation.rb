@@ -256,6 +256,7 @@ module MultimediaImportation
   
   def do_metadata_importation(metadata_files, imported_media)
     rep_type = ReproductionType.find(4)
+    english = ComplexScripts::Language.find_by_code('eng')
     for metadata_file in metadata_files
       basename = File.basename(metadata_file[:filename])
       metadata_source = MetadataSource.find_by(filename: basename)
@@ -302,8 +303,14 @@ module MultimediaImportation
           lat = lat.gsub(/(\w)\s+(\d+)\D+(\d+)\D+([\d\.]+)/){($1.upcase=='S' ? -1 : 1) * ($2.to_f + $3.to_f/60 + $4.to_f/3600)} if !lat.blank? && lat.to_f == 0
           lng = attrs['longitude']
           lng = lng.gsub(/(\w)\s+(\d+)\D+(\d+)\D+([\d\.]+)/){($1.upcase=='W' ? -1 : 1) * ($2.to_f + $3.to_f/60 + $4.to_f/3600)} if !lng.blank? && lng.to_f == 0
-          conditions = { :medium_id => medium.id, :feature_id => fid, :lat => lat, :lng => lng, :spot_feature => attrs['Location Feature'], :notes => attrs['Location Notes'] }
-          Location.create(conditions) if Location.where(conditions).count == 0
+          conditions = { medium_id: medium.id, feature_id: fid}
+          ats = {lat: lat, lng: lng, spot_feature: attrs['Location Feature'], notes: attrs['Location Notes'] }
+          r = Location.where(conditions).first
+          if r.nil?
+            r = Location.create(conditions.merge(ats))
+          else
+            r.update_attributes(ats)
+          end
         end
         name = attrs['writer']
         if name.blank?
@@ -364,18 +371,22 @@ module MultimediaImportation
         if !s.blank?
           r = Caption.find_by(title: s)
           if r.nil?
-            conditions = { :title => s, :creator_id => creator_id }
-            r = Caption.create(conditions) if Caption.where(conditions).count == 0
+            r = Caption.create(:title => s, :creator_id => creator_id)
             medium.captions << r
           else
             medium.captions << r if !medium.caption_ids.include? r.id
           end
         end
+        s = attrs['product']
+        if !s.blank?
+          titles = medium.titles
+          titles.create(title: s, creator_id: creator_id, language_id: english.id) if titles.find_by(title: s).nil?
+        end
         ks = attrs['keywords']
         ks.each do |k_s|
           k = Keyword.find_by_title(k_s)
           k = Keyword.create(title: k_s) if k.nil?
-          medium.keywords << k
+          medium.keywords << k if !medium.keyword_ids.include? k.id
         end
       end
       metadata_source.creators << writers
