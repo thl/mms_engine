@@ -1,9 +1,9 @@
 #require 'document'
 
 class DocumentSweeper < ActionController::Caching::Sweeper
+  include InterfaceUtils::Extensions::Sweeper
   include Rails.application.routes.url_helpers
   include ActionController::Caching::Pages
-  include InterfaceUtils::Extensions::Sweeper
   
   observe Document
   
@@ -17,6 +17,6 @@ class DocumentSweeper < ActionController::Caching::Sweeper
   
   def expire_cache(document)
     options = {:only_path => true, :format => :xml}
-    [document_url(document, options), medium_url(document, options), media_url(options)].each{ |path| expire_page path }
+    [document_url(document, options), medium_url(document, options), media_url(options)].each{ |path| expire_full_path_page path }
   end
 end

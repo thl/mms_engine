@@ -1,7 +1,7 @@
 class MediaCategoryAssociationSweeper < ActionController::Caching::Sweeper
+  include InterfaceUtils::Extensions::Sweeper
   include Rails.application.routes.url_helpers
   include ActionController::Caching::Pages
-  include InterfaceUtils::Extensions::Sweeper
   
   observe MediaCategoryAssociation
   
@@ -20,7 +20,7 @@ class MediaCategoryAssociationSweeper < ActionController::Caching::Sweeper
   end
   
   def expire_topic_cache(c)
-    expire_page category_counts_url(c, only_path: true, :format => :xml)
+    expire_full_path_page category_counts_url(c, only_path: true, :format => :xml)
     actions = [{:controller => 'topics', :action => 'index'}]
     actions << ([c] + Topic.find(c).ancestors.collect(&:id)).inject([]){ |actions, c_id| actions + ['show', 'pictures', 'videos', 'documents'].collect{ |action| {:controller => 'topics', :action => action, :id => c_id} } } if !c.nil?
     actions.each{ |action| expire_fragment action }
@@ -31,6 +31,6 @@ class MediaCategoryAssociationSweeper < ActionController::Caching::Sweeper
     options = {:only_path => true, :format => :xml}
     paths = [medium_url(m, options), media_url(options)]
     paths << document_url(m, options) if m.instance_of? Document
-    paths.each{ |path| expire_page(path) }
+    paths.each{ |path| expire_full_path_page(path) }
   end
 end

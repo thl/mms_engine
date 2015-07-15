@@ -1,7 +1,7 @@
 class TitleSweeper < ActionController::Caching::Sweeper
+  include InterfaceUtils::Extensions::Sweeper
   include Rails.application.routes.url_helpers
   include ActionController::Caching::Pages
-  include InterfaceUtils::Extensions::Sweeper
   
   observe Title
   
@@ -18,6 +18,6 @@ class TitleSweeper < ActionController::Caching::Sweeper
     medium = title.medium
     paths = [medium_titles_url(medium, options), medium_title_url(medium, title, options), medium_url(medium, options), media_url(options)]
     paths << document_url(medium, options) if medium.instance_of? Document
-    paths.each {|path| expire_page path}
+    paths.each {|path| expire_full_path_page path}
   end
 end
