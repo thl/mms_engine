@@ -1,6 +1,6 @@
 <%= f.error_messages %>
 <%= tinymce_assets %>
-<%= tinymce forced_root_block: 'false' %>
+<%= tinymce forced_root_block: 'false', toolbar:['fullscreen | bold italic underline strikethrough | undo redo | link unlink code', 'cut copy paste pastetext | removeformat charmap'] %>
 <p>
 <%=  thumbnail_image_link(@medium) %>
 </p>
