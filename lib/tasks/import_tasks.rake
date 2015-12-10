@@ -2,7 +2,7 @@
 require 'multimedia_importation'
 
 namespace :mms do
-  namespace :import do
+  namespace import: :environment do
     media_import_description = "Batch process to import media.\n" + 
     "Syntax:\n" +
     "rake import:images SOURCE=path-to-folder [CLASSIFICATION=classification-type [CLASSIFICATION2=classification-type2 [CLASSIFICATION3=classification-type3]]]\n" +
@@ -33,7 +33,7 @@ namespace :mms do
     "sources.title, media_source_associations.shot_number"
     
     desc media_import_description
-    task :images do |t|
+    task images: :environment do |t|
       require_relative '../multimedia_importation.rb'
       source = ENV['SOURCE']
       ENV['CLASSIFICATION'] ||= 'administrative_unit'
@@ -45,7 +45,7 @@ namespace :mms do
     end
 
     desc media_import_description
-    task :movies do |t|
+    task movies: :environment do |t|
       require_relative '../multimedia_importation.rb'
       source = ENV['SOURCE']
       ENV['CLASSIFICATION'] ||= 'administrative_unit'
@@ -57,7 +57,7 @@ namespace :mms do
     end 
 
     desc media_import_description
-    task :typescripts do |t|
+    task typescripts: :environment do |t|
       require_relative '../multimedia_importation.rb'
       source = ENV['SOURCE']
       ENV['CLASSIFICATION'] ||= 'administrative_unit'
@@ -101,7 +101,7 @@ namespace :mms do
     # To import bod rgya tshig mdzod chen mo:
     # rake import:dictionary FILE_NAME=db/migrate/dicts/tibetan/tshig-mdzod.txt WORD_LANGUAGE=bod DEFINITION_LANGUAGE=bod COLS=letter,word,definition "GLOSSARY_NAME=bod rgya tshig mdzod chen mo"  
     desc media_import_description
-    task :dictionary do |t|
+    task dictionary: :environment do |t|
       require_relative '../dictionary_importation.rb'
       cols_string = ENV['COLS']
       cols = Hash.new
@@ -120,7 +120,7 @@ namespace :mms do
     # To import english to dzongkha run:
     # rake import:dictionaries FILE_NAMES=A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z WORD_LANGUAGE=eng DEFINITION_LANGUAGE=dzo PATH_TO_DICTS=db/migrate/dicts/eng-dzo COLS=word,grammatical_class,definition "GLOSSARY_NAME=English to Dzongkha Dictionary"
     desc media_import_description
-    task :dictionaries do |t|
+    task dictionaries: :environment do |t|
       require_relative '../dictionary_importation.rb'
       cols_string = ENV['COLS']
       cols = Hash.new
@@ -129,7 +129,7 @@ namespace :mms do
     end
 
     desc metadata_description
-    task :metadata do |t|
+    task metadata: :environment do |t|
       require_relative '../metadata_importation.rb'
       filename = ENV['FILENAME']
       if filename.blank?

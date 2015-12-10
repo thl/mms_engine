@@ -10,6 +10,7 @@ require 'filename_utils'
 I18n.load_path += Dir[File.join(__dir__, '..', 'config', 'locales', '**', '*.yml')]
 require 'mime_types'
 # ActionController::Base.cache_store = :file_store, File.join(RAILS_ROOT, 'tmp', 'cache')
+RMAGICK_BYPASS_VERSION_TEST = true
 
 module MmsEngine
 end
