@@ -2,7 +2,7 @@
 require 'multimedia_importation'
 
 namespace :mms do
-  namespace import: :environment do
+  namespace :import do
     media_import_description = "Batch process to import media.\n" + 
     "Syntax:\n" +
     "rake import:images SOURCE=path-to-folder [CLASSIFICATION=classification-type [CLASSIFICATION2=classification-type2 [CLASSIFICATION3=classification-type3]]]\n" +
