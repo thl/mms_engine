@@ -19,6 +19,5 @@ class Citation < ActiveRecord::Base
   validates_presence_of :reference_id, :reference_type
   belongs_to :medium
   belongs_to :reference, :polymorphic =>true
-  belongs_to :language, :class_name => 'ComplexScripts::Language'
   belongs_to :creator, :class_name => 'AuthenticatedSystem::Person', :foreign_key => 'creator_id'
 end

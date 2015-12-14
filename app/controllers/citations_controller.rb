@@ -25,9 +25,7 @@ class CitationsController < AclController
   # GET /citations/new.xml
   def new
     #@citation = Citation.new
-    @languages = ComplexScripts::Language.order('title')
-    language = ComplexScripts::Language.find_iso_code(I18n.locale)
-    @citation = @reference.citations.new(:language => language)
+    @citation = @reference.citations.new
     @citation.creator = current_user.person
     respond_to do |format|
       format.html # new.html.erb
