@@ -34,7 +34,7 @@ class MediaCategoryAssociationsController < AclController
   # GET /media_category_associations/new
   # GET /media_category_associations/new.xml
   def new
-    @media_category_association = MediaCategoryAssociation.new(:root_id => @topic.id)
+    @media_category_association = MediaCategoryAssociation.new(:root_id => @topic.nil? ? nil : @topic.id)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -132,7 +132,7 @@ class MediaCategoryAssociationsController < AclController
   private
   
   def media_category_association_params
-    params.require(:media_category_association).permit(:root_id, :category_id, :medium_id, :numeric_value, :string_value)
+    params.require(:media_category_association).permit(:root_id, :medium_id, :numeric_value, :string_value, category_id: [])
   end
   
   def find_medium_and_topic
