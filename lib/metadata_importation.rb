@@ -129,7 +129,7 @@ class MetadataImportation
   end
   
   def process_location
-    0.upto(2) do |i|
+    0.upto(5) do |i|
       prefix = i>0 ? "#{i}." : ''
       feature_str = self.fields.delete("#{prefix}locations.feature_id")
       if feature_str.blank?
