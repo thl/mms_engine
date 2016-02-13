@@ -91,14 +91,40 @@ class MetadataImportation
   
   def process_caption
     caption_str = self.fields.delete('captions.title')
-    if !caption_str.nil?
-      caption = MetadataImportation.truncated_find(Caption, caption_str)
-      captions = self.medium.captions
-      if caption.nil?
-        captions.create(:title => caption_str, :language => self.english)
-      else
-        captions << caption if !captions.collect{ |c| c.id }.include?(caption.id)
+    return if caption_str.nil?
+    caption_creator_str = self.fields.delete('captions.creator')
+    caption_creator = nil
+    if !caption_creator_str.blank?
+      caption_creator = AuthenticatedSystem::Person.find_by(fullname: caption_creator_str)
+      if caption_creator.nil?
+        puts "Caption creator named #{caption_creator_str} not found!"
       end
+    end
+    type_str = self.fields.delete('captions.type')
+    if type_str.blank?
+      caption_type = nil
+    else
+      caption_type = DescriptionType.find_by_title(type_str)
+      if caption_type.nil?
+        puts "Caption type #{type_str} not found!"
+      end
+    end
+    lang_code_str = self.fields.delete('captions.language.code')
+    if lang_code_str.blank?
+      lang = self.english
+    else
+      lang = ComplexScripts::Language.find_by_code(lang_code_str)
+      if lang.nil?
+        puts "Caption language code #{lang_code_str} not found!"
+        lang = self.english
+      end
+    end
+    caption = MetadataImportation.truncated_find(Caption, caption_str)
+    captions = self.medium.captions
+    if caption.nil?
+      captions.create(title: caption_str, language: lang, description_type: caption_type, creator: caption_creator)
+    else
+      captions << caption if !captions.collect{ |c| c.id }.include?(caption.id)
     end
   end
   
@@ -129,7 +155,7 @@ class MetadataImportation
   end
   
   def process_location
-    0.upto(5) do |i|
+    0.upto(7) do |i|
       prefix = i>0 ? "#{i}." : ''
       feature_str = self.fields.delete("#{prefix}locations.feature_id")
       if feature_str.blank?
@@ -165,26 +191,45 @@ class MetadataImportation
   
   def process_description
     description_str = self.fields.delete('descriptions.title')
-    if !description_str.nil?
-      description_creator_str = self.fields.delete('descriptions.creator')
+    return if description_str.nil?
+    description_creator_str = self.fields.delete('descriptions.creator')
+    if description_creator_str.blank?
       description_creator = nil
-      if !description_creator_str.nil?
-        description_creator = AuthenticatedSystem::Person.find_by(fullname: description_creator_str)
-        if description_creator.nil?
-          puts "Description creator named #{description_creator_str} not found!"
-        end
+    else
+      description_creator = AuthenticatedSystem::Person.find_by(fullname: description_creator_str)
+      if description_creator.nil?
+        puts "Description creator named #{description_creator_str} not found!"
       end
-      description = MetadataImportation.truncated_find(Description, description_str)
-      descriptions = self.medium.descriptions
-      if description.nil?
-        descriptions.create(:title => description_str, :language => english, :creator => description_creator)
-      else
-        if !description_creator.nil? && description.creator.nil?
-          description.creator = description_creator
-          description.save
-        end
-        descriptions << description if !descriptions.collect{ |d| d.id }.include?(description.id)
+    end
+    type_str = self.fields.delete('descriptions.type')
+    if type_str.blank?
+      desc_type = nil
+    else
+      desc_type = DescriptionType.find_by_title(type_str)
+      if desc_type.nil?
+        puts "Description type #{type_str} not found!"
       end
+    end
+    lang_code_str = self.fields.delete('descriptions.language.code')
+    if lang_code_str.blank?
+      lang = self.english
+    else
+      lang = ComplexScripts::Language.find_by_code(lang_code_str)
+      if lang.nil?
+        puts "Description language code #{lang_code_str} not found!"
+        lang = self.english
+      end
+    end
+    description = MetadataImportation.truncated_find(Description, description_str)
+    descriptions = self.medium.descriptions
+    if description.nil?
+      descriptions.create(title: description_str, language: lang, creator: description_creator, description_type: desc_type)
+    else
+      if !description_creator.nil? && description.creator.nil?
+        description.creator = description_creator
+        description.save
+      end
+      descriptions << description if !descriptions.collect{ |d| d.id }.include?(description.id)
     end
   end
   
@@ -230,16 +275,40 @@ class MetadataImportation
     end
   end
   
+  def process_copyrights
+    holder_str = self.fields.delete('copyright_holders.title')
+    return if holder_str.nil?
+    holder_str.strip!
+    return if holder_str.blank?
+    holder = CopyrightHolder.find_by(title: holder_str)
+    if holder.nil?
+      puts "Copyright holder #{holder_str} not found!"
+    else
+      reproduction_type_id = self.fields.delete('reproduction_types.id')
+      if reproduction_type_id.blank?
+        puts "Reproduction type needed to add copyright holder #{holder_str}!"
+      else
+        reproduction_type = ReproductionType.find(reproduction_type_id)
+        if reproduction_type.nil?
+          puts "Reproduction type needed #{reproduction_type_id} not found!"
+        else
+          copyright = self.medium.copyrights.create(copyright_holder: holder, reproduction_type: reproduction_type)
+        end
+      end
+    end
+  end
+  
   # Accepts:
   # media.id, workflows.original_filename
   # workflows.original_medium_id, workflows.other_id, workflows.sequence_order, workflows.notes
   # media.recording_note, media.private_note, media.taken_on, media.photographer, recording_orientations.title
   # locations.feature_id, geo_code_types.code, features.geo_code, locations.notes, locations.spot_feature
-  # captions.title
+  # captions.title, captions.creator, captions.type, captions.language.code
   # topics.title | topics.id, topics.delete
-  # descriptions.title, descriptions.creator
+  # descriptions.title, descriptions.creator, descriptions.type, descriptions.language.code
   # keywords.title
   # sources.title, media_source_associations.shot_number
+  # copyright_holders.title, reproduction_types.id
   def do_metadata_importation(filename)
     self.english = ComplexScripts::Language.find_by(code: 'eng')
     self.topic_root_ids = Hash.new
@@ -254,6 +323,7 @@ class MetadataImportation
       self.process_description
       self.process_keywords
       self.process_source
+      process_copyrights
       if self.fields.empty?
         puts "#{self.medium.id} processed."
       else
