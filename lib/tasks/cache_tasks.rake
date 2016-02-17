@@ -21,7 +21,10 @@ namespace :mms do
       associations = associations.joins(:medium).where('media.application_filter_id' => ApplicationFilter.application_filter.id) if !ApplicationFilter.application_filter.nil?
       associations.each do |a|
         feature = a.feature
-        puts "#{Time.now}: Feature #{a.feature_id} not found!" if feature.nil?
+        if feature.nil?
+          puts "#{Time.now}: Feature #{a.feature_id} not found!"
+          next
+        end
         medium_ids = ApplicationFilter.application_filter.nil? ? Location.where(:feature_id => feature.id).collect(&:medium_id) : Location.joins(:medium).where(:feature_id => feature.id, 'media.application_filter_id' => ApplicationFilter.application_filter.id).collect(&:medium_id)
         ([feature] + feature.ancestors).each { |f| medium_ids.each { |medium_id| CumulativeMediaLocationAssociation.create(:feature_id => f.id, :medium_id => medium_id) if CumulativeMediaLocationAssociation.find_by(feature_id: f.id, medium_id: medium_id).nil? } }
       end
