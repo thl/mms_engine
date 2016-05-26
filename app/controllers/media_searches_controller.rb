@@ -33,12 +33,17 @@ class MediaSearchesController < AclController
       redirect_to new_media_search_url
     else
       per_page = @media_type.blank? ? 20 : Medium::FULL_COLS * Medium::FULL_ROWS
-      @media = Medium.media_search(@media_search, @media_type).paginate(:per_page => per_page, :page => params[:page]) # :total_entries => Medium.media_count_search(@media_search, @media_type)
-      @pictures = Medium.media_search(@media_search, 'Picture').paginate(:per_page => per_page, :page => params[:page])
-      @videos = Medium.media_search(@media_search, 'Video').paginate(:per_page => per_page, :page => params[:page])
-      @documents = Medium.media_search(@media_search, 'Document').paginate(:per_page => per_page, :page => params[:page])
-      @online_resources = Medium.media_search(@media_search, 'OnlineResource').paginate(:per_page => per_page, :page => params[:page])
-      @keywords = Keyword.where([Util.search_condition_string(@media_search.type, 'title', true), @media_search.title])
+      if @media_type.blank?
+        @pictures = Medium.media_search(@media_search, 'Picture').paginate(:per_page => per_page, :page => params[:page])
+        @videos = Medium.media_search(@media_search, 'Video').paginate(:per_page => per_page, :page => params[:page])
+        @documents = Medium.media_search(@media_search, 'Document').paginate(:per_page => per_page, :page => params[:page])
+        @online_resources = Medium.media_search(@media_search, 'OnlineResource').paginate(:per_page => per_page, :page => params[:page])
+        @keywords = Keyword.where([Util.search_condition_string(@media_search.type, 'title', true), @media_search.title])
+      else
+        @media = Medium.media_search(@media_search, @media_type)
+        @media = @media.send(session[:filter]) if !session[:filter].blank?
+        @media = @media.paginate(:per_page => per_page, :page => params[:page]) # :total_entries => Medium.media_count_search(@media_search, @media_type)
+      end
       @titles = Hash.new
       @@media_types.each{ |key, value| @titles[key] = "#{value.model_name.human(:count => :many).titleize} about \"#{@media_search.title}\"" }
       media_type_display = @media_type.blank? ? 'Media' : @@media_types[@media_type.underscore.to_sym].model_name.human(:count => :many).titleize

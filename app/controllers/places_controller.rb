@@ -42,7 +42,15 @@ class PlacesController < ApplicationController
   
   def get_media_by_type(type)
     @place = Place.find(params[:id])
-    @media = @place.media(:type => type).paginate(:page => params[:page], :per_page => Medium::FULL_COLS * Medium::FULL_ROWS, :total_entries => @place.media_count(type))
+    @media = @place.media(:type => type)
+    filter = session[:filter]
+    if filter.blank?
+      count = @place.media_count(type)
+    else
+      @media = @media.send(filter)
+      count = @media.count
+    end
+    @media = @media.paginate(:page => params[:page], :per_page => Medium::FULL_COLS * Medium::FULL_ROWS, :total_entries => count)
     @pagination_params = { :feature_id => @place.fid, :type => type }
   end
   

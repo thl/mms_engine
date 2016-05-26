@@ -24,7 +24,9 @@ class MediaController < AclController
         @title = "#{Medium.model_name.human(:count => :many).titleize} Associated with Keyword \"#{@keyword.title}\"".s
       else
         if !@type.blank?
-          @media = Medium.where(:type => @type).order('created_on DESC').paginate(:per_page => Medium::FULL_COLS * Medium::FULL_ROWS, :page => params[:page]) # :total_entries => Medium.where(:type => @type).count
+          @media = Medium.where(:type => @type).order('created_on DESC')
+          @media = @media.send(session[:filter]) if !session[:filter].blank?
+          @media = @media.paginate(:per_page => Medium::FULL_COLS * Medium::FULL_ROWS, :page => params[:page]) # :total_entries => Medium.where(:type => @type).count
           @title = @type.constantize.model_name.human.titleize.pluralize
         else
           #@pictures = Picture.all.limit(Medium::COLS * Medium::PREVIEW_ROWS).order('RAND()')

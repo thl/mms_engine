@@ -77,7 +77,15 @@ class TopicsController < AclController
   
   def get_media_by_type(type)
     @topic = Topic.find(params[:id])
-    @media = @topic.media(:type => type).paginate(:page => params[:page], :per_page => params[:per_page] || Medium::FULL_COLS * Medium::FULL_ROWS, :total_entries => @topic.media_count(type))
+    @media = @topic.media(:type => type)
+    filter = session[:filter]
+    if filter.blank?
+      count = @topic.media_count(type)
+    else
+      @media = @media.send(filter)
+      count = @media.count
+    end
+    @media = @media.paginate(:page => params[:page], :per_page => params[:per_page] || Medium::FULL_COLS * Medium::FULL_ROWS, :total_entries => count)
     @pagination_params = { :category_id => @topic.id, :type => type }
   end
   

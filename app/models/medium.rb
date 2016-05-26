@@ -85,7 +85,12 @@ class Medium < ActiveRecord::Base
   has_many :keywords, -> { order 'title' }, through: :media_keyword_associations
   has_many :cumulative_media_category_associations, :dependent => :destroy
   has_many :titles, :dependent => :destroy
-    
+  
+  scope :no_caption, -> { where('media.id NOT IN (SELECT medium_id FROM captions_media)') }
+  scope :no_description, -> { where('media.id NOT IN (SELECT medium_id FROM descriptions_media)') }
+  scope :no_place, -> { where('media.id NOT IN (SELECT medium_id FROM locations)') } # Medium.includes(:locations).where(:locations => {:id => nil})
+  scope :no_subject, -> { where('media.id NOT IN (SELECT medium_id FROM media_category_associations)') }
+
   def media_collection_associations
     self.media_category_associations.where(:root_id => Collection.root_id)
   end

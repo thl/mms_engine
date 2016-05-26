@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     :online_resources, :organizations, :pictures, :projects, :quality_types, :recording_orientations,
     :reproduction_types, :sources, :sponsors, :transformations, :videos, :statuses, :publishers  
   get 'admin', to: 'main#admin', as: 'admin'
+  get 'sessions/filter_by/:id', to: 'sessions#filter_by', as: 'sessions_filter_by'
   get 'subtitles/:video_id/:language/:form', to: 'subtitles#index', as: 'subtitles', defaults: { form: 'script', language: 'bo' }
   get 'help', to: 'help#advanced_search', as: 'help_advanced_search'
   

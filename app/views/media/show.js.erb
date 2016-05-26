@@ -1,2 +1,16 @@
-$("#popup_dialog").html("<%= escape_javascript(render(:partial => 'show')) %>")
+$("#popup_dialog").html("<%= escape_javascript(render(:partial => 'show')) %>");
 $("#popup_dialog").dialog("open");
+grid = $(".media-thumb");
+current = $("#thumb-<%= @medium.id %>");
+index = grid.index(current);
+if (index>0) {
+	$("#previous-link").attr('href', grid[index-1].href);
+} else {
+	$("#previous-link").hide();
+}
+if (index+1<grid.length) {
+	$("#next-link").attr('href', grid[index+1].href);
+}
+else {
+	$("#next-link").hide();
+}

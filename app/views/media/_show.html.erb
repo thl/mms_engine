@@ -160,18 +160,13 @@
 <%   end
    end %>
 <p>
-<% has_previous = false
-   if authorized?(edit_medium_path(@medium)) %>
-<%=  link_to ts('edit.record', :what => t(:catalog_record)), edit_medium_path(@medium) %>
-<%   has_previous = true
-   end
+<%= link_to "<< #{ts('results.previous')}", '#', id: 'previous-link', remote: true %>
+<% if authorized?(edit_medium_path(@medium)) %>
+      | <%= link_to ts('edit.record', :what => t(:catalog_record)), edit_medium_path(@medium) %>
+<% end
    path = medium_path(@medium)
-   if authorized?(path, :action => 'destroy')
-	 if has_previous %>
-	   |
-<%   else
-       has_previous = true
-	 end %>
-<%=  link_to ts('delete.this'), path, method: :delete, data: { confirm: te('delete.confirmation') } %>
+   if authorized?(path, :action => 'destroy') %>
+     | <%= link_to ts('delete.this'), path, method: :delete, data: { confirm: te('delete.confirmation') } %>
 <% end %>
+| <%= link_to "#{ts('results.next')} >>", '#', id: 'next-link', remote: true %>
 </p>
