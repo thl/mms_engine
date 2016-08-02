@@ -1,8 +1,33 @@
 <h1><%= ts :for, :what => t('edit.ing.record', :what => t(:catalog_record)), :whom => "#{Medium.human_attribute_name(:id)}#{@medium.id}" %></h1>
 <%= error_messages_for :medium %>
+<p><b><%= Medium.model_name.human.titleize.s %></b><br />
+<%= thumbnail_image_link(@medium) if !@medium.instance_of? OnlineResource %></p>
+<% captions = @medium.captions
+   if !captions.empty? %>
+     <p><%= bookmark 'captions' %>
+	 <b><%= Caption.model_name.human(:count => captions.size).titleize.s %></b>
+     (<%= link_to ts('new.record', :what => Caption.model_name.human), new_medium_caption_path(@medium) %>)</p>
+<%=  captions.collect{|caption| "<p>#{caption.title.s} (#{link_to caption.description_type.nil? ? ts('edit.this') : caption.description_type.title, edit_medium_caption_path(@medium, caption)})</p>"}.join("\n").html_safe %>
+     <hr/>
+<% end
+   descriptions = @medium.descriptions
+   if !descriptions.empty? %>
+     <p><%= bookmark 'descriptions' %>
+	 <b><%= Description.model_name.human(:count => descriptions.size).titleize.s %></b>
+	 (<%=  link_to ts('new.record', :what => Description.model_name.human), new_medium_description_path(@medium) %>)</p>
+<%=  descriptions.collect{|description| "#{description.title.s}<p>#{link_to description.description_type.nil? ? ts('edit.this') : description.description_type.title, edit_medium_description_path(@medium, description)}</p><hr/>" }.join("\n").html_safe %>
+<% end %>
+<p>
+<% if captions.empty? %>
+<%=  bookmark 'captions' %>
+<%=  link_to ts('add.record', :what => Caption.model_name.human), new_medium_caption_path(@medium)%> |
+<% end
+   if descriptions.empty? %>
+<%=  bookmark 'descriptions' %>
+<%=  link_to ts('add.record', :what => Description.model_name.human), new_medium_description_path(@medium) %>
+<% end %>
+</p>
 <%= form_for(@medium, :as => :medium, :url => medium_path(@medium), :method => :put) do |f| %>
-      <p><b><%= Medium.model_name.human.titleize.s %></b><br />
-<%=   thumbnail_image_link(@medium) if !@medium.instance_of? OnlineResource %></p>
 <%    case @medium.class.name
       when 'Picture' %>
 <%=     render :partial => 'pictures/form', :locals => {:f => f} %>
@@ -23,22 +48,7 @@
 <%   end %>
 <%=  render :partial => 'titles/index', :locals => {:titles => titles } %>
 <% end
-   captions = @medium.captions
-   if !captions.empty? %>
-     <p><%= bookmark 'captions' %>
-	 <b><%= Caption.model_name.human(:count => captions.size).titleize.s %></b>
-     (<%= link_to ts('new.record', :what => Caption.model_name.human), new_medium_caption_path(@medium) %>)</p>
-<%=  captions.collect{|caption| "<p>#{caption.title.s} (#{link_to caption.description_type.nil? ? ts('edit.this') : caption.description_type.title, edit_medium_caption_path(@medium, caption)})</p>"}.join("\n").html_safe %>
-     <hr/>
-<% end
-   descriptions = @medium.descriptions
-   if !descriptions.empty? %>
-     <p><%= bookmark 'descriptions' %>
-	 <b><%= Description.model_name.human(:count => descriptions.size).titleize.s %></b>
-	 (<%=  link_to ts('new.record', :what => Description.model_name.human), new_medium_description_path(@medium) %>)</p>
-<%=  descriptions.collect{|description| "#{description.title.s}<p>#{link_to description.description_type.nil? ? ts('edit.this') : description.description_type.title, edit_medium_description_path(@medium, description)}</p><hr/>" }.join("\n").html_safe %>
-<% end %>
-<% locations = @medium.locations 
+   locations = @medium.locations 
    if !locations.empty? %>
      <p><%= bookmark 'locations' %>
 	 <b><%= Location.model_name.human(:count => locations.size).titleize.s %></b>
@@ -116,14 +126,6 @@
 <% if titles.empty? %>
 <%=  bookmark 'titles' %>
 <%=  link_to ts('add.record', :what => Title.model_name.human), new_medium_title_path(@medium)%> |
-<% end
-   if captions.empty? %>
-<%=  bookmark 'captions' %>
-<%=  link_to ts('add.record', :what => Caption.model_name.human), new_medium_caption_path(@medium)%> |
-<% end
-   if descriptions.empty? %>
-<%=  bookmark 'descriptions' %>
-<%=  link_to ts('add.record', :what => Description.model_name.human), new_medium_description_path(@medium) %> |
 <% end
    if media_keyword_associations.empty? %>
 <%=  bookmark 'keywords' %>

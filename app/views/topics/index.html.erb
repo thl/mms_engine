@@ -12,7 +12,7 @@
      </div>
 <% end %>
 <%= javascript_on_load do %>
-      $("select[name='root_topics']").change(function() { 
+      $("select[name='root_topics']").change(function() {
 		  value = $(this).val();
 		  if (value != '') window.location = value;
 	  });

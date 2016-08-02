@@ -18,6 +18,17 @@
 <%   when 'OnlineResource' %>
 <%=    render :partial => 'online_resources/show' %>
 <%   end %>
+<p>
+<%= link_to "<< #{ts('results.previous')}", '#', id: 'previous-link', remote: true %>
+<% if authorized?(edit_medium_path(@medium)) %>
+      | <%= link_to ts('edit.record', :what => t(:catalog_record)), edit_medium_path(@medium) %>
+<% end
+   path = medium_path(@medium)
+   if authorized?(path, :action => 'destroy') %>
+     | <%= link_to ts('delete.this'), path, method: :delete, data: { confirm: te('delete.confirmation') } %>
+<% end %>
+| <%= link_to "#{ts('results.next')} >>", '#', id: 'next-link', remote: true %>
+</p>
 <%=  display_if_not_blank Medium.human_attribute_name(:id).s, "#{@medium.id} (#{link_to ts(:url_for_reference), medium_path(@medium)})".html_safe %>
 <%=  render :partial => 'titles/index_display_only', :locals => {:medium => @medium} %>
 <% end 
@@ -159,14 +170,3 @@
 <%=    render :partial => 'workflows/show', :locals => {:workflow => workflow} %>
 <%   end
    end %>
-<p>
-<%= link_to "<< #{ts('results.previous')}", '#', id: 'previous-link', remote: true %>
-<% if authorized?(edit_medium_path(@medium)) %>
-      | <%= link_to ts('edit.record', :what => t(:catalog_record)), edit_medium_path(@medium) %>
-<% end
-   path = medium_path(@medium)
-   if authorized?(path, :action => 'destroy') %>
-     | <%= link_to ts('delete.this'), path, method: :delete, data: { confirm: te('delete.confirmation') } %>
-<% end %>
-| <%= link_to "#{ts('results.next')} >>", '#', id: 'next-link', remote: true %>
-</p>
