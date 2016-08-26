@@ -301,8 +301,52 @@ class Medium < ActiveRecord::Base
     end
   end
   
+  def update_solr
+    begin
+      Flare.index!(document_for_rsolr)
+      return true
+    rescue => e
+      logger.error "Solr index could not be updated for media object #{self.id}"
+      logger.error e.to_s
+      logger.error e.backtrace.join("\n")
+      return false
+    end
+  end
+  
   private
-      
+  
+  def document_for_rsolr
+    doc = RSolr::Xml::Document.new
+    doc.add_field('asset_type', self.class.name.downcase)
+    service = MmsIntegration::Medium.service
+    doc.add_field('service', service)
+    doc.add_field('id', self.id)
+    doc.add_field('uid', "#{service}-#{self.id}")
+    url = MmsIntegration::Medium.get_url(self.id)
+    doc.add_field('url_html', url)
+    doc.add_field('url_ajax', "#{url}.js")
+    doc.add_field('url_json', "#{url}.json")
+    thumb = self.thumbnail_image
+    doc.add_field('url_thumb', MmsIntegration::Medium.prefix_for_url + thumb.public_filename) if !thumb.nil?
+    caption = prioritized_caption
+    doc.add_field('caption', caption.title) if !caption.nil?
+    self.cumulative_media_category_associations.each{ |ca| doc.add_field('kmapid', "subjects-#{ca.category_id}") }
+    self.cumulative_media_location_associations.each{ |la| doc.add_field('kmapid', "places-#{la.feature_id}") }
+    # Handle subjects and places associations!
+    doc
+  end
+  
+  def prioritized_caption
+    eng = ComplexScripts::Language.find_by_code('eng')
+    type = DescriptionType.first
+    captions = self.captions
+    return nil if captions.empty?
+    filtered = captions.where(language_id: eng.id, description_type_id: type.id)
+    filtered = captions.where(language_id: eng.id) if filtered.empty?
+    filtered = captions if filtered.empty?
+    return filtered.first
+  end
+  
   def delete_from_coldstorage
     media_full_path = cold_storage_if_exists
     return if media_full_path.nil?
@@ -311,8 +355,6 @@ class Medium < ActiveRecord::Base
     rescue Exception => exc
     end
   end
-  
-  private
   
   def medium_path
     ['media_objects', self.id].join('/')
