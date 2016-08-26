@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '~> 4.1.5'
   # s.add_dependency "jquery-rails"
   
-  s.add_dependency 'mysql2'
+  s.add_dependency 'mysql2', '0.3.18'
   
   # Use Uglifier as compressor for JavaScript assets
   s.add_dependency 'uglifier', '>= 1.3.0'
