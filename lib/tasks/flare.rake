@@ -5,13 +5,16 @@ namespace :mms_engine do
       media = Medium.order(:id)
       from = ENV['FROM']
       media = media.where(['id >= ?', from.to_i]) if !from.blank?
+      count = 0
       media.each do |m|
         if m.update_solr
           puts "#{Time.now}: Reindexed #{m.id}."
+          Flare.commit if (count+=1) % 1000 == 0 # Do commit every 1000 updates
         else
           puts "#{Time.now}: #{m.id} failed."
         end
       end
+      Flare.commit
     end
   end
 end

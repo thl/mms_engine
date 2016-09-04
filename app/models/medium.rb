@@ -313,14 +313,37 @@ class Medium < ActiveRecord::Base
     end
   end
   
+  def update_solr!
+    resp = update_solr
+    Flare.commit if resp
+    resp
+  end
+  
+  def delete_from_solr
+    Flare.delete_by("service:#{solr_service} AND id:#{solr_id}")
+  end
+  
+  def delete_from_solr!
+    delete_from_solr
+    Flare.commit
+  end
+  
   private
+  
+  def solr_id
+    self.id
+  end
+  
+  def solr_service
+    MmsIntegration::Medium.service
+  end
   
   def document_for_rsolr
     doc = RSolr::Xml::Document.new
     doc.add_field('asset_type', self.class.name.downcase)
-    service = MmsIntegration::Medium.service
+    service = solr_service
     doc.add_field('service', service)
-    doc.add_field('id', self.id)
+    doc.add_field('id', solr_id)
     doc.add_field('uid', "#{service}-#{self.id}")
     url = MmsIntegration::Medium.get_url(self.id)
     doc.add_field('url_html', url)
