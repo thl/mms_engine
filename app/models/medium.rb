@@ -303,7 +303,7 @@ class Medium < ActiveRecord::Base
   
   def update_solr
     begin
-      Flare.index!(document_for_rsolr)
+      Flare.index(document_for_rsolr)
       return true
     rescue => e
       logger.error "Solr index could not be updated for media object #{self.id}"
@@ -320,7 +320,13 @@ class Medium < ActiveRecord::Base
   end
   
   def delete_from_solr
-    Flare.delete_by("service:#{solr_service} AND id:#{solr_id}")
+    begin
+      Flare.delete_by("service:#{solr_service} AND id:#{solr_id}")
+    rescue => e
+      logger.error "Solr index could not be deleted for feature #{self.fid}"
+      logger.error e.to_s
+      logger.error e.backtrace.join("\n")
+    end
   end
   
   def delete_from_solr!
