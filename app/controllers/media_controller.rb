@@ -2,7 +2,7 @@ class MediaController < AclController
   caches_page :show, :if => Proc.new { |c| c.request.format.xml? || c.request.format.json?}
   caches_page :index, :if => Proc.new { |c| c.request.format.xml? || c.request.format.json?}
   cache_sweeper :medium_sweeper, :only => [:update, :destroy]
-  skip_before_filter :verify_authenticity_token, :only => [:external]
+  skip_before_filter :verify_authenticity_token, only: [:external]
   
   # Adding redundant candidates (e.g. category_id and :topic_id) for now to prevent errors, but these should be consolidated
   MEDIA_TYPES = {:picture => Picture, :video => Video, :document => Document}
@@ -103,19 +103,10 @@ class MediaController < AclController
   def external
     @medium = Medium.find(params[:id])
     respond_to do |format|
-      format.html do # show.rhtml
-        @tab_options ||= {}
-        @tab_options[:entity] = @medium
-        @pictures = Picture.all.order('RAND()').limit(Medium::COLS * Medium::PREVIEW_ROWS)
-        @videos = Video.all.order('RAND()').limit(1)
-        @documents = Document.all.order('RAND()').limit(1)
-        @titles = { :picture => ts(:daily, :what => Picture.model_name.human(:count => :many).titleize), :video => ts(:daily, :what => Video.model_name.human(:count => :many).titleize), :document => ts(:daily, :what => Document.model_name.human(:count => :many).titleize) }
-        @more = { :type => '' }
-      end
-      format.js
+      format.html { render 'og_external', layout: false  }
+      format.js #{render 'external'}
     end
   end
-  
   
   # GET /media/1/large
   # GET /media/1/large.xml
