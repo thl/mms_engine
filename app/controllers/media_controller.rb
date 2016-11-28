@@ -1,11 +1,12 @@
 class MediaController < AclController
-  caches_page :show, :if => Proc.new { |c| c.request.format.xml? || c.request.format.json?}
-  caches_page :index, :if => Proc.new { |c| c.request.format.xml? || c.request.format.json?}
-  cache_sweeper :medium_sweeper, :only => [:update, :destroy]
+  caches_page :show, if: Proc.new { |c| c.request.format.xml? || c.request.format.json?}
+  caches_page :index, if: Proc.new { |c| c.request.format.xml? || c.request.format.json?}
+  caches_page :external, if: Proc.new { |c| c.request.format.html?}
+  cache_sweeper :medium_sweeper, only: [:update, :destroy]
   skip_before_filter :verify_authenticity_token, only: [:external]
   
   # Adding redundant candidates (e.g. category_id and :topic_id) for now to prevent errors, but these should be consolidated
-  MEDIA_TYPES = {:picture => Picture, :video => Video, :document => Document}
+  MEDIA_TYPES = {picture: Picture, video: Video, document: Document}
 
   def initialize
     super

@@ -41,7 +41,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'annotate'
 
   s.add_dependency 'rmagick'
-  s.add_dependency 'spawnling'
   
   s.add_dependency 'acts_as_list'
   s.add_dependency 'in_place_editing'
