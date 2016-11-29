@@ -5,6 +5,7 @@ class MediumSweeper < ActionController::Caching::Sweeper
   
   observe Medium, Location, MediaCategoryAssociation
   FORMATS = ['xml', 'json']
+  RELATIVE_ROOT = ActionController::Base.relative_url_root
   
   def after_save(record)
     expire_cache(record)
@@ -28,6 +29,6 @@ class MediumSweeper < ActionController::Caching::Sweeper
       paths.each{ |path| expire_full_path_page path }
     end
     options[:format] = 'html'
-    expire_full_path_page external_medium_url(medium, options)
+    expire_action "#{RELATIVE_ROOT if !RELATIVE_ROOT.blank?}#{external_medium_url(medium, options)}"
   end
 end

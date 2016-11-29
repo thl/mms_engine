@@ -1,7 +1,7 @@
 class MediaController < AclController
   caches_page :show, if: Proc.new { |c| c.request.format.xml? || c.request.format.json?}
   caches_page :index, if: Proc.new { |c| c.request.format.xml? || c.request.format.json?}
-  caches_page :external, if: Proc.new { |c| c.request.format.html?}
+  caches_action :external, cache_path: Proc.new { |c| c.request.path }, if: Proc.new { |c| c.request.format.html?}
   cache_sweeper :medium_sweeper, only: [:update, :destroy]
   skip_before_filter :verify_authenticity_token, only: [:external]
   
