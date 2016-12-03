@@ -23,6 +23,8 @@
 class Document < Medium  
   include MediaProcessor::DocumentExtension
   
+  acts_as_indexable uid_prefix: MmsIntegration::MediaManagementResource.service, scope: {asset_type: self.name.downcase, service: MmsIntegration::Medium.service}
+  
   before_create  { |record| record.resource_type_id = 2639 if record.resource_type_id.nil? }
   before_destroy { |record| record.typescript.destroy if !record.typescript.nil? }
   

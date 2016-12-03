@@ -27,6 +27,8 @@ class Video < Medium
   include ForkedNotifier
 
   validates_presence_of :attachment_id
+  
+  acts_as_indexable uid_prefix: MmsIntegration::MediaManagementResource.service, scope: {asset_type: self.name.downcase, service: MmsIntegration::Medium.service}
 
   before_create  { |record| record.resource_type_id = 2687 if record.resource_type_id.nil? }
   before_destroy { |record| record.movie.destroy }

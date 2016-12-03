@@ -25,6 +25,8 @@ class Picture < Medium
   
   validates_presence_of :attachment_id
   
+  acts_as_indexable uid_prefix: MmsIntegration::MediaManagementResource.service, scope: {asset_type: self.name.downcase, service: MmsIntegration::Medium.service}
+  
   before_create  { |record| record.resource_type_id = 2660 if record.resource_type_id.nil? }
   before_destroy { |record| record.image.destroy if !record.image.nil? }
   after_create   { |record| record.update_from_image_properties }
