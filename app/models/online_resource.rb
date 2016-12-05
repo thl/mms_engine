@@ -20,14 +20,13 @@
 #  rotation                 :integer
 #
 
-class OnlineResource < Medium
-  accepts_nested_attributes_for :web_address
-  
+class OnlineResource < Medium  
   acts_as_indexable uid_prefix: MmsIntegration::MediaManagementResource.service, scope: {asset_type: self.name.downcase, service: MmsIntegration::Medium.service}
   
   before_create  { |record| record.resource_type_id = 2677 if record.resource_type_id.nil? }
   
   has_one :web_address
+  accepts_nested_attributes_for :web_address
     
   def self.maker_title
     'Web admin'
