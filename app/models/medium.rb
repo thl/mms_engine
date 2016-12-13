@@ -174,6 +174,12 @@ class Medium < ActiveRecord::Base
     att.children.find_by(thumbnail: 'large')
   end
 
+  def huge_image
+    att = attachment
+    return nil if att.nil?
+    att.children.find_by(thumbnail: 'huge')
+  end
+
   #not meant to be called in itself but within the page_media of administrative_units, subjects, collections, and ethnicities
   def self.paged_media(descendant_ids, limit, offset = nil, type = nil)
     conditions_string = String.new
@@ -313,8 +319,16 @@ class Medium < ActiveRecord::Base
     doc.add_field('url_html', url)
     doc.add_field('url_ajax', "#{url}.js")
     doc.add_field('url_json', "#{url}.json")
-    thumb = self.thumbnail_image
-    doc.add_field('url_thumb', MmsIntegration::Medium.prefix_for_url + thumb.public_filename) if !thumb.nil?
+    attachment = self.attachment
+    prefix = MmsIntegration::Medium.prefix_for_url
+    attachment.children.each do |c|
+      doc.add_field("url_#{c.thumbnail}", prefix + c.public_filename) 
+      doc.add_field("url_#{c.thumbnail}_width", c.width)
+      doc.add_field("url_#{c.thumbnail}_height", c.height)
+      doc.add_field("url_#{c.thumbnail}_size", c.size)
+    end if !attachment.nil?
+    # thumb = self.thumbnail_image
+    # doc.add_field('url_thumb', MmsIntegration::Medium.prefix_for_url + thumb.public_filename) if !thumb.nil?
     caption = prioritized_caption
     doc.add_field('caption', caption.title) if !caption.nil?
     self.cumulative_media_category_associations.each{ |ca| doc.add_field('kmapid', "subjects-#{ca.category_id}") }

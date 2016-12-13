@@ -36,12 +36,6 @@ class Picture < Medium
   def attachment
     image
   end
-      
-  def huge_image
-    att = attachment
-    return nil if att.nil?
-    att.children.find_by(thumbnail: 'huge')
-  end
   
   def self.public_folder
     'images'

@@ -9,12 +9,12 @@ namespace :mms_engine do
       media.each do |m|
         if m.index
           puts "#{Time.now}: Reindexed #{m.id}."
-          Medium.commit if (count+=1) % 1000 == 0 # Do commit every 1000 updates
+          Picture.commit if (count+=1) % 1000 == 0 # Do commit every 1000 updates
         else
           puts "#{Time.now}: #{m.id} failed."
         end
       end
-      Medium.commit
+      Picture.commit
     end
   end
 end
