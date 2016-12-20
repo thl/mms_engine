@@ -306,7 +306,21 @@ class Medium < ActiveRecord::Base
       self.partial_taken_on = a.join('/') if !a.empty?
     end
   end
-    
+  
+  def prioritized_title
+    title = self.prioritized_titles.first
+    return title.nil? ? self.id.to_s : title.title
+  end
+  
+  protected
+  
+  def prioritized_titles
+     eng = ComplexScripts::Language.find_by_code('eng')
+     titles = self.titles.order(:id)
+     title = titles.where(language_id: eng.id).first
+     return title.nil? ? titles : [title] + titles.where.not(id: title.id)
+  end
+  
   private
   
   def document_for_rsolr
@@ -331,12 +345,13 @@ class Medium < ActiveRecord::Base
     # doc.add_field('url_thumb', MmsIntegration::Medium.prefix_for_url + thumb.public_filename) if !thumb.nil?
     caption = prioritized_caption
     doc.add_field('caption', caption.title) if !caption.nil?
+    self.prioritized_titles.collect(&:title).uniq.each {|t| doc.add_field('title', t) }
     self.cumulative_media_category_associations.each{ |ca| doc.add_field('kmapid', "subjects-#{ca.category_id}") }
     self.cumulative_media_location_associations.each{ |la| doc.add_field('kmapid', "places-#{la.feature_id}") }
     # Handle subjects and places associations!
     doc
   end
-  
+   
   def prioritized_caption
     eng = ComplexScripts::Language.find_by_code('eng')
     type = DescriptionType.first
