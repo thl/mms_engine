@@ -2,6 +2,7 @@ class MediumSweeper < ActionController::Caching::Sweeper
   include InterfaceUtils::Extensions::Sweeper
   include Rails.application.routes.url_helpers
   include ActionController::Caching::Pages
+  include ActionController::Caching::Actions
   
   observe Medium, Location, MediaCategoryAssociation
   FORMATS = ['xml', 'json']
