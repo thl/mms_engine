@@ -16,7 +16,7 @@ class RotationsController < AclController
   # GET /rotations/1.xml
   def show
     @rotation = params[:id]
-    if @rotation.blank? || @rotation.to_i.to_s != @rotation || Rotation.find_by(id: @rotation.to_i).nil?
+    if @rotation.blank? || @rotation.to_i.to_s != @rotation || Rotation.find_by_id(@rotation.to_i).nil?
       redirect_to medium_url(@medium)
     else
       respond_to do |format|
@@ -31,7 +31,7 @@ class RotationsController < AclController
 
   # POST /rotations
   def create
-    if @medium.update_attributes(params[:medium])
+    if @medium.update_attributes(params.require(:medium).permit(:rotation))
       respond_to do |format|
         format.js do
           start_log('Beginning rotation.')

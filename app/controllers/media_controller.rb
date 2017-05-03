@@ -155,7 +155,7 @@ class MediaController < AclController
   def update
     @medium = Medium.find(params[:id])
     params_medium = params.require(:medium).permit(:recording_note, :resource_type_id, :photographer_id, :taken_on, :partial_taken_on, :capture_device_model_id,
-    :quality_type_id, :private_note, web_address_attributes: [:parent_resource_id, :url])
+    :quality_type_id, :private_note, :rotation, web_address_attributes: [:parent_resource_id, :url])
     respond_to do |format|
       params_web_address = params_medium.delete(:web_address_attributes)
       @medium.attributes = params_medium
