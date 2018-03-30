@@ -7,5 +7,5 @@
 #
 
 class Dialect < ActiveRecord::Base
-  has_many :words
+  has_many :words, dependent: :nullify
 end

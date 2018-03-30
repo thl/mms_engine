@@ -12,7 +12,7 @@
 
 class Publisher < ActiveRecord::Base
   validates_presence_of :title
-  has_many :media_publishers
+  has_many :media_publishers, dependent: :nullify
 
   def country
     self.country_id.nil? ? nil : Place.find(self.country_id)

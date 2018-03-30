@@ -16,6 +16,6 @@ class Title < ActiveRecord::Base
   belongs_to :medium
   belongs_to :language, :class_name => 'ComplexScripts::Language'
   belongs_to :creator, :class_name => 'AuthenticatedSystem::Person', :foreign_key => 'creator_id'
-  has_many   :translated_titles
-  has_many   :citations, :as => :reference
+  has_many   :translated_titles, dependent: :destroy
+  has_many   :citations, as: :reference, dependent: :destroy
 end

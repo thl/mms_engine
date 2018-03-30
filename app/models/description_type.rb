@@ -8,6 +8,6 @@
 
 class DescriptionType < ActiveRecord::Base
   validates_presence_of :title
-  has_many :captions  
-  has_many :descriptions
+  has_many :captions, dependent: :nullify
+  has_many :descriptions, dependent: :nullify
 end

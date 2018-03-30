@@ -1,0 +1,39 @@
+TY - <%= @medium.resource_type.header %>
+ID - <%= @medium.id %>
+<% titles = @medium.titles
+   if !titles.first.nil? && !titles.first.title.blank? %>
+TI - <%= titles.first.title %>
+<% end
+   if !titles.second.nil? && !titles.second.title.blank? %>
+T1 - <%= titles.second.title %>
+<% end 
+   translated_titles = titles.collect{|t| t.translated_titles}.flatten
+	 for title in translated_titles
+		 if !title.title.blank? -%>
+TT - <%= title.title %>
+<%   end
+   end
+   if !@medium.photographer.nil? -%>
+AU - <%= @medium.photographer.fullname %>
+<% end 
+   if !@medium.media_publisher.nil? && !@medium.media_publisher.publisher.nil? && !@medium.media_publisher.publisher.title.blank? -%>
+PB - <%= @medium.media_publisher.publisher.title %>
+<% end 
+   caption = @medium.captions.first
+	 if !caption.nil? && !caption.title.blank? -%>
+CA - <%= caption.title %>
+<% end 
+   desc = @medium.descriptions.first
+   if !desc.nil? && !desc.title.blank? -%>
+N1 - <%= desc.title %>
+<% end
+   location = @medium.locations.first
+   if !location.nil? && !location.feature.nil? & !location.feature.header.blank? -%>
+CY - <%= location.feature.header %>
+<% end
+   @medium.media_category_associations.each do |mca|
+     if !mca.category.nil? && !mca.category.header.blank? -%>
+KW - <%= mca.category.header %>
+<%   end
+	 end -%>
+ER -

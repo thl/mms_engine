@@ -12,5 +12,5 @@
 
 class CaptureDeviceModel < ActiveRecord::Base
   belongs_to :capture_device_maker
-  has_many :media
+  has_many :media, dependent: :nullify
 end

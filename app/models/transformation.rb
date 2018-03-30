@@ -10,7 +10,7 @@
 
 class Transformation < ActiveRecord::Base
   belongs_to :renderer, :class_name => 'FileRenderer'
-  has_many :typescripts
+  has_many :typescripts, dependent: :nullify
   
   def full_path
     renderer.path.sub(/:transformation/, path)

@@ -312,6 +312,17 @@ class Medium < ActiveRecord::Base
     return title.nil? ? self.id.to_s : title.title
   end
   
+  def prioritized_caption
+    eng = ComplexScripts::Language.find_by_code('eng')
+    type = DescriptionType.first
+    captions = self.captions
+    return nil if captions.empty?
+    filtered = captions.where(language_id: eng.id, description_type_id: type.id)
+    filtered = captions.where(language_id: eng.id) if filtered.empty?
+    filtered = captions if filtered.empty?
+    return filtered.first
+  end
+  
   protected
   
   def prioritized_titles
@@ -350,17 +361,6 @@ class Medium < ActiveRecord::Base
     self.cumulative_media_location_associations.each{ |la| doc.add_field('kmapid', "places-#{la.feature_id}") }
     # Handle subjects and places associations!
     doc
-  end
-   
-  def prioritized_caption
-    eng = ComplexScripts::Language.find_by_code('eng')
-    type = DescriptionType.first
-    captions = self.captions
-    return nil if captions.empty?
-    filtered = captions.where(language_id: eng.id, description_type_id: type.id)
-    filtered = captions.where(language_id: eng.id) if filtered.empty?
-    filtered = captions if filtered.empty?
-    return filtered.first
   end
   
   def delete_from_coldstorage

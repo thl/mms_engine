@@ -8,6 +8,6 @@
 #
 
 class FileRenderer < ActiveRecord::Base
-  has_many :transformations
+  has_many :transformations, dependent: :nullify
   self.table_name = 'renderers'
 end

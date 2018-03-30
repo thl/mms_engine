@@ -9,5 +9,5 @@
 
 class CopyrightHolder < ActiveRecord::Base
   validates_presence_of :title
-  has_many :copyrights
+  has_many :copyrights, dependent: :destroy
 end

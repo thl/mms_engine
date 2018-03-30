@@ -11,6 +11,6 @@
 #
 
 class Glossary < ActiveRecord::Base
-  has_many :definitions
+  has_many :definitions, dependent: :nullify
   belongs_to :organization
 end

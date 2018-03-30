@@ -8,5 +8,5 @@
 
 class Sponsor < ActiveRecord::Base
   validates_presence_of :title
-  has_many :affiliations
+  has_many :affiliations, dependent: :nullify
 end

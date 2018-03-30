@@ -33,7 +33,8 @@ class DocumentsController < AclController
     else
       respond_to do |format|
         format.html # show.rhtml
-        format.xml  { render :template => 'media/show' }
+        format.xml { render 'media/show' }
+        format.ris
       end
     end
   end
@@ -58,6 +59,7 @@ class DocumentsController < AclController
     @recording_orientations = RecordingOrientation.order('title')    
     @resource_types = Topic.find(2636).children
     @transformations = Transformation.order('renderer_id, title')
+    @root_topics = Topic.roots
     render :template => 'media/edit'
   end
 

@@ -16,5 +16,5 @@ class TranslatedTitle < ActiveRecord::Base
   belongs_to :parent_title, :class_name => 'Title', :foreign_key => 'title_id'
   belongs_to :language, :class_name => 'ComplexScripts::Language'
   belongs_to :creator, :class_name => 'AuthenticatedSystem::Person', :foreign_key => 'creator_id'
-  has_many   :citations, :as => :reference
+  has_many   :citations, as: :reference, dependent: :destroy
 end

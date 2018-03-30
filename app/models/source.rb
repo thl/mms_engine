@@ -9,6 +9,6 @@
 #
 
 class Source < ActiveRecord::Base
-  has_many :media_source_associations
-  has_many :media, :through => :media_source_associations
+  has_many :media_source_associations, dependent: :destroy
+  has_many :media, through: :media_source_associations
 end

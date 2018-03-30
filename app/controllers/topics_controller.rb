@@ -36,7 +36,7 @@ class TopicsController < AclController
   # DELETE /topics/1
   def destroy
     @topic = Topic.find(params[:id])
-    MediaCategoryAssociation.destroy_all(:category_id => @topic.id)
+    MediaCategoryAssociation.where(category_id: @topic.id).destroy_all
     redirect_to topic_url(@topic.parent)
   end
 

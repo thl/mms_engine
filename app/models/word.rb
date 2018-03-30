@@ -12,7 +12,7 @@
 class Word < ActiveRecord::Base
   belongs_to :language, :class_name => 'ComplexScripts::Language'
   belongs_to :letter
-  has_many :definitions, :foreign_key => 'definiendum_id'
+  has_many :definitions, foreign_key: 'definiendum_id', dependent: :destroy
   
   def definienda
     Word.find_by_sql(['SELECT words.* FROM words, definitions WHERE definitions.definition_id = ? AND words.id = definitions.definiendum_id', id])
