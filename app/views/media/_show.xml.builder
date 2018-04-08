@@ -19,14 +19,6 @@ xml.__send__(class_name.underscore.dasherize) do
   xml.rotation(medium.rotation)
   recording_orientation = medium.recording_orientation
   xml.recording_orientation(id: recording_orientation.id, title: recording_orientation.title) if !recording_orientation.nil?
-  media_publisher = medium.media_publisher
-  if !media_publisher.nil?
-    publisher = media_publisher.publisher
-    attrs = { id: publisher.id, title: publisher.title, country_id: publisher.country_id }
-    country = publisher.country
-    attrs[country: country.header] if !country.nil?
-    xml.publisher(attrs)
-  end
   capture_device_model = medium.capture_device_model
   if !capture_device_model.nil?
     attrs = { model_id: capture_device_model.id, model_title: capture_device_model.title, model_exif_tag: capture_device_model.exif_tag }
@@ -47,9 +39,6 @@ xml.__send__(class_name.underscore.dasherize) do
   xml << render(partial: 'workflows/show.xml.builder', locals: {workflow: workflow}) if !workflow.nil?
   xml.associated_categories(type: 'array') do
     medium.media_category_associations.each { |association| xml.associated_category(id: association.category_id, root_id: association.root_id, string_value: association.string_value, numeric_value: association.numeric_value) }
-  end
-  xml.associated_features(type: 'array') do
-    medium.locations.each { |location| xml.associated_feature(fid: location.feature_id) }
   end
   attachment = medium.attachment
   if !attachment.nil?
