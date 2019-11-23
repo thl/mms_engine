@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency 'rails', '~> 4.1.5'
+  s.add_dependency 'rails', '4.1.14'
   # s.add_dependency "jquery-rails"
   
   s.add_dependency 'mysql2', '0.3.18'
@@ -38,9 +38,9 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'memcache-client'
   s.add_dependency 'newrelic_rpm'
-  s.add_dependency 'annotate'
+  s.add_dependency 'annotate', '2.7.2'
 
-  s.add_dependency 'rmagick'
+  s.add_dependency 'rmagick', '~> 2.16'
   
   s.add_dependency 'acts_as_list'
   s.add_dependency 'in_place_editing'
