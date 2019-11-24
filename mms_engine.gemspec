@@ -40,7 +40,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'newrelic_rpm'
   s.add_dependency 'annotate', '2.7.2'
 
-  s.add_dependency 'rmagick', '~> 2.16'
+  s.add_dependency 'rmagick', '2.15.4'
   
   s.add_dependency 'acts_as_list'
   s.add_dependency 'in_place_editing'
