@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = MmsEngine::VERSION
   s.authors     = ["Andres Montano"]
   s.email       = ["amontano@virginia.edu"]
-  s.homepage    = "mms.thlib.org"
-  s.summary     = "TODO: Summary of MmsEngine."
-  s.description = "TODO: Description of MmsEngine."
+  s.homepage    = "http://mms.thlib.org"
+  s.summary     = "This engine provides the core code for administering objects of different media types."
+  s.description = "This engine provides the core code for administering objects of different media types."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]

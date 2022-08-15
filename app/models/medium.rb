@@ -253,7 +253,6 @@ class Medium < ActiveRecord::Base
     end   
   end
   
-  
   def id_name
     actual_media = attachment
     if actual_media.nil?
@@ -321,6 +320,25 @@ class Medium < ActiveRecord::Base
     filtered = captions.where(language_id: eng.id) if filtered.empty?
     filtered = captions if filtered.empty?
     return filtered.first
+  end
+  
+  def shanti_id
+    uri = URI("https://images.mandala.library.virginia.edu/api/imginfo/mmsid/#{self.id}")
+    failed = false
+    tries = 0
+    begin
+      begin
+        response = Net::HTTP.get(uri)
+      rescue Exception => exc #Zlib::BufError => exc
+        tries += 1
+        failed = true
+        response = nil
+      end
+    end while failed && tries < 3
+    return nil if response.nil?
+    json = JSON.parse(response)
+    nid_str = json['nid']
+    return nid_str.nil? ? nil : nid_str.to_i
   end
   
   protected
