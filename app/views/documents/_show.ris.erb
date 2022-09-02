@@ -1,0 +1,63 @@
+TY - <%= medium.resource_type.codes.select{|c| c.code_type == 'RIS'}.first.value %>
+M3 - <%= medium.resource_type.header %>
+U5 - <%= medium.id %>
+<% titles = medium.titles
+   title = nil
+   if titles.size == 1
+		 title = titles.first.title
+	 elsif titles.size > 1
+		 title = "#{titles.first.title.html_safe} (#{titles.second.title.html_safe})"
+   end
+   if !title.blank? %>
+TI - <%= title %>
+<% end
+   translated_titles = titles.collect{|t| t.translated_titles}.flatten
+	 title = translated_titles.first
+   if !title.blank? -%>
+TT - <%= title.title.html_safe %>
+<% end
+   if !medium.photographer.nil? -%>
+AU - <%= medium.photographer.fullname.html_safe %>
+<% end 
+   if !medium.media_publisher.nil? && !medium.media_publisher.publisher.nil? && !medium.media_publisher.publisher.title.blank? -%>
+PB - <%= medium.media_publisher.publisher.title.html_safe %>
+<% end
+   partial_taken_on = medium.partial_taken_on
+	 date = nil
+	 year = nil
+	 if partial_taken_on.nil?
+		 taken_on = medium.taken_on
+		 if !taken_on.nil?
+			 date = medium.taken_on_display_string
+			 year = taken_on.year
+		 end
+	 else
+		 date = partial_taken_on
+		 year = partial_taken_on.split('/').last
+	 end
+   if !year.blank? -%>
+PY - <%= year %>
+<% end 
+if !date.blank? -%>
+DA - <%= date %>
+<% end 
+   caption = medium.captions.first
+	 if !caption.nil? && !caption.title.blank? -%>
+CA - <%= caption.title.html_safe %>
+<% end 
+   desc = medium.descriptions.first
+   if !desc.nil? && !desc.title.blank? -%>
+N1 - <%= desc.title.html_safe %>
+<% elsif !medium.recording_note.blank? -%>
+N1 - <%= medium.recording_note.html_safe %>
+<% end
+   location = medium.locations.first
+   if !location.nil? && !location.feature.nil? && !location.feature.header.blank? -%>
+CY - <%= location.feature.header.html_safe %>
+<% end
+   medium.media_category_associations.each do |mca|
+     if !mca.category.nil? && !mca.category.header.blank? -%>
+KW - <%= mca.category.header.html_safe %>
+<%   end
+	 end -%>
+ER -

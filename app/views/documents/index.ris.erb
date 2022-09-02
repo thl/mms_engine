@@ -1,0 +1,4 @@
+<% for document in @documents
+     next if !document.used_outside -%>
+<%=  render(:partial => 'show.ris.erb', :locals => {:medium => document}) %>
+<% end %>

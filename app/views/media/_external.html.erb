@@ -114,15 +114,10 @@
    if !@medium.recording_note.blank? %>
      <p><b><%= Medium.human_attribute_name('recording_note').s %>:</b></p>
 <%=  @medium.recording_note.html_safe %>
+<% end
+   taken_on = @medium.taken_on_display_string
+   if !taken_on.blank? %>
+		 <p><b><%= Medium.human_attribute_name('taken_on', :what => @medium.class.model_name.human.titleize).s %>:</b>
+<%=    h(taken_on) %>
+     </p>
 <% end %>
-<p>
-<% if @medium.partial_taken_on.blank? 
-	 if !@medium.taken_on.nil? %>
-       <b><%= Medium.human_attribute_name('taken_on', :what => @medium.class.model_name.human.titleize).s %>:</b>
-<%=    h(@medium.taken_on.strftime('%d/%b/%Y')) %>
-<%   end
-   else %>
-     <b><%= Medium.human_attribute_name('taken_on', :what => @medium.class.model_name.human.titleize).s %>:</b>
-<%=  h(@medium.partial_taken_on) %>
-<% end %>
-</p>

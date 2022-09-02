@@ -306,6 +306,21 @@ class Medium < ActiveRecord::Base
     end
   end
   
+  def taken_on_display_string
+    if self.partial_taken_on.blank?
+    	if !self.taken_on.nil?
+        if self.taken_on.strftime('%d/%b')=='01/Jan'
+          return self.taken_on.strftime('%Y')
+        else
+          return self.taken_on.strftime('%d/%b/%Y')
+        end
+      end
+    else
+      return self.partial_taken_on
+    end
+    return nil
+  end
+  
   def prioritized_title
     title = self.prioritized_titles.first
     return title.nil? ? self.id.to_s : title.title

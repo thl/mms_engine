@@ -7,6 +7,7 @@ class OnlineResourcesController < AclController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @online_resources }
+      format.ris
     end
   end
 
@@ -18,6 +19,7 @@ class OnlineResourcesController < AclController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render :json => @online_resource }
+      format.ris
     end
   end
 

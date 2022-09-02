@@ -1,0 +1,4 @@
+<% for online_resource in @online_resources
+     next if !online_resource.used_outside -%>
+<%=  render(:partial => 'show.ris.erb', :locals => {:medium => online_resource}) %>
+<% end %>

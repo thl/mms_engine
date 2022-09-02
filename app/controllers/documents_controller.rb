@@ -21,6 +21,7 @@ class DocumentsController < AclController
     respond_to do |format|
       format.html # index.rhtml
       format.xml  # { render :xml => @documents.to_xml }
+      format.ris
     end
   end
 
