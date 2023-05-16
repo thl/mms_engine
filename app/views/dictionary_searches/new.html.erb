@@ -12,7 +12,7 @@
 <%= form_for(:dictionary_search, :url => dictionary_searches_path, :remote => true, :html => { :id => 'browse_form' }) do |f| %>
     <p>
 <%=   ts('or.this') %> <%= globalized_submit_tag 'browse.this', :id => 'browse' %>
-<%=   f.collection_select(:language, @head_term_languages, :id, :title, {:include_blank => true}, {:onclick => "document.getElementById('browse').disabled=(document.getElementById('browse_language').selectedIndex==0);", :id => 'browse_language'}) %>
+<%=   f.collection_select(:language, @head_term_languages, :id, :title, {:include_blank => true}, {:onchange => "document.getElementById('browse').disabled=(document.getElementById('browse_language').selectedIndex==0);", :id => 'browse_language'}) %>
       <input id="dictionary_search_type" name="dictionary_search[type]" type="hidden" value="browse" />
    </p>
 <% end %>
