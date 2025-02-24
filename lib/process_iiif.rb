@@ -4,7 +4,9 @@ module ProcessIiif
     all.each do |p|
       next if !p.iiif_image.nil?
       shanti_image = ShantiImage.from_mms(p.id)
-      if !shanti_image.nil? && shanti_image.instance_of?(ShantiImage)
+      if shanti_image.nil? || !shanti_image.instance_of?(ShantiImage)
+        puts "Picture #{p.id} not found in shanti."
+      else
         uri = URI(shanti_image.url_iiif_s)
         response = Net::HTTP.get(uri)
         begin

@@ -21,6 +21,7 @@ class ShantiImage
   def self.from_mms(id)
     uri = URI("https://images.mandala.library.virginia.edu/api/imginfo/mmsid/#{id}")
     response = Net::HTTP.get(uri)
+    return nil if response.blank?
     json = JSON.parse(response)
     nid_str = json['nid']
     return nil if nid_str.nil?
