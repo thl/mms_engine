@@ -15,5 +15,19 @@ namespace :mms do
         end
       end
     end
+    
+    desc 'Populate iiif_image table. Optionally from PICTURE_ID onwards'
+    task populate_iiif_data: :environment do |t|
+      require_relative '../process_iiif.rb'
+      picture_id = ENV['PICTURE_ID']
+      ProcessIiif.populate(picture_id)
+    end
+    
+    desc 'Delete images stored for pictures that have an iiif association. Optionally from PICTURE_ID onwards.'
+    task remove_images_with_iiif_data: :environment do |t|
+      require_relative '../process_iiif.rb'
+      picture_id = ENV['PICTURE_ID']
+      ProcessIiif.remove(picture_id)
+    end
   end  
 end

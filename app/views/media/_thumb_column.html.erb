@@ -3,7 +3,7 @@
      <td>&nbsp;</td>
 <% else
      chosen_caption = chosen_caption(medium) %>
-     <td width="<%= thumbnail.width %>" height="<%= thumbnail.height %>">
-<%=    link_to image_tag(thumbnail.public_filename, width: thumbnail.width, height: thumbnail.height, alt: (chosen_caption.nil? ? nil : chosen_caption.title)), medium_path(medium), class: 'media-thumb', id: "thumb-#{medium.id}", remote: true %>
+     <td width="95" height="95">
+<%=    link_to image_tag(thumbnail.instance_of?(String) ? thumbnail : thumbnail.public_filename, width: 95, height: 95, alt: (chosen_caption.nil? ? nil : chosen_caption.title)), medium_path(medium), class: 'media-thumb', id: "thumb-#{medium.id}", remote: true %>
      </td>
 <% end %>

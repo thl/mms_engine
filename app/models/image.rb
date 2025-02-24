@@ -20,5 +20,5 @@ class Image < ActiveRecord::Base
   has_attachment :storage => :file_system, :processor => :rmagick, :max_size => 500.megabytes, :content_type => VALID_TYPES.collect {|key, value| value}, :thumbnails => Medium::COMMON_SIZES.merge(:jiats_essay => {:geometry => '350x>', :density => 260, :quality => 80}, :jiats_large => {:geometry => '700x>', :density => 300, :quality => 80}, :jiats_huge => {:geometry => '1200x>', :density => 300, :quality => 80})
   acts_as_tree
   validates_as_attachment
-  has_one :picture, :foreign_key => 'attachment_id'
+  has_one :picture, :foreign_key => 'attachment_id', dependent: :nullify
 end

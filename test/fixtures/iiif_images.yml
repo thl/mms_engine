@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  picture_id: 
+  shanti_url: MyString
+  api_url: MyString
+  uid: MyString
+
+two:
+  picture_id: 
+  shanti_url: MyString
+  api_url: MyString
+  uid: MyString

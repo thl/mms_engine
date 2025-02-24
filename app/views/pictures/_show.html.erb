@@ -3,11 +3,11 @@
     if !screen_size_image.nil?
 	  large_image = @medium.large_image
 	  # Temporarily using the huge image and scaling it down with CSS to avoid regenerating all of the screen_size images
-	  image_tag = image_tag(screen_size_image.public_filename, :style => "max-width: 550px; max-height: 350px;")
+	  image_tag = image_tag(screen_size_image.instance_of?(String) ? screen_size_image : screen_size_image.public_filename, :style => "max-width: 550px; max-height: 350px;")
 	  div_id = "media_large_#{@medium.id}" %>
 	  <div id="<%= div_id %>">
 <%      #screen_size_image.nil? ? image_tag : link_to(image_tag, full_size_medium_path(@medium), :class => 'media-thumb', :remote => true) %>
-<%=     large_image.nil? ? image_tag : link_to(image_tag, '#', onclick: "$(\"#TB_window\").remove(); $(\".thl-popup\").remove(); $(\"body\").append(\"<div id='TB_window'></div>\");	tb_show(null, \"#{large_image.public_filename}\", false);") %>
+<%=     large_image.nil? ? image_tag : link_to(image_tag, '#', onclick: "$(\"#TB_window\").remove(); $(\".thl-popup\").remove(); $(\"body\").append(\"<div id='TB_window'></div>\");	tb_show(null, \"#{large_image.instance_of?(String) ? large_image : large_image.public_filename}\", false);") %>
 	  </div>
 <%  end %>
 <div id ="edit_div">

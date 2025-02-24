@@ -17,6 +17,6 @@ module MediaHelper
   
   def thumbnail_image_link(medium)
     thumbnail_image = medium.screen_size_image
-    thumbnail_image.nil? ? nil : link_to(image_tag(thumbnail_image.public_filename), medium_path(medium))
+    thumbnail_image.nil? ? nil : link_to(image_tag(thumbnail_image.instance_of?(String) ? thumbnail_image : thumbnail_image.public_filename), medium_path(medium))
   end
 end

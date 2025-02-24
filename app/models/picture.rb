@@ -31,10 +31,47 @@ class Picture < Medium
   before_destroy { |record| record.image.destroy if !record.image.nil? }
   after_create   { |record| record.update_from_image_properties }
   
-  belongs_to :image, :foreign_key => 'attachment_id'
+  belongs_to :image, :foreign_key => 'attachment_id', dependent: :destroy
+  has_one :iiif_image
   
   def attachment
     image
+  end
+  
+  def thumbnail_image
+    i_img = self.iiif_image
+    if i_img.nil?
+      super
+    else
+      "#{i_img.api_url}/square/95,95/0/default.jpg"
+    end
+  end
+  
+  def screen_size_image
+    i_img = self.iiif_image
+    if i_img.nil?
+      super
+    else
+      "#{i_img.api_url}/full/^!500,500/0/default.jpg"
+    end
+  end
+  
+  def large_image
+    i_img = self.iiif_image
+    if i_img.nil?
+      super
+    else
+      "#{i_img.api_url}/full/^!800,700/0/default.jpg"
+    end
+  end
+
+  def huge_image
+    i_img = self.iiif_image
+    if i_img.nil?
+      super
+    else
+      "#{i_img.api_url}/full/^!2000,2000/0/default.jpg"
+    end
   end
   
   def self.public_folder

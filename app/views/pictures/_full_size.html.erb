@@ -1,8 +1,9 @@
-<% div_id = "media_full_size_#{@medium.id}" %>
+<% div_id = "media_full_size_#{@medium.id}" 
+   large_image = @medium.large_image %>
 <p id="<%= div_id %>">
 <%= link_to "&#8592; Back to main view", medium_path(@medium), :class => 'media-thumb', :remote => true %>
 </p>
 <div style="width: 100%; text-align: center;">
-<%= image_tag(@medium.large_image.public_filename, :style => "max-width: 900px; max-height: 500px; margin:0 auto;") %>
+<%= image_tag(large_image.instance_of(String) ? large_image : @medium.large_image.public_filename, :style => "max-width: 900px; max-height: 500px; margin:0 auto;") %>
 </div>
 <%= javascript_tag "ActivateThlPopups('##{div_id}')" %>
